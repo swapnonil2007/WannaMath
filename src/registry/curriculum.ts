@@ -282,7 +282,7 @@ export const MULTIVARIABLE_CALCULUS_TOPICS: MathTopic[] = [
     route: "/calculus/jacobians",
     domainId: "calculus",
     phaseNumber: 5,
-    status: "phase-ready",
+    status: "available",
     accentHex: "#D35323",
     secondaryHex: "#96B898",
     highlightHex: "#FBEAA4",

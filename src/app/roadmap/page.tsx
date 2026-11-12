@@ -49,7 +49,7 @@ const PHASE_TIMELINE = [
   {
     phase: "Phase 5",
     title: "Topic 04: Jacobians & Change of Variables",
-    status: "Next Phase",
+    status: "Completed",
     accent: "#D35323",
     route: "/calculus/jacobians",
     details:
@@ -58,7 +58,7 @@ const PHASE_TIMELINE = [
   {
     phase: "Phase 6",
     title: "Cross-Topic Deep Linking, Performance Optimization & QA",
-    status: "Planned",
+    status: "Next Phase",
     accent: "#B95869",
     details:
       "Contextual links uniting polar/spherical integrals with Jacobians and coordinate systems, 60 FPS WebGL tuning, and complete archive handoff documentation.",
