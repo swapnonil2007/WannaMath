@@ -185,14 +185,15 @@ export function createParametricSurfaceMesh(
 }
 
 /**
- * Builds a 3D vector arrow in z-up mathematical coordinates from `origin`
- * along `direction` with length `length`.
+ * Builds a 3D vector arrow in z-up mathematical coordinates from `originMath`
+ * along `dirMath`. Supports either 3 arguments `(originMath, vecMath, colorHex)`
+ * where arrow length equals `‖vecMath‖`, or 4 arguments `(originMath, dirMath, length, colorHex)`.
  */
 export function createVectorArrow3D(
   originMath: [number, number, number],
   dirMath: [number, number, number],
-  length: number,
-  colorHex: number,
+  colorOrLength: number,
+  maybeColorHex?: number,
   headLengthRatio = 0.24
 ): THREE.ArrowHelper {
   const originThree = mathToThreeVec3(
@@ -201,12 +202,17 @@ export function createVectorArrow3D(
     originMath[2]
   );
   const dirThree = mathToThreeVec3(dirMath[0], dirMath[1], dirMath[2]);
-  if (dirThree.lengthSq() < 1e-12) {
+  const rawVecLen = dirThree.length();
+  if (rawVecLen < 1e-12) {
     dirThree.set(1, 0, 0);
   } else {
     dirThree.normalize();
   }
+
+  const length = maybeColorHex !== undefined ? colorOrLength : rawVecLen;
+  const colorHex = maybeColorHex !== undefined ? maybeColorHex : colorOrLength;
   const safeLen = Math.max(0.05, length);
+
   return new THREE.ArrowHelper(
     dirThree,
     originThree,

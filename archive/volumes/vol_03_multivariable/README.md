@@ -1,6 +1,20 @@
 # Volume III — Multivariable & Vector Calculus (`multivariable-calculus`)
 
-## Module 3.2 Historical Build & Migration Index
+## Module 3.1 Build Index (`multivariable-differentiation` — PUBLISHED)
+All 4 chapters and 4 interactive laboratories of **Module 3.1 (`3D Geometry & Multivariable Differentiation`)** are live under `/multivariable-calculus/multivariable-differentiation/[chapter]`:
+
+1. **Chapter `3.1.1` — Surfaces, Level Curves & Contour Maps (`surfaces-level-curves`)**
+   - Lab: `SurfaceContourSlicerLab` (`src/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab.tsx`)
+2. **Chapter `3.1.2` — Partial Derivatives & Tangent Planes (`partial-derivatives-tangent-planes`)**
+   - Lab: `PartialDerivativeTangentPlaneLab` (`src/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab.tsx`)
+3. **Chapter `3.1.3` — The Gradient Vector & Directional Derivatives (`gradient-directional-derivatives`)**
+   - Lab: `GradientDirectionalDerivativeLab` (`src/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab.tsx`)
+4. **Chapter `3.1.4` — Lagrange Multipliers & Constrained Optimization (`lagrange-multipliers`)**
+   - Lab: `LagrangeMultipliersLab` (`src/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab.tsx`)
+
+---
+
+## Module 3.2 Historical Build & Migration Index (`multiple-integrals` — PUBLISHED)
 All 4 chapters and 8 interactive laboratories of **Module 3.2 (`multiple-integrals`)** were built, verified, and migrated into the 4-tier textbook taxonomy (`/multivariable-calculus/multiple-integrals/[chapter]`):
 
 1. **Chapter `3.2.1` — Double Integrals & Fubini's Theorem (`double-integrals`)**

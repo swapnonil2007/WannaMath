@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Phase A & Track 1 Completed — 6-Volume 4-Tier Textbook Architecture, Modular Registry, Hierarchical Routing & Shared Visualization Primitives (`src/components/visualizations/primitives/`) Active
+> **Last Updated:** Phase A, Track 1 & Track 2 Completed — Volume III Modules 3.1 & 3.2 (`8/13` Chapters & `12` Interactive Labs) Live
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -12,7 +12,7 @@
 | :--- | :--- | :--- | :---: | :---: | :--- |
 | **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | `planned` |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
-| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 13 | **`in-progress` (Module 3.2 `published` — 8 Labs Live)** |
+| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 13 | **`in-progress` (Modules 3.1 & 3.2 `published` — 12 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | `planned` |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | `planned` |
 | **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | `planned` |
@@ -21,13 +21,13 @@
 
 ## 2. Detailed Chapter Status Matrix — Volume III: Multivariable & Vector Calculus (`/multivariable-calculus`)
 
-### Module 3.1: 3D Geometry & Multivariable Differentiation (`/multivariable-calculus/multivariable-differentiation`)
-| Chapter ID | Slug | Title | Status | Interactive Labs |
+### Module 3.1: 3D Geometry & Multivariable Differentiation (`/multivariable-calculus/multivariable-differentiation`) — **ALL PUBLISHED**
+| Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
-| `3.1.1` | `surfaces-level-curves` | Surfaces, Level Curves & Contour Maps | `planned` | Quadric Surface Slicer, Contour Elevation Inspector |
-| `3.1.2` | `partial-derivatives-tangent-planes` | Partial Derivatives & Tangent Planes | `planned` | $x/y$ Cross-Section Slope Lab, 3D Tangent Plane Linearizer |
-| `3.1.3` | `gradient-directional-derivatives` | The Gradient Vector & Directional Derivatives | `planned` | Steepest Ascent Compass, Directional Derivative Probe |
-| `3.1.4` | `lagrange-multipliers` | Lagrange Multipliers & Constrained Optimization | `planned` | Contour Tangency $\nabla f = \lambda \nabla g$ Explorer |
+| `3.1.1` | `/multivariable-calculus/multivariable-differentiation/surfaces-level-curves` | Surfaces, Level Curves & Contour Maps | **`published`** | `SurfaceContourSlicerLab` |
+| `3.1.2` | `/multivariable-calculus/multivariable-differentiation/partial-derivatives-tangent-planes` | Partial Derivatives & Tangent Planes | **`published`** | `PartialDerivativeTangentPlaneLab` |
+| `3.1.3` | `/multivariable-calculus/multivariable-differentiation/gradient-directional-derivatives` | The Gradient Vector & Directional Derivatives | **`published`** | `GradientDirectionalDerivativeLab` |
+| `3.1.4` | `/multivariable-calculus/multivariable-differentiation/lagrange-multipliers` | Lagrange Multipliers & Constrained Optimization | **`published`** | `LagrangeMultipliersLab` |
 
 ### Module 3.2: Multiple Integrals & Coordinate Pullbacks (`/multivariable-calculus/multiple-integrals`) — **ALL PUBLISHED**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
@@ -57,5 +57,5 @@
    - `threeScenePrimitives.ts` — `mathToThreeVec3`, `disposeThreeObject`, `createCoordinateAxesAndGrid`, `createParametricSurfaceMesh`, and `createVectorArrow3D`.
    - `SvgCoordinatePlane2D.tsx` — Accessible 2D SVG coordinate plane with `worldToSvgX/Y`, grid lines, and click-to-world coordinates.
    - `quadrature.ts` — `integrate1DGaussLegendre`, `integrate2DIterated`, `integrate3DIterated`, `computePartialDerivatives2D`, and `computeJacobian2D`.
-2. **Track 2 (Ready):** Build **Volume III, Module 3.1 (`multivariable-differentiation`)** — Chapters `3.1.1` through `3.1.4`.
+2. **Track 2 (COMPLETED):** Built **Volume III, Module 3.1 (`multivariable-differentiation`)** — Chapters `3.1.1` through `3.1.4` (`SurfaceContourSlicerLab`, `PartialDerivativeTangentPlaneLab`, `GradientDirectionalDerivativeLab`, `LagrangeMultipliersLab`).
 3. **Track 3 (Ready):** Build **Volume III, Module 3.3 (`vector-calculus`)** — Chapters `3.3.1` through `3.3.5`.

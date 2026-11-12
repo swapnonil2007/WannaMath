@@ -32,7 +32,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Surfaces, Level Curves & Contour Maps",
           subtitle:
             "Slice 3D surfaces z = f(x,y) with horizontal planes z = c and project contour elevation maps onto the xy-plane.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.1.1"],
           dimensionBadge: "2D + 3D",
@@ -72,7 +72,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Partial Derivatives & Tangent Planes",
           subtitle:
             "Freeze y = y₀ or x = x₀ to slice a 3D surface into 1D curves whose tangent vectors span the local tangent plane.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["1.2.1", "1.2.2", "3.1.1"],
           dimensionBadge: "2D + 3D",
@@ -83,6 +83,16 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Multivariable sensitivity analysis, thermodynamic state partials, and nonlinear control linearization.",
+          pedagogicalRhythm: {
+            question:
+              "When a surface z = f(x,y) depends on two independent variables, how do two 1D coordinate slopes combine to form a flat 2D tangent plane?",
+            labInteraction:
+              "Move the probe point (x₀, y₀) to inspect the x-slice curve (y fixed) and y-slice curve (x fixed), their tangent vectors T_x = ⟨1, 0, f_x⟩ and T_y = ⟨0, 1, f_y⟩, and the spanned tangent plane.",
+            symbolicFormalizationLatex:
+              "L(x,y) = f(x_0,y_0) + \\color{#8D9FCE}{f_x(x_0,y_0)}(x-x_0) + \\color{#96B898}{f_y(x_0,y_0)}(y-y_0), \\quad \\mathbf{n} = \\mathbf{T}_x \\times \\mathbf{T}_y = \\langle -f_x, -f_y, 1 \\rangle",
+            edgeCasesAndBridge:
+              "Coordinate partials only measure slope along the x and y axes—to find the slope in any arbitrary compass direction u, we package ⟨f_x, f_y⟩ into the gradient vector ∇f in Chapter 3.1.3.",
+          },
           labs: [
             {
               id: "lab-3-1-2a",
@@ -102,7 +112,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "The Gradient Vector & Directional Derivatives",
           subtitle:
             "Rotate a vertical slicing plane in any unit direction u to see why steepest ascent aligns with ∇f and is orthogonal to contours.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["2.1.1", "3.1.2"],
           dimensionBadge: "2D + 3D",
@@ -113,6 +123,16 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Gradient descent optimization in machine learning, Fourier heat conduction q = -k∇T, and potential fields.",
+          pedagogicalRhythm: {
+            question:
+              "If you stand on a 3D hillside z = f(x,y) and face a compass heading u = ⟨cos α, sin α⟩, what is your instantaneous slope—and which direction is steepest?",
+            labInteraction:
+              "Rotate the vertical slicing plane through 360° or snap directly to Steepest Ascent (θ = 0°), Level Curve Tangent (θ = 90°), and Steepest Descent (θ = 180°).",
+            symbolicFormalizationLatex:
+              "D_{\\mathbf{u}}f(x_0,y_0) = \\color{#D35323}{\\nabla f(x_0,y_0)} \\cdot \\color{#8D9FCE}{\\mathbf{u}} = \\|\\nabla f\\|\\cos\\theta \\in [-\\|\\nabla f\\|,\\; +\\|\\nabla f\\|]",
+            edgeCasesAndBridge:
+              "Because D_u f = 0 along a level curve, ∇f is always perpendicular to level curves—the exact geometric foundation for Lagrange Multipliers in Chapter 3.1.4.",
+          },
           labs: [
             {
               id: "lab-3-1-3a",
@@ -132,7 +152,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Lagrange Multipliers & Constrained Optimization",
           subtitle:
             "Walk along a constraint curve g(x,y) = c until its normal ∇g aligns parallel with the objective gradient ∇f = λ∇g.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["3.1.3"],
           dimensionBadge: "2D + 3D",
@@ -142,6 +162,16 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Minimum-weight structural design under stress constraints, portfolio optimization, and maximum entropy.",
+          pedagogicalRhythm: {
+            question:
+              "When our movement is restricted to a constraint path g(x,y) = c, why must the objective contour f(x,y) = k be tangent to the constraint curve at an extremum?",
+            labInteraction:
+              "Scrub parameter t along the constraint curve or click Snap to Max / Snap to Min to observe ∇f aligning collinearly with the constraint normal ∇g while df/ds = ∇f · T vanishes.",
+            symbolicFormalizationLatex:
+              "\\frac{df}{ds} = \\nabla f \\cdot \\hat{\\mathbf{T}} = 0 \\iff \\color{#D35323}{\\nabla f(x^*,y^*)} = \\lambda\\,\\color{#8D9FCE}{\\nabla g(x^*,y^*)}",
+            edgeCasesAndBridge:
+              "Having mastered local differential geometry of surfaces (Module 3.1), Module 3.2 reverses differentiation to accumulate area, volume, and mass across 2D and 3D domains.",
+          },
           labs: [
             {
               id: "lab-3-1-4a",

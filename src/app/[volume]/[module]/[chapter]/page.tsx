@@ -4,7 +4,13 @@ import { getAllResolvedChapters, getChapterBySlugs } from "@/registry/index";
 import { TopicPageShell } from "@/components/layout/TopicPageShell";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 
-// Existing 8 Live Laboratories (Module 3.2: Multiple Integrals & Coordinate Pullbacks)
+// Module 3.1 Live Laboratories (3D Geometry & Multivariable Differentiation)
+import { SurfaceContourSlicerLab } from "@/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab";
+import { PartialDerivativeTangentPlaneLab } from "@/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab";
+import { GradientDirectionalDerivativeLab } from "@/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab";
+import { LagrangeMultipliersLab } from "@/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab";
+
+// Module 3.2 Live Laboratories (Multiple Integrals & Coordinate Pullbacks)
 import { RiemannVolumeLab } from "@/components/visualizations/double-integrals/RiemannVolumeLab";
 import { IteratedOrderChangeLab } from "@/components/visualizations/double-integrals/IteratedOrderChangeLab";
 import { TripleIntegralOrderLab } from "@/components/visualizations/triple-integrals/TripleIntegralOrderLab";
@@ -42,6 +48,30 @@ export default async function ChapterPage({
 
   return (
     <TopicPageShell chapterId={chapter.id}>
+      {chapter.slug === "surfaces-level-curves" && (
+        <div className="space-y-10">
+          <SurfaceContourSlicerLab />
+        </div>
+      )}
+
+      {chapter.slug === "partial-derivatives-tangent-planes" && (
+        <div className="space-y-10">
+          <PartialDerivativeTangentPlaneLab />
+        </div>
+      )}
+
+      {chapter.slug === "gradient-directional-derivatives" && (
+        <div className="space-y-10">
+          <GradientDirectionalDerivativeLab />
+        </div>
+      )}
+
+      {chapter.slug === "lagrange-multipliers" && (
+        <div className="space-y-10">
+          <LagrangeMultipliersLab />
+        </div>
+      )}
+
       {chapter.slug === "double-integrals" && (
         <div className="space-y-10">
           <RiemannVolumeLab />
