@@ -20,9 +20,10 @@ All project plans, design tokens, and phase-by-phase progress logs are stored in
 
 - **Remote Repository:** `https://github.com/swapnonil2007/WannaMath.git`
 - **Branch:** `main`
-- **Commit Author Identity (Mandatory):**
+- **Commit Author & Push Identity (Mandatory):**
   - `user.name`: `swapnonil2007`
   - `user.email`: `swapnonil2007@gmail.com`
+  - `credential.https://github.com.username`: `swapnonil2007` (configured so Git Credential Manager selects `swapnonil2007` when pushing to `origin/main`)
 - **Workflow:** At the end of every phase (or significant milestone), update `archive/01_CURRENT_STATUS.md`, add a phase log in `archive/phase_logs/`, verify `npm run build` passes with zero errors, and commit & push to `origin/main`.
 
 ---
