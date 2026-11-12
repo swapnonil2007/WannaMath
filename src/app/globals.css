@@ -1,0 +1,280 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+
+/* ==========================================================================
+   wanna math — Butterfly Palette & Traditional Math Design System
+    strictly flat surfaces, 1px borders, zero multi-stop gradients
+   ========================================================================== */
+
+:root {
+  /* Raw Butterfly Palette Tokens (From Reference Image) */
+  /* Triad 1 */
+  --palette-periwinkle: #8d9fce;
+  --palette-cream-warm: #fbeaa4;
+  --palette-crimson: #b95869;
+
+  /* Triad 2 */
+  --palette-sage: #96b898;
+  --palette-lemon-soft: #fff7c2;
+  --palette-persimmon: #d35323;
+
+  /* Triad 3 */
+  --palette-rose-dusty: #d5658b;
+  --palette-peach-cream: #fcdcc7;
+  --palette-teal-deep: #029091;
+
+  /* Triad 4 */
+  --palette-olive-gold: #aaa36d;
+  --palette-ivory-chalk: #fffbe4;
+  --palette-ochre-brown: #976434;
+
+  /* Light Mode (Warm Textbook Paper) Raw Tokens */
+  --bg-canvas-light: #fffbe4;
+  --bg-grid-light: #efe8c8;
+  --bg-panel-light: #f6f0d2;
+  --bg-panel-elevated-light: #ede4be;
+  --border-subtle-light: #d3ca9f;
+  --border-strong-light: #7c7454;
+  --text-primary-light: #1e1f22;
+  --text-secondary-light: #3d3f45;
+  --text-muted-light: #626055;
+  --accent-brand-light: #027374;
+  --scrollbar-thumb-light: #7c7454;
+  --scrollbar-track-light: #f6f0d2;
+
+  /* Dark Mode (Drafting Grid Slate — Matching Reference Background) Raw Tokens */
+  --bg-canvas-dark: #1e1f22;
+  --bg-grid-dark: #27292e;
+  --bg-panel-dark: #25272c;
+  --bg-panel-elevated-dark: #2d3037;
+  --border-subtle-dark: #383b43;
+  --border-strong-dark: #6c707c;
+  --text-primary-dark: #fffbe4;
+  --text-secondary-dark: #ccc8b8;
+  --text-muted-dark: #989485;
+  --accent-brand-dark: #8d9fce;
+  --scrollbar-thumb-dark: #6c707c;
+  --scrollbar-track-dark: #25272c;
+
+  /* Semantic Math Tokens (Consistent Across All Visualizations) */
+  --math-var-x: #8d9fce;
+  --math-var-y: #96b898;
+  --math-var-z: #029091;
+  --math-bound-upper: #b95869;
+  --math-bound-lower: #d5658b;
+  --math-active-sweep: #d35323;
+  --math-diff-element: #fbeaa4;
+  --math-grid-accent: #aaa36d;
+  --math-earth-accent: #976434;
+
+  /* Default Fallback Assignments (Light before media query) */
+  --bg-canvas: var(--bg-canvas-light);
+  --bg-grid: var(--bg-grid-light);
+  --bg-panel: var(--bg-panel-light);
+  --bg-panel-elevated: var(--bg-panel-elevated-light);
+  --border-subtle: var(--border-subtle-light);
+  --border-strong: var(--border-strong-light);
+  --text-primary: var(--text-primary-light);
+  --text-secondary: var(--text-secondary-light);
+  --text-muted: var(--text-muted-light);
+  --accent-color: var(--accent-brand-light);
+  --scrollbar-thumb: var(--scrollbar-thumb-light);
+  --scrollbar-track: var(--scrollbar-track-light);
+
+  /* Fallback for browsers without light-dark() support */
+  @media (prefers-color-scheme: dark) {
+    --bg-canvas: var(--bg-canvas-dark);
+    --bg-grid: var(--bg-grid-dark);
+    --bg-panel: var(--bg-panel-dark);
+    --bg-panel-elevated: var(--bg-panel-elevated-dark);
+    --border-subtle: var(--border-subtle-dark);
+    --border-strong: var(--border-strong-dark);
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --text-muted: var(--text-muted-dark);
+    --accent-color: var(--accent-brand-dark);
+    --scrollbar-thumb: var(--scrollbar-thumb-dark);
+    --scrollbar-track: var(--scrollbar-track-dark);
+  }
+
+  /* Modern light-dark() automatic resolution */
+  @supports (color: light-dark(white, black)) {
+    --bg-canvas: light-dark(var(--bg-canvas-light), var(--bg-canvas-dark));
+    --bg-grid: light-dark(var(--bg-grid-light), var(--bg-grid-dark));
+    --bg-panel: light-dark(var(--bg-panel-light), var(--bg-panel-dark));
+    --bg-panel-elevated: light-dark(
+      var(--bg-panel-elevated-light),
+      var(--bg-panel-elevated-dark)
+    );
+    --border-subtle: light-dark(
+      var(--border-subtle-light),
+      var(--border-subtle-dark)
+    );
+    --border-strong: light-dark(
+      var(--border-strong-light),
+      var(--border-strong-dark)
+    );
+    --text-primary: light-dark(
+      var(--text-primary-light),
+      var(--text-primary-dark)
+    );
+    --text-secondary: light-dark(
+      var(--text-secondary-light),
+      var(--text-secondary-dark)
+    );
+    --text-muted: light-dark(var(--text-muted-light), var(--text-muted-dark));
+    --accent-color: light-dark(
+      var(--accent-brand-light),
+      var(--accent-brand-dark)
+    );
+    --scrollbar-thumb: light-dark(
+      var(--scrollbar-thumb-light),
+      var(--scrollbar-thumb-dark)
+    );
+    --scrollbar-track: light-dark(
+      var(--scrollbar-track-light),
+      var(--scrollbar-track-dark)
+    );
+  }
+
+  /* Mandatory viewport-wide color-scheme declaration */
+  color-scheme: light dark;
+
+  /* Reflect explicit user override from <meta name="color-scheme"> */
+  &:has(> head > meta[name="color-scheme"][content="dark"]) {
+    color-scheme: dark;
+    --bg-canvas: var(--bg-canvas-dark);
+    --bg-grid: var(--bg-grid-dark);
+    --bg-panel: var(--bg-panel-dark);
+    --bg-panel-elevated: var(--bg-panel-elevated-dark);
+    --border-subtle: var(--border-subtle-dark);
+    --border-strong: var(--border-strong-dark);
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --text-muted: var(--text-muted-dark);
+    --accent-color: var(--accent-brand-dark);
+    --scrollbar-thumb: var(--scrollbar-thumb-dark);
+    --scrollbar-track: var(--scrollbar-track-dark);
+  }
+
+  &:has(> head > meta[name="color-scheme"][content="light"]) {
+    color-scheme: light;
+    --bg-canvas: var(--bg-canvas-light);
+    --bg-grid: var(--bg-grid-light);
+    --bg-panel: var(--bg-panel-light);
+    --bg-panel-elevated: var(--bg-panel-elevated-light);
+    --border-subtle: var(--border-subtle-light);
+    --border-strong: var(--border-strong-light);
+    --text-primary: var(--text-primary-light);
+    --text-secondary: var(--text-secondary-light);
+    --text-muted: var(--text-muted-light);
+    --accent-color: var(--accent-brand-light);
+    --scrollbar-thumb: var(--scrollbar-thumb-light);
+    --scrollbar-track: var(--scrollbar-track-light);
+  }
+
+  accent-color: var(--accent-color);
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* Legacy WebKit scrollbar fallback */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+}
+
+/* Forced Colors Mode accessibility support */
+@media (forced-colors: active) {
+  :root {
+    --border-subtle: CanvasText;
+    --border-strong: Highlight;
+  }
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  accent-color: var(--accent-color);
+  /* Subtle orthogonal engineering drafting grid using crisp 1px lines (not a color gradient) */
+  background-image:
+    linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  min-height: 100vh;
+}
+
+/* Academic textbook serif for headings and mathematical prose */
+.font-math-serif {
+  font-family: var(--font-serif), "STIX Two Text", Georgia, Cambria, serif;
+}
+
+/* Tabular monospace for live coordinate and numerical readouts */
+.font-tabular-mono {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* KaTeX overrides for eye comfort and overflow safety */
+.katex {
+  font-size: 1.06em;
+  color: inherit;
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35rem 0;
+  margin: 0.5rem 0;
+}
+
+/* Progressive enhancement fallback for older browsers without accent-color */
+@supports not (accent-color: var(--accent-color)) {
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: var(--border-strong);
+    border-radius: 3px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    cursor: pointer;
+    margin-top: -5px;
+  }
+
+  input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: var(--border-strong);
+    border-radius: 3px;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    cursor: pointer;
+  }
+}
