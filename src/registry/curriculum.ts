@@ -182,7 +182,7 @@ export const MULTIVARIABLE_CALCULUS_TOPICS: MathTopic[] = [
     route: "/calculus/triple-integrals",
     domainId: "calculus",
     phaseNumber: 3,
-    status: "phase-ready",
+    status: "available",
     accentHex: "#029091",
     secondaryHex: "#96B898",
     highlightHex: "#D35323",

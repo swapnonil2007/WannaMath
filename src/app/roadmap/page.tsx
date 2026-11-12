@@ -31,7 +31,7 @@ const PHASE_TIMELINE = [
   {
     phase: "Phase 3",
     title: "Topic 02: Triple Integration, Shadow Projections & 6 Permutations",
-    status: "Next Phase",
+    status: "Completed",
     accent: "#029091",
     route: "/calculus/triple-integrals",
     details:
@@ -40,7 +40,7 @@ const PHASE_TIMELINE = [
   {
     phase: "Phase 4",
     title: "Topic 03: Coordinate Systems Interactive Laboratory",
-    status: "Planned",
+    status: "Next Phase",
     accent: "#AAA36D",
     route: "/calculus/coordinate-systems",
     details:
