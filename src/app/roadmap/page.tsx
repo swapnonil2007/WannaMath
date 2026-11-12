@@ -40,7 +40,7 @@ const PHASE_TIMELINE = [
   {
     phase: "Phase 4",
     title: "Topic 03: Coordinate Systems Interactive Laboratory",
-    status: "Next Phase",
+    status: "Completed",
     accent: "#AAA36D",
     route: "/calculus/coordinate-systems",
     details:
@@ -49,7 +49,7 @@ const PHASE_TIMELINE = [
   {
     phase: "Phase 5",
     title: "Topic 04: Jacobians & Change of Variables",
-    status: "Planned",
+    status: "Next Phase",
     accent: "#D35323",
     route: "/calculus/jacobians",
     details:

@@ -232,7 +232,7 @@ export const MULTIVARIABLE_CALCULUS_TOPICS: MathTopic[] = [
     route: "/calculus/coordinate-systems",
     domainId: "calculus",
     phaseNumber: 4,
-    status: "phase-ready",
+    status: "available",
     accentHex: "#AAA36D",
     secondaryHex: "#D5658B",
     highlightHex: "#029091",
