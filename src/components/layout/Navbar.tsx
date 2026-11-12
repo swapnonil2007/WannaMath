@@ -16,6 +16,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { MULTIVARIABLE_CALCULUS_TOPICS } from "@/registry/curriculum";
+import { TextbookSidebar } from "@/components/layout/TextbookSidebar";
 
 const TOPIC_ICONS: Record<string, React.ReactNode> = {
   "double-integrals": <Layers className="w-4 h-4" aria-hidden="true" />,
@@ -55,7 +56,6 @@ export function Navbar() {
 
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
     const handleMediaChange = () => {
-      // Do NOT remove stored value on system change; only re-evaluate rendered state
       syncState();
     };
 
@@ -118,8 +118,8 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--bg-panel)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-        {/* Brand Identity */}
-        <div className="flex items-center gap-6">
+        {/* Brand Identity + 6-Volume TOC Drawer Trigger */}
+        <div className="flex items-center gap-4">
           <Link
             href="/"
             className="flex items-center gap-3 group focus:outline-none"
@@ -135,26 +135,31 @@ export function Navbar() {
                 wanna math
               </span>
               <span className="text-[11px] font-tabular-mono uppercase tracking-widest text-[var(--text-muted)] block mt-0.5">
-                Engineering Visual Lab
+                6-Volume Textbook
               </span>
             </div>
           </Link>
 
+          <TextbookSidebar />
+
           {/* Primary Navigation Links */}
           <nav
             aria-label="Main Curriculum Navigation"
-            className="hidden lg:flex items-center gap-1 pl-4 border-l border-[var(--border-subtle)]"
+            className="hidden xl:flex items-center gap-1 pl-3 border-l border-[var(--border-subtle)]"
           >
             <Link
-              href="/calculus"
-              className={`px-3 py-1.5 text-sm font-medium transition-colors flex items-center gap-1.5 border ${
-                pathname === "/calculus"
+              href="/multivariable-calculus"
+              aria-current={
+                pathname === "/multivariable-calculus" ? "page" : undefined
+              }
+              className={`px-2.5 py-1.5 text-xs font-medium transition-colors flex items-center gap-1.5 border ${
+                pathname === "/multivariable-calculus"
                   ? "bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-strong)]"
                   : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
               }`}
             >
-              <BookOpen className="w-3.5 h-3.5 text-[#8D9FCE]" aria-hidden="true" />
-              <span>Calculus Hub</span>
+              <BookOpen className="w-3.5 h-3.5 text-[#029091]" aria-hidden="true" />
+              <span>Vol. III Hub</span>
             </Link>
 
             {MULTIVARIABLE_CALCULUS_TOPICS.map((topic) => {
@@ -163,7 +168,8 @@ export function Navbar() {
                 <Link
                   key={topic.id}
                   href={topic.route}
-                  className={`px-3 py-1.5 text-sm font-medium transition-colors flex items-center gap-1.5 border ${
+                  aria-current={isActive ? "page" : undefined}
+                  className={`px-2.5 py-1.5 text-xs font-medium transition-colors flex items-center gap-1.5 border ${
                     isActive
                       ? "bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-strong)]"
                       : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
@@ -179,19 +185,20 @@ export function Navbar() {
 
             <Link
               href="/roadmap"
-              className={`px-3 py-1.5 text-sm font-medium transition-colors flex items-center gap-1.5 border ${
+              aria-current={pathname === "/roadmap" ? "page" : undefined}
+              className={`px-2.5 py-1.5 text-xs font-medium transition-colors flex items-center gap-1.5 border ${
                 pathname === "/roadmap"
                   ? "bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-strong)]"
                   : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
               }`}
             >
               <Map className="w-3.5 h-3.5 text-[#AAA36D]" aria-hidden="true" />
-              <span>Roadmap</span>
+              <span>Syllabus Matrix</span>
             </Link>
           </nav>
         </div>
 
-        {/* Right Controls: Phase Indicator & Theme Mode Switch */}
+        {/* Right Controls: Version Indicator & Theme Mode Switch */}
         <div className="flex items-center gap-2.5">
           <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-secondary)]">
             <span
@@ -199,7 +206,7 @@ export function Navbar() {
               style={{ backgroundColor: "#96B898" }}
               aria-hidden="true"
             />
-            <span>v1.0 • Phase 3 Active</span>
+            <span>v2.0 • Vol. III Live</span>
           </div>
 
           <button
@@ -229,7 +236,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileOpen((prev) => !prev)}
-            className="lg:hidden p-2 border border-[var(--border-strong)] bg-[var(--bg-canvas)] text-[var(--text-primary)]"
+            className="xl:hidden p-2 border border-[var(--border-strong)] bg-[var(--bg-canvas)] text-[var(--text-primary)]"
             aria-expanded={mobileOpen}
             aria-label="Toggle navigation menu"
           >
@@ -246,15 +253,15 @@ export function Navbar() {
       {mobileOpen && (
         <nav
           aria-label="Mobile Navigation"
-          className="lg:hidden border-t border-[var(--border-subtle)] bg-[var(--bg-panel)] px-4 py-3 space-y-1"
+          className="xl:hidden border-t border-[var(--border-subtle)] bg-[var(--bg-panel)] px-4 py-3 space-y-1"
         >
           <Link
-            href="/calculus"
+            href="/multivariable-calculus"
             onClick={() => setMobileOpen(false)}
             className="flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
           >
-            <BookOpen className="w-4 h-4 text-[#8D9FCE]" aria-hidden="true" />
-            <span>Multivariable Calculus Overview</span>
+            <BookOpen className="w-4 h-4 text-[#029091]" aria-hidden="true" />
+            <span>Volume III: Multivariable &amp; Vector Calculus</span>
           </Link>
 
           {MULTIVARIABLE_CALCULUS_TOPICS.map((topic) => (
@@ -284,7 +291,7 @@ export function Navbar() {
             className="flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
           >
             <Map className="w-4 h-4 text-[#AAA36D]" aria-hidden="true" />
-            <span>Curriculum & Architecture Roadmap</span>
+            <span>6-Volume Curriculum Matrix</span>
           </Link>
         </nav>
       )}

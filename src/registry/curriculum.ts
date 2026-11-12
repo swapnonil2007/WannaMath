@@ -118,10 +118,10 @@ export const SEMANTIC_MATH_PALETTE = [
 export const MULTIVARIABLE_CALCULUS_TOPICS: MathTopic[] = [
   {
     id: "double-integrals",
-    number: "01",
-    title: "Double Integration & Order Change",
+    number: "3.2.1",
+    title: "Double Integrals & Fubini's Theorem",
     shortTitle: "Double Integration",
-    route: "/calculus/double-integrals",
+    route: "/multivariable-calculus/multiple-integrals/double-integrals",
     domainId: "calculus",
     phaseNumber: 2,
     status: "available",
@@ -176,10 +176,10 @@ export const MULTIVARIABLE_CALCULUS_TOPICS: MathTopic[] = [
   },
   {
     id: "triple-integrals",
-    number: "02",
-    title: "Triple Integration & 6-Order Projections",
+    number: "3.2.2",
+    title: "Triple Integrals, 6-Order Slicing & Density",
     shortTitle: "Triple Integration",
-    route: "/calculus/triple-integrals",
+    route: "/multivariable-calculus/multiple-integrals/triple-integrals",
     domainId: "calculus",
     phaseNumber: 3,
     status: "available",
@@ -226,10 +226,10 @@ export const MULTIVARIABLE_CALCULUS_TOPICS: MathTopic[] = [
   },
   {
     id: "coordinate-systems",
-    number: "03",
-    title: "Coordinate Systems Interactive Laboratory",
+    number: "3.2.3",
+    title: "Curvilinear Coordinates: Polar, Cylindrical & Spherical",
     shortTitle: "Coordinate Systems",
-    route: "/calculus/coordinate-systems",
+    route: "/multivariable-calculus/multiple-integrals/coordinate-systems",
     domainId: "calculus",
     phaseNumber: 4,
     status: "available",
@@ -276,10 +276,10 @@ export const MULTIVARIABLE_CALCULUS_TOPICS: MathTopic[] = [
   },
   {
     id: "jacobians",
-    number: "04",
-    title: "Jacobians & Change of Variables",
+    number: "3.2.4",
+    title: "The Jacobian & Change of Variables Pullback",
     shortTitle: "Jacobians",
-    route: "/calculus/jacobians",
+    route: "/multivariable-calculus/multiple-integrals/jacobians",
     domainId: "calculus",
     phaseNumber: 5,
     status: "available",
@@ -329,10 +329,10 @@ export const MULTIVARIABLE_CALCULUS_TOPICS: MathTopic[] = [
 export const CURRICULUM_DOMAINS: MathDomain[] = [
   {
     id: "calculus",
-    code: "MATH-01",
-    title: "Multivariable & Integral Calculus",
+    code: "VOL-III",
+    title: "Multivariable & Vector Calculus",
     shortTitle: "Multivariable Calculus",
-    route: "/calculus",
+    route: "/multivariable-calculus",
     status: "active",
     accentHex: "#8D9FCE",
     description:
@@ -467,3 +467,5 @@ export function getAdjacentTopics(id: string): {
         : null,
   };
 }
+
+export * from "./index";

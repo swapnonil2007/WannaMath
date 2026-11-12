@@ -1,0 +1,528 @@
+import { VolumeMetadata } from "./types";
+
+export const VOL3_MULTIVARIABLE: VolumeMetadata = {
+  id: "vol-3",
+  volumeNumber: "III",
+  slug: "multivariable-calculus",
+  title: "Multivariable & Vector Calculus",
+  shortTitle: "Multivariable & Vector",
+  accentToken: "--math-var-z",
+  accentHex: "#029091",
+  description:
+    "Spatial geometry of scalar and vector fields in ℝ² and ℝ³: level surfaces, tangent planes, directional gradients, double and triple integration, curvilinear coordinates, Jacobians, and the integral theorems of Green, Stokes, and Gauss.",
+  engineeringApplications: [
+    "Structural Mechanics, Moments of Inertia & 3D Centroids",
+    "Thermodynamics, Heat Flux & Control-Volume Conservation",
+    "Maxwell's Equations in Electrodynamics & Field Potentials",
+    "Finite Element Master-Element Isoparametric Mapping",
+  ],
+  modules: [
+    {
+      id: "mod-3-1",
+      slug: "multivariable-differentiation",
+      numberLabel: "3.1",
+      title: "3D Geometry & Multivariable Differentiation",
+      description:
+        "Scalar surfaces z = f(x,y), level contour maps, partial derivative cross-sections, tangent planes, directional gradients, and Lagrange multiplier optimization.",
+      accentHex: "#8D9FCE",
+      chapters: [
+        {
+          id: "3.1.1",
+          slug: "surfaces-level-curves",
+          title: "Surfaces, Level Curves & Contour Maps",
+          subtitle:
+            "Slice 3D surfaces z = f(x,y) with horizontal planes z = c and project contour elevation maps onto the xy-plane.",
+          status: "planned",
+          estimatedMinutes: 25,
+          prerequisites: ["1.1.1"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#8D9FCE",
+          keyEquationsLatex: [
+            "S = \\{(x,y,z) \\in \\mathbb{R}^3 : z = f(x,y)\\}",
+            "C_k = \\{(x,y) \\in \\mathbb{R}^2 : f(x,y) = k\\}",
+          ],
+          engineeringContext:
+            "Topographic terrain modeling, isobaric weather charts, and equipotential electrostatic surfaces.",
+          pedagogicalRhythm: {
+            question:
+              "How can we represent a 3D scalar landscape z = f(x,y) on a flat 2D engineering drawing without losing height and steepness information?",
+            labInteraction:
+              "Scrub horizontal slicing plane z = k through paraboloids, saddles, and custom surfaces while watching the intersection curve project onto the 2D contour map.",
+            symbolicFormalizationLatex:
+              "f(x,y) = k \\implies \\nabla f \\cdot d\\mathbf{r} = 0 \\text{ along level curve } C_k",
+            edgeCasesAndBridge:
+              "Closely packed level curves indicate steep terrain—leading directly to directional rates of change via partial derivatives in Chapter 3.1.2.",
+          },
+          labs: [
+            {
+              id: "lab-3-1-1a",
+              slug: "surface-contour-slicer",
+              title: "3D Surface & 2D Level Curve Contour Synchronizer",
+              componentKey: "SurfaceContourSlicerLab",
+              summary:
+                "Sweep altitude plane z = k and inspect xy, xz, and yz trace curves.",
+              formulaLatex: "f(x,y) = k",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.1.2",
+          slug: "partial-derivatives-tangent-planes",
+          title: "Partial Derivatives & Tangent Planes",
+          subtitle:
+            "Freeze y = y₀ or x = x₀ to slice a 3D surface into 1D curves whose tangent vectors span the local tangent plane.",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["1.2.1", "1.2.2", "3.1.1"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#96B898",
+          keyEquationsLatex: [
+            "f_x(x_0,y_0) = \\lim_{h\\to 0}\\frac{f(x_0+h,y_0)-f(x_0,y_0)}{h}",
+            "z \\approx f(x_0,y_0) + f_x(x_0,y_0)(x-x_0) + f_y(x_0,y_0)(y-y_0)",
+          ],
+          engineeringContext:
+            "Multivariable sensitivity analysis, thermodynamic state partials, and nonlinear control linearization.",
+          labs: [
+            {
+              id: "lab-3-1-2a",
+              slug: "partial-tangent-plane-lab",
+              title: "Partial Slice Curves & 3D Tangent Plane Linearization Lab",
+              componentKey: "PartialDerivativeTangentPlaneLab",
+              summary:
+                "Inspect tangent vectors T_x = (1, 0, f_x) and T_y = (0, 1, f_y) and their normal n = (-f_x, -f_y, 1).",
+              formulaLatex: "dz = \\frac{\\partial f}{\\partial x}dx + \\frac{\\partial f}{\\partial y}dy",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.1.3",
+          slug: "gradient-directional-derivatives",
+          title: "The Gradient Vector & Directional Derivatives",
+          subtitle:
+            "Rotate a vertical slicing plane in any unit direction u to see why steepest ascent aligns with ∇f and is orthogonal to contours.",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["2.1.1", "3.1.2"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#D35323",
+          keyEquationsLatex: [
+            "D_{\\mathbf{u}}f(x,y) = \\nabla f(x,y) \\cdot \\mathbf{u} = \\|\\nabla f\\|\\cos\\theta",
+            "\\nabla f = \\left\\langle \\frac{\\partial f}{\\partial x},\\; \\frac{\\partial f}{\\partial y} \\right\\rangle \\perp C_k",
+          ],
+          engineeringContext:
+            "Gradient descent optimization in machine learning, Fourier heat conduction q = -k∇T, and potential fields.",
+          labs: [
+            {
+              id: "lab-3-1-3a",
+              slug: "directional-derivative-compass",
+              title: "Directional Derivative Slicing Plane & Gradient Compass Lab",
+              componentKey: "GradientDirectionalDerivativeLab",
+              summary:
+                "Rotate unit heading vector u through 360° and compare directional slope D_u f against ∇f.",
+              formulaLatex: "D_{\\mathbf{u}}f = \\nabla f \\cdot \\mathbf{u}",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.1.4",
+          slug: "lagrange-multipliers",
+          title: "Lagrange Multipliers & Constrained Optimization",
+          subtitle:
+            "Walk along a constraint curve g(x,y) = c until its normal ∇g aligns parallel with the objective gradient ∇f = λ∇g.",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["3.1.3"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#B95869",
+          keyEquationsLatex: [
+            "\\nabla f(x,y) = \\lambda\\,\\nabla g(x,y), \\qquad g(x,y) = c",
+          ],
+          engineeringContext:
+            "Minimum-weight structural design under stress constraints, portfolio optimization, and maximum entropy.",
+          labs: [
+            {
+              id: "lab-3-1-4a",
+              slug: "lagrange-contour-tangency",
+              title: "Constrained Contour Tangency & Gradient Alignment Inspector",
+              componentKey: "LagrangeMultipliersLab",
+              summary:
+                "Scrub along constraint path g(x,y) = c and observe where ∇f × ∇g = 0.",
+              formulaLatex: "\\nabla f = \\lambda \\nabla g",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "mod-3-2",
+      slug: "multiple-integrals",
+      numberLabel: "3.2",
+      title: "Multiple Integrals & Coordinate Pullbacks",
+      description:
+        "Riemann volume convergence, Type I/II iterated slicing, Fubini order reversal, 3D triple integrals across all 6 permutations, curvilinear coordinate systems, and Jacobian transformations.",
+      accentHex: "#029091",
+      chapters: [
+        {
+          id: "3.2.1",
+          slug: "double-integrals",
+          title: "Double Integrals & Fubini's Theorem",
+          subtitle:
+            "Visualize signed volume under z = f(x,y), Riemann prism convergence, Type I vs. Type II domain slicing, and Fubini's Theorem order reversal.",
+          status: "published",
+          estimatedMinutes: 35,
+          prerequisites: ["1.3.1", "1.3.2", "3.1.1"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#8D9FCE",
+          engineeringContext:
+            "Used across structural mechanics (area moments of inertia, centroids of laminae), hydrostatics (pressure force on submerged plates), and heat flux integration.",
+          keyEquationsLatex: [
+            "\\iint_{R} f(x,y)\\,dA = \\int_{a}^{b} \\int_{g_1(x)}^{g_2(x)} f(x,y)\\,dy\\,dx = \\int_{c}^{d} \\int_{h_1(y)}^{h_2(y)} f(x,y)\\,dx\\,dy",
+            "V = \\lim_{\\Delta x, \\Delta y \\to 0} \\sum_{i=1}^{N_x} \\sum_{j=1}^{N_y} f(x_i^*, y_j^*)\\,\\Delta x\\,\\Delta y",
+          ],
+          pedagogicalRhythm: {
+            question:
+              "How do we compute the exact signed volume beneath a curved 3D surface z = f(x,y) over a non-rectangular 2D domain R, and why does swapping dy dx ↔ dx dy often transform an impossible integral into a trivial one?",
+            labInteraction:
+              "Refine the 2D partition (Nx × Ny) to watch 3D Riemann prisms converge, then scrub the cross-sectional slice curtain and toggle between Type I (vertical strips) and Type II (horizontal strips) with custom equations and limits.",
+            symbolicFormalizationLatex:
+              "\\int_{a}^{b} \\left[\\int_{\\color{#D5658B}{g_1(x)}}^{\\color{#B95869}{g_2(x)}} f(x,y)\\,\\color{#D35323}{dy}\\right]\\color{#8D9FCE}{dx} = \\int_{c}^{d} \\left[\\int_{\\color{#D5658B}{h_1(y)}}^{\\color{#B95869}{h_2(y)}} f(x,y)\\,\\color{#D35323}{dx}\\right]\\color{#96B898}{dy}",
+            edgeCasesAndBridge:
+              "When a region boundary changes formula mid-domain, one integration order requires splitting into multiple integrals while the reversed order sweeps cleanly in one pass—setting the stage for 3D solids in Chapter 3.2.2.",
+          },
+          labs: [
+            {
+              id: "riemann-volume",
+              slug: "riemann-volume",
+              title: "2D Domain & 3D Riemann Volume Convergence Lab",
+              componentKey: "RiemannVolumeLab",
+              summary:
+                "Interactive subdivision grid (Nx × Ny) showing how rectangular columns over region R in the xy-plane converge to the smooth volume under z = f(x,y).",
+              formulaLatex: "\\Delta V_{ij} = f(x_i, y_j)\\,\\Delta x\\,\\Delta y",
+              dimensionBadge: "2D + 3D",
+            },
+            {
+              id: "iterated-slicing",
+              slug: "iterated-slicing",
+              title: "Iterated Integrals, Type I/II Limits & Fubini Order Change Lab",
+              componentKey: "IteratedOrderChangeLab",
+              summary:
+                "Synchronized 2D domain strip and 3D cross-sectional curtain demonstrating dy dx ↔ dx dy order reversal and custom region bounds.",
+              formulaLatex:
+                "A(x) = \\int_{g_1(x)}^{g_2(x)} f(x,y)\\,dy \\implies V = \\int_{a}^{b} A(x)\\,dx",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.2.2",
+          slug: "triple-integrals",
+          title: "Triple Integrals, 6-Order Slicing & Density",
+          subtitle:
+            "Master 3D bounded solids E, the 3-stage geometric collapse (1D ray → 2D curtain → 3D solid), coordinate wall shadow projections, and all 6 permutations of dx dy dz.",
+          status: "published",
+          estimatedMinutes: 40,
+          prerequisites: ["3.2.1"],
+          dimensionBadge: "3D + 2D Shadow",
+          accentHex: "#029091",
+          engineeringContext:
+            "Essential for computing 3D mass distributions with variable density ρ(x,y,z), moments of inertia of rigid bodies, gravitational potentials, and control-volume conservation laws.",
+          keyEquationsLatex: [
+            "\\iiint_{E} f(x,y,z)\\,dV = \\int_{a}^{b} \\int_{g_1(x)}^{g_2(x)} \\int_{u_1(x,y)}^{u_2(x,y)} f(x,y,z)\\,dz\\,dy\\,dx",
+            "M = \\iiint_{E} \\rho(x,y,z)\\,dV, \\qquad \\bar{z} = \\frac{1}{M}\\iiint_{E} z\\,\\rho(x,y,z)\\,dV",
+          ],
+          pedagogicalRhythm: {
+            question:
+              "How do we systematically determine the six bounds of a 3D triple integral over a curved solid E without guessing, and how do the 6 permutations of dx dy dz correspond to shadows on the three coordinate walls?",
+            labInteraction:
+              "Shoot a 1D inner ray between entry/exit surfaces, sweep it into a 2D lamina curtain, project the 3D solid's shadow onto the xy, xz, or yz wall, and inspect 3D voxel density and center of mass.",
+            symbolicFormalizationLatex:
+              "\\iiint_{E} f\\,dV = \\iint_{\\pi_{xy}(E)} \\left[\\int_{\\color{#D5658B}{u_1(x,y)}}^{\\color{#B95869}{u_2(x,y)}} f(x,y,z)\\,\\color{#029091}{dz}\\right] dA_{xy}",
+            edgeCasesAndBridge:
+              "Cylindrical and spherical solids produce square-root bounds in Cartesian (x,y,z)—motivating curvilinear coordinate systems in Chapter 3.2.3.",
+          },
+          labs: [
+            {
+              id: "three-stage-collapse",
+              slug: "three-stage-collapse",
+              title: "3-Stage Geometric Collapse, Shadow Projections & 6-Order Explorer",
+              componentKey: "TripleIntegralOrderLab",
+              summary:
+                "Step through Ray → Curtain → Solid, orthographic shadow projections on xy/xz/yz walls, and all 6 integration orders with editable limits.",
+              formulaLatex:
+                "\\text{Ray } (dz) \\longrightarrow \\text{Curtain } (dy\\,dz) \\longrightarrow \\text{Solid } (dx\\,dy\\,dz)",
+              dimensionBadge: "2D + 3D",
+            },
+            {
+              id: "voxel-density",
+              slug: "voxel-density",
+              title: "3D Voxel Subdivision, Scalar Density ρ(x,y,z) & Center of Mass Lab",
+              componentKey: "TripleVoxelDensityLab",
+              summary:
+                "Subdivide 3D solids into voxels ΔV = Δx Δy Δz, slice horizontally, and compute live mass M and centroid (x̄, ȳ, z̄).",
+              formulaLatex: "\\Delta m_{ijk} = \\rho(x_i, y_j, z_k)\\,\\Delta x\\,\\Delta y\\,\\Delta z",
+              dimensionBadge: "3D",
+            },
+          ],
+        },
+        {
+          id: "3.2.3",
+          slug: "coordinate-systems",
+          title: "Curvilinear Coordinates: Polar, Cylindrical & Spherical",
+          subtitle:
+            "Explore 2D Cartesian & Polar and 3D Cartesian, Cylindrical (r, θ, z), and Spherical (ρ, φ, θ) coordinate surfaces, local basis vectors, and differential volume elements dV.",
+          status: "published",
+          estimatedMinutes: 35,
+          prerequisites: ["3.2.1", "3.2.2"],
+          dimensionBadge: "2D & 3D",
+          accentHex: "#AAA36D",
+          engineeringContext:
+            "Crucial for electromagnetics (spherical/cylindrical symmetry in Gauss's & Ampère's laws), pipe flow fluid mechanics, antenna radiation patterns, and orbital mechanics.",
+          keyEquationsLatex: [
+            "dV = dx\\,dy\\,dz = r\\,dr\\,d\\theta\\,dz = \\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta",
+            "(x,y,z) = (\\rho\\sin\\phi\\cos\\theta,\\; \\rho\\sin\\phi\\sin\\theta,\\; \\rho\\cos\\phi)",
+          ],
+          pedagogicalRhythm: {
+            question:
+              "Why does a polar area wedge require an extra factor of r (dA = r dr dθ) and a spherical volume box require ρ² sin φ (dV = ρ² sin φ dρ dφ dθ)?",
+            labInteraction:
+              "Inspect the 2D polar wedge magnifier, toggle the 3 intersecting orthogonal coordinate surfaces in 3D, and zoom the camera directly onto the 3D curvilinear volume element dV.",
+            symbolicFormalizationLatex:
+              "dV_{\\text{cyl}} = (dr)(r\\,d\\theta)(dz), \\qquad dV_{\\text{sph}} = (d\\rho)(\\rho\\,d\\phi)(\\rho\\sin\\phi\\,d\\theta)",
+            edgeCasesAndBridge:
+              "Orthogonal scale factors h₁ h₂ h₃ are a special case of a universal distortion law for arbitrary coordinate mappings—the Jacobian determinant in Chapter 3.2.4.",
+          },
+          labs: [
+            {
+              id: "2d-polar-cartesian",
+              slug: "2d-polar-cartesian",
+              title: "2D Cartesian (x, y) vs. Polar (r, θ) & Area Element dA Lab",
+              componentKey: "PolarCoordinateAreaLab",
+              summary:
+                "Interactive point locator, rotating polar basis vectors, polar wedge magnifier dA = r dr dθ, and custom polar double integral evaluator.",
+              formulaLatex: "dA = dx\\,dy = r\\,dr\\,d\\theta",
+              dimensionBadge: "2D",
+            },
+            {
+              id: "3d-coordinate-surfaces",
+              slug: "3d-coordinate-surfaces",
+              title: "3D Intersecting Coordinate Surfaces, Basis Triads & dV Magnifier",
+              componentKey: "Curvilinear3DSurfacesAndElementLab",
+              summary:
+                "Toggle planes, cylinders, cones, and spheres in 3D, zoom into the dV wedge, and evaluate custom 3D curvilinear integrals.",
+              formulaLatex:
+                "dV = h_1 h_2 h_3\\,dq_1\\,dq_2\\,dq_3 = \\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta",
+              dimensionBadge: "3D",
+            },
+          ],
+        },
+        {
+          id: "3.2.4",
+          slug: "jacobians",
+          title: "The Jacobian & Change of Variables Pullback",
+          subtitle:
+            "Understand the Jacobian matrix and determinant |det J| as the local area/volume distortion factor via continuous (u,v) → (x,y) grid morphing and tangent parallelograms.",
+          status: "published",
+          estimatedMinutes: 40,
+          prerequisites: ["2.2.2", "3.1.2", "3.2.1", "3.2.3"],
+          dimensionBadge: "Dual 2D & 3D",
+          accentHex: "#D35323",
+          engineeringContext:
+            "Foundation of Finite Element Analysis (isoparametric master element mapping), continuum mechanics deformation gradient tensor F, robotic kinematics, and coordinate transformations.",
+          keyEquationsLatex: [
+            "\\iint_{R_{xy}} f(x,y)\\,dx\\,dy = \\iint_{R_{uv}} f(x(u,v), y(u,v))\\,\\left|\\frac{\\partial(x,y)}{\\partial(u,v)}\\right|\\,du\\,dv",
+            "J = \\frac{\\partial(x,y)}{\\partial(u,v)} = \\begin{vmatrix} \\dfrac{\\partial x}{\\partial u} & \\dfrac{\\partial x}{\\partial v} \\\\[8pt] \\dfrac{\\partial y}{\\partial u} & \\dfrac{\\partial y}{\\partial v} \\end{vmatrix} = \\frac{\\partial x}{\\partial u}\\frac{\\partial y}{\\partial v} - \\frac{\\partial x}{\\partial v}\\frac{\\partial y}{\\partial u}",
+          ],
+          pedagogicalRhythm: {
+            question:
+              "When we deform a complicated physical domain R_xy back into a clean rectangle R_uv in parameter space, how much does each infinitesimal grid square stretch, compress, or twist?",
+            labInteraction:
+              "Animate the homotopy slider t ∈ [0,1] from (u,v) to (x,y), click anywhere in parameter space to compare the tangent parallelogram r_u Δu × r_v Δv against the true curved patch, and solve domain pullback integrals.",
+            symbolicFormalizationLatex:
+              "\\Delta A_{xy} \\approx \\|\\mathbf{r}_u \\times \\mathbf{r}_v\\|\\,\\Delta u\\,\\Delta v = \\left|\\det J(u,v)\\right|\\,\\Delta u\\,\\Delta v",
+            edgeCasesAndBridge:
+              "Where det J = 0, the coordinate mapping folds or collapses dimension and loses local invertibility—bridging to parametric surfaces and vector flux integrals in Module 3.3.",
+          },
+          labs: [
+            {
+              id: "dual-grid-morphing",
+              slug: "dual-grid-morphing",
+              title: "Dual-Space (u, v) ↔ (x, y) Homotopy Morphing & Tangent Parallelogram Lab",
+              componentKey: "DualGridMorphingAndTangentLab",
+              summary:
+                "Side-by-side parameter and physical space viewports with continuous homotopy slider t ∈ [0,1] and tangent vector parallelogram inspector.",
+              formulaLatex:
+                "\\Delta A_{xy} \\approx \\|\\mathbf{r}_u \\times \\mathbf{r}_v\\|\\,\\Delta u\\,\\Delta v = |\\det J|\\,\\Delta u\\,\\Delta v",
+              dimensionBadge: "Dual 2D",
+            },
+            {
+              id: "jacobian-matrix-explorer",
+              slug: "jacobian-matrix-explorer",
+              title: "Integral Domain Pullback Solver & 2D/3D Jacobian Matrix Explorer",
+              componentKey: "JacobianIntegralPullbackLab",
+              summary:
+                "Pull slanted or curved physical regions back to parameter space, color-code cells by |det J|, and inspect 3×3 3D Jacobians.",
+              formulaLatex:
+                "\\left|\\frac{\\partial(x,y,z)}{\\partial(\\rho,\\phi,\\theta)}\\right| = \\rho^2\\sin\\phi",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "mod-3-3",
+      slug: "vector-calculus",
+      numberLabel: "3.3",
+      title: "Vector Calculus & Integral Theorems",
+      description:
+        "2D and 3D vector fields, divergence, curl, work and circulation line integrals, oriented surface flux, and the unification of Green's, Stokes', and Gauss's Theorems.",
+      accentHex: "#D35323",
+      chapters: [
+        {
+          id: "3.3.1",
+          slug: "vector-fields-divergence-curl",
+          title: "Vector Fields, Divergence & Curl",
+          subtitle:
+            "Place a microscopic flux box and paddlewheel probe inside 2D/3D velocity fields to measure local expansion (∇·F) and rotation (∇×F).",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["3.1.3"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#029091",
+          keyEquationsLatex: [
+            "\\operatorname{div}\\mathbf{F} = \\nabla \\cdot \\mathbf{F} = \\frac{\\partial P}{\\partial x} + \\frac{\\partial Q}{\\partial y} + \\frac{\\partial R}{\\partial z}",
+            "\\operatorname{curl}\\mathbf{F} = \\nabla \\times \\mathbf{F}",
+          ],
+          engineeringContext:
+            "Incompressible fluid continuity (∇·u = 0), aerodynamic vorticity, and electromagnetic charge/current sources.",
+          labs: [
+            {
+              id: "lab-3-3-1a",
+              slug: "div-curl-paddlewheel-probe",
+              title: "Interactive Divergence Flux Box & Curl Paddlewheel Probe",
+              componentKey: "DivCurlProbeLab",
+              summary:
+                "Drag a probe across sources, sinks, shears, and vortices to measure net outflow and angular velocity.",
+              formulaLatex: "\\nabla \\cdot \\mathbf{F}, \\qquad \\nabla \\times \\mathbf{F}",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.3.2",
+          slug: "line-integrals-work",
+          title: "Line Integrals (Work & Circulation)",
+          subtitle:
+            "Project vector field F onto unit tangent T along curve C to accumulate mechanical work ∫_C F · dr and test path independence.",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["3.1.3", "3.3.1"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#8D9FCE",
+          keyEquationsLatex: [
+            "W = \\int_{C} \\mathbf{F}\\cdot d\\mathbf{r} = \\int_{a}^{b} \\mathbf{F}(\\mathbf{r}(t))\\cdot \\mathbf{r}'(t)\\,dt",
+            "\\mathbf{F} = \\nabla f \\implies \\int_A^B \\mathbf{F}\\cdot d\\mathbf{r} = f(B) - f(A)",
+          ],
+          labs: [
+            {
+              id: "lab-3-3-2a",
+              slug: "line-integral-work-path",
+              title: "Tangential Work Accumulator & Conservative Field Path Explorer",
+              componentKey: "LineIntegralWorkLab",
+              summary:
+                "Deform path C between endpoints A and B in conservative vs. non-conservative fields.",
+              formulaLatex: "\\int_C \\mathbf{F}\\cdot \\hat{\\mathbf{T}}\\,ds",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.3.3",
+          slug: "greens-theorem",
+          title: "Green's Theorem",
+          subtitle:
+            "Subdivide a 2D region D into N×N interior circulation loops to watch adjacent interior edges cancel, leaving only boundary circulation.",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["3.2.1", "3.3.1", "3.3.2"],
+          dimensionBadge: "2D",
+          accentHex: "#96B898",
+          keyEquationsLatex: [
+            "\\oint_{\\partial D} (P\\,dx + Q\\,dy) = \\iint_{D} \\left(\\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}\\right) dA",
+          ],
+          labs: [
+            {
+              id: "lab-3-3-3a",
+              slug: "greens-cancellation-grid",
+              title: "Microscopic Curl Cancellation Grid & Boundary Circulation Lab",
+              componentKey: "GreensTheoremLab",
+              summary:
+                "Increase subdivision N to see internal counter-directed edges cancel on screen.",
+              formulaLatex: "\\oint_{\\partial D} \\mathbf{F}\\cdot d\\mathbf{r} = \\iint_D (\\nabla \\times \\mathbf{F})_z\\,dA",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "3.3.4",
+          slug: "surface-integrals-flux",
+          title: "Surface Integrals & Flux",
+          subtitle:
+            "Map parameter patch (u,v) onto 3D surface S with normal vector r_u × r_v to measure volumetric fluid and electric flux.",
+          status: "planned",
+          estimatedMinutes: 35,
+          prerequisites: ["3.2.4", "3.3.1"],
+          dimensionBadge: "3D",
+          accentHex: "#029091",
+          keyEquationsLatex: [
+            "\\Phi = \\iint_{S} \\mathbf{F}\\cdot \\hat{\\mathbf{n}}\\,dS = \\iint_{R_{uv}} \\mathbf{F}\\cdot (\\mathbf{r}_u \\times \\mathbf{r}_v)\\,du\\,dv",
+          ],
+          labs: [
+            {
+              id: "lab-3-3-4a",
+              slug: "surface-flux-canopy",
+              title: "3D Oriented Surface Normal & Vector Flux Inspector",
+              componentKey: "SurfaceFluxLab",
+              summary:
+                "Inspect local normal patches dS = (r_u × r_v) du dv inside 3D vector fields.",
+              formulaLatex: "d\\mathbf{S} = (\\mathbf{r}_u \\times \\mathbf{r}_v)\\,du\\,dv",
+              dimensionBadge: "3D",
+            },
+          ],
+        },
+        {
+          id: "3.3.5",
+          slug: "stokes-divergence-theorems",
+          title: "Stokes' Theorem & The Divergence Theorem",
+          subtitle:
+            "Unify all integral theorems: see why surface curl flux depends only on the boundary rim ∂S and why closed-surface flux equals interior divergence.",
+          status: "planned",
+          estimatedMinutes: 35,
+          prerequisites: ["3.2.2", "3.3.3", "3.3.4"],
+          dimensionBadge: "3D",
+          accentHex: "#D35323",
+          keyEquationsLatex: [
+            "\\iint_{S} (\\nabla \\times \\mathbf{F})\\cdot d\\mathbf{S} = \\oint_{\\partial S} \\mathbf{F}\\cdot d\\mathbf{r}",
+            "\\oiint_{\\partial E} \\mathbf{F}\\cdot d\\mathbf{S} = \\iiint_{E} (\\nabla \\cdot \\mathbf{F})\\,dV",
+          ],
+          labs: [
+            {
+              id: "lab-3-3-5a",
+              slug: "stokes-gauss-unification",
+              title: "3D Stokes' Rim-Surface Deformer & Gauss Divergence Control Volume Lab",
+              componentKey: "StokesDivergenceLab",
+              summary:
+                "Deform a 3D soap-film surface sharing the same boundary rim C and verify invariant curl flux.",
+              formulaLatex: "\\int_{\\partial \\Omega} \\omega = \\int_{\\Omega} d\\omega",
+              dimensionBadge: "3D",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};

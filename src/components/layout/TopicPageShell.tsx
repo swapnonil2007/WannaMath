@@ -7,34 +7,48 @@ import {
   Cpu,
   Layers,
   BookOpen,
+  Clock,
+  CheckCircle2,
+  GitBranch,
+  HelpCircle,
 } from "lucide-react";
 import {
-  getAdjacentTopics,
-  getTopicById,
-  MULTIVARIABLE_CALCULUS_TOPICS,
-} from "@/registry/curriculum";
+  getAdjacentChapters,
+  getChapterById,
+  getPrerequisiteChapters,
+} from "@/registry/index";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 
 interface TopicPageShellProps {
-  topicId: string;
+  topicId?: string;
+  chapterId?: string;
   children?: React.ReactNode;
 }
 
-export function TopicPageShell({ topicId, children }: TopicPageShellProps) {
-  const topic = getTopicById(topicId);
-  const { prev, next } = getAdjacentTopics(topicId);
+export function TopicPageShell({
+  topicId,
+  chapterId,
+  children,
+}: TopicPageShellProps) {
+  const lookupKey = chapterId ?? topicId ?? "";
+  const resolved = getChapterById(lookupKey);
 
-  if (!topic) {
+  if (!resolved) {
     return null;
   }
 
+  const { volume, module: mod, chapter } = resolved;
+  const { prev, next } = getAdjacentChapters(chapter.id);
+  const prereqs = getPrerequisiteChapters(chapter.id);
+  const accentHex = chapter.accentHex ?? mod.accentHex ?? volume.accentHex;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-      {/* Breadcrumb & Topic Switcher Bar */}
+      {/* 4-Tier Textbook Breadcrumb & Module Chapter Switcher Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <nav
           aria-label="Breadcrumb"
-          className="flex items-center gap-2 text-xs font-tabular-mono text-[var(--text-muted)]"
+          className="flex flex-wrap items-center gap-1.5 text-xs font-tabular-mono text-[var(--text-muted)]"
         >
           <Link
             href="/"
@@ -42,27 +56,37 @@ export function TopicPageShell({ topicId, children }: TopicPageShellProps) {
           >
             wanna math
           </Link>
-          <ChevronRight className="w-3.5 h-3.5" aria-hidden="true" />
+          <ChevronRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
           <Link
-            href="/calculus"
+            href={`/${volume.slug}`}
             className="hover:text-[var(--text-primary)] transition-colors"
           >
-            Multivariable Calculus
+            Vol. {volume.volumeNumber}: {volume.shortTitle ?? volume.title}
           </Link>
-          <ChevronRight className="w-3.5 h-3.5" aria-hidden="true" />
+          <ChevronRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+          <Link
+            href={`/${volume.slug}/${mod.slug}`}
+            className="hover:text-[var(--text-primary)] transition-colors"
+          >
+            Mod. {mod.numberLabel}: {mod.title}
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
           <span className="text-[var(--text-primary)] font-medium">
-            {topic.number}. {topic.shortTitle}
+            Ch. {chapter.id}: {chapter.title}
           </span>
         </nav>
 
-        {/* Quick Pill Switcher across the 4 Calculus Topics */}
+        {/* Sibling Chapters Quick Pill Switcher within Current Module */}
         <div className="flex flex-wrap items-center gap-1.5">
-          {MULTIVARIABLE_CALCULUS_TOPICS.map((item) => {
-            const active = item.id === topic.id;
+          {mod.chapters.map((sibling) => {
+            const active = sibling.id === chapter.id;
+            const siblingRoute = `/${volume.slug}/${mod.slug}/${sibling.slug}`;
+            const siblingAccent = sibling.accentHex ?? accentHex;
             return (
               <Link
-                key={item.id}
-                href={item.route}
+                key={sibling.id}
+                href={siblingRoute}
+                aria-current={active ? "page" : undefined}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
                     ? "bg-[var(--bg-panel-elevated)] text-[var(--text-primary)] border-[var(--border-strong)] font-semibold"
@@ -71,48 +95,104 @@ export function TopicPageShell({ topicId, children }: TopicPageShellProps) {
               >
                 <span
                   className="inline-block w-1.5 h-1.5 mr-1.5 align-middle"
-                  style={{ backgroundColor: item.accentHex }}
+                  style={{ backgroundColor: siblingAccent }}
                   aria-hidden="true"
                 />
-                {item.number} {item.shortTitle}
+                {sibling.id}
               </Link>
             );
           })}
         </div>
       </div>
 
-      {/* Academic Topic Header */}
+      {/* Prerequisite Chips Bar */}
+      <div className="flex flex-wrap items-center gap-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] px-4 py-2.5">
+        <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 mr-1">
+          <GitBranch className="w-3.5 h-3.5 text-[#AAA36D]" aria-hidden="true" />
+          <span>Prerequisite Chapters:</span>
+        </span>
+        {prereqs.length === 0 ? (
+          <span className="text-xs font-tabular-mono text-[var(--text-secondary)] px-2 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
+            Foundational Entry Chapter (No prior chapters required)
+          </span>
+        ) : (
+          prereqs.map((p) => (
+            <Link
+              key={p.chapter.id}
+              href={p.route}
+              className="px-2.5 py-1 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-primary)] flex items-center gap-1.5 transition-colors"
+            >
+              <span
+                className="w-1.5 h-1.5 inline-block"
+                style={{
+                  backgroundColor:
+                    p.chapter.status === "published" ? "#96B898" : "#AAA36D",
+                }}
+                aria-hidden="true"
+              />
+              <span className="text-[var(--text-muted)]">{p.chapter.id}</span>
+              <span>{p.chapter.title}</span>
+            </Link>
+          ))
+        )}
+      </div>
+
+      {/* Academic Chapter Header */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <div className="lg:col-span-7 space-y-4">
           <div className="flex flex-wrap items-center gap-2.5">
             <span
               className="px-2.5 py-0.5 text-xs font-tabular-mono font-semibold border border-[var(--border-strong)] bg-[var(--bg-panel)]"
-              style={{ color: topic.accentHex }}
+              style={{ color: accentHex }}
             >
-              TOPIC {topic.number} • {topic.dimensionBadge}
+              CHAPTER {chapter.id} • {chapter.dimensionBadge ?? "2D + 3D"}
             </span>
-            <span className="px-2.5 py-0.5 text-xs font-tabular-mono border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)]">
-              Roadmap Phase {topic.phaseNumber}
+            <span className="px-2.5 py-0.5 text-xs font-tabular-mono border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] flex items-center gap-1">
+              {chapter.status === "published" ? (
+                <>
+                  <CheckCircle2
+                    className="w-3.5 h-3.5 text-[#96B898]"
+                    aria-hidden="true"
+                  />
+                  <span>Published Interactive Labs</span>
+                </>
+              ) : (
+                <>
+                  <Clock
+                    className="w-3.5 h-3.5 text-[#FBEAA4]"
+                    aria-hidden="true"
+                  />
+                  <span>Curriculum Syllabus Ready</span>
+                </>
+              )}
+            </span>
+            <span className="px-2.5 py-0.5 text-xs font-tabular-mono border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-muted)]">
+              ~{chapter.estimatedMinutes} min study
             </span>
           </div>
 
           <h1 className="font-math-serif text-3xl sm:text-4xl font-semibold text-[var(--text-primary)] tracking-tight leading-tight">
-            {topic.title}
+            {chapter.title}
           </h1>
 
           <p className="font-math-serif text-lg text-[var(--text-secondary)] leading-relaxed">
-            {topic.summary}
+            {chapter.subtitle}
           </p>
 
-          <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
-            <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
-              <Cpu className="w-3.5 h-3.5 text-[#96B898]" aria-hidden="true" />
-              <span>Engineering &amp; Physical Application Context</span>
+          {chapter.engineeringContext && (
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
+              <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
+                <Cpu
+                  className="w-3.5 h-3.5 text-[#96B898]"
+                  aria-hidden="true"
+                />
+                <span>Engineering &amp; Physical Application Context</span>
+              </div>
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                {chapter.engineeringContext}
+              </p>
             </div>
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-              {topic.engineeringContext}
-            </p>
-          </div>
+          )}
         </div>
 
         {/* Right: Governing Equations Card */}
@@ -123,121 +203,193 @@ export function TopicPageShell({ topicId, children }: TopicPageShellProps) {
             </span>
             <span
               className="w-3 h-3 inline-block border border-[var(--border-strong)]"
-              style={{ backgroundColor: topic.accentHex }}
+              style={{ backgroundColor: accentHex }}
               aria-hidden="true"
             />
           </div>
 
-          <div className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--text-primary)]">
-            <KaTeXMath math={topic.keyFormulaLatex} block />
-          </div>
-
-          <div className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--text-secondary)] text-sm">
-            <KaTeXMath math={topic.secondaryFormulaLatex} block />
-          </div>
+          {chapter.keyEquationsLatex.map((eq, idx) => (
+            <div
+              key={idx}
+              className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--text-primary)] overflow-x-auto"
+            >
+              <KaTeXMath math={eq} block />
+            </div>
+          ))}
 
           <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-[var(--text-muted)] font-tabular-mono">
-            <span>Prerequisites: {topic.prerequisites.join(" • ")}</span>
+            <span>
+              Volume {volume.volumeNumber} • Module {mod.numberLabel}
+            </span>
+            <span>{chapter.labs.length} Interactive Lab(s)</span>
           </div>
         </div>
       </section>
 
-      {/* Subtopic Interactive Module Navigation Strip */}
-      <section
-        aria-label="Topic Interactive Modules"
-        className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-4"
-      >
-        <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] mb-3">
-          <Layers className="w-3.5 h-3.5" style={{ color: topic.accentHex }} />
-          <span>Interactive Sections in This Topic</span>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-          {topic.subtopics.map((sub, idx) => (
-            <a
-              key={sub.id}
-              href={`#${sub.id}`}
-              className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] hover:border-[var(--border-strong)] transition-colors flex flex-col justify-between gap-2"
-            >
-              <div className="space-y-1">
-                <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-                  <span>
-                    §{topic.number}.{idx + 1}
-                  </span>
-                  <span style={{ color: topic.accentHex }}>
-                    {sub.dimensionBadge}
-                  </span>
+      {/* Step 1 of 4-Step Pedagogical Chapter Rhythm: Physical & Geometric Question */}
+      {chapter.pedagogicalRhythm && (
+        <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-5 space-y-4">
+          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+            <div className="flex items-center gap-2">
+              <HelpCircle
+                className="w-4 h-4 text-[#FBEAA4]"
+                aria-hidden="true"
+              />
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#FBEAA4]">
+                4-Step Pedagogical Chapter Rhythm • Geometric Intuition First
+              </span>
+            </div>
+            <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
+              Ch. {chapter.id}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+              <span className="text-[11px] font-tabular-mono font-semibold text-[#8D9FCE] block">
+                STEP 1 • GEOMETRIC QUESTION
+              </span>
+              <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
+                {chapter.pedagogicalRhythm.question}
+              </p>
+            </div>
+
+            <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+              <span className="text-[11px] font-tabular-mono font-semibold text-[#96B898] block">
+                STEP 2 • INTERACTIVE LAB EXPLORATION
+              </span>
+              <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
+                {chapter.pedagogicalRhythm.labInteraction}
+              </p>
+            </div>
+
+            <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5 overflow-x-auto">
+              <span className="text-[11px] font-tabular-mono font-semibold text-[#FBEAA4] block">
+                STEP 3 • SYMBOLIC FORMALIZATION
+              </span>
+              <div className="text-xs pt-1">
+                <KaTeXMath
+                  math={chapter.pedagogicalRhythm.symbolicFormalizationLatex}
+                />
+              </div>
+            </div>
+
+            <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+              <span className="text-[11px] font-tabular-mono font-semibold text-[#D35323] block">
+                STEP 4 • EDGE CASES &amp; NEXT BRIDGE
+              </span>
+              <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
+                {chapter.pedagogicalRhythm.edgeCasesAndBridge}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Interactive Laboratory Jump Bar */}
+      {chapter.labs.length > 0 && (
+        <section
+          aria-label="Chapter Interactive Laboratories"
+          className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-4"
+        >
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] mb-3">
+            <Layers className="w-3.5 h-3.5" style={{ color: accentHex }} />
+            <span>Interactive Laboratories in Chapter {chapter.id}</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {chapter.labs.map((lab, idx) => (
+              <a
+                key={lab.id}
+                href={`#${lab.slug}`}
+                className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] hover:border-[var(--border-strong)] transition-colors flex flex-col justify-between gap-2"
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
+                    <span>
+                      LAB {chapter.id}.{idx + 1} • {lab.componentKey}
+                    </span>
+                    <span style={{ color: accentHex }}>
+                      {lab.dimensionBadge ?? "2D + 3D"}
+                    </span>
+                  </div>
+                  <h2 className="font-math-serif text-base font-semibold text-[var(--text-primary)] leading-snug">
+                    {lab.title}
+                  </h2>
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                    {lab.summary}
+                  </p>
                 </div>
-                <h2 className="font-math-serif text-sm font-semibold text-[var(--text-primary)] leading-snug">
-                  {sub.title}
-                </h2>
-              </div>
-              <div className="text-xs text-[var(--text-secondary)] pt-1 border-t border-[var(--border-subtle)] truncate">
-                <KaTeXMath math={sub.formulaLatex} />
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
+                {lab.formulaLatex && (
+                  <div className="text-xs text-[var(--text-secondary)] pt-1.5 border-t border-[var(--border-subtle)] overflow-x-auto">
+                    <KaTeXMath math={lab.formulaLatex} />
+                  </div>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Main Interactive Workspace Slot */}
       {children}
 
-      {/* Detailed Module Architecture Breakdown */}
+      {/* Detailed Laboratory & Section Breakdown */}
       <section className="space-y-4">
         <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-2.5">
             <BookOpen
               className="w-5 h-5"
-              style={{ color: topic.accentHex }}
+              style={{ color: accentHex }}
               aria-hidden="true"
             />
-            <span>Section-by-Section Mathematical Breakdown</span>
+            <span>Chapter {chapter.id} Laboratory Specifications</span>
           </h2>
           <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
-            {topic.subtopics.length} Interactive Labs
+            {chapter.labs.length} Interactive Lab(s)
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {topic.subtopics.map((sub, index) => (
+          {chapter.labs.map((lab, index) => (
             <article
-              key={sub.id}
-              id={sub.id}
-              className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-5 space-y-3 flex flex-col justify-between scroll-mt-24"
+              key={lab.id}
+              className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-5 space-y-3 flex flex-col justify-between"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span
                     className="text-xs font-tabular-mono font-semibold px-2 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]"
-                    style={{ color: topic.accentHex }}
+                    style={{ color: accentHex }}
                   >
-                    MODULE {topic.number}.{index + 1}
+                    LAB {chapter.id}.{index + 1}
                   </span>
                   <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
-                    Viewport: {sub.dimensionBadge}
+                    Component: {lab.componentKey}
                   </span>
                 </div>
 
                 <h3 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
-                  {sub.title}
+                  {lab.title}
                 </h3>
 
                 <p className="font-math-serif text-sm text-[var(--text-secondary)] leading-relaxed">
-                  {sub.description}
+                  {lab.summary}
                 </p>
               </div>
 
-              <div className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--text-primary)]">
-                <KaTeXMath math={sub.formulaLatex} block />
-              </div>
+              {lab.formulaLatex && (
+                <div className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--text-primary)] overflow-x-auto">
+                  <KaTeXMath math={lab.formulaLatex} block />
+                </div>
+              )}
             </article>
           ))}
         </div>
       </section>
 
-      {/* Sequential Prev / Next Topic Footer Navigation */}
+      {/* Sequential Prev / Next Chapter Footer Navigation Across Modules & Volumes */}
       <nav
-        aria-label="Adjacent Topics"
+        aria-label="Adjacent Chapters"
         className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-[var(--border-subtle)]"
       >
         {prev ? (
@@ -247,21 +399,24 @@ export function TopicPageShell({ topicId, children }: TopicPageShellProps) {
           >
             <ArrowLeft
               className="w-5 h-5 shrink-0"
-              style={{ color: prev.accentHex }}
+              style={{
+                color: prev.chapter.accentHex ?? prev.volume.accentHex,
+              }}
               aria-hidden="true"
             />
             <div>
               <span className="text-xs font-tabular-mono uppercase text-[var(--text-muted)] block">
-                Previous Topic ({prev.number})
+                Previous Chapter ({prev.chapter.id} • Vol.{" "}
+                {prev.volume.volumeNumber})
               </span>
               <span className="font-math-serif text-base font-semibold text-[var(--text-primary)]">
-                {prev.title}
+                {prev.chapter.title}
               </span>
             </div>
           </Link>
         ) : (
           <Link
-            href="/calculus"
+            href={`/${volume.slug}`}
             className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] hover:border-[var(--border-strong)] transition-colors flex items-center gap-3"
           >
             <ArrowLeft
@@ -270,10 +425,10 @@ export function TopicPageShell({ topicId, children }: TopicPageShellProps) {
             />
             <div>
               <span className="text-xs font-tabular-mono uppercase text-[var(--text-muted)] block">
-                Domain Hub
+                Volume Index
               </span>
               <span className="font-math-serif text-base font-semibold text-[var(--text-primary)]">
-                Multivariable Calculus Overview
+                Volume {volume.volumeNumber}: {volume.title}
               </span>
             </div>
           </Link>
@@ -286,15 +441,18 @@ export function TopicPageShell({ topicId, children }: TopicPageShellProps) {
           >
             <div>
               <span className="text-xs font-tabular-mono uppercase text-[var(--text-muted)] block">
-                Next Topic ({next.number})
+                Next Chapter ({next.chapter.id} • Vol.{" "}
+                {next.volume.volumeNumber})
               </span>
               <span className="font-math-serif text-base font-semibold text-[var(--text-primary)]">
-                {next.title}
+                {next.chapter.title}
               </span>
             </div>
             <ArrowRight
               className="w-5 h-5 shrink-0"
-              style={{ color: next.accentHex }}
+              style={{
+                color: next.chapter.accentHex ?? next.volume.accentHex,
+              }}
               aria-hidden="true"
             />
           </Link>
@@ -305,10 +463,10 @@ export function TopicPageShell({ topicId, children }: TopicPageShellProps) {
           >
             <div>
               <span className="text-xs font-tabular-mono uppercase text-[var(--text-muted)] block">
-                Future Curriculum
+                Master Curriculum
               </span>
               <span className="font-math-serif text-base font-semibold text-[var(--text-primary)]">
-                Explore Upcoming Math Domains
+                Explore All 6 Textbook Volumes
               </span>
             </div>
             <ArrowRight

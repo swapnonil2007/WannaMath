@@ -1,0 +1,410 @@
+import { VolumeMetadata } from "./types";
+
+export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
+  id: "vol-1",
+  volumeNumber: "I",
+  slug: "single-variable-calculus",
+  title: "Single-Variable Calculus",
+  shortTitle: "Single-Variable",
+  accentToken: "--math-var-x",
+  accentHex: "#8D9FCE",
+  description:
+    "Foundations of continuous change and accumulation in one dimension: epsilon-delta limits, secant-to-tangent homotopy, local linearization, Riemann partitions, the Fundamental Theorem of Calculus, and power series convergence.",
+  engineeringApplications: [
+    "Kinematics, Velocity & Acceleration Profiles",
+    "Sensitivity Analysis & Newton-Raphson Root Finding",
+    "Work, Hydrostatic Force & Centroids of 1D Beams",
+    "Signal Approximation via Taylor & Maclaurin Polynomials",
+  ],
+  modules: [
+    {
+      id: "mod-1-1",
+      slug: "limits-continuity",
+      numberLabel: "1.1",
+      title: "Limits & Continuity",
+      description:
+        "Rigorous neighborhood bounds, one-sided limits, removable vs. jump discontinuities, and the Intermediate Value Theorem.",
+      accentHex: "#8D9FCE",
+      chapters: [
+        {
+          id: "1.1.1",
+          slug: "epsilon-delta-limits",
+          title: "ε-δ Neighborhoods & Limit Convergence",
+          subtitle:
+            "Interactive tolerance band challenge showing how output error ε constrains input window δ around x = a.",
+          status: "planned",
+          estimatedMinutes: 25,
+          prerequisites: [],
+          dimensionBadge: "2D",
+          accentHex: "#8D9FCE",
+          keyEquationsLatex: [
+            "0 < |x - a| < \\delta \\implies |f(x) - L| < \\varepsilon",
+            "\\lim_{x \\to a} f(x) = L",
+          ],
+          engineeringContext:
+            "Manufacturing tolerance specification and sensor calibration error bounds.",
+          pedagogicalRhythm: {
+            question:
+              "How tightly must we control an input parameter x near a target value a to guarantee the system output f(x) stays within an allowable engineering tolerance ε?",
+            labInteraction:
+              "Adjust the horizontal output tolerance band (L - ε, L + ε) and scrub the vertical input corridor (a - δ, a + δ) until the entire curve segment stays trapped inside the tolerance box.",
+            symbolicFormalizationLatex:
+              "\\forall \\varepsilon > 0,\\; \\exists \\delta > 0 \\text{ such that } 0 < |x - a| < \\delta \\implies |f(x) - L| < \\varepsilon",
+            edgeCasesAndBridge:
+              "At jump discontinuities or oscillating singularities like sin(1/x), no positive δ can trap the graph for small ε—motivating the formal definition of continuity in Chapter 1.1.2.",
+          },
+          labs: [
+            {
+              id: "lab-1-1-1a",
+              slug: "epsilon-delta-corridor",
+              title: "Interactive ε-δ Tolerance Corridor Inspector",
+              componentKey: "EpsilonDeltaCorridorLab",
+              summary:
+                "Manipulate ε and δ bands on smooth, piecewise, and singular functions to test limit existence.",
+              formulaLatex: "|f(x) - L| < \\varepsilon",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "1.1.2",
+          slug: "continuity-ivt",
+          title: "Continuity, Intermediate Value Theorem & Asymptotes",
+          subtitle:
+            "Visualize connected graph trajectories, root-bracketing guarantees, and asymptotic growth rates.",
+          status: "planned",
+          estimatedMinutes: 20,
+          prerequisites: ["1.1.1"],
+          dimensionBadge: "2D",
+          accentHex: "#8D9FCE",
+          keyEquationsLatex: [
+            "\\lim_{x \\to a} f(x) = f(a)",
+            "f(a) < N < f(b) \\implies \\exists c \\in (a,b) : f(c) = N",
+          ],
+          engineeringContext:
+            "Bisection root-finding algorithms and thermal equilibrium existence proofs.",
+          labs: [
+            {
+              id: "lab-1-1-2a",
+              slug: "ivt-bisection-bracketing",
+              title: "Intermediate Value Theorem & Bisection Root Bracketing Lab",
+              componentKey: "IVTBisectionLab",
+              summary:
+                "Step through bisection intervals on continuous vs. discontinuous curves.",
+              formulaLatex: "f(a)\\cdot f(b) < 0 \\implies \\exists c : f(c) = 0",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "mod-1-2",
+      slug: "differential-calculus",
+      numberLabel: "1.2",
+      title: "Differential Calculus & Local Linearity",
+      description:
+        "Secant-to-tangent homotopy, local linear approximations, chain rule composition, and Taylor polynomial osculation.",
+      accentHex: "#D35323",
+      chapters: [
+        {
+          id: "1.2.1",
+          slug: "secant-tangent-homotopy",
+          title: "Secant-to-Tangent Homotopy & Instantaneous Rate",
+          subtitle:
+            "Scrub step h → 0 and zoom into the curve until secant chord and tangent line become indistinguishable.",
+          status: "planned",
+          estimatedMinutes: 25,
+          prerequisites: ["1.1.1"],
+          dimensionBadge: "2D",
+          accentHex: "#D35323",
+          keyEquationsLatex: [
+            "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}",
+          ],
+          labs: [
+            {
+              id: "lab-1-2-1a",
+              slug: "secant-tangent-zoom",
+              title: "Secant Chord to Tangent Derivative Magnifier",
+              componentKey: "SecantTangentLab",
+              summary:
+                "Synchronized difference quotient chord and derivative graph plotter.",
+              formulaLatex: "m_{\\text{sec}} = \\frac{\\Delta y}{\\Delta x} \\to f'(x)",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "1.2.2",
+          slug: "local-linearity-differentials",
+          title: "Local Linearity, Differentials & Newton-Raphson",
+          subtitle:
+            "Compare tangent differential dy = f'(x) dx against true increment Δy and iterate tangent root-finding.",
+          status: "planned",
+          estimatedMinutes: 25,
+          prerequisites: ["1.2.1"],
+          dimensionBadge: "2D",
+          accentHex: "#D35323",
+          keyEquationsLatex: [
+            "L(x) = f(a) + f'(a)(x-a)",
+            "x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}",
+          ],
+          labs: [
+            {
+              id: "lab-1-2-2a",
+              slug: "newton-raphson-cobweb",
+              title: "Differential Error & Newton-Raphson Iteration Lab",
+              componentKey: "NewtonRaphsonLab",
+              summary:
+                "Trace tangent root steps and inspect quadratic convergence vs. stationary-point divergence.",
+              formulaLatex: "\\Delta y - dy = o(\\Delta x)",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "1.2.3",
+          slug: "chain-rule-kinematics",
+          title: "Chain Rule, Implicit Differentiation & Related Rates",
+          subtitle:
+            "Visualize composite rate amplification dy/dx = (dy/du)(du/dx) through linked intermediate axes.",
+          status: "planned",
+          estimatedMinutes: 25,
+          prerequisites: ["1.2.1"],
+          dimensionBadge: "2D",
+          accentHex: "#96B898",
+          keyEquationsLatex: [
+            "\\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx}",
+          ],
+          labs: [
+            {
+              id: "lab-1-2-3a",
+              slug: "chain-rule-gearbox",
+              title: "Three-Axis Composite Function Rate Propagator",
+              componentKey: "ChainRulePropagatorLab",
+              summary:
+                "Watch input perturbation dx scale through u = g(x) and y = f(u).",
+              formulaLatex: "(f \\circ g)'(x) = f'(g(x))\\,g'(x)",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "1.2.4",
+          slug: "taylor-polynomials-curvature",
+          title: "Taylor Polynomials & Curvature Osculating Circles",
+          subtitle:
+            "Match higher-order derivatives at x = a to hug nonlinear curves and measure radius of curvature R = 1/κ.",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["1.2.2"],
+          dimensionBadge: "2D",
+          accentHex: "#B95869",
+          keyEquationsLatex: [
+            "P_n(x) = \\sum_{k=0}^{n} \\frac{f^{(k)}(a)}{k!}(x-a)^k",
+            "\\kappa(x) = \\frac{|f''(x)|}{\\big(1 + [f'(x)]^2\\big)^{3/2}}",
+          ],
+          labs: [
+            {
+              id: "lab-1-2-4a",
+              slug: "taylor-degree-scrubber",
+              title: "Taylor Degree Scrubber & Osculating Circle Inspector",
+              componentKey: "TaylorCurvatureLab",
+              summary:
+                "Adjust polynomial degree n ∈ [1, 12] and expansion center a with live remainder error.",
+              formulaLatex: "R_n(x) = f(x) - P_n(x)",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "mod-1-3",
+      slug: "integral-calculus",
+      numberLabel: "1.3",
+      title: "Single-Variable Integration & Accumulation",
+      description:
+        "1D Riemann sums, Darboux upper/lower bounds, the Fundamental Theorem of Calculus, and 3D solids of revolution.",
+      accentHex: "#029091",
+      chapters: [
+        {
+          id: "1.3.1",
+          slug: "riemann-sums-1d",
+          title: "1D Riemann Sums, Darboux Bounds & Definite Area",
+          subtitle:
+            "Compare left, right, midpoint, and trapezoidal partitions as N → ∞ on signed curves.",
+          status: "planned",
+          estimatedMinutes: 25,
+          prerequisites: ["1.1.1"],
+          dimensionBadge: "2D",
+          accentHex: "#029091",
+          keyEquationsLatex: [
+            "\\int_{a}^{b} f(x)\\,dx = \\lim_{N \\to \\infty} \\sum_{i=1}^{N} f(x_i^*)\\,\\Delta x",
+          ],
+          labs: [
+            {
+              id: "lab-1-3-1a",
+              slug: "riemann-partition-1d",
+              title: "1D Riemann & Darboux Partition Explorer",
+              componentKey: "Riemann1DLab",
+              summary:
+                "Subdivide [a, b] into N strips and compare upper/lower Darboux discrepancy.",
+              formulaLatex: "L(f, P) \\le \\int_a^b f(x)\\,dx \\le U(f, P)",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "1.3.2",
+          slug: "fundamental-theorem-calculus",
+          title: "The Fundamental Theorem of Calculus: Accumulation vs. Slope",
+          subtitle:
+            "Sweep upper bound x to see why the rate of change of accumulated area A(x) equals the boundary height f(x).",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["1.2.1", "1.3.1"],
+          dimensionBadge: "2D",
+          accentHex: "#029091",
+          keyEquationsLatex: [
+            "\\frac{d}{dx}\\int_{a}^{x} f(t)\\,dt = f(x)",
+            "\\int_{a}^{b} F'(x)\\,dx = F(b) - F(a)",
+          ],
+          labs: [
+            {
+              id: "lab-1-3-2a",
+              slug: "ftc-accumulation-sweeper",
+              title: "Dual-Graph FTC Area Accumulation & Derivative Synchronizer",
+              componentKey: "FTCAccumulationLab",
+              summary:
+                "Sweep x to watch area under f(t) trace the antiderivative curve F(x) with tangent slope f(x).",
+              formulaLatex: "dA = f(x)\\,dx \\implies A'(x) = f(x)",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "1.3.3",
+          slug: "substitution-integration-by-parts",
+          title: "u-Substitution & Integration by Parts Geometry",
+          subtitle:
+            "See u-substitution as 1D interval rescaling and integration by parts as complementary rectangular area partitioning.",
+          status: "planned",
+          estimatedMinutes: 25,
+          prerequisites: ["1.2.3", "1.3.2"],
+          dimensionBadge: "2D",
+          accentHex: "#96B898",
+          keyEquationsLatex: [
+            "\\int_{a}^{b} f(g(x))\\,g'(x)\\,dx = \\int_{g(a)}^{g(b)} f(u)\\,du",
+            "\\int u\\,dv = u v - \\int v\\,du",
+          ],
+          labs: [
+            {
+              id: "lab-1-3-3a",
+              slug: "ibp-area-rectangle",
+              title: "1D Domain Stretch (u-Sub) & u-v Area Partition (IBP) Lab",
+              componentKey: "SubstitutionIBPLab",
+              summary:
+                "Visualize ∫ u dv + ∫ v du = Δ(uv) directly in the (u, v) plane.",
+              formulaLatex: "\\int_{u_1}^{u_2} v\\,du + \\int_{v_1}^{v_2} u\\,dv = u_2 v_2 - u_1 v_1",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "1.3.4",
+          slug: "solids-of-revolution",
+          title: "Solids of Revolution: Disks, Washers & Cylindrical Shells",
+          subtitle:
+            "Revolve 2D regions around axes in 3D WebGL to compare perpendicular washer slices against nested cylindrical shells.",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["1.3.1"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#029091",
+          keyEquationsLatex: [
+            "V_{\\text{washer}} = \\int_{a}^{b} \\pi\\big([R(x)]^2 - [r(x)]^2\\big)\\,dx",
+            "V_{\\text{shell}} = \\int_{a}^{b} 2\\pi x\\,f(x)\\,dx",
+          ],
+          labs: [
+            {
+              id: "lab-1-3-4a",
+              slug: "revolution-washer-shell-3d",
+              title: "3D Solid of Revolution Washer vs. Cylindrical Shell Slicer",
+              componentKey: "SolidOfRevolutionLab",
+              summary:
+                "Animate 360° revolution and toggle washer disks vs. concentric shells.",
+              formulaLatex: "dV = 2\\pi r h\\,dr",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "mod-1-4",
+      slug: "infinite-series",
+      numberLabel: "1.4",
+      title: "Infinite Series & Power Series Convergence",
+      description:
+        "Partial sum trajectories, integral comparison tests, and power series intervals of convergence.",
+      accentHex: "#D5658B",
+      chapters: [
+        {
+          id: "1.4.1",
+          slug: "sequences-partial-sums",
+          title: "Sequences, Partial Sums & Geometric Convergence",
+          subtitle:
+            "Compare discrete partial sums S_N against continuous improper integral bounds.",
+          status: "planned",
+          estimatedMinutes: 25,
+          prerequisites: ["1.3.1"],
+          dimensionBadge: "2D",
+          accentHex: "#D5658B",
+          keyEquationsLatex: [
+            "S_N = \\sum_{n=1}^{N} a_n, \\qquad \\sum_{n=0}^{\\infty} ar^n = \\frac{a}{1-r}\\;(|r|<1)",
+          ],
+          labs: [
+            {
+              id: "lab-1-4-1a",
+              slug: "partial-sum-staircase",
+              title: "Partial Sum Staircase & Integral Test Comparator",
+              componentKey: "PartialSumSeriesLab",
+              summary:
+                "Inspect p-series and geometric series convergence rates.",
+              formulaLatex: "\\int_1^\\infty f(x)\\,dx \\text{ converges} \\iff \\sum_{n=1}^\\infty a_n \\text{ converges}",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "1.4.2",
+          slug: "power-series-convergence",
+          title: "Power Series, Radius of Convergence & Analytic Functions",
+          subtitle:
+            "Visualize why 1/(1+x²) diverges outside |x| < 1 even though the real curve is smooth everywhere.",
+          status: "planned",
+          estimatedMinutes: 25,
+          prerequisites: ["1.2.4", "1.4.1"],
+          dimensionBadge: "2D",
+          accentHex: "#D5658B",
+          keyEquationsLatex: [
+            "f(x) = \\sum_{n=0}^{\\infty} c_n(x-a)^n, \\qquad |x - a| < R",
+          ],
+          labs: [
+            {
+              id: "lab-1-4-2a",
+              slug: "radius-of-convergence-interval",
+              title: "Power Series Radius of Convergence & Endpoint Inspector",
+              componentKey: "PowerSeriesConvergenceLab",
+              summary:
+                "Scrub partial sums across (-R, R) to observe blow-up outside the radius of convergence.",
+              formulaLatex: "R = \\lim_{n \\to \\infty} \\left|\\frac{c_n}{c_{n+1}}\\right|",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
