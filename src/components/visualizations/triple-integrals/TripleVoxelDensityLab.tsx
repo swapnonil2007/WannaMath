@@ -5,86 +5,106 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Cpu, Grid, RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { MathExpressionInput } from "@/components/math/MathExpressionInput";
+import { compileMathExpression } from "@/lib/mathParser";
 
-type VoxelSolidId = "tetrahedron" | "quarter-sphere" | "parabolic-tunnel";
-type DensityId = "uniform" | "stratified" | "radial-core" | "outer-heavy";
+type VoxelSolidId = "tetrahedron" | "quarter-sphere" | "parabolic-tunnel" | "custom";
+type DensityId = "uniform" | "stratified" | "radial-core" | "outer-heavy" | "custom";
 
 interface DensityPreset {
-  id: DensityId;
+  id: Exclude<DensityId, "custom">;
   name: string;
-  latex: string;
+  expr: string;
   engineeringContext: string;
-  fn: (x: number, y: number, z: number) => number;
 }
 
 const DENSITY_PRESETS: DensityPreset[] = [
   {
     id: "uniform",
     name: "Uniform Density (ρ = 1)",
-    latex: "\\rho(x,y,z) = 1.0",
+    expr: "1.0",
     engineeringContext:
       "Homogeneous alloy or incompressible fluid: Mass equals geometric volume V, and Center of Mass coincides with the geometric centroid.",
-    fn: () => 1.0,
   },
   {
     id: "stratified",
     name: "Bottom-Heavy Stratified",
-    latex: "\\rho(x,y,z) = 2.2 - 1.3z",
+    expr: "2.2 - 1.3*z",
     engineeringContext:
       "Graded foundation material or atmospheric/oceanic density stratification where lower layers are denser (shifts z̄ downward).",
-    fn: (_x, _y, z) => Math.max(0.15, 2.2 - 1.3 * z),
   },
   {
     id: "radial-core",
     name: "Dense Axial Core",
-    latex: "\\rho(x,y,z) = 2.1 - 1.1(x^2 + y^2)",
+    expr: "2.1 - 1.1*(x^2 + y^2)",
     engineeringContext:
       "Concentrated core density near the z-axis (pulls x̄ and ȳ closer to the vertical axis).",
-    fn: (x, y) => Math.max(0.15, 2.1 - 1.1 * (x * x + y * y)),
   },
   {
     id: "outer-heavy",
     name: "Outer Shell Heavy",
-    latex: "\\rho(x,y,z) = 0.35 + 1.35(x^2 + y^2 + z^2)",
+    expr: "0.35 + 1.35*(x^2 + y^2 + z^2)",
     engineeringContext:
       "Centrifugally cast component or flywheel with higher density at larger radii (shifts Center of Mass outward).",
-    fn: (x, y, z) => 0.35 + 1.35 * (x * x + y * y + z * z),
   },
 ];
 
-function isInsideVoxelSolid(
-  x: number,
-  y: number,
-  z: number,
-  solidId: VoxelSolidId
-): boolean {
-  if (x < 0 || y < 0 || z < 0) return false;
-  if (solidId === "tetrahedron") {
-    return x + y + z <= 1.35;
-  }
-  if (solidId === "quarter-sphere") {
-    return x * x + y * y + z * z <= 1.25 * 1.25;
-  }
-  if (solidId === "parabolic-tunnel") {
-    return x <= 1.2 && y <= 1.2 && z <= 1.2 - 0.8 * y * y;
-  }
-  return false;
-}
+const SOLID_ZMAX_PRESETS: {
+  id: Exclude<VoxelSolidId, "custom">;
+  label: string;
+  zMaxExpr: string;
+}[] = [
+  {
+    id: "quarter-sphere",
+    label: "Octant Sphere",
+    zMaxExpr: "sqrt(max(0, 1.5625 - x^2 - y^2))",
+  },
+  {
+    id: "tetrahedron",
+    label: "Tetrahedron",
+    zMaxExpr: "1.35 - x - y",
+  },
+  {
+    id: "parabolic-tunnel",
+    label: "Parabolic Arch",
+    zMaxExpr: "1.2 - 0.8*y^2",
+  },
+];
 
 export function TripleVoxelDensityLab() {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const voxelGroupRef = useRef<THREE.Group | null>(null);
 
   const [solidId, setSolidId] = useState<VoxelSolidId>("quarter-sphere");
+  const [zMaxExpr, setZMaxExpr] = useState<string>(
+    SOLID_ZMAX_PRESETS[0].zMaxExpr
+  );
+
   const [densityId, setDensityId] = useState<DensityId>("stratified");
+  const [densityExpr, setDensityExpr] = useState<string>(
+    DENSITY_PRESETS[1].expr
+  );
+
   const [resolution, setResolution] = useState<number>(7);
   const [sliceZFilter, setSliceZFilter] = useState<number>(1.0);
 
-  const activeDensity = useMemo(
-    () =>
-      DENSITY_PRESETS.find((d) => d.id === densityId) ?? DENSITY_PRESETS[0],
-    [densityId]
+  const compiledDensity = useMemo(
+    () => compileMathExpression(densityExpr, ["x", "y", "z"], 1.0),
+    [densityExpr]
   );
+
+  const compiledZMax = useMemo(
+    () => compileMathExpression(zMaxExpr, ["x", "y"], 1.0),
+    [zMaxExpr]
+  );
+
+  const activeEngineeringContext = useMemo(() => {
+    const match = DENSITY_PRESETS.find((d) => d.id === densityId);
+    return (
+      match?.engineeringContext ??
+      "Custom user-defined 3D scalar density distribution ρ(x, y, z) integrated across active voxels."
+    );
+  }, [densityId]);
 
   // Compute 3D Voxel Lattice, Riemann Volume, Total Mass M, and Center of Mass (xBar, yBar, zBar)
   const voxelData = useMemo(() => {
@@ -111,10 +131,14 @@ export function TripleVoxelDensityLab() {
       const xc = (i + 0.5) * step;
       for (let j = 0; j < resolution; j++) {
         const yc = (j + 0.5) * step;
+        const zUpper = compiledZMax.evaluate({ x: xc, y: yc });
         for (let k = 0; k < resolution; k++) {
           const zc = (k + 0.5) * step;
-          if (isInsideVoxelSolid(xc, yc, zc, solidId)) {
-            const rho = activeDensity.fn(xc, yc, zc);
+          if (zc <= zUpper) {
+            const rho = Math.max(
+              0.05,
+              compiledDensity.evaluate({ x: xc, y: yc, z: zc })
+            );
             const dm = rho * dV;
             totalVolume += dV;
             totalMass += dm;
@@ -149,7 +173,7 @@ export function TripleVoxelDensityLab() {
       com,
       activeCount,
     };
-  }, [solidId, activeDensity, resolution, sliceZFilter]);
+  }, [compiledDensity, compiledZMax, resolution, sliceZFilter]);
 
   // Initialize Three.js Scene
   useEffect(() => {
@@ -253,7 +277,6 @@ export function TripleVoxelDensityLab() {
       opacity: 0.45,
     });
 
-    // Three discrete semantic density tiers (Low: #8D9FCE, Medium: #029091, High: #D5658B)
     const lowMat = new THREE.MeshLambertMaterial({
       color: "#8D9FCE",
       transparent: true,
@@ -274,7 +297,6 @@ export function TripleVoxelDensityLab() {
       if (!v.visible) continue;
       const mat = v.rho > 1.55 ? highMat : v.rho > 0.95 ? midMat : lowMat;
       const mesh = new THREE.Mesh(cubeGeom, mat);
-      // Map math (x, y, z) -> Three (x, z, y)
       mesh.position.set(v.xc, v.zc, v.yc);
       group.add(mesh);
 
@@ -283,7 +305,6 @@ export function TripleVoxelDensityLab() {
       group.add(wire);
     }
 
-    // Center of Mass Marker Sphere (#FBEAA4 Warm Cream) + Crosshair axes (#D35323 Persimmon)
     const comSphere = new THREE.Mesh(
       new THREE.SphereGeometry(0.065, 18, 18),
       new THREE.MeshBasicMaterial({ color: "#FBEAA4" })
@@ -306,7 +327,6 @@ export function TripleVoxelDensityLab() {
         )
       );
     };
-    // Project crosshair down to the xy floor and axes
     addCrossLine([com[0], 0, com[1]], [com[0], com[2], com[1]]);
     addCrossLine([0, com[2], com[1]], [com[0], com[2], com[1]]);
     addCrossLine([com[0], com[2], 0], [com[0], com[2], com[1]]);
@@ -328,11 +348,10 @@ export function TripleVoxelDensityLab() {
             Visualizing ∭ ρ(x, y, z) dV as Mass &amp; Center of Mass
           </h2>
           <p className="font-math-serif text-sm sm:text-base text-[var(--text-secondary)] max-w-3xl">
-            While a double integral measures volume under a 3D surface, a triple
-            integral integrates a <strong>scalar density field</strong>{" "}
-            <KaTeXMath math="\rho(x,y,z)" /> across 3D volume elements{" "}
-            <KaTeXMath math="\Delta V = \Delta x\,\Delta y\,\Delta z" />. Watch
-            how varying <KaTeXMath math="\rho(x,y,z)" /> shifts the{" "}
+            Choose a preset or type your own 3D scalar density function{" "}
+            <KaTeXMath math="\rho(x,y,z)" /> and upper bounding surface{" "}
+            <KaTeXMath math="z_{\max}(x,y)" /> below. Watch how varying{" "}
+            <KaTeXMath math="\rho(x,y,z)" /> shifts the{" "}
             <strong>3D Center of Mass</strong> (cream sphere with persimmon
             crosshairs).
           </p>
@@ -368,6 +387,43 @@ export function TripleVoxelDensityLab() {
         </div>
       </div>
 
+      {/* Custom Math Typing Widgets for Density ρ(x,y,z) and Upper Surface z_max(x,y) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <MathExpressionInput
+          label="Custom 3D Scalar Density Function ρ(x, y, z):"
+          value={densityExpr}
+          onChange={(val) => {
+            setDensityId("custom");
+            setDensityExpr(val);
+          }}
+          allowedVars={["x", "y", "z"]}
+          prefixLatex="\rho(x,y,z) ="
+          placeholder="2.2 - 1.3*z"
+          accentHex="#D5658B"
+          quickTokens={[
+            { label: "x²", insert: "x^2" },
+            { label: "y²", insert: "y^2" },
+            { label: "z²", insert: "z^2" },
+            { label: "x*y*z", insert: "x*y*z" },
+            { label: "exp()", insert: "exp()" },
+            { label: "cos()", insert: "cos()" },
+          ]}
+        />
+
+        <MathExpressionInput
+          label="Custom 3D Solid Upper Surface z = u₂(x, y):"
+          value={zMaxExpr}
+          onChange={(val) => {
+            setSolidId("custom");
+            setZMaxExpr(val);
+          }}
+          allowedVars={["x", "y"]}
+          prefixLatex="0 \le z \le"
+          placeholder="1.35 - x - y"
+          accentHex="#029091"
+        />
+      </div>
+
       {/* Main Split Workspace */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         {/* Left: 3D Voxel & Center of Mass Viewport */}
@@ -395,20 +451,17 @@ export function TripleVoxelDensityLab() {
           <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-3">
             <div className="space-y-1.5">
               <span className="text-xs font-tabular-mono uppercase text-[var(--text-muted)] block">
-                1. 3D Solid Domain E
+                1. 3D Solid Domain Presets
               </span>
               <div className="grid grid-cols-3 gap-1.5">
-                {(
-                  [
-                    { id: "quarter-sphere", label: "Octant Sphere" },
-                    { id: "tetrahedron", label: "Tetrahedron" },
-                    { id: "parabolic-tunnel", label: "Parabolic Arch" },
-                  ] as const
-                ).map((s) => (
+                {SOLID_ZMAX_PRESETS.map((s) => (
                   <button
                     key={s.id}
                     type="button"
-                    onClick={() => setSolidId(s.id)}
+                    onClick={() => {
+                      setSolidId(s.id);
+                      setZMaxExpr(s.zMaxExpr);
+                    }}
                     className={`px-2 py-1.5 text-xs font-medium border transition-colors cursor-pointer ${
                       solidId === s.id
                         ? "border-[var(--border-strong)] bg-[var(--bg-panel-elevated)] text-[var(--text-primary)] font-semibold"
@@ -423,14 +476,17 @@ export function TripleVoxelDensityLab() {
 
             <div className="space-y-1.5 pt-1">
               <span className="text-xs font-tabular-mono uppercase text-[var(--text-muted)] block">
-                2. Scalar Density Function ρ(x, y, z)
+                2. Scalar Density Presets ρ(x, y, z)
               </span>
               <div className="grid grid-cols-2 gap-1.5">
                 {DENSITY_PRESETS.map((d) => (
                   <button
                     key={d.id}
                     type="button"
-                    onClick={() => setDensityId(d.id)}
+                    onClick={() => {
+                      setDensityId(d.id);
+                      setDensityExpr(d.expr);
+                    }}
                     className={`px-2.5 py-1.5 text-xs font-medium text-left border transition-colors cursor-pointer ${
                       densityId === d.id
                         ? "border-[var(--border-strong)] bg-[var(--bg-panel-elevated)] text-[var(--text-primary)] font-semibold"
@@ -440,9 +496,6 @@ export function TripleVoxelDensityLab() {
                     {d.name}
                   </button>
                 ))}
-              </div>
-              <div className="text-xs text-[#D5658B] pt-1">
-                <KaTeXMath math={activeDensity.latex} />
               </div>
             </div>
           </div>
@@ -515,14 +568,14 @@ export function TripleVoxelDensityLab() {
             </div>
             <KaTeXMath
               block
-              math={`M = \\iiint_E \\rho(x,y,z)\\,dV \\approx \\textcolor{#D5658B}{${voxelData.totalMass.toFixed(
+              math={`M = \\iiint_E \\left(${compiledDensity.tex}\\right)\\,dV \\approx \\textcolor{#D5658B}{${voxelData.totalMass.toFixed(
                 4
-              )}}, \\quad \\bar{z} = \\frac{1}{M}\\iiint_E z\\,\\rho\\,dV \\approx \\textcolor{#FBEAA4}{${voxelData.com[2].toFixed(
+              )}}, \\quad \\bar{z} \\approx \\textcolor{#FBEAA4}{${voxelData.com[2].toFixed(
                 3
               )}}`}
             />
             <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
-              {activeDensity.engineeringContext}
+              {activeEngineeringContext}
             </p>
           </div>
         </div>

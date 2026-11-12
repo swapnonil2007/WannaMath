@@ -1,29 +1,38 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RotateCcw, ArrowLeftRight, Play, Pause } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { MathExpressionInput } from "@/components/math/MathExpressionInput";
+import { compileMathExpression } from "@/lib/mathParser";
 
 type IntegrationOrder = "dydx" | "dxdy";
 
 /**
  * Interactive 2D + 3D Synchronized Preview for the Landing Hub
- * Demonstrates f(x, y) = 1.5 - 0.45(x^2 + y^2) over the region R:
- *   Type I (dy dx):  0 <= x <= 1,  x^2 <= y <= 1
- *   Type II (dx dy): 0 <= y <= 1,  0 <= x <= sqrt(y)
+ * Supports typing any custom integrand f(x, y) over R = { 0 <= x <= 1, x^2 <= y <= 1 }.
  */
 export function HeroIntegralPreview() {
   const mountRef = useRef<HTMLDivElement | null>(null);
+  const surfaceGroupRef = useRef<THREE.Group | null>(null);
+  const sliceGroupRef = useRef<THREE.Group | null>(null);
+
   const [order, setOrder] = useState<IntegrationOrder>("dydx");
   const [slicePos, setSlicePos] = useState<number>(0.55);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [exprStr, setExprStr] = useState<string>("1.5 - 0.45*(x^2 + y^2)");
 
-  // References to mutable Three.js objects for fast 60fps updates
-  const sliceGroupRef = useRef<THREE.Group | null>(null);
+  const compiledFn = useMemo(
+    () => compileMathExpression(exprStr, ["x", "y"], 1.0),
+    [exprStr]
+  );
 
-  const f = (x: number, y: number) => 1.5 - 0.45 * (x * x + y * y);
+  const evalF = React.useCallback(
+    (x: number, y: number) => Math.max(0.02, compiledFn.evaluate({ x, y })),
+    [compiledFn]
+  );
 
   // Animate slice position when playing
   useEffect(() => {
@@ -49,7 +58,7 @@ export function HeroIntegralPreview() {
     if (!container) return;
 
     const width = container.clientWidth || 520;
-    const height = container.clientHeight || 340;
+    const height = container.clientHeight || 360;
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color("#1E1F22");
@@ -72,19 +81,16 @@ export function HeroIntegralPreview() {
     controls.minDistance = 1.4;
     controls.maxDistance = 6;
 
-    // Ambient + directional lighting for crisp matte depth (no specular glare)
     const ambient = new THREE.AmbientLight(0xfffbe4, 0.78);
     scene.add(ambient);
     const dirLight = new THREE.DirectionalLight(0xfffbe4, 0.75);
     dirLight.position.set(3, 5, 2);
     scene.add(dirLight);
 
-    // Base grid in xy-plane (math z = 0 -> Three y = 0)
     const gridHelper = new THREE.GridHelper(1.4, 7, 0xaaa36d, 0x34373f);
     gridHelper.position.set(0.5, 0, 0.5);
     scene.add(gridHelper);
 
-    // Coordinate Axes (Math X: #8D9FCE, Math Y: #96B898, Math Z: #029091)
     const addAxisLine = (
       from: [number, number, number],
       to: [number, number, number],
@@ -97,14 +103,77 @@ export function HeroIntegralPreview() {
       const mat = new THREE.LineBasicMaterial({ color: hex });
       scene.add(new THREE.Line(geom, mat));
     };
-    // Math X axis -> Three +X
     addAxisLine([0, 0, 0], [1.28, 0, 0], "#8D9FCE");
-    // Math Y axis -> Three +Z
     addAxisLine([0, 0, 0], [0, 0, 1.28], "#96B898");
-    // Math Z axis -> Three +Y
     addAxisLine([0, 0, 0], [0, 1.65, 0], "#029091");
 
-    // Build Surface Mesh over R = { 0 <= x <= 1, x^2 <= y <= 1 }
+    // Boundary curves in xy-plane:
+    const lowerCurvePts: THREE.Vector3[] = [];
+    for (let i = 0; i <= 48; i++) {
+      const x = i / 48;
+      lowerCurvePts.push(new THREE.Vector3(x, 0.008, x * x));
+    }
+    scene.add(
+      new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(lowerCurvePts),
+        new THREE.LineBasicMaterial({ color: "#D5658B" })
+      )
+    );
+
+    const upperCurvePts = [
+      new THREE.Vector3(0, 0.008, 1),
+      new THREE.Vector3(1, 0.008, 1),
+    ];
+    scene.add(
+      new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(upperCurvePts),
+        new THREE.LineBasicMaterial({ color: "#B95869" })
+      )
+    );
+
+    const surfaceGroup = new THREE.Group();
+    const sliceGroup = new THREE.Group();
+    scene.add(surfaceGroup);
+    scene.add(sliceGroup);
+    surfaceGroupRef.current = surfaceGroup;
+    sliceGroupRef.current = sliceGroup;
+
+    let frameId: number;
+    const animate = () => {
+      frameId = requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const handleResize = () => {
+      if (!container) return;
+      const w = container.clientWidth || 520;
+      const h = container.clientHeight || 360;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(frameId);
+      renderer.dispose();
+    };
+  }, []);
+
+  // Rebuild Surface Mesh whenever user-typed expression changes
+  useEffect(() => {
+    const surfaceGroup = surfaceGroupRef.current;
+    if (!surfaceGroup) return;
+
+    while (surfaceGroup.children.length > 0) {
+      const child = surfaceGroup.children[0] as THREE.Mesh;
+      if (child.geometry) child.geometry.dispose();
+      surfaceGroup.remove(child);
+    }
+
     const nx = 32;
     const ny = 32;
     const positions: number[] = [];
@@ -112,15 +181,13 @@ export function HeroIntegralPreview() {
     const indices: number[] = [];
 
     for (let i = 0; i <= nx; i++) {
-      const u = i / nx; // x in [0, 1]
-      const x = u;
+      const x = i / nx;
       const yMin = x * x;
       const yMax = 1.0;
       for (let j = 0; j <= ny; j++) {
         const v = j / ny;
         const y = yMin + v * (yMax - yMin);
-        const z = f(x, y);
-        // Map (x, y, z) -> (x, z, y)
+        const z = evalF(x, y);
         positions.push(x, z, y);
         basePositions.push(x, 0.002, y);
       }
@@ -145,95 +212,49 @@ export function HeroIntegralPreview() {
     surfaceGeom.setIndex(indices);
     surfaceGeom.computeVertexNormals();
 
-    const surfaceMat = new THREE.MeshLambertMaterial({
-      color: "#8D9FCE",
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.65,
-    });
-    const surfaceMesh = new THREE.Mesh(surfaceGeom, surfaceMat);
-    scene.add(surfaceMesh);
+    surfaceGroup.add(
+      new THREE.Mesh(
+        surfaceGeom,
+        new THREE.MeshLambertMaterial({
+          color: "#8D9FCE",
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.65,
+        })
+      )
+    );
+    surfaceGroup.add(
+      new THREE.Mesh(
+        surfaceGeom,
+        new THREE.MeshBasicMaterial({
+          color: "#FFFBE4",
+          wireframe: true,
+          transparent: true,
+          opacity: 0.14,
+        })
+      )
+    );
 
-    const wireMat = new THREE.MeshBasicMaterial({
-      color: "#FFFBE4",
-      wireframe: true,
-      transparent: true,
-      opacity: 0.14,
-    });
-    scene.add(new THREE.Mesh(surfaceGeom, wireMat));
-
-    // Base shadow region R in the xy-plane
     const baseGeom = new THREE.BufferGeometry();
     baseGeom.setAttribute(
       "position",
       new THREE.Float32BufferAttribute(basePositions, 3)
     );
     baseGeom.setIndex(indices);
-    const baseMat = new THREE.MeshBasicMaterial({
-      color: "#029091",
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.28,
-    });
-    scene.add(new THREE.Mesh(baseGeom, baseMat));
-
-    // Boundary curves in xy-plane:
-    // Lower curve y = x^2 (#D5658B Dusty Rose)
-    const lowerCurvePts: THREE.Vector3[] = [];
-    for (let i = 0; i <= 48; i++) {
-      const x = i / 48;
-      lowerCurvePts.push(new THREE.Vector3(x, 0.008, x * x));
-    }
-    scene.add(
-      new THREE.Line(
-        new THREE.BufferGeometry().setFromPoints(lowerCurvePts),
-        new THREE.LineBasicMaterial({ color: "#D5658B" })
+    surfaceGroup.add(
+      new THREE.Mesh(
+        baseGeom,
+        new THREE.MeshBasicMaterial({
+          color: "#029091",
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.28,
+        })
       )
     );
+  }, [evalF]);
 
-    // Upper line y = 1 (#B95869 Terracotta Crimson)
-    const upperCurvePts = [
-      new THREE.Vector3(0, 0.008, 1),
-      new THREE.Vector3(1, 0.008, 1),
-    ];
-    scene.add(
-      new THREE.Line(
-        new THREE.BufferGeometry().setFromPoints(upperCurvePts),
-        new THREE.LineBasicMaterial({ color: "#B95869" })
-      )
-    );
-
-    // Dynamic Slicing Curtain Group
-    const sliceGroup = new THREE.Group();
-    scene.add(sliceGroup);
-    sliceGroupRef.current = sliceGroup;
-
-    let frameId: number;
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    const handleResize = () => {
-      if (!container) return;
-      const w = container.clientWidth || 520;
-      const h = container.clientHeight || 340;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(frameId);
-      renderer.dispose();
-    };
-  }, []);
-
-  // Update 3D Slice Curtain Geometry whenever order or slicePos changes
+  // Update 3D Slice Curtain Geometry whenever order, slicePos, or evalF changes
   useEffect(() => {
     const group = sliceGroupRef.current;
     if (!group) return;
@@ -251,7 +272,6 @@ export function HeroIntegralPreview() {
     const baseEdgePts: THREE.Vector3[] = [];
 
     if (order === "dydx") {
-      // Fix x = slicePos, sweep y from x^2 to 1
       const x = slicePos;
       const yMin = x * x;
       const yMax = 1.0;
@@ -259,15 +279,13 @@ export function HeroIntegralPreview() {
       for (let i = 0; i <= steps; i++) {
         const t = i / steps;
         const y = yMin + t * (yMax - yMin);
-        const z = f(x, y);
-        // Bottom vertex (x, 0, y) and Top vertex (x, z, y)
+        const z = evalF(x, y);
         vertices.push(x, 0, y);
         vertices.push(x, z, y);
         topEdgePts.push(new THREE.Vector3(x, z, y));
         baseEdgePts.push(new THREE.Vector3(x, 0.012, y));
       }
     } else {
-      // Fix y = slicePos, sweep x from 0 to sqrt(y)
       const y = slicePos;
       const xMin = 0;
       const xMax = Math.sqrt(y);
@@ -275,7 +293,7 @@ export function HeroIntegralPreview() {
       for (let i = 0; i <= steps; i++) {
         const t = i / steps;
         const x = xMin + t * (xMax - xMin);
-        const z = f(x, y);
+        const z = evalF(x, y);
         vertices.push(x, 0, y);
         vertices.push(x, z, y);
         topEdgePts.push(new THREE.Vector3(x, z, y));
@@ -300,15 +318,17 @@ export function HeroIntegralPreview() {
     curtainGeom.setIndex(indices);
     curtainGeom.computeVertexNormals();
 
-    const curtainMat = new THREE.MeshBasicMaterial({
-      color: "#D35323",
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.72,
-    });
-    group.add(new THREE.Mesh(curtainGeom, curtainMat));
-
-    // Highlight top curve and base strip in Warm Cream (#FBEAA4)
+    group.add(
+      new THREE.Mesh(
+        curtainGeom,
+        new THREE.MeshBasicMaterial({
+          color: "#D35323",
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.72,
+        })
+      )
+    );
     group.add(
       new THREE.Line(
         new THREE.BufferGeometry().setFromPoints(topEdgePts),
@@ -321,34 +341,49 @@ export function HeroIntegralPreview() {
         new THREE.LineBasicMaterial({ color: "#FBEAA4" })
       )
     );
-  }, [order, slicePos]);
+  }, [order, slicePos, evalF]);
 
-  // Compute live cross-sectional area A(x) or A(y) analytically
-  // f(x,y) = 1.5 - 0.45 x^2 - 0.45 y^2
-  const sliceArea = React.useMemo(() => {
+  // Compute live cross-sectional area A(x) or A(y) and total volume numerically
+  const { sliceArea, totalVolume } = useMemo(() => {
+    const M = 24;
+    let sArea = 0;
     if (order === "dydx") {
       const x = slicePos;
       const y1 = x * x;
-      const y2 = 1;
-      // int_{y1}^{y2} (1.5 - 0.45 x^2 - 0.45 y^2) dy
-      return (
-        (1.5 - 0.45 * x * x) * (y2 - y1) -
-        0.15 * (Math.pow(y2, 3) - Math.pow(y1, 3))
-      );
+      const y2 = 1.0;
+      const dy = (y2 - y1) / M;
+      for (let i = 0; i < M; i++) {
+        sArea += evalF(x, y1 + (i + 0.5) * dy) * dy;
+      }
     } else {
       const y = slicePos;
+      const x1 = 0;
       const x2 = Math.sqrt(y);
-      // int_{0}^{x2} (1.5 - 0.45 y^2 - 0.45 x^2) dx
-      return (1.5 - 0.45 * y * y) * x2 - 0.15 * Math.pow(x2, 3);
+      const dx = (x2 - x1) / M;
+      for (let i = 0; i < M; i++) {
+        sArea += evalF(x1 + (i + 0.5) * dx, y) * dx;
+      }
     }
-  }, [order, slicePos]);
 
-  // Exact total double integral over R:
-  // int_0^1 [ (1.5 - 0.45 x^2)(1 - x^2) - 0.15(1 - x^6) ] dx = 0.8593
-  const exactTotalVolume = 0.8593;
+    let vol = 0;
+    const Nx = 24;
+    const Ny = 24;
+    const dx = 1 / Nx;
+    for (let i = 0; i < Nx; i++) {
+      const x = (i + 0.5) * dx;
+      const y1 = x * x;
+      const y2 = 1.0;
+      const dy = (y2 - y1) / Ny;
+      for (let j = 0; j < Ny; j++) {
+        const y = y1 + (j + 0.5) * dy;
+        vol += evalF(x, y) * dx * dy;
+      }
+    }
 
-  // Build parabolic path in 2D SVG (200x200 coordinate box)
-  const parabolaPath = React.useMemo(() => {
+    return { sliceArea: sArea, totalVolume: vol };
+  }, [order, slicePos, evalF]);
+
+  const parabolaPath = useMemo(() => {
     const pts: string[] = [];
     for (let i = 0; i <= 40; i++) {
       const x = i / 40;
@@ -368,7 +403,7 @@ export function HeroIntegralPreview() {
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
         <div>
           <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
-            Interactive Live Preview • Fubini&apos;s Theorem &amp; Slicing
+            Interactive Live Preview • Custom Equation &amp; Fubini Slicing
           </span>
           <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
             Synchronized 2D Domain Strip &amp; 3D Cross-Sectional Curtain
@@ -413,10 +448,21 @@ export function HeroIntegralPreview() {
         </div>
       </div>
 
+      {/* Custom Math Expression Input Bar */}
+      <MathExpressionInput
+        label="Type Any Custom Integrand Surface z = f(x, y):"
+        value={exprStr}
+        onChange={setExprStr}
+        allowedVars={["x", "y"]}
+        prefixLatex="f(x,y) ="
+        placeholder="1.5 - 0.45*(x^2 + y^2)"
+        accentHex="#8D9FCE"
+      />
+
       {/* Main Split Viewports: Left 3D WebGL + Right 2D Domain & Live KaTeX */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         {/* 3D WebGL Stage */}
-        <div className="lg:col-span-7 flex flex-col justify-between border border-[var(--border-subtle)] bg-[#1E1F22] relative min-h-[340px]">
+        <div className="lg:col-span-7 flex flex-col justify-between border border-[var(--border-subtle)] bg-[#1E1F22] relative min-h-[360px]">
           <div className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-[#25272C] border border-[#383B43] text-[11px] font-tabular-mono text-[#FFFBE4] flex items-center gap-3">
             <span>3D Viewport (Drag to Orbit)</span>
             <span className="text-[#8D9FCE]">x</span>
@@ -424,7 +470,7 @@ export function HeroIntegralPreview() {
             <span className="text-[#029091]">z</span>
           </div>
 
-          <div ref={mountRef} className="w-full h-[340px] cursor-grab" />
+          <div ref={mountRef} className="w-full h-[360px] cursor-grab" />
 
           <div className="px-3 py-2 border-t border-[#383B43] bg-[#25272C] flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono text-[#CCC8B8]">
             <span>
@@ -444,7 +490,7 @@ export function HeroIntegralPreview() {
             <span>
               Total Volume V ={" "}
               <strong className="text-[#96B898]">
-                {exactTotalVolume.toFixed(4)}
+                {totalVolume.toFixed(4)}
               </strong>
             </span>
           </div>
@@ -457,7 +503,9 @@ export function HeroIntegralPreview() {
             <div className="w-full flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)] mb-1">
               <span>2D Integration Domain R (xy-plane)</span>
               <span className="text-[#D35323]">
-                {order === "dydx" ? "Vertical Strip (dy)" : "Horizontal Strip (dx)"}
+                {order === "dydx"
+                  ? "Vertical Strip (dy)"
+                  : "Horizontal Strip (dx)"}
               </span>
             </div>
 
@@ -467,7 +515,6 @@ export function HeroIntegralPreview() {
               role="img"
               aria-label="2D region of integration bounded by y = x squared and y = 1"
             >
-              {/* Grid lines */}
               {[0.25, 0.5, 0.75, 1].map((t) => (
                 <React.Fragment key={t}>
                   <line
@@ -491,14 +538,8 @@ export function HeroIntegralPreview() {
                 </React.Fragment>
               ))}
 
-              {/* Shaded Region R */}
-              <path
-                d={regionFillPath}
-                fill="#029091"
-                fillOpacity="0.24"
-              />
+              <path d={regionFillPath} fill="#029091" fillOpacity="0.24" />
 
-              {/* Active Strip (dy dx or dx dy) */}
               {order === "dydx" ? (
                 <line
                   x1={30 + slicePos * 145}
@@ -519,7 +560,6 @@ export function HeroIntegralPreview() {
                 />
               )}
 
-              {/* Upper Bound y = 1 (#B95869) */}
               <line
                 x1={30}
                 y1={30}
@@ -529,7 +569,6 @@ export function HeroIntegralPreview() {
                 strokeWidth="2.5"
               />
 
-              {/* Lower Curve y = x^2 (#D5658B) */}
               <path
                 d={parabolaPath}
                 fill="none"
@@ -537,7 +576,6 @@ export function HeroIntegralPreview() {
                 strokeWidth="2.5"
               />
 
-              {/* Axes */}
               <line
                 x1={30}
                 y1={175}
@@ -555,7 +593,6 @@ export function HeroIntegralPreview() {
                 strokeWidth="1.5"
               />
 
-              {/* Labels */}
               <text
                 x={193}
                 y={179}
@@ -644,12 +681,16 @@ export function HeroIntegralPreview() {
             {order === "dydx" ? (
               <KaTeXMath
                 block
-                math={`\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\left[ \\int_{\\textcolor{#D5658B}{x^2}}^{\\textcolor{#B95869}{1}} f(x,y)\\,\\textcolor{#D35323}{dy} \\right] \\textcolor{#8D9FCE}{dx} = 0.8593`}
+                math={`\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\left[ \\int_{\\textcolor{#D5658B}{x^2}}^{\\textcolor{#B95869}{1}} \\left(${compiledFn.tex}\\right)\\,\\textcolor{#D35323}{dy} \\right] \\textcolor{#8D9FCE}{dx} \\approx ${totalVolume.toFixed(
+                  4
+                )}`}
               />
             ) : (
               <KaTeXMath
                 block
-                math={`\\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\left[ \\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#D5658B}{\\sqrt{y}}} f(x,y)\\,\\textcolor{#D35323}{dx} \\right] \\textcolor{#96B898}{dy} = 0.8593`}
+                math={`\\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\left[ \\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#D5658B}{\\sqrt{y}}} \\left(${compiledFn.tex}\\right)\\,\\textcolor{#D35323}{dx} \\right] \\textcolor{#96B898}{dy} \\approx ${totalVolume.toFixed(
+                  4
+                )}`}
               />
             )}
           </div>

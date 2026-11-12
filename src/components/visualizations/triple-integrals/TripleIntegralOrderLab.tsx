@@ -6,12 +6,13 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import {
   Box,
   ChevronDown,
-  Layers,
   Pause,
   Play,
   RotateCcw,
 } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { MathExpressionInput } from "@/components/math/MathExpressionInput";
+import { compileMathExpression } from "@/lib/mathParser";
 
 export type TripleOrder =
   | "dzdydx"
@@ -24,10 +25,9 @@ export type TripleOrder =
 export type SolidId =
   | "tetrahedron"
   | "parabolic-wedge"
-  | "paraboloid-cap"
-  | "inclined-prism";
+  | "paraboloid-cap";
 
-interface OrderSpec {
+interface OrderExprSpec {
   order: TripleOrder;
   label: string;
   innerVar: "x" | "y" | "z";
@@ -36,9 +36,10 @@ interface OrderSpec {
   shadowPlane: "xy" | "xz" | "yz";
   shadowPlaneLabel: string;
   outerRange: [number, number];
-  midBounds: (outer: number) => [number, number];
-  innerBounds: (outer: number, mid: number) => [number, number];
-  latex: string;
+  midMinExpr: string;
+  midMaxExpr: string;
+  innerMinExpr: string;
+  innerMaxExpr: string;
   rayEntryExitLabel: string;
   shadowBoundsLabel: string;
 }
@@ -50,13 +51,8 @@ interface SolidPreset {
   badge: string;
   description: string;
   equationsLatex: string;
-  exactVolumeLabel: string;
-  // Builds the 3D solid boundary surface meshes for Three.js
-  zTopSurface: (x: number, y: number) => number;
-  zBottomSurface: (x: number, y: number) => number;
-  xyBaseYBounds: (x: number) => [number, number];
   xyBaseXRange: [number, number];
-  orders: Record<TripleOrder, OrderSpec>;
+  orders: Record<TripleOrder, OrderExprSpec>;
 }
 
 const ORDER_METADATA: {
@@ -76,16 +72,13 @@ const SOLID_PRESETS: SolidPreset[] = [
   {
     id: "tetrahedron",
     name: "1. First-Octant Tetrahedron (x + y + z ≤ 1.4)",
-    shortLabel: "Tetrahedron (x+y+z ≤ a)",
+    shortLabel: "Tetrahedron (x+y+z ≤ 1.4)",
     badge: "Symmetric 6-Way",
     description:
       "Bounded by the coordinate planes x = 0, y = 0, z = 0 and the slanted plane x + y + z = 1.4. Because the plane is symmetric in all three variables, every coordinate wall projection is a right triangle!",
-    equationsLatex: "E = \\{(x,y,z) : x \\ge 0,\\; y \\ge 0,\\; z \\ge 0,\\; x + y + z \\le 1.4\\}",
-    exactVolumeLabel: "V = 1.4³ / 6 ≈ 0.4573",
+    equationsLatex:
+      "E = \\{(x,y,z) : x \\ge 0,\\; y \\ge 0,\\; z \\ge 0,\\; x + y + z \\le 1.4\\}",
     xyBaseXRange: [0, 1.4],
-    xyBaseYBounds: (x) => [0, Math.max(0, 1.4 - x)],
-    zBottomSurface: () => 0,
-    zTopSurface: (x, y) => Math.max(0, 1.4 - x - y),
     orders: {
       dzdydx: {
         order: "dzdydx",
@@ -96,10 +89,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xy",
         shadowPlaneLabel: "xy-plane (z = 0)",
         outerRange: [0, 1.4],
-        midBounds: (x) => [0, Math.max(0, 1.4 - x)],
-        innerBounds: (x, y) => [0, Math.max(0, 1.4 - x - y)],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1.4}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1.4-x}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1.4-x-y}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dz}\\,\\textcolor{#96B898}{dy}\\,\\textcolor{#8D9FCE}{dx}",
+        midMinExpr: "0",
+        midMaxExpr: "1.4 - x",
+        innerMinExpr: "0",
+        innerMaxExpr: "1.4 - x - y",
         rayEntryExitLabel: "z enters at z = 0, exits at slanted plane z = 1.4 - x - y",
         shadowBoundsLabel: "Shadow in xy-plane: 0 ≤ x ≤ 1.4, 0 ≤ y ≤ 1.4 - x",
       },
@@ -112,10 +105,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xy",
         shadowPlaneLabel: "xy-plane (z = 0)",
         outerRange: [0, 1.4],
-        midBounds: (y) => [0, Math.max(0, 1.4 - y)],
-        innerBounds: (y, x) => [0, Math.max(0, 1.4 - x - y)],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1.4}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1.4-y}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1.4-x-y}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dz}\\,\\textcolor{#96B898}{dx}\\,\\textcolor{#8D9FCE}{dy}",
+        midMinExpr: "0",
+        midMaxExpr: "1.4 - y",
+        innerMinExpr: "0",
+        innerMaxExpr: "1.4 - x - y",
         rayEntryExitLabel: "z enters at z = 0, exits at slanted plane z = 1.4 - x - y",
         shadowBoundsLabel: "Shadow in xy-plane: 0 ≤ y ≤ 1.4, 0 ≤ x ≤ 1.4 - y",
       },
@@ -128,10 +121,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xz",
         shadowPlaneLabel: "xz-plane (y = 0)",
         outerRange: [0, 1.4],
-        midBounds: (x) => [0, Math.max(0, 1.4 - x)],
-        innerBounds: (x, z) => [0, Math.max(0, 1.4 - x - z)],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1.4}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1.4-x}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1.4-x-z}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dy}\\,\\textcolor{#96B898}{dz}\\,\\textcolor{#8D9FCE}{dx}",
+        midMinExpr: "0",
+        midMaxExpr: "1.4 - x",
+        innerMinExpr: "0",
+        innerMaxExpr: "1.4 - x - z",
         rayEntryExitLabel: "y enters at y = 0, exits at plane y = 1.4 - x - z",
         shadowBoundsLabel: "Shadow in xz-plane: 0 ≤ x ≤ 1.4, 0 ≤ z ≤ 1.4 - x",
       },
@@ -144,10 +137,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xz",
         shadowPlaneLabel: "xz-plane (y = 0)",
         outerRange: [0, 1.4],
-        midBounds: (z) => [0, Math.max(0, 1.4 - z)],
-        innerBounds: (z, x) => [0, Math.max(0, 1.4 - x - z)],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1.4}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1.4-z}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1.4-x-z}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dy}\\,\\textcolor{#96B898}{dx}\\,\\textcolor{#8D9FCE}{dz}",
+        midMinExpr: "0",
+        midMaxExpr: "1.4 - z",
+        innerMinExpr: "0",
+        innerMaxExpr: "1.4 - x - z",
         rayEntryExitLabel: "y enters at y = 0, exits at plane y = 1.4 - x - z",
         shadowBoundsLabel: "Shadow in xz-plane: 0 ≤ z ≤ 1.4, 0 ≤ x ≤ 1.4 - z",
       },
@@ -160,10 +153,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "yz",
         shadowPlaneLabel: "yz-plane (x = 0)",
         outerRange: [0, 1.4],
-        midBounds: (y) => [0, Math.max(0, 1.4 - y)],
-        innerBounds: (y, z) => [0, Math.max(0, 1.4 - y - z)],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1.4}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1.4-y}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1.4-y-z}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dx}\\,\\textcolor{#96B898}{dz}\\,\\textcolor{#8D9FCE}{dy}",
+        midMinExpr: "0",
+        midMaxExpr: "1.4 - y",
+        innerMinExpr: "0",
+        innerMaxExpr: "1.4 - y - z",
         rayEntryExitLabel: "x enters at x = 0, exits at plane x = 1.4 - y - z",
         shadowBoundsLabel: "Shadow in yz-plane: 0 ≤ y ≤ 1.4, 0 ≤ z ≤ 1.4 - y",
       },
@@ -176,10 +169,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "yz",
         shadowPlaneLabel: "yz-plane (x = 0)",
         outerRange: [0, 1.4],
-        midBounds: (z) => [0, Math.max(0, 1.4 - z)],
-        innerBounds: (z, y) => [0, Math.max(0, 1.4 - y - z)],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1.4}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1.4-z}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1.4-y-z}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dx}\\,\\textcolor{#96B898}{dy}\\,\\textcolor{#8D9FCE}{dz}",
+        midMinExpr: "0",
+        midMaxExpr: "1.4 - z",
+        innerMinExpr: "0",
+        innerMaxExpr: "1.4 - y - z",
         rayEntryExitLabel: "x enters at x = 0, exits at plane x = 1.4 - y - z",
         shadowBoundsLabel: "Shadow in yz-plane: 0 ≤ z ≤ 1.4, 0 ≤ y ≤ 1.4 - z",
       },
@@ -192,12 +185,9 @@ const SOLID_PRESETS: SolidPreset[] = [
     badge: "Curved Roof z = 1 - y²",
     description:
       "A quarter-tunnel bounded above by the parabolic cylinder z = 1 - y² and over the unit square 0 ≤ x ≤ 1, 0 ≤ y ≤ 1. Switching between dz, dy, and dx changes the shadow from a square (xy) to a parabolic arch (yz)!",
-    equationsLatex: "E = \\{(x,y,z) : 0 \\le x \\le 1,\\; 0 \\le y \\le 1,\\; 0 \\le z \\le 1 - y^2\\}",
-    exactVolumeLabel: "V = 2 / 3 ≈ 0.6667",
+    equationsLatex:
+      "E = \\{(x,y,z) : 0 \\le x \\le 1,\\; 0 \\le y \\le 1,\\; 0 \\le z \\le 1 - y^2\\}",
     xyBaseXRange: [0, 1],
-    xyBaseYBounds: () => [0, 1],
-    zBottomSurface: () => 0,
-    zTopSurface: (_x, y) => Math.max(0, 1 - y * y),
     orders: {
       dzdydx: {
         order: "dzdydx",
@@ -208,10 +198,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xy",
         shadowPlaneLabel: "xy-plane (Unit Square)",
         outerRange: [0, 1],
-        midBounds: () => [0, 1],
-        innerBounds: (_x, y) => [0, Math.max(0, 1 - y * y)],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1-y^2}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dz}\\,\\textcolor{#96B898}{dy}\\,\\textcolor{#8D9FCE}{dx}",
+        midMinExpr: "0",
+        midMaxExpr: "1",
+        innerMinExpr: "0",
+        innerMaxExpr: "1 - y^2",
         rayEntryExitLabel: "z enters at floor z = 0, exits at parabolic roof z = 1 - y²",
         shadowBoundsLabel: "Shadow in xy-plane: Unit square [0, 1] × [0, 1]",
       },
@@ -224,10 +214,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xy",
         shadowPlaneLabel: "xy-plane (Unit Square)",
         outerRange: [0, 1],
-        midBounds: () => [0, 1],
-        innerBounds: (y) => [0, Math.max(0, 1 - y * y)],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1-y^2}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dz}\\,\\textcolor{#96B898}{dx}\\,\\textcolor{#8D9FCE}{dy}",
+        midMinExpr: "0",
+        midMaxExpr: "1",
+        innerMinExpr: "0",
+        innerMaxExpr: "1 - y^2",
         rayEntryExitLabel: "z enters at floor z = 0, exits at parabolic roof z = 1 - y²",
         shadowBoundsLabel: "Shadow in xy-plane: Unit square [0, 1] × [0, 1]",
       },
@@ -240,10 +230,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xz",
         shadowPlaneLabel: "xz-plane (Unit Square)",
         outerRange: [0, 1],
-        midBounds: () => [0, 1],
-        innerBounds: (_x, z) => [0, Math.sqrt(Math.max(0, 1 - z))],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{\\sqrt{1-z}}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dy}\\,\\textcolor{#96B898}{dz}\\,\\textcolor{#8D9FCE}{dx}",
+        midMinExpr: "0",
+        midMaxExpr: "1",
+        innerMinExpr: "0",
+        innerMaxExpr: "sqrt(max(0, 1 - z))",
         rayEntryExitLabel: "y enters at y = 0, exits at inverted parabola y = √(1 - z)",
         shadowBoundsLabel: "Shadow in xz-plane: Unit square [0, 1] × [0, 1]",
       },
@@ -256,10 +246,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xz",
         shadowPlaneLabel: "xz-plane (Unit Square)",
         outerRange: [0, 1],
-        midBounds: () => [0, 1],
-        innerBounds: (z) => [0, Math.sqrt(Math.max(0, 1 - z))],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{\\sqrt{1-z}}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dy}\\,\\textcolor{#96B898}{dx}\\,\\textcolor{#8D9FCE}{dz}",
+        midMinExpr: "0",
+        midMaxExpr: "1",
+        innerMinExpr: "0",
+        innerMaxExpr: "sqrt(max(0, 1 - z))",
         rayEntryExitLabel: "y enters at y = 0, exits at inverted parabola y = √(1 - z)",
         shadowBoundsLabel: "Shadow in xz-plane: Unit square [0, 1] × [0, 1]",
       },
@@ -272,10 +262,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "yz",
         shadowPlaneLabel: "yz-plane (Parabolic Arch)",
         outerRange: [0, 1],
-        midBounds: (y) => [0, Math.max(0, 1 - y * y)],
-        innerBounds: () => [0, 1],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1-y^2}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dx}\\,\\textcolor{#96B898}{dz}\\,\\textcolor{#8D9FCE}{dy}",
+        midMinExpr: "0",
+        midMaxExpr: "1 - y^2",
+        innerMinExpr: "0",
+        innerMaxExpr: "1",
         rayEntryExitLabel: "x enters at back wall x = 0, exits at front wall x = 1",
         shadowBoundsLabel: "Shadow in yz-plane: Parabolic arch 0 ≤ y ≤ 1, 0 ≤ z ≤ 1 - y²",
       },
@@ -288,10 +278,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "yz",
         shadowPlaneLabel: "yz-plane (Parabolic Arch)",
         outerRange: [0, 1],
-        midBounds: (z) => [0, Math.sqrt(Math.max(0, 1 - z))],
-        innerBounds: () => [0, 1],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{\\sqrt{1-z}}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{1}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dx}\\,\\textcolor{#96B898}{dy}\\,\\textcolor{#8D9FCE}{dz}",
+        midMinExpr: "0",
+        midMaxExpr: "sqrt(max(0, 1 - z))",
+        innerMinExpr: "0",
+        innerMaxExpr: "1",
         rayEntryExitLabel: "x enters at back wall x = 0, exits at front wall x = 1",
         shadowBoundsLabel: "Shadow in yz-plane: Parabolic arch 0 ≤ z ≤ 1, 0 ≤ y ≤ √(1 - z)",
       },
@@ -304,12 +294,9 @@ const SOLID_PRESETS: SolidPreset[] = [
     badge: "Curved Bottom Surface",
     description:
       "Bounded below by the elliptic paraboloid z = x² + y² and above by the horizontal plane z = 1 in the first octant (x, y ≥ 0). Demonstrates a non-flat bottom entry surface u₁(x,y) = x² + y²!",
-    equationsLatex: "E = \\{(x,y,z) : x \\ge 0,\\; y \\ge 0,\\; x^2 + y^2 \\le z \\le 1\\}",
-    exactVolumeLabel: "V = π / 8 ≈ 0.3927",
+    equationsLatex:
+      "E = \\{(x,y,z) : x \\ge 0,\\; y \\ge 0,\\; x^2 + y^2 \\le z \\le 1\\}",
     xyBaseXRange: [0, 1],
-    xyBaseYBounds: (x) => [0, Math.sqrt(Math.max(0, 1 - x * x))],
-    zBottomSurface: (x, y) => Math.min(1, x * x + y * y),
-    zTopSurface: () => 1.0,
     orders: {
       dzdydx: {
         order: "dzdydx",
@@ -320,10 +307,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xy",
         shadowPlaneLabel: "xy-plane (Quarter Disk)",
         outerRange: [0, 1],
-        midBounds: (x) => [0, Math.sqrt(Math.max(0, 1 - x * x))],
-        innerBounds: (x, y) => [Math.min(1, x * x + y * y), 1],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{\\sqrt{1-x^2}}} \\int_{\\textcolor{#D5658B}{x^2+y^2}}^{\\textcolor{#B95869}{1}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dz}\\,\\textcolor{#96B898}{dy}\\,\\textcolor{#8D9FCE}{dx}",
+        midMinExpr: "0",
+        midMaxExpr: "sqrt(max(0, 1 - x^2))",
+        innerMinExpr: "x^2 + y^2",
+        innerMaxExpr: "1",
         rayEntryExitLabel: "z enters on paraboloid z = x² + y², exits on flat lid z = 1",
         shadowBoundsLabel: "Shadow in xy-plane: Quarter disk x² + y² ≤ 1",
       },
@@ -336,10 +323,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xy",
         shadowPlaneLabel: "xy-plane (Quarter Disk)",
         outerRange: [0, 1],
-        midBounds: (y) => [0, Math.sqrt(Math.max(0, 1 - y * y))],
-        innerBounds: (y, x) => [Math.min(1, x * x + y * y), 1],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{\\sqrt{1-y^2}}} \\int_{\\textcolor{#D5658B}{x^2+y^2}}^{\\textcolor{#B95869}{1}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dz}\\,\\textcolor{#96B898}{dx}\\,\\textcolor{#8D9FCE}{dy}",
+        midMinExpr: "0",
+        midMaxExpr: "sqrt(max(0, 1 - y^2))",
+        innerMinExpr: "x^2 + y^2",
+        innerMaxExpr: "1",
         rayEntryExitLabel: "z enters on paraboloid z = x² + y², exits on flat lid z = 1",
         shadowBoundsLabel: "Shadow in xy-plane: Quarter disk x² + y² ≤ 1",
       },
@@ -352,10 +339,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xz",
         shadowPlaneLabel: "xz-plane (Parabolic Spandrel)",
         outerRange: [0, 1],
-        midBounds: (x) => [x * x, 1],
-        innerBounds: (x, z) => [0, Math.sqrt(Math.max(0, z - x * x))],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{x^2}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{\\sqrt{z-x^2}}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dy}\\,\\textcolor{#96B898}{dz}\\,\\textcolor{#8D9FCE}{dx}",
+        midMinExpr: "x^2",
+        midMaxExpr: "1",
+        innerMinExpr: "0",
+        innerMaxExpr: "sqrt(max(0, z - x^2))",
         rayEntryExitLabel: "y enters at y = 0, exits on paraboloid wall y = √(z - x²)",
         shadowBoundsLabel: "Shadow in xz-plane: 0 ≤ x ≤ 1, x² ≤ z ≤ 1",
       },
@@ -368,10 +355,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "xz",
         shadowPlaneLabel: "xz-plane (Parabolic Spandrel)",
         outerRange: [0, 1],
-        midBounds: (z) => [0, Math.sqrt(Math.max(0, z))],
-        innerBounds: (z, x) => [0, Math.sqrt(Math.max(0, z - x * x))],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{\\sqrt{z}}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{\\sqrt{z-x^2}}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dy}\\,\\textcolor{#96B898}{dx}\\,\\textcolor{#8D9FCE}{dz}",
+        midMinExpr: "0",
+        midMaxExpr: "sqrt(max(0, z))",
+        innerMinExpr: "0",
+        innerMaxExpr: "sqrt(max(0, z - x^2))",
         rayEntryExitLabel: "y enters at y = 0, exits on paraboloid wall y = √(z - x²)",
         shadowBoundsLabel: "Shadow in xz-plane: 0 ≤ z ≤ 1, 0 ≤ x ≤ √z",
       },
@@ -384,10 +371,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "yz",
         shadowPlaneLabel: "yz-plane (Parabolic Spandrel)",
         outerRange: [0, 1],
-        midBounds: (y) => [y * y, 1],
-        innerBounds: (y, z) => [0, Math.sqrt(Math.max(0, z - y * y))],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{y^2}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{\\sqrt{z-y^2}}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dx}\\,\\textcolor{#96B898}{dz}\\,\\textcolor{#8D9FCE}{dy}",
+        midMinExpr: "y^2",
+        midMaxExpr: "1",
+        innerMinExpr: "0",
+        innerMaxExpr: "sqrt(max(0, z - y^2))",
         rayEntryExitLabel: "x enters at x = 0, exits on paraboloid wall x = √(z - y²)",
         shadowBoundsLabel: "Shadow in yz-plane: 0 ≤ y ≤ 1, y² ≤ z ≤ 1",
       },
@@ -400,10 +387,10 @@ const SOLID_PRESETS: SolidPreset[] = [
         shadowPlane: "yz",
         shadowPlaneLabel: "yz-plane (Parabolic Spandrel)",
         outerRange: [0, 1],
-        midBounds: (z) => [0, Math.sqrt(Math.max(0, z))],
-        innerBounds: (z, y) => [0, Math.sqrt(Math.max(0, z - y * y))],
-        latex:
-          "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{\\sqrt{z}}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{\\sqrt{z-y^2}}} f(x,y,z)\\,\\textcolor{#FBEAA4}{dx}\\,\\textcolor{#96B898}{dy}\\,\\textcolor{#8D9FCE}{dz}",
+        midMinExpr: "0",
+        midMaxExpr: "sqrt(max(0, z))",
+        innerMinExpr: "0",
+        innerMaxExpr: "sqrt(max(0, z - y^2))",
         rayEntryExitLabel: "x enters at x = 0, exits on paraboloid wall x = √(z - y²)",
         shadowBoundsLabel: "Shadow in yz-plane: 0 ≤ z ≤ 1, 0 ≤ y ≤ √z",
       },
@@ -411,7 +398,6 @@ const SOLID_PRESETS: SolidPreset[] = [
   },
 ];
 
-// Helper to map (outer, mid, inner) back to math (x, y, z)
 function mapOrderCoordsToXYZ(
   order: TripleOrder,
   outerVal: number,
@@ -450,6 +436,12 @@ export function TripleIntegralOrderLab() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [showPartialSolid, setShowPartialSolid] = useState<boolean>(false);
 
+  // User-editable math expression strings (seeded from active solid + order)
+  const [integrandExpr, setIntegrandExpr] = useState<string>("1");
+  const [innerMinExpr, setInnerMinExpr] = useState<string>("0");
+  const [innerMaxExpr, setInnerMaxExpr] = useState<string>("1.4 - x - y");
+  const [midMaxExpr, setMidMaxExpr] = useState<string>("1.4 - x");
+
   const solid = useMemo(
     () => SOLID_PRESETS.find((s) => s.id === solidId) ?? SOLID_PRESETS[0],
     [solidId]
@@ -457,13 +449,72 @@ export function TripleIntegralOrderLab() {
 
   const spec = solid.orders[order];
 
+  // Sync user-editable bound inputs whenever solidId or order changes
+  useEffect(() => {
+    setInnerMinExpr(spec.innerMinExpr);
+    setInnerMaxExpr(spec.innerMaxExpr);
+    setMidMaxExpr(spec.midMaxExpr);
+  }, [spec]);
+
+  // Compile user-typed expressions
+  const compiledIntegrand = useMemo(
+    () => compileMathExpression(integrandExpr, ["x", "y", "z"], 1),
+    [integrandExpr]
+  );
+  const compiledInnerMin = useMemo(
+    () =>
+      compileMathExpression(
+        innerMinExpr,
+        [spec.outerVar, spec.midVar],
+        0
+      ),
+    [innerMinExpr, spec.outerVar, spec.midVar]
+  );
+  const compiledInnerMax = useMemo(
+    () =>
+      compileMathExpression(
+        innerMaxExpr,
+        [spec.outerVar, spec.midVar],
+        1
+      ),
+    [innerMaxExpr, spec.outerVar, spec.midVar]
+  );
+  const compiledMidMin = useMemo(
+    () => compileMathExpression(spec.midMinExpr, [spec.outerVar], 0),
+    [spec.midMinExpr, spec.outerVar]
+  );
+  const compiledMidMax = useMemo(
+    () => compileMathExpression(midMaxExpr, [spec.outerVar], 1),
+    [midMaxExpr, spec.outerVar]
+  );
+
+  const evalMidBounds = React.useCallback(
+    (oVal: number): [number, number] => {
+      const scope = { [spec.outerVar]: oVal };
+      const m1 = Math.max(0, compiledMidMin.evaluate(scope));
+      const m2 = Math.max(m1, Math.min(1.6, compiledMidMax.evaluate(scope)));
+      return [m1, m2];
+    },
+    [compiledMidMin, compiledMidMax, spec.outerVar]
+  );
+
+  const evalInnerBounds = React.useCallback(
+    (oVal: number, mVal: number): [number, number] => {
+      const scope = { [spec.outerVar]: oVal, [spec.midVar]: mVal };
+      const i1 = Math.max(0, compiledInnerMin.evaluate(scope));
+      const i2 = Math.max(i1, Math.min(1.6, compiledInnerMax.evaluate(scope)));
+      return [i1, i2];
+    },
+    [compiledInnerMin, compiledInnerMax, spec.outerVar, spec.midVar]
+  );
+
   // Actual coordinate values for outer, mid, and inner bounds
   const coords = useMemo(() => {
     const [oMin, oMax] = spec.outerRange;
     const outerVal = oMin + outerNorm * (oMax - oMin);
-    const [mMin, mMax] = spec.midBounds(outerVal);
+    const [mMin, mMax] = evalMidBounds(outerVal);
     const midVal = mMin + midNorm * Math.max(0, mMax - mMin);
-    const [iMin, iMax] = spec.innerBounds(outerVal, midVal);
+    const [iMin, iMax] = evalInnerBounds(outerVal, midVal);
     return {
       outerVal,
       mMin,
@@ -473,7 +524,37 @@ export function TripleIntegralOrderLab() {
       iMax,
       rayLength: Math.max(0, iMax - iMin),
     };
-  }, [spec, outerNorm, midNorm]);
+  }, [spec.outerRange, outerNorm, midNorm, evalMidBounds, evalInnerBounds]);
+
+  // Compute numerical Triple Integral ∭_E f(x,y,z) dV for the user's custom expressions
+  const evaluatedTripleIntegral = useMemo(() => {
+    const N = 14;
+    const [oA, oB] = spec.outerRange;
+    const dOuter = (oB - oA) / N;
+    let sum = 0;
+
+    for (let i = 0; i < N; i++) {
+      const oVal = oA + (i + 0.5) * dOuter;
+      const [m1, m2] = evalMidBounds(oVal);
+      if (m2 <= m1) continue;
+      const dMid = (m2 - m1) / N;
+
+      for (let j = 0; j < N; j++) {
+        const mVal = m1 + (j + 0.5) * dMid;
+        const [in1, in2] = evalInnerBounds(oVal, mVal);
+        if (in2 <= in1) continue;
+        const dIn = (in2 - in1) / N;
+
+        for (let k = 0; k < N; k++) {
+          const inVal = in1 + (k + 0.5) * dIn;
+          const [x, y, z] = mapOrderCoordsToXYZ(order, oVal, mVal, inVal);
+          const fVal = compiledIntegrand.evaluate({ x, y, z });
+          sum += fVal * dOuter * dMid * dIn;
+        }
+      }
+    }
+    return sum;
+  }, [spec.outerRange, evalMidBounds, evalInnerBounds, order, compiledIntegrand]);
 
   // Animate outer & middle sweep when playing
   useEffect(() => {
@@ -533,7 +614,6 @@ export function TripleIntegralOrderLab() {
     grid.position.set(0.7, 0, 0.7);
     scene.add(grid);
 
-    // Coordinate Axes: Math X -> Three X (#8D9FCE), Math Y -> Three Z (#96B898), Math Z -> Three Y (#029091)
     const addAxis = (to: [number, number, number], hex: string) => {
       const geom = new THREE.BufferGeometry().setFromPoints([
         new THREE.Vector3(0, 0, 0),
@@ -588,7 +668,7 @@ export function TripleIntegralOrderLab() {
     };
   }, []);
 
-  // Rebuild 3D Solid Shell whenever solid or showPartialSolid/outerVal changes
+  // Rebuild 3D Solid Shell directly from the user's active bounds
   useEffect(() => {
     const groups = groupsRef.current;
     if (!groups) return;
@@ -600,32 +680,33 @@ export function TripleIntegralOrderLab() {
       solidGroup.remove(c);
     }
 
-    const nx = 34;
-    const ny = 34;
+    const nO = 32;
+    const nM = 32;
     const topPos: number[] = [];
     const botPos: number[] = [];
     const indices: number[] = [];
 
-    const [xA, xB] = solid.xyBaseXRange;
-    for (let i = 0; i <= nx; i++) {
-      const x = xA + (i / nx) * (xB - xA);
-      const [y1, y2] = solid.xyBaseYBounds(x);
-      for (let j = 0; j <= ny; j++) {
-        const y = y1 + (j / ny) * (y2 - y1);
-        const zTop = solid.zTopSurface(x, y);
-        const zBot = solid.zBottomSurface(x, y);
+    const [oA, oB] = spec.outerRange;
+    for (let i = 0; i <= nO; i++) {
+      const oVal = oA + (i / nO) * (oB - oA);
+      const [m1, m2] = evalMidBounds(oVal);
+      for (let j = 0; j <= nM; j++) {
+        const mVal = m1 + (j / nM) * (m2 - m1);
+        const [in1, in2] = evalInnerBounds(oVal, mVal);
+        const pTop = mapOrderCoordsToXYZ(order, oVal, mVal, in2);
+        const pBot = mapOrderCoordsToXYZ(order, oVal, mVal, in1);
         // Math (x, y, z) -> Three (x, z, y)
-        topPos.push(x, zTop, y);
-        botPos.push(x, zBot, y);
+        topPos.push(pTop[0], pTop[2], pTop[1]);
+        botPos.push(pBot[0], pBot[2], pBot[1]);
       }
     }
 
-    for (let i = 0; i < nx; i++) {
-      for (let j = 0; j < ny; j++) {
-        const a = i * (ny + 1) + j;
-        const b = (i + 1) * (ny + 1) + j;
-        const c = (i + 1) * (ny + 1) + (j + 1);
-        const d = i * (ny + 1) + (j + 1);
+    for (let i = 0; i < nO; i++) {
+      for (let j = 0; j < nM; j++) {
+        const a = i * (nM + 1) + j;
+        const b = (i + 1) * (nM + 1) + j;
+        const c = (i + 1) * (nM + 1) + (j + 1);
+        const d = i * (nM + 1) + (j + 1);
         indices.push(a, b, d);
         indices.push(b, c, d);
       }
@@ -662,7 +743,7 @@ export function TripleIntegralOrderLab() {
       )
     );
 
-    if (solid.id === "paraboloid-cap") {
+    if (innerMinExpr.trim() !== "0") {
       const botGeom = new THREE.BufferGeometry();
       botGeom.setAttribute(
         "position",
@@ -682,7 +763,14 @@ export function TripleIntegralOrderLab() {
         )
       );
     }
-  }, [solid, showPartialSolid]);
+  }, [
+    spec.outerRange,
+    order,
+    evalMidBounds,
+    evalInnerBounds,
+    innerMinExpr,
+    showPartialSolid,
+  ]);
 
   // Update 2D Shadow Projection on Coordinate Wall, 2D Middle Curtain, and 1D Inner Pillar Ray
   useEffect(() => {
@@ -701,7 +789,6 @@ export function TripleIntegralOrderLab() {
     clearGroup(curtainGroup);
     clearGroup(rayGroup);
 
-    // 1. Render 2D Shadow Region D directly on the target coordinate wall (xy -> z=0, xz -> y=0, yz -> x=0)
     const nS = 28;
     const shadowVerts: number[] = [];
     const shadowIdx: number[] = [];
@@ -709,11 +796,10 @@ export function TripleIntegralOrderLab() {
 
     for (let i = 0; i <= nS; i++) {
       const oVal = oA + (i / nS) * (oB - oA);
-      const [m1, m2] = spec.midBounds(oVal);
+      const [m1, m2] = evalMidBounds(oVal);
       for (let j = 0; j <= nS; j++) {
         const mVal = m1 + (j / nS) * (m2 - m1);
         const [x, y, z] = mapOrderCoordsToXYZ(order, oVal, mVal, 0);
-        // Slightly offset off the coordinate plane so there is no z-fighting
         const sx = spec.shadowPlane === "yz" ? 0.003 : x;
         const sy = spec.shadowPlane === "xz" ? 0.003 : y;
         const sz = spec.shadowPlane === "xy" ? 0.003 : z;
@@ -750,7 +836,6 @@ export function TripleIntegralOrderLab() {
       )
     );
 
-    // 2. Render 2D Middle Integration Curtain at outerVal
     const steps = 32;
     const curtVerts: number[] = [];
     const curtIdx: number[] = [];
@@ -758,10 +843,9 @@ export function TripleIntegralOrderLab() {
 
     for (let i = 0; i <= steps; i++) {
       const m = mMin + (i / steps) * (mMax - mMin);
-      const [in1, in2] = spec.innerBounds(outerVal, m);
+      const [in1, in2] = evalInnerBounds(outerVal, m);
       const p1 = mapOrderCoordsToXYZ(order, outerVal, m, in1);
       const p2 = mapOrderCoordsToXYZ(order, outerVal, m, in2);
-      // Map math (x,y,z) -> Three (x,z,y)
       curtVerts.push(p1[0], p1[2], p1[1]);
       curtVerts.push(p2[0], p2[2], p2[1]);
     }
@@ -795,7 +879,6 @@ export function TripleIntegralOrderLab() {
       )
     );
 
-    // 3. Render 1D Inner Integration Pillar/Ray at (outerVal, midVal) from iMin to iMax
     const rayStartMath = mapOrderCoordsToXYZ(order, outerVal, midVal, iMin);
     const rayEndMath = mapOrderCoordsToXYZ(order, outerVal, midVal, iMax);
     const vStart = new THREE.Vector3(
@@ -809,7 +892,6 @@ export function TripleIntegralOrderLab() {
       rayEndMath[1]
     );
 
-    // Glowing Cylinder Pillar for the 1D inner ray
     const rayVec = new THREE.Vector3().subVectors(vEnd, vStart);
     const len = rayVec.length();
     if (len > 0.005) {
@@ -824,7 +906,6 @@ export function TripleIntegralOrderLab() {
       rayGroup.add(cylMesh);
     }
 
-    // Entry Sphere (#D5658B Dusty Rose) & Exit Sphere (#B95869 Terracotta Crimson)
     const sphereGeom = new THREE.SphereGeometry(0.044, 16, 16);
     const entrySphere = new THREE.Mesh(
       sphereGeom,
@@ -839,7 +920,7 @@ export function TripleIntegralOrderLab() {
     );
     exitSphere.position.copy(vEnd);
     rayGroup.add(exitSphere);
-  }, [spec, order, coords]);
+  }, [spec, order, coords, evalMidBounds, evalInnerBounds]);
 
   // Build 2D SVG for the Orthographic Shadow Projection D
   const shadowSvg = useMemo(() => {
@@ -855,10 +936,9 @@ export function TripleIntegralOrderLab() {
     const lowerPts: [number, number][] = [];
     const upperPts: [number, number][] = [];
 
-    // We plot outerVar on horizontal axis and midVar on vertical axis of the 2D Shadow Plane
     for (let i = 0; i <= N; i++) {
       const o = oA + (i / N) * (oB - oA);
-      const [m1, m2] = spec.midBounds(o);
+      const [m1, m2] = evalMidBounds(o);
       lowerPts.push(toSvg(o, m1));
       upperPts.push(toSvg(o, m2));
     }
@@ -877,7 +957,11 @@ export function TripleIntegralOrderLab() {
       stripTop,
       rayFootprint,
     };
-  }, [solid.id, spec, coords]);
+  }, [solid.id, spec.outerRange, coords, evalMidBounds]);
+
+  const dynamicTripleLatex = `\\int_{\\textcolor{#8D9FCE}{${spec.outerRange[0]}}}^{\\textcolor{#8D9FCE}{${spec.outerRange[1]}}} \\int_{\\textcolor{#96B898}{${compiledMidMin.tex}}}^{\\textcolor{#96B898}{${compiledMidMax.tex}}} \\int_{\\textcolor{#D5658B}{${compiledInnerMin.tex}}}^{\\textcolor{#B95869}{${compiledInnerMax.tex}}} \\left(${compiledIntegrand.tex}\\right)\\,\\textcolor{#FBEAA4}{d${spec.innerVar}}\\,\\textcolor{#96B898}{d${spec.midVar}}\\,\\textcolor{#8D9FCE}{d${spec.outerVar}} \\approx \\textcolor{#FBEAA4}{${evaluatedTripleIntegral.toFixed(
+    4
+  )}}`;
 
   return (
     <section
@@ -898,21 +982,20 @@ export function TripleIntegralOrderLab() {
             1D Inner Ray → 2D Shadow Curtain → 3D Solid across All 6 Orders
           </h2>
           <p className="font-math-serif text-sm sm:text-base text-[var(--text-secondary)] max-w-3xl">
-            Select any of the <strong>6 integration orders</strong> below. Watch
-            how the innermost differential (<KaTeXMath math="dz, dy," /> or{" "}
-            <KaTeXMath math="dx" />) shoots a <strong>1D ray</strong> between two
-            surfaces, projects a <strong>2D shadow</strong> onto the orthogonal
-            coordinate wall, and sweeps a <strong>2D curtain</strong> to fill the
-            3D solid <KaTeXMath math="E" />.
+            Select any of the <strong>6 integration orders</strong> or type your
+            own custom 3D bounding surfaces and integrand below! Watch how the
+            innermost differential shoots a <strong>1D ray</strong>, projects a{" "}
+            <strong>2D shadow</strong> onto the coordinate wall, and sweeps a{" "}
+            <strong>2D curtain</strong>.
           </p>
         </div>
 
         <div className="border border-[var(--border-strong)] bg-[var(--bg-canvas)] px-3.5 py-2 text-xs font-tabular-mono space-y-0.5">
           <span className="text-[10px] uppercase text-[var(--text-muted)] block">
-            Active Shadow Wall
+            Evaluated Triple Integral ∭ f dV
           </span>
-          <span className="text-sm font-semibold text-[#96B898]">
-            {spec.shadowPlaneLabel}
+          <span className="text-sm font-semibold text-[#FBEAA4]">
+            {evaluatedTripleIntegral.toFixed(4)}
           </span>
         </div>
       </div>
@@ -922,10 +1005,9 @@ export function TripleIntegralOrderLab() {
         id="six-orders-of-integration"
         className="grid grid-cols-1 lg:grid-cols-12 gap-4 scroll-mt-24"
       >
-        {/* Solid Selector (5 cols) */}
         <div className="lg:col-span-5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
           <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] block">
-            1. Select 3D Bounded Solid E:
+            1. Select 3D Bounded Solid Preset:
           </span>
           <div className="grid grid-cols-1 gap-1.5">
             {SOLID_PRESETS.map((s) => (
@@ -952,7 +1034,6 @@ export function TripleIntegralOrderLab() {
           </div>
         </div>
 
-        {/* 6 Orders of Integration Selector (7 cols) */}
         <div className="lg:col-span-7 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 flex flex-col justify-between gap-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
@@ -994,10 +1075,54 @@ export function TripleIntegralOrderLab() {
           </div>
 
           <div className="text-xs font-tabular-mono text-[var(--text-secondary)] pt-1 flex flex-wrap items-center justify-between gap-2">
-            <span>{solid.exactVolumeLabel}</span>
+            <span>Shadow Wall: {spec.shadowPlaneLabel}</span>
             <span className="text-[#D5658B]">{spec.rayEntryExitLabel}</span>
           </div>
         </div>
+      </div>
+
+      {/* Custom Math Typing Composer for Triple Integral Bounds & Integrand */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <MathExpressionInput
+          label="Integrand f(x, y, z):"
+          value={integrandExpr}
+          onChange={setIntegrandExpr}
+          allowedVars={["x", "y", "z"]}
+          prefixLatex="f ="
+          placeholder="1"
+          accentHex="#8D9FCE"
+          compact
+        />
+        <MathExpressionInput
+          label={`Inner Lower Surface (${spec.innerVar}_min):`}
+          value={innerMinExpr}
+          onChange={setInnerMinExpr}
+          allowedVars={[spec.outerVar, spec.midVar]}
+          prefixLatex={`${spec.innerVar}_1 =`}
+          placeholder="0"
+          accentHex="#D5658B"
+          compact
+        />
+        <MathExpressionInput
+          label={`Inner Upper Surface (${spec.innerVar}_max):`}
+          value={innerMaxExpr}
+          onChange={setInnerMaxExpr}
+          allowedVars={[spec.outerVar, spec.midVar]}
+          prefixLatex={`${spec.innerVar}_2 =`}
+          placeholder="1.4 - x - y"
+          accentHex="#B95869"
+          compact
+        />
+        <MathExpressionInput
+          label={`2D Shadow Upper Curve (${spec.midVar}_max):`}
+          value={midMaxExpr}
+          onChange={setMidMaxExpr}
+          allowedVars={[spec.outerVar]}
+          prefixLatex={`${spec.midVar}_2 =`}
+          placeholder="1.4 - x"
+          accentHex="#96B898"
+          compact
+        />
       </div>
 
       {/* Main Split Viewports: Left 3D Solid/Ray/Curtain + Right 2D Shadow Projection & Sliders */}
@@ -1041,7 +1166,6 @@ export function TripleIntegralOrderLab() {
 
         {/* Right: 2D Shadow Wall Projection SVG + 2-Stage Scrubber Controls */}
         <div className="lg:col-span-5 flex flex-col justify-between gap-4">
-          {/* 2D Orthographic Shadow Region SVG */}
           <figure className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 flex flex-col items-center">
             <div className="w-full flex items-center justify-between text-xs font-tabular-mono mb-2">
               <span className="text-[#96B898] font-semibold">
@@ -1058,7 +1182,6 @@ export function TripleIntegralOrderLab() {
               role="img"
               aria-label={`2D shadow projection onto the ${spec.shadowPlane}-plane`}
             >
-              {/* Projected Shadow Polygon */}
               <polygon
                 points={shadowSvg.polyPoints}
                 fill="#96B898"
@@ -1067,7 +1190,6 @@ export function TripleIntegralOrderLab() {
                 strokeWidth="2"
               />
 
-              {/* Middle Integration Curtain Footprint Line (#D35323 Persimmon) */}
               <line
                 x1={shadowSvg.stripBottom[0]}
                 y1={shadowSvg.stripBottom[1]}
@@ -1077,7 +1199,6 @@ export function TripleIntegralOrderLab() {
                 strokeWidth="3.5"
               />
 
-              {/* 1D Inner Ray Footprint Point (#FBEAA4 Warm Cream) */}
               <circle
                 cx={shadowSvg.rayFootprint[0]}
                 cy={shadowSvg.rayFootprint[1]}
@@ -1087,7 +1208,6 @@ export function TripleIntegralOrderLab() {
                 strokeWidth="1.5"
               />
 
-              {/* Axes */}
               <line
                 x1={32}
                 y1={175}
@@ -1171,7 +1291,6 @@ export function TripleIntegralOrderLab() {
               </div>
             </div>
 
-            {/* Slider 1: Outer Variable */}
             <div className="space-y-1">
               <label
                 htmlFor="triple-outer-slider"
@@ -1195,7 +1314,6 @@ export function TripleIntegralOrderLab() {
               />
             </div>
 
-            {/* Slider 2: Middle Variable */}
             <div className="space-y-1">
               <label
                 htmlFor="triple-mid-slider"
@@ -1239,7 +1357,7 @@ export function TripleIntegralOrderLab() {
           </span>
           <span className="text-[#96B898]">{spec.shadowBoundsLabel}</span>
         </div>
-        <KaTeXMath math={spec.latex} block />
+        <KaTeXMath math={dynamicTripleLatex} block />
       </div>
 
       {/* Pedagogical Step-by-Step Disclosure */}

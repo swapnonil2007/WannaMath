@@ -5,67 +5,66 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { Box, Eye, Grid, RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { MathExpressionInput } from "@/components/math/MathExpressionInput";
+import { compileMathExpression } from "@/lib/mathParser";
 
-type SurfaceId = "paraboloid" | "saddle" | "wave" | "plane";
-type DomainShapeId = "rectangle" | "triangle" | "sector";
+type SurfaceId = "paraboloid" | "saddle" | "wave" | "plane" | "custom";
+type DomainShapeId = "rectangle" | "triangle" | "sector" | "custom";
 type SampleRule = "midpoint" | "lower" | "upper";
 
 interface SurfacePreset {
-  id: SurfaceId;
+  id: Exclude<SurfaceId, "custom">;
   name: string;
-  latex: string;
+  expr: string;
   engineeringNote: string;
-  fn: (x: number, y: number) => number;
 }
 
 const SURFACE_PRESETS: SurfacePreset[] = [
   {
     id: "paraboloid",
     name: "Elliptic Paraboloid Dome",
-    latex: "f(x,y) = 1.85 - 0.45(x^2 + y^2)",
+    expr: "1.85 - 0.45*(x^2 + y^2)",
     engineeringNote:
       "Models laminar velocity profile in a duct or acoustic pressure dome.",
-    fn: (x, y) => 1.85 - 0.45 * (x * x + y * y),
   },
   {
     id: "plane",
     name: "Hydrostatic Pressure Plane",
-    latex: "f(x,y) = 0.45 + 0.65x + 0.50y",
+    expr: "0.45 + 0.65*x + 0.50*y",
     engineeringNote:
       "Models linearly varying hydrostatic pressure or eccentric axial stress on a footing.",
-    fn: (x, y) => 0.45 + 0.65 * x + 0.5 * y,
   },
   {
     id: "saddle",
     name: "Hyperbolic Twist Surface",
-    latex: "f(x,y) = 0.65 + 0.75xy",
+    expr: "0.65 + 0.75*x*y",
     engineeringNote:
       "Bilinear finite-element shape function interpolation over a quadrilateral patch.",
-    fn: (x, y) => 0.65 + 0.75 * x * y,
   },
   {
     id: "wave",
     name: "Harmonic Standing Mode",
-    latex: "f(x,y) = 1.15 + 0.55\\cos(1.6x)\\cos(1.6y)",
+    expr: "1.15 + 0.55*cos(1.6*x)*cos(1.6*y)",
     engineeringNote:
       "Fundamental vibration mode shape of an elastic rectangular membrane.",
-    fn: (x, y) => 1.15 + 0.55 * Math.cos(1.6 * x) * Math.cos(1.6 * y),
+  },
+];
+
+const DOMAIN_PRESETS: {
+  id: Exclude<DomainShapeId, "custom">;
+  label: string;
+  yMaxExpr: string;
+}[] = [
+  { id: "rectangle", label: "Rectangle (y ≤ 1.4)", yMaxExpr: "1.4" },
+  { id: "triangle", label: "Triangle (y ≤ x)", yMaxExpr: "x" },
+  {
+    id: "sector",
+    label: "Quarter Disk",
+    yMaxExpr: "sqrt(max(0, 1.96 - x^2))",
   },
 ];
 
 const DOMAIN_MAX = 1.4;
-
-function isPointInDomain(
-  x: number,
-  y: number,
-  domainShape: DomainShapeId
-): boolean {
-  if (x < 0 || y < 0 || x > DOMAIN_MAX || y > DOMAIN_MAX) return false;
-  if (domainShape === "rectangle") return true;
-  if (domainShape === "triangle") return y <= x + 1e-7;
-  if (domainShape === "sector") return x * x + y * y <= DOMAIN_MAX * DOMAIN_MAX + 1e-7;
-  return true;
-}
 
 // 5-point Gauss-Legendre nodes/weights on [0, 1] for accurate reference integral
 const GL_NODES = [
@@ -77,9 +76,9 @@ const GL_WEIGHTS = [
 
 function computeExactVolume(
   fn: (x: number, y: number) => number,
-  domainShape: DomainShapeId
+  yMaxFn: (x: number) => number
 ): number {
-  const N = 24;
+  const N = 20;
   const dx = DOMAIN_MAX / N;
   let total = 0;
 
@@ -89,12 +88,8 @@ function computeExactVolume(
       const x = x0 + GL_NODES[gx] * dx;
       const wx = GL_WEIGHTS[gx] * dx;
 
-      let yMax = DOMAIN_MAX;
-      if (domainShape === "triangle") {
-        yMax = x;
-      } else if (domainShape === "sector") {
-        yMax = Math.sqrt(Math.max(0, DOMAIN_MAX * DOMAIN_MAX - x * x));
-      }
+      const yMax = Math.max(0, Math.min(DOMAIN_MAX, yMaxFn(x)));
+      if (yMax <= 0) continue;
 
       const M = 10;
       const dy = yMax / M;
@@ -117,18 +112,47 @@ export function RiemannVolumeLab() {
   const surfaceGroupRef = useRef<THREE.Group | null>(null);
 
   const [surfaceId, setSurfaceId] = useState<SurfaceId>("paraboloid");
+  const [surfaceExpr, setSurfaceExpr] = useState<string>(
+    SURFACE_PRESETS[0].expr
+  );
+
   const [domainShape, setDomainShape] = useState<DomainShapeId>("rectangle");
+  const [yMaxExpr, setYMaxExpr] = useState<string>("1.4");
+
   const [nx, setNx] = useState<number>(8);
   const [ny, setNy] = useState<number>(8);
   const [sampleRule, setSampleRule] = useState<SampleRule>("midpoint");
   const [showSmoothSurface, setShowSmoothSurface] = useState<boolean>(true);
   const [selectedCell, setSelectedCell] = useState<[number, number]>([3, 2]);
 
-  const activeSurface = useMemo(
-    () =>
-      SURFACE_PRESETS.find((s) => s.id === surfaceId) ?? SURFACE_PRESETS[0],
-    [surfaceId]
+  const compiledSurface = useMemo(
+    () => compileMathExpression(surfaceExpr, ["x", "y"], 1.0),
+    [surfaceExpr]
   );
+
+  const compiledYMax = useMemo(
+    () => compileMathExpression(yMaxExpr, ["x"], DOMAIN_MAX),
+    [yMaxExpr]
+  );
+
+  const evalF = React.useCallback(
+    (x: number, y: number) => Math.max(0.02, compiledSurface.evaluate({ x, y })),
+    [compiledSurface]
+  );
+
+  const evalYMax = React.useCallback(
+    (x: number) =>
+      Math.max(0, Math.min(DOMAIN_MAX, compiledYMax.evaluate({ x }))),
+    [compiledYMax]
+  );
+
+  const activeEngineeringNote = useMemo(() => {
+    const match = SURFACE_PRESETS.find((s) => s.id === surfaceId);
+    return (
+      match?.engineeringNote ??
+      "Custom user-defined multivariable surface z = f(x, y) integrated over custom 2D region R."
+    );
+  }, [surfaceId]);
 
   // Compute partition cells and Riemann sum
   const partitionData = useMemo(() => {
@@ -162,6 +186,8 @@ export function RiemannVolumeLab() {
           ? x0
           : x0 + dx;
 
+      const yUpperAtXc = evalYMax(xc);
+
       for (let j = 0; j < ny; j++) {
         const y0 = j * dy;
         const yc = y0 + 0.5 * dy;
@@ -172,9 +198,8 @@ export function RiemannVolumeLab() {
             ? y0
             : y0 + dy;
 
-        // Cell is included if its center lies inside the domain R
-        const inside = isPointInDomain(xc, yc, domainShape);
-        const height = inside ? Math.max(0.02, activeSurface.fn(xs, ys)) : 0;
+        const inside = yc <= yUpperAtXc + 1e-7;
+        const height = inside ? evalF(xs, ys) : 0;
         const dV = inside ? height * dA : 0;
 
         if (inside) {
@@ -198,7 +223,7 @@ export function RiemannVolumeLab() {
       }
     }
 
-    const exactVol = computeExactVolume(activeSurface.fn, domainShape);
+    const exactVol = computeExactVolume(evalF, evalYMax);
     const absError = Math.abs(riemannSum - exactVol);
     const relErrorPct = exactVol > 0 ? (absError / exactVol) * 100 : 0;
 
@@ -213,9 +238,8 @@ export function RiemannVolumeLab() {
       relErrorPct,
       activeCount,
     };
-  }, [activeSurface, domainShape, nx, ny, sampleRule]);
+  }, [evalF, evalYMax, nx, ny, sampleRule]);
 
-  // Keep selectedCell within valid bounds when nx, ny, or domainShape change
   const inspectedCell = useMemo(() => {
     const [ci, cj] = selectedCell;
     const clampedI = Math.min(ci, nx - 1);
@@ -264,11 +288,7 @@ export function RiemannVolumeLab() {
     grid.position.set(0.7, 0, 0.7);
     scene.add(grid);
 
-    // Coordinate Axes (Math X -> Three X, Math Y -> Three Z, Math Z -> Three Y)
-    const addAxis = (
-      to: [number, number, number],
-      hex: string
-    ) => {
+    const addAxis = (to: [number, number, number], hex: string) => {
       const geom = new THREE.BufferGeometry().setFromPoints([
         new THREE.Vector3(0, 0, 0),
         new THREE.Vector3(...to),
@@ -332,7 +352,6 @@ export function RiemannVolumeLab() {
 
     const { dx, dy, cells } = partitionData;
 
-    // Shared materials (flat solid colors, zero gradients)
     const normalMat = new THREE.MeshLambertMaterial({
       color: "#029091",
       transparent: true,
@@ -376,7 +395,6 @@ export function RiemannVolumeLab() {
       prismGroup.add(wire);
 
       if (isInspected) {
-        // Warm cream top cap on the inspected prism
         const capGeom = new THREE.PlaneGeometry(dx * 0.96, dy * 0.96);
         capGeom.rotateX(-Math.PI / 2);
         const capMesh = new THREE.Mesh(capGeom, topCapHighlightMat);
@@ -385,7 +403,6 @@ export function RiemannVolumeLab() {
       }
     }
 
-    // Smooth reference surface z = f(x,y)
     if (showSmoothSurface) {
       const res = 34;
       const positions: number[] = [];
@@ -394,16 +411,11 @@ export function RiemannVolumeLab() {
       for (let i = 0; i <= res; i++) {
         const u = i / res;
         const x = u * DOMAIN_MAX;
-        let yMax = DOMAIN_MAX;
-        if (domainShape === "triangle") {
-          yMax = x;
-        } else if (domainShape === "sector") {
-          yMax = Math.sqrt(Math.max(0, DOMAIN_MAX * DOMAIN_MAX - x * x));
-        }
+        const yMax = evalYMax(x);
         for (let j = 0; j <= res; j++) {
           const v = j / res;
           const y = v * yMax;
-          const z = activeSurface.fn(x, y);
+          const z = evalF(x, y);
           positions.push(x, z, y);
         }
       }
@@ -443,15 +455,23 @@ export function RiemannVolumeLab() {
       });
       surfaceGroup.add(new THREE.Mesh(surfGeom, surfWire));
     }
-  }, [
-    partitionData,
-    inspectedCell,
-    showSmoothSurface,
-    domainShape,
-    activeSurface,
-  ]);
+  }, [partitionData, inspectedCell, showSmoothSurface, evalF, evalYMax]);
 
   const svgScale = 155 / DOMAIN_MAX;
+
+  // Dynamic boundary curve path for 2D SVG
+  const boundaryCurveSvgPath = useMemo(() => {
+    const pts: string[] = [];
+    const N = 48;
+    for (let i = 0; i <= N; i++) {
+      const x = (i / N) * DOMAIN_MAX;
+      const y = evalYMax(x);
+      const sx = 30 + x * svgScale;
+      const sy = 180 - y * svgScale;
+      pts.push(`${i === 0 ? "M" : "L"} ${sx.toFixed(1)} ${sy.toFixed(1)}`);
+    }
+    return pts.join(" ");
+  }, [evalYMax, svgScale]);
 
   return (
     <section
@@ -469,11 +489,10 @@ export function RiemannVolumeLab() {
             From 2D Partition Sub-Rectangles to 3D Riemann Columns
           </h2>
           <p className="font-math-serif text-sm sm:text-base text-[var(--text-secondary)] max-w-3xl">
-            Subdivide the 2D region <KaTeXMath math="R \subset \mathbb{R}^2" />{" "}
-            into an <KaTeXMath math="N_x \times N_y" /> mesh of patches{" "}
-            <KaTeXMath math="\Delta A = \Delta x\,\Delta y" />. Click any cell
-            in the 2D domain grid on the right to inspect its corresponding 3D
-            column <KaTeXMath math="\Delta V_{ij} = f(x_i^*, y_j^*)\,\Delta A" />.
+            Choose a preset or type your own surface <KaTeXMath math="z = f(x,y)" />{" "}
+            and domain boundary <KaTeXMath math="y = g_2(x)" /> below. Click any
+            cell in the 2D domain grid to inspect its corresponding 3D column{" "}
+            <KaTeXMath math="\Delta V_{ij} = f(x_i^*, y_j^*)\,\Delta A" />.
           </p>
         </div>
 
@@ -511,14 +530,17 @@ export function RiemannVolumeLab() {
         {/* 1. Surface Selector */}
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
           <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] block">
-            1. Integrand Surface z = f(x, y)
+            1. Integrand Surface Presets
           </span>
           <div className="grid grid-cols-2 gap-1.5">
             {SURFACE_PRESETS.map((preset) => (
               <button
                 key={preset.id}
                 type="button"
-                onClick={() => setSurfaceId(preset.id)}
+                onClick={() => {
+                  setSurfaceId(preset.id);
+                  setSurfaceExpr(preset.expr);
+                }}
                 className={`px-2.5 py-1.5 text-xs font-medium text-left border transition-colors cursor-pointer ${
                   surfaceId === preset.id
                     ? "border-[var(--border-strong)] bg-[var(--bg-panel-elevated)] text-[var(--text-primary)] font-semibold"
@@ -529,28 +551,22 @@ export function RiemannVolumeLab() {
               </button>
             ))}
           </div>
-          <div className="text-xs pt-1 text-[#8D9FCE]">
-            <KaTeXMath math={activeSurface.latex} />
-          </div>
         </div>
 
         {/* 2. Domain Shape Selector */}
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
           <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] block">
-            2. Base Region R in xy-Plane
+            2. Base Region R Presets (0 ≤ x ≤ 1.4)
           </span>
           <div className="grid grid-cols-3 gap-1.5">
-            {(
-              [
-                { id: "rectangle", label: "Rectangle" },
-                { id: "triangle", label: "Triangle y ≤ x" },
-                { id: "sector", label: "Quarter Disk" },
-              ] as const
-            ).map((d) => (
+            {DOMAIN_PRESETS.map((d) => (
               <button
                 key={d.id}
                 type="button"
-                onClick={() => setDomainShape(d.id)}
+                onClick={() => {
+                  setDomainShape(d.id);
+                  setYMaxExpr(d.yMaxExpr);
+                }}
                 className={`px-2.5 py-1.5 text-xs font-medium border transition-colors cursor-pointer ${
                   domainShape === d.id
                     ? "border-[var(--border-strong)] bg-[var(--bg-panel-elevated)] text-[var(--text-primary)] font-semibold"
@@ -611,6 +627,35 @@ export function RiemannVolumeLab() {
         </div>
       </div>
 
+      {/* Custom Math Typing Widgets for Surface f(x, y) and Upper Boundary Curve y_max(x) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <MathExpressionInput
+          label="Custom Surface Equation z = f(x, y):"
+          value={surfaceExpr}
+          onChange={(val) => {
+            setSurfaceId("custom");
+            setSurfaceExpr(val);
+          }}
+          allowedVars={["x", "y"]}
+          prefixLatex="f(x,y) ="
+          placeholder="1.85 - 0.45*(x^2 + y^2)"
+          accentHex="#8D9FCE"
+        />
+
+        <MathExpressionInput
+          label="Custom 2D Domain Upper Curve y = g₂(x) on [0, 1.4]:"
+          value={yMaxExpr}
+          onChange={(val) => {
+            setDomainShape("custom");
+            setYMaxExpr(val);
+          }}
+          allowedVars={["x"]}
+          prefixLatex="0 \le y \le"
+          placeholder="1.4 - 0.5*x^2"
+          accentHex="#B95869"
+        />
+      </div>
+
       {/* Main Split Workspace: Left 3D WebGL + Right 2D Interactive Partition Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         {/* Left: 3D WebGL Riemann Prism Viewport */}
@@ -667,37 +712,14 @@ export function RiemannVolumeLab() {
               role="img"
               aria-label="Interactive 2D partition grid of the integration domain R"
             >
-              {/* True boundary outline of R */}
-              {domainShape === "rectangle" && (
-                <rect
-                  x={30}
-                  y={180 - 155}
-                  width={155}
-                  height={155}
-                  fill="none"
-                  stroke="#B95869"
-                  strokeWidth="1.5"
-                  strokeDasharray="3 2"
-                />
-              )}
-              {domainShape === "triangle" && (
-                <polygon
-                  points="30,180 185,180 185,25"
-                  fill="none"
-                  stroke="#B95869"
-                  strokeWidth="1.5"
-                  strokeDasharray="3 2"
-                />
-              )}
-              {domainShape === "sector" && (
-                <path
-                  d="M 30 25 A 155 155 0 0 1 185 180 L 30 180 Z"
-                  fill="none"
-                  stroke="#B95869"
-                  strokeWidth="1.5"
-                  strokeDasharray="3 2"
-                />
-              )}
+              {/* Dynamic Boundary Curve y = g2(x) */}
+              <path
+                d={boundaryCurveSvgPath}
+                fill="none"
+                stroke="#B95869"
+                strokeWidth="2"
+                strokeDasharray="3 2"
+              />
 
               {/* Partition Sub-Rectangles */}
               {partitionData.cells.map((cell) => {
@@ -838,12 +860,12 @@ export function RiemannVolumeLab() {
             </span>
             <KaTeXMath
               block
-              math={`S_{${nx},${ny}} = \\sum_{i=1}^{\\textcolor{#8D9FCE}{${nx}}} \\sum_{j=1}^{\\textcolor{#96B898}{${ny}}} f(x_i^*, y_j^*)\\,\\textcolor{#FBEAA4}{\\Delta A} = \\textcolor{#FBEAA4}{${partitionData.riemannSum.toFixed(
+              math={`S_{${nx},${ny}} = \\sum_{i=1}^{\\textcolor{#8D9FCE}{${nx}}} \\sum_{j=1}^{\\textcolor{#96B898}{${ny}}} \\left(${compiledSurface.tex}\\right)\\,\\textcolor{#FBEAA4}{\\Delta A} = \\textcolor{#FBEAA4}{${partitionData.riemannSum.toFixed(
                 4
               )}}`}
             />
             <p className="text-xs text-[var(--text-secondary)] font-math-serif">
-              {activeSurface.engineeringNote}
+              {activeEngineeringNote}
             </p>
           </div>
         </div>

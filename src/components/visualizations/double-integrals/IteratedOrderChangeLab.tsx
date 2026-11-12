@@ -13,6 +13,8 @@ import {
   Split,
 } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { MathExpressionInput } from "@/components/math/MathExpressionInput";
+import { compileMathExpression } from "@/lib/mathParser";
 
 type OrderMode = "dydx" | "dxdy";
 type PresetId =
@@ -29,27 +31,19 @@ interface DomainPreset {
   badge: string;
   xMaxDomain: number;
   yMaxDomain: number;
-  integrandLatex: string;
-  fn: (x: number, y: number) => number;
-  // Type I: x in [a, b], y in [yMin(x), yMax(x)]
+  integrandExpr: string;
   typeI: {
     xRange: [number, number];
-    yBounds: (x: number) => [number, number];
-    lowerCurveLabel: string;
-    upperCurveLabel: string;
-    integralLatex: string;
+    yMinExpr: string;
+    yMaxExpr: string;
     requiresSplit?: boolean;
     splitX?: number;
   };
-  // Type II: y in [c, d], x in [xMin(y), xMax(y)]
   typeII: {
     yRange: [number, number];
-    xBounds: (y: number) => [number, number];
-    lowerCurveLabel: string;
-    upperCurveLabel: string;
-    integralLatex: string;
+    xMinExpr: string;
+    xMaxExpr: string;
   };
-  exactValue: string;
   pedagogicalSteps: {
     boundsExplanation: string;
     inversionAlgebraLatex: string;
@@ -65,26 +59,17 @@ const PRESETS: DomainPreset[] = [
     badge: "Classic Fubini Swap",
     xMaxDomain: 1.0,
     yMaxDomain: 1.0,
-    integrandLatex: "f(x,y) = e^{y^2}",
-    // Scaled by 0.65 in 3D height so e^1 = 2.718 fits comfortably in the 3D viewport
-    fn: (_x, y) => 0.65 * Math.exp(y * y),
+    integrandExpr: "exp(y^2)",
     typeI: {
       xRange: [0, 1],
-      yBounds: (x) => [x, 1],
-      lowerCurveLabel: "y = x",
-      upperCurveLabel: "y = 1",
-      integralLatex:
-        "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#D5658B}{x}}^{\\textcolor{#B95869}{1}} e^{y^2}\\,\\textcolor{#D35323}{dy}\\,\\textcolor{#8D9FCE}{dx} \\quad (\\text{No elementary antiderivative in } y)",
+      yMinExpr: "x",
+      yMaxExpr: "1",
     },
     typeII: {
       yRange: [0, 1],
-      xBounds: (y) => [0, y],
-      lowerCurveLabel: "x = 0",
-      upperCurveLabel: "x = y",
-      integralLatex:
-        "\\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{y}} e^{y^2}\\,\\textcolor{#D35323}{dx}\\,\\textcolor{#96B898}{dy} = \\int_0^1 y\\,e^{y^2}\\,dy = \\frac{e - 1}{2}",
+      xMinExpr: "0",
+      xMaxExpr: "y",
     },
-    exactValue: "(e - 1) / 2 ≈ 0.8591",
     pedagogicalSteps: {
       boundsExplanation:
         "In Type I (dy dx), a vertical ray at x enters the triangle on the diagonal line y = x and exits at the horizontal top edge y = 1. In Type II (dx dy), a horizontal ray at height y enters at the y-axis (x = 0) and exits on the diagonal line x = y.",
@@ -101,25 +86,17 @@ const PRESETS: DomainPreset[] = [
     badge: "Algebraic Inversion",
     xMaxDomain: 1.0,
     yMaxDomain: 1.0,
-    integrandLatex: "f(x,y) = 1.6 - 0.5x^2 - 0.4y^2",
-    fn: (x, y) => 1.6 - 0.5 * x * x - 0.4 * y * y,
+    integrandExpr: "1.6 - 0.5*x^2 - 0.4*y^2",
     typeI: {
       xRange: [0, 1],
-      yBounds: (x) => [x * x, 1],
-      lowerCurveLabel: "y = x²",
-      upperCurveLabel: "y = 1",
-      integralLatex:
-        "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#D5658B}{x^2}}^{\\textcolor{#B95869}{1}} \\left(1.6 - 0.5x^2 - 0.4y^2\\right)\\,\\textcolor{#D35323}{dy}\\,\\textcolor{#8D9FCE}{dx}",
+      yMinExpr: "x^2",
+      yMaxExpr: "1",
     },
     typeII: {
       yRange: [0, 1],
-      xBounds: (y) => [0, Math.sqrt(Math.max(0, y))],
-      lowerCurveLabel: "x = 0",
-      upperCurveLabel: "x = √y",
-      integralLatex:
-        "\\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{\\sqrt{y}}} \\left(1.6 - 0.5x^2 - 0.4y^2\\right)\\,\\textcolor{#D35323}{dx}\\,\\textcolor{#96B898}{dy}",
+      xMinExpr: "0",
+      xMaxExpr: "sqrt(max(0, y))",
     },
-    exactValue: "139 / 150 ≈ 0.9267",
     pedagogicalSteps: {
       boundsExplanation:
         "For Type I (dy dx), x runs from 0 to 1, and each vertical strip rises from the parabola y = x² to the line y = 1. For Type II (dx dy), solving y = x² for x in the first quadrant gives the right-hand exit curve x = √y.",
@@ -136,25 +113,17 @@ const PRESETS: DomainPreset[] = [
     badge: "Two Curved Bounds",
     xMaxDomain: 1.0,
     yMaxDomain: 1.0,
-    integrandLatex: "f(x,y) = 1.0 + 0.6x + 0.6y",
-    fn: (x, y) => 1.0 + 0.6 * x + 0.6 * y,
+    integrandExpr: "1.0 + 0.6*x + 0.6*y",
     typeI: {
       xRange: [0, 1],
-      yBounds: (x) => [x * x, x],
-      lowerCurveLabel: "y = x²",
-      upperCurveLabel: "y = x",
-      integralLatex:
-        "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#D5658B}{x^2}}^{\\textcolor{#B95869}{x}} f(x,y)\\,\\textcolor{#D35323}{dy}\\,\\textcolor{#8D9FCE}{dx}",
+      yMinExpr: "x^2",
+      yMaxExpr: "x",
     },
     typeII: {
       yRange: [0, 1],
-      xBounds: (y) => [y, Math.sqrt(Math.max(0, y))],
-      lowerCurveLabel: "x = y",
-      upperCurveLabel: "x = √y",
-      integralLatex:
-        "\\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{y}}^{\\textcolor{#B95869}{\\sqrt{y}}} f(x,y)\\,\\textcolor{#D35323}{dx}\\,\\textcolor{#96B898}{dy}",
+      xMinExpr: "y",
+      xMaxExpr: "sqrt(max(0, y))",
     },
-    exactValue: "31 / 140 ≈ 0.2214",
     pedagogicalSteps: {
       boundsExplanation:
         "On [0, 1], x ≥ x², so the line y = x is the upper roof in Type I and the parabola y = x² is the floor. When sliced horizontally (Type II), a ray moving left-to-right hits the line x = y first (entry) and exits through the parabola x = √y!",
@@ -171,25 +140,17 @@ const PRESETS: DomainPreset[] = [
     badge: "Circular Symmetry",
     xMaxDomain: 1.0,
     yMaxDomain: 1.0,
-    integrandLatex: "f(x,y) = 1.75 - 0.65(x^2 + y^2)",
-    fn: (x, y) => 1.75 - 0.65 * (x * x + y * y),
+    integrandExpr: "1.75 - 0.65*(x^2 + y^2)",
     typeI: {
       xRange: [0, 1],
-      yBounds: (x) => [0, Math.sqrt(Math.max(0, 1 - x * x))],
-      lowerCurveLabel: "y = 0",
-      upperCurveLabel: "y = √(1 - x²)",
-      integralLatex:
-        "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#8D9FCE}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{\\sqrt{1-x^2}}} f(x,y)\\,\\textcolor{#D35323}{dy}\\,\\textcolor{#8D9FCE}{dx}",
+      yMinExpr: "0",
+      yMaxExpr: "sqrt(max(0, 1 - x^2))",
     },
     typeII: {
       yRange: [0, 1],
-      xBounds: (y) => [0, Math.sqrt(Math.max(0, 1 - y * y))],
-      lowerCurveLabel: "x = 0",
-      upperCurveLabel: "x = √(1 - y²)",
-      integralLatex:
-        "\\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{\\sqrt{1-y^2}}} f(x,y)\\,\\textcolor{#D35323}{dx}\\,\\textcolor{#96B898}{dy}",
+      xMinExpr: "0",
+      xMaxExpr: "sqrt(max(0, 1 - y^2))",
     },
-    exactValue: "57π / 160 ≈ 1.1192",
     pedagogicalSteps: {
       boundsExplanation:
         "Because x² + y² = 1 is symmetric in x and y, both Cartesian orders involve square-root upper bounds √(1-x²) or √(1-y²).",
@@ -206,27 +167,19 @@ const PRESETS: DomainPreset[] = [
     badge: "Split Required in dy dx",
     xMaxDomain: 2.0,
     yMaxDomain: 1.0,
-    integrandLatex: "f(x,y) = 1.25 - 0.25x + 0.35y",
-    fn: (x, y) => 1.25 - 0.25 * x + 0.35 * y,
+    integrandExpr: "1.25 - 0.25*x + 0.35*y",
     typeI: {
       xRange: [0, 2],
-      yBounds: (x) => [0, x <= 1 ? x : 2 - x],
-      lowerCurveLabel: "y = 0",
-      upperCurveLabel: "y = x (x≤1) | y = 2-x (x≥1)",
+      yMinExpr: "0",
+      yMaxExpr: "min(x, 2 - x)",
       requiresSplit: true,
       splitX: 1.0,
-      integralLatex:
-        "\\int_{\\textcolor{#8D9FCE}{0}}^{\\textcolor{#AAA36D}{1}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{x}} f\\,\\textcolor{#D35323}{dy}\\,\\textcolor{#8D9FCE}{dx} \\;+\\; \\int_{\\textcolor{#AAA36D}{1}}^{\\textcolor{#8D9FCE}{2}} \\int_{\\textcolor{#D5658B}{0}}^{\\textcolor{#B95869}{2-x}} f\\,\\textcolor{#D35323}{dy}\\,\\textcolor{#8D9FCE}{dx}",
     },
     typeII: {
       yRange: [0, 1],
-      xBounds: (y) => [y, 2 - y],
-      lowerCurveLabel: "x = y",
-      upperCurveLabel: "x = 2 - y",
-      integralLatex:
-        "\\int_{\\textcolor{#96B898}{0}}^{\\textcolor{#96B898}{1}} \\int_{\\textcolor{#D5658B}{y}}^{\\textcolor{#B95869}{2-y}} f(x,y)\\,\\textcolor{#D35323}{dx}\\,\\textcolor{#96B898}{dy} \\quad (\\text{Single Unified Integral!})",
+      xMinExpr: "y",
+      xMaxExpr: "2 - y",
     },
-    exactValue: "1.1167",
     pedagogicalSteps: {
       boundsExplanation:
         "Look at the top roof of the triangle in the xy-plane: for x ∈ [0, 1] the roof is the rising line y = x, but at the apex (1, 1) the roof switches to the falling line y = 2 - x! Thus Type I (dy dx) MUST split at x = 1 into two separate integrals.",
@@ -250,15 +203,85 @@ export function IteratedOrderChangeLab() {
 
   const [presetId, setPresetId] = useState<PresetId>("exp-triangle");
   const [order, setOrder] = useState<OrderMode>("dydx");
-  // Normalized slider t in [0.03, 0.97] mapped to the active outer interval
   const [sliceNorm, setSliceNorm] = useState<number>(0.55);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [showAccumulated, setShowAccumulated] = useState<boolean>(true);
+
+  // User-editable equation strings (seeded from active preset)
+  const [integrandExpr, setIntegrandExpr] = useState<string>("exp(y^2)");
+  const [yMinExpr, setYMinExpr] = useState<string>("x");
+  const [yMaxExpr, setYMaxExpr] = useState<string>("1");
+  const [xMinExpr, setXMinExpr] = useState<string>("0");
+  const [xMaxExpr, setXMaxExpr] = useState<string>("y");
 
   const preset = useMemo(
     () => PRESETS.find((p) => p.id === presetId) ?? PRESETS[0],
     [presetId]
   );
+
+  // Compile user-typed expressions
+  const compiledIntegrand = useMemo(
+    () => compileMathExpression(integrandExpr, ["x", "y"], 1.0),
+    [integrandExpr]
+  );
+  const compiledYMin = useMemo(
+    () => compileMathExpression(yMinExpr, ["x"], 0),
+    [yMinExpr]
+  );
+  const compiledYMax = useMemo(
+    () => compileMathExpression(yMaxExpr, ["x"], 1),
+    [yMaxExpr]
+  );
+  const compiledXMin = useMemo(
+    () => compileMathExpression(xMinExpr, ["y"], 0),
+    [xMinExpr]
+  );
+  const compiledXMax = useMemo(
+    () => compileMathExpression(xMaxExpr, ["y"], 1),
+    [xMaxExpr]
+  );
+
+  const evalTrueF = React.useCallback(
+    (x: number, y: number) => Math.max(0.02, compiledIntegrand.evaluate({ x, y })),
+    [compiledIntegrand]
+  );
+
+  // Visual 3D height clamps very tall functions (like exp(1)=2.718) smoothly so they fit inside the 3D box
+  const evalVisualZ = React.useCallback(
+    (x: number, y: number) => {
+      const val = evalTrueF(x, y);
+      return Math.min(2.2, val * 0.72);
+    },
+    [evalTrueF]
+  );
+
+  const evalYBounds = React.useCallback(
+    (x: number): [number, number] => {
+      const a = Math.max(0, Math.min(preset.yMaxDomain, compiledYMin.evaluate({ x })));
+      const b = Math.max(a, Math.min(preset.yMaxDomain, compiledYMax.evaluate({ x })));
+      return [a, b];
+    },
+    [compiledYMin, compiledYMax, preset.yMaxDomain]
+  );
+
+  const evalXBounds = React.useCallback(
+    (y: number): [number, number] => {
+      const a = Math.max(0, Math.min(preset.xMaxDomain, compiledXMin.evaluate({ y })));
+      const b = Math.max(a, Math.min(preset.xMaxDomain, compiledXMax.evaluate({ y })));
+      return [a, b];
+    },
+    [compiledXMin, compiledXMax, preset.xMaxDomain]
+  );
+
+  const handleSelectPreset = (item: DomainPreset) => {
+    setPresetId(item.id);
+    setIntegrandExpr(item.integrandExpr);
+    setYMinExpr(item.typeI.yMinExpr);
+    setYMaxExpr(item.typeI.yMaxExpr);
+    setXMinExpr(item.typeII.xMinExpr);
+    setXMaxExpr(item.typeII.xMaxExpr);
+    setSliceNorm(0.55);
+  };
 
   // Actual coordinate value of the outer variable (x0 for dydx, y0 for dxdy)
   const outerCoord = useMemo(() => {
@@ -270,30 +293,62 @@ export function IteratedOrderChangeLab() {
   // Inner bounds at the current outer coordinate
   const activeInnerBounds = useMemo(() => {
     if (order === "dydx") {
-      return preset.typeI.yBounds(outerCoord);
+      return evalYBounds(outerCoord);
     }
-    return preset.typeII.xBounds(outerCoord);
-  }, [order, preset, outerCoord]);
+    return evalXBounds(outerCoord);
+  }, [order, evalYBounds, evalXBounds, outerCoord]);
 
-  // Compute cross-sectional slice area A(x0) or A(y0) via 16-point midpoint quadrature
-  const sliceArea = useMemo(() => {
+  // Compute cross-sectional slice area A(x0) or A(y0) AND total double integral numerically
+  const { sliceArea, totalIntegralValue } = useMemo(() => {
     const [bMin, bMax] = activeInnerBounds;
-    if (bMax <= bMin) return 0;
-    const M = 24;
-    const h = (bMax - bMin) / M;
-    let sum = 0;
-    for (let k = 0; k < M; k++) {
-      const mid = bMin + (k + 0.5) * h;
-      const val =
-        order === "dydx"
-          ? preset.fn(outerCoord, mid)
-          : preset.fn(mid, outerCoord);
-      // Unscale exp-triangle back to true mathematical e^(y^2) for numeric readout
-      const trueVal = preset.id === "exp-triangle" ? val / 0.65 : val;
-      sum += trueVal * h;
+    let sArea = 0;
+    if (bMax > bMin) {
+      const M = 28;
+      const h = (bMax - bMin) / M;
+      for (let k = 0; k < M; k++) {
+        const mid = bMin + (k + 0.5) * h;
+        const val =
+          order === "dydx"
+            ? evalTrueF(outerCoord, mid)
+            : evalTrueF(mid, outerCoord);
+        sArea += val * h;
+      }
     }
-    return sum;
-  }, [activeInnerBounds, order, outerCoord, preset]);
+
+    // Total double integral over the active order's domain
+    const N = 28;
+    const M = 28;
+    let total = 0;
+    if (order === "dydx") {
+      const [xA, xB] = preset.typeI.xRange;
+      const dx = (xB - xA) / N;
+      for (let i = 0; i < N; i++) {
+        const x = xA + (i + 0.5) * dx;
+        const [y1, y2] = evalYBounds(x);
+        if (y2 <= y1) continue;
+        const dy = (y2 - y1) / M;
+        for (let j = 0; j < M; j++) {
+          const y = y1 + (j + 0.5) * dy;
+          total += evalTrueF(x, y) * dx * dy;
+        }
+      }
+    } else {
+      const [yC, yD] = preset.typeII.yRange;
+      const dy = (yD - yC) / N;
+      for (let i = 0; i < N; i++) {
+        const y = yC + (i + 0.5) * dy;
+        const [x1, x2] = evalXBounds(y);
+        if (x2 <= x1) continue;
+        const dx = (x2 - x1) / M;
+        for (let j = 0; j < M; j++) {
+          const x = x1 + (j + 0.5) * dx;
+          total += evalTrueF(x, y) * dx * dy;
+        }
+      }
+    }
+
+    return { sliceArea: sArea, totalIntegralValue: total };
+  }, [activeInnerBounds, order, outerCoord, preset, evalTrueF, evalYBounds, evalXBounds]);
 
   // Animate sweep when playing
   useEffect(() => {
@@ -403,7 +458,7 @@ export function IteratedOrderChangeLab() {
     };
   }, []);
 
-  // Rebuild Full Surface & Domain Boundary Curves when preset changes
+  // Rebuild Full Surface & Domain Base when preset, integrand, or bounds change
   useEffect(() => {
     const objs = sceneObjectsRef.current;
     if (!objs) return;
@@ -415,7 +470,6 @@ export function IteratedOrderChangeLab() {
       surfaceGroup.remove(child);
     }
 
-    // Center camera target nicely for xMax = 2 (split-triangle) vs xMax = 1
     controls.target.set(preset.xMaxDomain * 0.5, 0.55, 0.5);
 
     const nx = 40;
@@ -424,15 +478,29 @@ export function IteratedOrderChangeLab() {
     const basePos: number[] = [];
     const indices: number[] = [];
 
-    const [xA, xB] = preset.typeI.xRange;
-    for (let i = 0; i <= nx; i++) {
-      const x = xA + (i / nx) * (xB - xA);
-      const [y1, y2] = preset.typeI.yBounds(x);
-      for (let j = 0; j <= ny; j++) {
-        const y = y1 + (j / ny) * (y2 - y1);
-        const z = preset.fn(x, y);
-        surfPos.push(x, z, y);
-        basePos.push(x, 0.002, y);
+    if (order === "dydx") {
+      const [xA, xB] = preset.typeI.xRange;
+      for (let i = 0; i <= nx; i++) {
+        const x = xA + (i / nx) * (xB - xA);
+        const [y1, y2] = evalYBounds(x);
+        for (let j = 0; j <= ny; j++) {
+          const y = y1 + (j / ny) * (y2 - y1);
+          const z = evalVisualZ(x, y);
+          surfPos.push(x, z, y);
+          basePos.push(x, 0.002, y);
+        }
+      }
+    } else {
+      const [yC, yD] = preset.typeII.yRange;
+      for (let i = 0; i <= nx; i++) {
+        const y = yC + (i / nx) * (yD - yC);
+        const [x1, x2] = evalXBounds(y);
+        for (let j = 0; j <= ny; j++) {
+          const x = x1 + (j / ny) * (x2 - x1);
+          const z = evalVisualZ(x, y);
+          surfPos.push(x, z, y);
+          basePos.push(x, 0.002, y);
+        }
       }
     }
 
@@ -495,7 +563,7 @@ export function IteratedOrderChangeLab() {
         })
       )
     );
-  }, [preset]);
+  }, [preset, order, evalVisualZ, evalYBounds, evalXBounds]);
 
   // Update Active Cross-Sectional Curtain & Partial Accumulated Volume
   useEffect(() => {
@@ -513,7 +581,6 @@ export function IteratedOrderChangeLab() {
     clearGroup(sliceGroup);
     clearGroup(accumulatedGroup);
 
-    // 1. Active Slice Curtain at outerCoord
     const steps = 36;
     const vertices: number[] = [];
     const indices: number[] = [];
@@ -526,7 +593,7 @@ export function IteratedOrderChangeLab() {
       const inner = bMin + t * (bMax - bMin);
       const x = order === "dydx" ? outerCoord : inner;
       const y = order === "dydx" ? inner : outerCoord;
-      const z = preset.fn(x, y);
+      const z = evalVisualZ(x, y);
 
       vertices.push(x, 0, y);
       vertices.push(x, z, y);
@@ -575,7 +642,6 @@ export function IteratedOrderChangeLab() {
       )
     );
 
-    // 2. Partial Accumulated Volume up to outerCoord
     if (showAccumulated) {
       const nOuter = 20;
       const nInner = 20;
@@ -588,15 +654,13 @@ export function IteratedOrderChangeLab() {
       for (let i = 0; i <= nOuter; i++) {
         const oVal = oStart + (i / nOuter) * (outerCoord - oStart);
         const [iMin, iMax] =
-          order === "dydx"
-            ? preset.typeI.yBounds(oVal)
-            : preset.typeII.xBounds(oVal);
+          order === "dydx" ? evalYBounds(oVal) : evalXBounds(oVal);
 
         for (let j = 0; j <= nInner; j++) {
           const iVal = iMin + (j / nInner) * (iMax - iMin);
           const x = order === "dydx" ? oVal : iVal;
           const y = order === "dydx" ? iVal : oVal;
-          const z = preset.fn(x, y);
+          const z = evalVisualZ(x, y);
           accPos.push(x, z, y);
         }
       }
@@ -632,9 +696,18 @@ export function IteratedOrderChangeLab() {
         )
       );
     }
-  }, [outerCoord, activeInnerBounds, order, preset, showAccumulated]);
+  }, [
+    outerCoord,
+    activeInnerBounds,
+    order,
+    preset,
+    showAccumulated,
+    evalVisualZ,
+    evalYBounds,
+    evalXBounds,
+  ]);
 
-  // Build 2D SVG paths for the active preset
+  // Build 2D SVG paths for the active bounds
   const svgPaths = useMemo(() => {
     const scaleX = 160 / preset.xMaxDomain;
     const scaleY = 150 / preset.yMaxDomain;
@@ -644,32 +717,20 @@ export function IteratedOrderChangeLab() {
     ];
 
     const N = 50;
-    // Region polygon
-    const [xA, xB] = preset.typeI.xRange;
     const lowerPts: [number, number][] = [];
     const upperPts: [number, number][] = [];
-
-    for (let i = 0; i <= N; i++) {
-      const x = xA + (i / N) * (xB - xA);
-      const [y1, y2] = preset.typeI.yBounds(x);
-      lowerPts.push(toSvg(x, y1));
-      upperPts.push(toSvg(x, y2));
-    }
-
-    const polyPoints = [...lowerPts, ...upperPts.slice().reverse()]
-      .map((p) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`)
-      .join(" ");
-
-    // Entry & Exit curves for the currently selected order
     const entryCurvePts: string[] = [];
     const exitCurvePts: string[] = [];
 
     if (order === "dydx") {
+      const [xA, xB] = preset.typeI.xRange;
       for (let i = 0; i <= N; i++) {
         const x = xA + (i / N) * (xB - xA);
-        const [y1, y2] = preset.typeI.yBounds(x);
+        const [y1, y2] = evalYBounds(x);
         const p1 = toSvg(x, y1);
         const p2 = toSvg(x, y2);
+        lowerPts.push(p1);
+        upperPts.push(p2);
         entryCurvePts.push(
           `${i === 0 ? "M" : "L"} ${p1[0].toFixed(1)} ${p1[1].toFixed(1)}`
         );
@@ -681,9 +742,11 @@ export function IteratedOrderChangeLab() {
       const [yC, yD] = preset.typeII.yRange;
       for (let i = 0; i <= N; i++) {
         const y = yC + (i / N) * (yD - yC);
-        const [x1, x2] = preset.typeII.xBounds(y);
+        const [x1, x2] = evalXBounds(y);
         const p1 = toSvg(x1, y);
         const p2 = toSvg(x2, y);
+        lowerPts.push(p1);
+        upperPts.push(p2);
         entryCurvePts.push(
           `${i === 0 ? "M" : "L"} ${p1[0].toFixed(1)} ${p1[1].toFixed(1)}`
         );
@@ -693,7 +756,10 @@ export function IteratedOrderChangeLab() {
       }
     }
 
-    // Active slice segment endpoints in 2D SVG
+    const polyPoints = [...lowerPts, ...upperPts.slice().reverse()]
+      .map((p) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`)
+      .join(" ");
+
     const [bMin, bMax] = activeInnerBounds;
     const stripStart =
       order === "dydx"
@@ -716,9 +782,11 @@ export function IteratedOrderChangeLab() {
       stripEnd,
       splitLineSvgX,
     };
-  }, [preset, order, outerCoord, activeInnerBounds]);
+  }, [preset, order, outerCoord, activeInnerBounds, evalYBounds, evalXBounds]);
 
-  const activeConfig = order === "dydx" ? preset.typeI : preset.typeII;
+  const typeIDynamicLatex = `\\int_{\\textcolor{#8D9FCE}{${preset.typeI.xRange[0]}}}^{\\textcolor{#8D9FCE}{${preset.typeI.xRange[1]}}} \\int_{\\textcolor{#D5658B}{${compiledYMin.tex}}}^{\\textcolor{#B95869}{${compiledYMax.tex}}} \\left(${compiledIntegrand.tex}\\right)\\,\\textcolor{#D35323}{dy}\\,\\textcolor{#8D9FCE}{dx}`;
+
+  const typeIIDynamicLatex = `\\int_{\\textcolor{#96B898}{${preset.typeII.yRange[0]}}}^{\\textcolor{#96B898}{${preset.typeII.yRange[1]}}} \\int_{\\textcolor{#D5658B}{${compiledXMin.tex}}}^{\\textcolor{#B95869}{${compiledXMax.tex}}} \\left(${compiledIntegrand.tex}\\right)\\,\\textcolor{#D35323}{dx}\\,\\textcolor{#96B898}{dy}`;
 
   return (
     <section
@@ -739,11 +807,11 @@ export function IteratedOrderChangeLab() {
             Iterated Slicing, Boundary Limits &amp; Fubini&apos;s Order Reversal
           </h2>
           <p className="font-math-serif text-sm sm:text-base text-[var(--text-secondary)] max-w-3xl">
-            Compare <strong>Type I (Vertical Strips dy dx)</strong> and{" "}
-            <strong>Type II (Horizontal Strips dx dy)</strong> across five
-            canonical engineering regions. Notice how swapping the integration
-            order rotates the slicing ray by <KaTeXMath math="90^\circ" /> and
-            inverts the entry/exit boundary equations.
+            Select a preset scenario or type your own integrand{" "}
+            <KaTeXMath math="f(x,y)" /> and lower/upper boundary curves below!
+            Swap between <strong>Type I (dy dx)</strong> and{" "}
+            <strong>Type II (dx dy)</strong> to see the slicing ray rotate and
+            the integral limits invert.
           </p>
         </div>
 
@@ -766,12 +834,9 @@ export function IteratedOrderChangeLab() {
       </div>
 
       {/* 5 Domain & Integral Presets Selector */}
-      <div
-        id="limits-of-integration"
-        className="space-y-2 scroll-mt-24"
-      >
+      <div id="limits-of-integration" className="space-y-2 scroll-mt-24">
         <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] block">
-          Select Integration Domain &amp; Boundary Scenario:
+          Select Integration Domain Preset (or Edit Any Equation Below):
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
           {PRESETS.map((item) => {
@@ -780,10 +845,7 @@ export function IteratedOrderChangeLab() {
               <button
                 key={item.id}
                 type="button"
-                onClick={() => {
-                  setPresetId(item.id);
-                  setSliceNorm(0.55);
-                }}
+                onClick={() => handleSelectPreset(item)}
                 className={`p-3 border text-left transition-colors cursor-pointer flex flex-col justify-between gap-1.5 ${
                   active
                     ? "border-[var(--border-strong)] bg-[var(--bg-panel-elevated)] text-[var(--text-primary)]"
@@ -800,6 +862,63 @@ export function IteratedOrderChangeLab() {
             );
           })}
         </div>
+      </div>
+
+      {/* Custom Math Typing Composer for Integrand & Active Bounds */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <MathExpressionInput
+          label="1. Integrand Function f(x, y):"
+          value={integrandExpr}
+          onChange={setIntegrandExpr}
+          allowedVars={["x", "y"]}
+          prefixLatex="f(x,y) ="
+          placeholder="exp(y^2)"
+          accentHex="#8D9FCE"
+        />
+
+        {order === "dydx" ? (
+          <>
+            <MathExpressionInput
+              label="2. Type I Lower Entry Curve y = g₁(x):"
+              value={yMinExpr}
+              onChange={setYMinExpr}
+              allowedVars={["x"]}
+              prefixLatex="y_{\min}(x) ="
+              placeholder="x^2"
+              accentHex="#D5658B"
+            />
+            <MathExpressionInput
+              label="3. Type I Upper Exit Curve y = g₂(x):"
+              value={yMaxExpr}
+              onChange={setYMaxExpr}
+              allowedVars={["x"]}
+              prefixLatex="y_{\max}(x) ="
+              placeholder="1"
+              accentHex="#B95869"
+            />
+          </>
+        ) : (
+          <>
+            <MathExpressionInput
+              label="2. Type II Left Entry Curve x = h₁(y):"
+              value={xMinExpr}
+              onChange={setXMinExpr}
+              allowedVars={["y"]}
+              prefixLatex="x_{\min}(y) ="
+              placeholder="0"
+              accentHex="#D5658B"
+            />
+            <MathExpressionInput
+              label="3. Type II Right Exit Curve x = h₂(y):"
+              value={xMaxExpr}
+              onChange={setXMaxExpr}
+              allowedVars={["y"]}
+              prefixLatex="x_{\max}(y) ="
+              placeholder="sqrt(y)"
+              accentHex="#B95869"
+            />
+          </>
+        )}
       </div>
 
       {/* Split-Boundary Alert Banner when Preset 5 is in dy dx mode */}
@@ -837,7 +956,7 @@ export function IteratedOrderChangeLab() {
 
           <figcaption className="px-3.5 py-2.5 border-t border-[#383B43] bg-[#25272C] flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono text-[#CCC8B8]">
             <span>
-              Outer Position:{" "}
+              Outer:{" "}
               <strong className="text-[#FBEAA4]">
                 {order === "dydx"
                   ? `x₀ = ${outerCoord.toFixed(2)}`
@@ -845,16 +964,15 @@ export function IteratedOrderChangeLab() {
               </strong>
             </span>
             <span>
-              Inner Strip:{" "}
-              <strong className="text-[#D5658B]">
-                [{activeInnerBounds[0].toFixed(2)},{" "}
-                {activeInnerBounds[1].toFixed(2)}]
-              </strong>
-            </span>
-            <span>
               Slice Area A ={" "}
               <strong className="text-[#D35323]">
                 {sliceArea.toFixed(4)}
+              </strong>
+            </span>
+            <span>
+              Double Integral ∬ f dA ={" "}
+              <strong className="text-[#96B898]">
+                {totalIntegralValue.toFixed(4)}
               </strong>
             </span>
           </figcaption>
@@ -881,14 +999,12 @@ export function IteratedOrderChangeLab() {
               role="img"
               aria-label={`2D integration region for ${preset.title}`}
             >
-              {/* Shaded Domain Polygon */}
               <polygon
                 points={svgPaths.polyPoints}
                 fill="#029091"
                 fillOpacity="0.24"
               />
 
-              {/* Split Line x = 1 for Preset 5 */}
               {svgPaths.splitLineSvgX && (
                 <g>
                   <line
@@ -912,7 +1028,6 @@ export function IteratedOrderChangeLab() {
                 </g>
               )}
 
-              {/* Lower / Entry Curve (#D5658B Dusty Rose) */}
               <path
                 d={svgPaths.entryPath}
                 fill="none"
@@ -920,7 +1035,6 @@ export function IteratedOrderChangeLab() {
                 strokeWidth="2.75"
               />
 
-              {/* Upper / Exit Curve (#B95869 Terracotta Crimson) */}
               <path
                 d={svgPaths.exitPath}
                 fill="none"
@@ -928,7 +1042,6 @@ export function IteratedOrderChangeLab() {
                 strokeWidth="2.75"
               />
 
-              {/* Active Strip Ray (#D35323 Persimmon) */}
               <line
                 x1={svgPaths.stripStart[0]}
                 y1={svgPaths.stripStart[1]}
@@ -938,7 +1051,6 @@ export function IteratedOrderChangeLab() {
                 strokeWidth="3.5"
               />
 
-              {/* Entry Dot (#D5658B) and Exit Dot (#B95869) */}
               <circle
                 cx={svgPaths.stripStart[0]}
                 cy={svgPaths.stripStart[1]}
@@ -956,7 +1068,6 @@ export function IteratedOrderChangeLab() {
                 strokeWidth="1.2"
               />
 
-              {/* Axes */}
               <line
                 x1={30}
                 y1={175}
@@ -993,7 +1104,6 @@ export function IteratedOrderChangeLab() {
               </text>
             </svg>
 
-            {/* Color-Coded Entry/Exit Legend */}
             <figcaption className="w-full grid grid-cols-2 gap-2 pt-2 border-t border-[var(--border-subtle)] text-xs font-tabular-mono">
               <div className="flex items-center gap-1.5">
                 <span
@@ -1002,7 +1112,7 @@ export function IteratedOrderChangeLab() {
                   aria-hidden="true"
                 />
                 <span className="truncate text-[var(--text-secondary)]">
-                  Entry: {activeConfig.lowerCurveLabel}
+                  Entry: {order === "dydx" ? `y = ${yMinExpr}` : `x = ${xMinExpr}`}
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -1012,7 +1122,7 @@ export function IteratedOrderChangeLab() {
                   aria-hidden="true"
                 />
                 <span className="truncate text-[var(--text-secondary)]">
-                  Exit: {activeConfig.upperCurveLabel}
+                  Exit: {order === "dydx" ? `y = ${yMaxExpr}` : `x = ${xMaxExpr}`}
                 </span>
               </div>
             </figcaption>
@@ -1094,7 +1204,6 @@ export function IteratedOrderChangeLab() {
         id="order-change"
         className="grid grid-cols-1 lg:grid-cols-2 gap-4 scroll-mt-24"
       >
-        {/* Type I Card */}
         <div
           className={`p-4 border transition-colors ${
             order === "dydx"
@@ -1112,10 +1221,9 @@ export function IteratedOrderChangeLab() {
               </span>
             )}
           </div>
-          <KaTeXMath math={preset.typeI.integralLatex} block />
+          <KaTeXMath math={typeIDynamicLatex} block />
         </div>
 
-        {/* Type II Card */}
         <div
           className={`p-4 border transition-colors ${
             order === "dxdy"
@@ -1133,11 +1241,11 @@ export function IteratedOrderChangeLab() {
               </span>
             )}
           </div>
-          <KaTeXMath math={preset.typeII.integralLatex} block />
+          <KaTeXMath math={typeIIDynamicLatex} block />
         </div>
       </div>
 
-      {/* Step-by-Step Pedagogical Accordion (Non-exclusive <details> elements) */}
+      {/* Step-by-Step Pedagogical Accordion */}
       <div
         aria-label="Step-by-step derivation of limits and order reversal"
         className="space-y-2.5"
@@ -1152,7 +1260,8 @@ export function IteratedOrderChangeLab() {
               aria-hidden="true"
             />
             <span>
-              Step 1: Reading Entry &amp; Exit Limits from the 2D Domain ({preset.title})
+              Step 1: Reading Entry &amp; Exit Limits from the 2D Domain (
+              {preset.title})
             </span>
           </summary>
           <div className="px-4 pb-4 pt-2 border-t border-[var(--border-subtle)] space-y-2 text-sm font-math-serif text-[var(--text-secondary)] leading-relaxed">
@@ -1176,8 +1285,8 @@ export function IteratedOrderChangeLab() {
               aria-hidden="true"
             />
             <span>
-              Step 2: Why Reversing the Order Matters Here (Exact Value ={" "}
-              {preset.exactValue})
+              Step 2: Why Reversing the Order Matters Here (Evaluated Value ≈{" "}
+              {totalIntegralValue.toFixed(4)})
             </span>
           </summary>
           <div className="px-4 pb-4 pt-2 border-t border-[var(--border-subtle)] text-sm font-math-serif text-[var(--text-secondary)] leading-relaxed">
