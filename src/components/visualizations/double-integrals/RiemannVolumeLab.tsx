@@ -9,7 +9,7 @@ import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
 
 type SurfaceId = "paraboloid" | "saddle" | "wave" | "plane" | "custom";
-type DomainShapeId = "rectangle" | "triangle" | "sector" | "custom";
+type DomainShapeId = "rectangle" | "triangle" | "sector" | "spandrel" | "custom";
 type SampleRule = "midpoint" | "lower" | "upper";
 
 interface SurfacePreset {
@@ -53,18 +53,44 @@ const SURFACE_PRESETS: SurfacePreset[] = [
 const DOMAIN_PRESETS: {
   id: Exclude<DomainShapeId, "custom">;
   label: string;
+  xMinExpr: string;
+  xMaxExpr: string;
+  yMinExpr: string;
   yMaxExpr: string;
 }[] = [
-  { id: "rectangle", label: "Rectangle (y ≤ 1.4)", yMaxExpr: "1.4" },
-  { id: "triangle", label: "Triangle (y ≤ x)", yMaxExpr: "x" },
+  {
+    id: "rectangle",
+    label: "Rectangle ([0, 1.4]²)",
+    xMinExpr: "0",
+    xMaxExpr: "1.4",
+    yMinExpr: "0",
+    yMaxExpr: "1.4",
+  },
+  {
+    id: "triangle",
+    label: "Triangle (0 ≤ y ≤ x)",
+    xMinExpr: "0",
+    xMaxExpr: "1.4",
+    yMinExpr: "0",
+    yMaxExpr: "x",
+  },
   {
     id: "sector",
-    label: "Quarter Disk",
-    yMaxExpr: "sqrt(max(0, 1.96 - x^2))",
+    label: "Quarter Disk (x² + y² ≤ 1)",
+    xMinExpr: "0",
+    xMaxExpr: "1",
+    yMinExpr: "0",
+    yMaxExpr: "sqrt(1 - x^2)",
+  },
+  {
+    id: "spandrel",
+    label: "Spandrel (x² ≤ y ≤ 1)",
+    xMinExpr: "0",
+    xMaxExpr: "1",
+    yMinExpr: "x^2",
+    yMaxExpr: "1",
   },
 ];
-
-const DOMAIN_MAX = 1.4;
 
 // 5-point Gauss-Legendre nodes/weights on [0, 1] for accurate reference integral
 const GL_NODES = [
@@ -76,25 +102,29 @@ const GL_WEIGHTS = [
 
 function computeExactVolume(
   fn: (x: number, y: number) => number,
-  yMaxFn: (x: number) => number
+  xMin: number,
+  xMax: number,
+  yBoundsFn: (x: number) => [number, number]
 ): number {
   const N = 20;
-  const dx = DOMAIN_MAX / N;
+  const dx = (xMax - xMin) / N;
+  if (dx <= 0) return 0;
   let total = 0;
 
   for (let i = 0; i < N; i++) {
-    const x0 = i * dx;
+    const x0 = xMin + i * dx;
     for (let gx = 0; gx < 5; gx++) {
       const x = x0 + GL_NODES[gx] * dx;
       const wx = GL_WEIGHTS[gx] * dx;
 
-      const yMax = Math.max(0, Math.min(DOMAIN_MAX, yMaxFn(x)));
-      if (yMax <= 0) continue;
+      const [yMin, yMax] = yBoundsFn(x);
+      const ySpan = yMax - yMin;
+      if (ySpan <= 0) continue;
 
       const M = 10;
-      const dy = yMax / M;
+      const dy = ySpan / M;
       for (let j = 0; j < M; j++) {
-        const y0 = j * dy;
+        const y0 = yMin + j * dy;
         for (let gy = 0; gy < 5; gy++) {
           const y = y0 + GL_NODES[gy] * dy;
           const wy = GL_WEIGHTS[gy] * dy;
@@ -117,6 +147,9 @@ export function RiemannVolumeLab() {
   );
 
   const [domainShape, setDomainShape] = useState<DomainShapeId>("rectangle");
+  const [xMinExpr, setXMinExpr] = useState<string>("0");
+  const [xMaxExpr, setXMaxExpr] = useState<string>("1.4");
+  const [yMinExpr, setYMinExpr] = useState<string>("0");
   const [yMaxExpr, setYMaxExpr] = useState<string>("1.4");
 
   const [nx, setNx] = useState<number>(8);
@@ -126,24 +159,45 @@ export function RiemannVolumeLab() {
   const [selectedCell, setSelectedCell] = useState<[number, number]>([3, 2]);
 
   const compiledSurface = useMemo(
-    () => compileMathExpression(surfaceExpr, ["x", "y"], 1.0),
+    () => compileMathExpression(surfaceExpr, ["x", "y"], 0),
     [surfaceExpr]
   );
 
+  const compiledXMin = useMemo(
+    () => compileMathExpression(xMinExpr, [], 0),
+    [xMinExpr]
+  );
+  const compiledXMax = useMemo(
+    () => compileMathExpression(xMaxExpr, [], 1.4),
+    [xMaxExpr]
+  );
+  const compiledYMin = useMemo(
+    () => compileMathExpression(yMinExpr, ["x"], 0),
+    [yMinExpr]
+  );
   const compiledYMax = useMemo(
-    () => compileMathExpression(yMaxExpr, ["x"], DOMAIN_MAX),
+    () => compileMathExpression(yMaxExpr, ["x"], 1.4),
     [yMaxExpr]
   );
 
   const evalF = React.useCallback(
-    (x: number, y: number) => Math.max(0.02, compiledSurface.evaluate({ x, y })),
+    (x: number, y: number) => Math.max(0, compiledSurface.evaluate({ x, y })),
     [compiledSurface]
   );
 
-  const evalYMax = React.useCallback(
-    (x: number) =>
-      Math.max(0, Math.min(DOMAIN_MAX, compiledYMax.evaluate({ x }))),
-    [compiledYMax]
+  const xRange = useMemo((): [number, number] => {
+    const a = Math.max(-4, Math.min(4, compiledXMin.evaluate({})));
+    const b = Math.max(a + 0.05, Math.min(4, compiledXMax.evaluate({})));
+    return [a, b];
+  }, [compiledXMin, compiledXMax]);
+
+  const evalYBounds = React.useCallback(
+    (x: number): [number, number] => {
+      const y1 = Math.max(-4, Math.min(4, compiledYMin.evaluate({ x })));
+      const y2 = Math.max(y1, Math.min(4, compiledYMax.evaluate({ x })));
+      return [y1, y2];
+    },
+    [compiledYMin, compiledYMax]
   );
 
   const activeEngineeringNote = useMemo(() => {
@@ -154,10 +208,23 @@ export function RiemannVolumeLab() {
     );
   }, [surfaceId]);
 
-  // Compute partition cells and Riemann sum
+  // Compute bounding box in y across [xMin, xMax] and partition cells
   const partitionData = useMemo(() => {
-    const dx = DOMAIN_MAX / nx;
-    const dy = DOMAIN_MAX / ny;
+    const [xMin, xMax] = xRange;
+    let yBoxMin = Infinity;
+    let yBoxMax = -Infinity;
+    const S = 32;
+    for (let s = 0; s <= S; s++) {
+      const xs = xMin + (s / S) * (xMax - xMin);
+      const [y1, y2] = evalYBounds(xs);
+      if (y1 < yBoxMin) yBoxMin = y1;
+      if (y2 > yBoxMax) yBoxMax = y2;
+    }
+    if (!Number.isFinite(yBoxMin)) yBoxMin = 0;
+    if (!Number.isFinite(yBoxMax) || yBoxMax <= yBoxMin) yBoxMax = yBoxMin + 1;
+
+    const dx = (xMax - xMin) / nx;
+    const dy = (yBoxMax - yBoxMin) / ny;
     const dA = dx * dy;
     const cells: {
       i: number;
@@ -177,7 +244,7 @@ export function RiemannVolumeLab() {
     let activeCount = 0;
 
     for (let i = 0; i < nx; i++) {
-      const x0 = i * dx;
+      const x0 = xMin + i * dx;
       const xc = x0 + 0.5 * dx;
       const xs =
         sampleRule === "midpoint"
@@ -186,10 +253,10 @@ export function RiemannVolumeLab() {
           ? x0
           : x0 + dx;
 
-      const yUpperAtXc = evalYMax(xc);
+      const [yLowerAtXc, yUpperAtXc] = evalYBounds(xc);
 
       for (let j = 0; j < ny; j++) {
-        const y0 = j * dy;
+        const y0 = yBoxMin + j * dy;
         const yc = y0 + 0.5 * dy;
         const ys =
           sampleRule === "midpoint"
@@ -198,7 +265,7 @@ export function RiemannVolumeLab() {
             ? y0
             : y0 + dy;
 
-        const inside = yc <= yUpperAtXc + 1e-7;
+        const inside = yc >= yLowerAtXc - 1e-7 && yc <= yUpperAtXc + 1e-7;
         const height = inside ? evalF(xs, ys) : 0;
         const dV = inside ? height * dA : 0;
 
@@ -223,11 +290,15 @@ export function RiemannVolumeLab() {
       }
     }
 
-    const exactVol = computeExactVolume(evalF, evalYMax);
+    const exactVol = computeExactVolume(evalF, xMin, xMax, evalYBounds);
     const absError = Math.abs(riemannSum - exactVol);
     const relErrorPct = exactVol > 0 ? (absError / exactVol) * 100 : 0;
 
     return {
+      xMin,
+      xMax,
+      yBoxMin,
+      yBoxMax,
       dx,
       dy,
       dA,
@@ -238,7 +309,7 @@ export function RiemannVolumeLab() {
       relErrorPct,
       activeCount,
     };
-  }, [evalF, evalYMax, nx, ny, sampleRule]);
+  }, [evalF, xRange, evalYBounds, nx, ny, sampleRule]);
 
   const inspectedCell = useMemo(() => {
     const [ci, cj] = selectedCell;
@@ -277,14 +348,14 @@ export function RiemannVolumeLab() {
     controls.dampingFactor = 0.08;
     controls.maxPolarAngle = Math.PI / 2 + 0.12;
     controls.minDistance = 1.6;
-    controls.maxDistance = 7;
+    controls.maxDistance = 8;
 
     scene.add(new THREE.AmbientLight(0xfffbe4, 0.75));
     const dirLight = new THREE.DirectionalLight(0xfffbe4, 0.75);
     dirLight.position.set(3.5, 5.5, 2.5);
     scene.add(dirLight);
 
-    const grid = new THREE.GridHelper(1.8, 9, 0xaaa36d, 0x32353d);
+    const grid = new THREE.GridHelper(2.2, 11, 0xaaa36d, 0x32353d);
     grid.position.set(0.7, 0, 0.7);
     scene.add(grid);
 
@@ -297,8 +368,8 @@ export function RiemannVolumeLab() {
         new THREE.Line(geom, new THREE.LineBasicMaterial({ color: hex }))
       );
     };
-    addAxis([1.68, 0, 0], "#8D9FCE"); // x
-    addAxis([0, 0, 1.68], "#96B898"); // y
+    addAxis([1.85, 0, 0], "#8D9FCE"); // x
+    addAxis([0, 0, 1.85], "#96B898"); // y
     addAxis([0, 2.15, 0], "#029091"); // z
 
     const prismGroup = new THREE.Group();
@@ -371,11 +442,15 @@ export function RiemannVolumeLab() {
       opacity: 0.55,
     });
 
-    const boxGeom = new THREE.BoxGeometry(dx * 0.96, 1, dy * 0.96);
+    const boxGeom = new THREE.BoxGeometry(
+      Math.max(0.01, dx * 0.96),
+      1,
+      Math.max(0.01, dy * 0.96)
+    );
     const edgesGeom = new THREE.EdgesGeometry(boxGeom);
 
     for (const cell of cells) {
-      if (!cell.inside) continue;
+      if (!cell.inside || cell.height <= 0) continue;
       const isInspected =
         inspectedCell &&
         cell.i === inspectedCell.i &&
@@ -395,7 +470,10 @@ export function RiemannVolumeLab() {
       prismGroup.add(wire);
 
       if (isInspected) {
-        const capGeom = new THREE.PlaneGeometry(dx * 0.96, dy * 0.96);
+        const capGeom = new THREE.PlaneGeometry(
+          Math.max(0.01, dx * 0.96),
+          Math.max(0.01, dy * 0.96)
+        );
         capGeom.rotateX(-Math.PI / 2);
         const capMesh = new THREE.Mesh(capGeom, topCapHighlightMat);
         capMesh.position.set(cell.xc, cell.height + 0.004, cell.yc);
@@ -404,17 +482,18 @@ export function RiemannVolumeLab() {
     }
 
     if (showSmoothSurface) {
-      const res = 34;
+      const res = 48;
       const positions: number[] = [];
       const indices: number[] = [];
+      const [xMin, xMax] = xRange;
 
       for (let i = 0; i <= res; i++) {
         const u = i / res;
-        const x = u * DOMAIN_MAX;
-        const yMax = evalYMax(x);
+        const x = xMin + u * (xMax - xMin);
+        const [yMin, yMax] = evalYBounds(x);
         for (let j = 0; j <= res; j++) {
           const v = j / res;
-          const y = v * yMax;
+          const y = yMin + v * (yMax - yMin);
           const z = evalF(x, y);
           positions.push(x, z, y);
         }
@@ -443,7 +522,7 @@ export function RiemannVolumeLab() {
         color: "#8D9FCE",
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.44,
+        opacity: 0.48,
       });
       surfaceGroup.add(new THREE.Mesh(surfGeom, surfMat));
 
@@ -451,27 +530,46 @@ export function RiemannVolumeLab() {
         color: "#FFFBE4",
         wireframe: true,
         transparent: true,
-        opacity: 0.18,
+        opacity: 0.16,
       });
       surfaceGroup.add(new THREE.Mesh(surfGeom, surfWire));
     }
-  }, [partitionData, inspectedCell, showSmoothSurface, evalF, evalYMax]);
+  }, [partitionData, inspectedCell, showSmoothSurface, xRange, evalF, evalYBounds]);
 
-  const svgScale = 155 / DOMAIN_MAX;
+  // Dynamic boundary curve paths and coordinate mapping for 2D SVG
+  const svgMapping = useMemo(() => {
+    const maxExtent = Math.max(
+      0.5,
+      Math.abs(partitionData.xMax),
+      Math.abs(partitionData.yBoxMax)
+    );
+    const scale = 155 / maxExtent;
+    const toSvgX = (x: number) => 30 + x * scale;
+    const toSvgY = (y: number) => 180 - y * scale;
 
-  // Dynamic boundary curve path for 2D SVG
-  const boundaryCurveSvgPath = useMemo(() => {
-    const pts: string[] = [];
+    const lowerPts: string[] = [];
+    const upperPts: string[] = [];
     const N = 48;
+    const [xMin, xMax] = xRange;
     for (let i = 0; i <= N; i++) {
-      const x = (i / N) * DOMAIN_MAX;
-      const y = evalYMax(x);
-      const sx = 30 + x * svgScale;
-      const sy = 180 - y * svgScale;
-      pts.push(`${i === 0 ? "M" : "L"} ${sx.toFixed(1)} ${sy.toFixed(1)}`);
+      const x = xMin + (i / N) * (xMax - xMin);
+      const [y1, y2] = evalYBounds(x);
+      lowerPts.push(
+        `${i === 0 ? "M" : "L"} ${toSvgX(x).toFixed(1)} ${toSvgY(y1).toFixed(1)}`
+      );
+      upperPts.push(
+        `${i === 0 ? "M" : "L"} ${toSvgX(x).toFixed(1)} ${toSvgY(y2).toFixed(1)}`
+      );
     }
-    return pts.join(" ");
-  }, [evalYMax, svgScale]);
+
+    return {
+      scale,
+      toSvgX,
+      toSvgY,
+      lowerCurvePath: lowerPts.join(" "),
+      upperCurvePath: upperPts.join(" "),
+    };
+  }, [partitionData.xMax, partitionData.yBoxMax, xRange, evalYBounds]);
 
   return (
     <section
@@ -490,8 +588,8 @@ export function RiemannVolumeLab() {
           </h2>
           <p className="font-math-serif text-sm sm:text-base text-[var(--text-secondary)] max-w-3xl">
             Choose a preset or type your own surface <KaTeXMath math="z = f(x,y)" />{" "}
-            and domain boundary <KaTeXMath math="y = g_2(x)" /> below. Click any
-            cell in the 2D domain grid to inspect its corresponding 3D column{" "}
+            and integration limits <KaTeXMath math="x \in [a,b],\; y \in [g_1(x), g_2(x)]" />{" "}
+            below. Click any cell in the 2D domain grid to inspect its corresponding 3D column{" "}
             <KaTeXMath math="\Delta V_{ij} = f(x_i^*, y_j^*)\,\Delta A" />.
           </p>
         </div>
@@ -556,18 +654,21 @@ export function RiemannVolumeLab() {
         {/* 2. Domain Shape Selector */}
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
           <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] block">
-            2. Base Region R Presets (0 ≤ x ≤ 1.4)
+            2. Base Region R Presets
           </span>
-          <div className="grid grid-cols-3 gap-1.5">
+          <div className="grid grid-cols-2 gap-1.5">
             {DOMAIN_PRESETS.map((d) => (
               <button
                 key={d.id}
                 type="button"
                 onClick={() => {
                   setDomainShape(d.id);
+                  setXMinExpr(d.xMinExpr);
+                  setXMaxExpr(d.xMaxExpr);
+                  setYMinExpr(d.yMinExpr);
                   setYMaxExpr(d.yMaxExpr);
                 }}
-                className={`px-2.5 py-1.5 text-xs font-medium border transition-colors cursor-pointer ${
+                className={`px-2.5 py-1.5 text-xs font-medium text-left border transition-colors cursor-pointer ${
                   domainShape === d.id
                     ? "border-[var(--border-strong)] bg-[var(--bg-panel-elevated)] text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -627,8 +728,8 @@ export function RiemannVolumeLab() {
         </div>
       </div>
 
-      {/* Custom Math Typing Widgets for Surface f(x, y) and Upper Boundary Curve y_max(x) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {/* Custom Math Typing Widgets for Surface f(x, y) and All 4 Region Limits */}
+      <div className="space-y-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-4">
         <MathExpressionInput
           label="Custom Surface Equation z = f(x, y):"
           value={surfaceExpr}
@@ -638,22 +739,60 @@ export function RiemannVolumeLab() {
           }}
           allowedVars={["x", "y"]}
           prefixLatex="f(x,y) ="
-          placeholder="1.85 - 0.45*(x^2 + y^2)"
+          placeholder="sqrt(1 - (x^2 + y^2))"
           accentHex="#8D9FCE"
         />
 
-        <MathExpressionInput
-          label="Custom 2D Domain Upper Curve y = g₂(x) on [0, 1.4]:"
-          value={yMaxExpr}
-          onChange={(val) => {
-            setDomainShape("custom");
-            setYMaxExpr(val);
-          }}
-          allowedVars={["x"]}
-          prefixLatex="0 \le y \le"
-          placeholder="1.4 - 0.5*x^2"
-          accentHex="#B95869"
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+          <MathExpressionInput
+            label="Outer Lower Limit x_min (a):"
+            value={xMinExpr}
+            onChange={(val) => {
+              setDomainShape("custom");
+              setXMinExpr(val);
+            }}
+            allowedVars={[]}
+            prefixLatex="a ="
+            placeholder="0"
+            accentHex="#8D9FCE"
+          />
+          <MathExpressionInput
+            label="Outer Upper Limit x_max (b):"
+            value={xMaxExpr}
+            onChange={(val) => {
+              setDomainShape("custom");
+              setXMaxExpr(val);
+            }}
+            allowedVars={[]}
+            prefixLatex="b ="
+            placeholder="1.4"
+            accentHex="#8D9FCE"
+          />
+          <MathExpressionInput
+            label="Inner Lower Curve y_min(x) = g₁(x):"
+            value={yMinExpr}
+            onChange={(val) => {
+              setDomainShape("custom");
+              setYMinExpr(val);
+            }}
+            allowedVars={["x"]}
+            prefixLatex="g_1(x) ="
+            placeholder="0"
+            accentHex="#D5658B"
+          />
+          <MathExpressionInput
+            label="Inner Upper Curve y_max(x) = g₂(x):"
+            value={yMaxExpr}
+            onChange={(val) => {
+              setDomainShape("custom");
+              setYMaxExpr(val);
+            }}
+            allowedVars={["x"]}
+            prefixLatex="g_2(x) ="
+            placeholder="sqrt(1 - x^2)"
+            accentHex="#B95869"
+          />
+        </div>
       </div>
 
       {/* Main Split Workspace: Left 3D WebGL + Right 2D Interactive Partition Grid */}
@@ -712,9 +851,16 @@ export function RiemannVolumeLab() {
               role="img"
               aria-label="Interactive 2D partition grid of the integration domain R"
             >
-              {/* Dynamic Boundary Curve y = g2(x) */}
+              {/* Dynamic Lower & Upper Boundary Curves */}
               <path
-                d={boundaryCurveSvgPath}
+                d={svgMapping.lowerCurvePath}
+                fill="none"
+                stroke="#D5658B"
+                strokeWidth="2"
+                strokeDasharray="3 2"
+              />
+              <path
+                d={svgMapping.upperCurvePath}
                 fill="none"
                 stroke="#B95869"
                 strokeWidth="2"
@@ -723,10 +869,10 @@ export function RiemannVolumeLab() {
 
               {/* Partition Sub-Rectangles */}
               {partitionData.cells.map((cell) => {
-                const svgX = 30 + cell.x0 * svgScale;
-                const svgW = partitionData.dx * svgScale;
-                const svgH = partitionData.dy * svgScale;
-                const svgY = 180 - (cell.y0 + partitionData.dy) * svgScale;
+                const svgX = svgMapping.toSvgX(cell.x0);
+                const svgW = partitionData.dx * svgMapping.scale;
+                const svgH = partitionData.dy * svgMapping.scale;
+                const svgY = svgMapping.toSvgY(cell.y0 + partitionData.dy);
                 const isSelected =
                   inspectedCell &&
                   cell.i === inspectedCell.i &&
@@ -856,11 +1002,11 @@ export function RiemannVolumeLab() {
           {/* Live Riemann Formula Card */}
           <div className="border border-[var(--border-strong)] bg-[var(--bg-canvas)] p-3.5 space-y-1.5">
             <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] block">
-              Double Riemann Sum Approximation
+              Double Integral &amp; Riemann Sum Approximation
             </span>
             <KaTeXMath
               block
-              math={`S_{${nx},${ny}} = \\sum_{i=1}^{\\textcolor{#8D9FCE}{${nx}}} \\sum_{j=1}^{\\textcolor{#96B898}{${ny}}} \\left(${compiledSurface.tex}\\right)\\,\\textcolor{#FBEAA4}{\\Delta A} = \\textcolor{#FBEAA4}{${partitionData.riemannSum.toFixed(
+              math={`\\int_{\\textcolor{#8D9FCE}{${compiledXMin.tex}}}^{\\textcolor{#8D9FCE}{${compiledXMax.tex}}} \\int_{\\textcolor{#D5658B}{${compiledYMin.tex}}}^{\\textcolor{#B95869}{${compiledYMax.tex}}} \\left(${compiledSurface.tex}\\right)\\,dy\\,dx \\approx S_{${nx},${ny}} = \\textcolor{#FBEAA4}{${partitionData.riemannSum.toFixed(
                 4
               )}}`}
             />

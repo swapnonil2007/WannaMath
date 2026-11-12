@@ -438,9 +438,12 @@ export function TripleIntegralOrderLab() {
 
   // User-editable math expression strings (seeded from active solid + order)
   const [integrandExpr, setIntegrandExpr] = useState<string>("1");
+  const [outerMinExpr, setOuterMinExpr] = useState<string>("0");
+  const [outerMaxExpr, setOuterMaxExpr] = useState<string>("1.4");
+  const [midMinExpr, setMidMinExpr] = useState<string>("0");
+  const [midMaxExpr, setMidMaxExpr] = useState<string>("1.4 - x");
   const [innerMinExpr, setInnerMinExpr] = useState<string>("0");
   const [innerMaxExpr, setInnerMaxExpr] = useState<string>("1.4 - x - y");
-  const [midMaxExpr, setMidMaxExpr] = useState<string>("1.4 - x");
 
   const solid = useMemo(
     () => SOLID_PRESETS.find((s) => s.id === solidId) ?? SOLID_PRESETS[0],
@@ -451,15 +454,34 @@ export function TripleIntegralOrderLab() {
 
   // Sync user-editable bound inputs whenever solidId or order changes
   useEffect(() => {
+    setOuterMinExpr(String(spec.outerRange[0]));
+    setOuterMaxExpr(String(spec.outerRange[1]));
+    setMidMinExpr(spec.midMinExpr);
+    setMidMaxExpr(spec.midMaxExpr);
     setInnerMinExpr(spec.innerMinExpr);
     setInnerMaxExpr(spec.innerMaxExpr);
-    setMidMaxExpr(spec.midMaxExpr);
   }, [spec]);
 
-  // Compile user-typed expressions
+  // Compile user-typed expressions (fallbackValue = 0 so out-of-domain radicals evaluate to 0)
   const compiledIntegrand = useMemo(
-    () => compileMathExpression(integrandExpr, ["x", "y", "z"], 1),
+    () => compileMathExpression(integrandExpr, ["x", "y", "z"], 0),
     [integrandExpr]
+  );
+  const compiledOuterMin = useMemo(
+    () => compileMathExpression(outerMinExpr, [], 0),
+    [outerMinExpr]
+  );
+  const compiledOuterMax = useMemo(
+    () => compileMathExpression(outerMaxExpr, [], 1),
+    [outerMaxExpr]
+  );
+  const compiledMidMin = useMemo(
+    () => compileMathExpression(midMinExpr, [spec.outerVar], 0),
+    [midMinExpr, spec.outerVar]
+  );
+  const compiledMidMax = useMemo(
+    () => compileMathExpression(midMaxExpr, [spec.outerVar], 0),
+    [midMaxExpr, spec.outerVar]
   );
   const compiledInnerMin = useMemo(
     () =>
@@ -475,24 +497,22 @@ export function TripleIntegralOrderLab() {
       compileMathExpression(
         innerMaxExpr,
         [spec.outerVar, spec.midVar],
-        1
+        0
       ),
     [innerMaxExpr, spec.outerVar, spec.midVar]
   );
-  const compiledMidMin = useMemo(
-    () => compileMathExpression(spec.midMinExpr, [spec.outerVar], 0),
-    [spec.midMinExpr, spec.outerVar]
-  );
-  const compiledMidMax = useMemo(
-    () => compileMathExpression(midMaxExpr, [spec.outerVar], 1),
-    [midMaxExpr, spec.outerVar]
-  );
+
+  const outerRange = useMemo((): [number, number] => {
+    const a = Math.max(-4, Math.min(4, compiledOuterMin.evaluate({})));
+    const b = Math.max(a + 0.05, Math.min(4, compiledOuterMax.evaluate({})));
+    return [a, b];
+  }, [compiledOuterMin, compiledOuterMax]);
 
   const evalMidBounds = React.useCallback(
     (oVal: number): [number, number] => {
       const scope = { [spec.outerVar]: oVal };
-      const m1 = Math.max(0, compiledMidMin.evaluate(scope));
-      const m2 = Math.max(m1, Math.min(1.6, compiledMidMax.evaluate(scope)));
+      const m1 = Math.max(-4, Math.min(4, compiledMidMin.evaluate(scope)));
+      const m2 = Math.max(m1, Math.min(4, compiledMidMax.evaluate(scope)));
       return [m1, m2];
     },
     [compiledMidMin, compiledMidMax, spec.outerVar]
@@ -501,8 +521,8 @@ export function TripleIntegralOrderLab() {
   const evalInnerBounds = React.useCallback(
     (oVal: number, mVal: number): [number, number] => {
       const scope = { [spec.outerVar]: oVal, [spec.midVar]: mVal };
-      const i1 = Math.max(0, compiledInnerMin.evaluate(scope));
-      const i2 = Math.max(i1, Math.min(1.6, compiledInnerMax.evaluate(scope)));
+      const i1 = Math.max(-4, Math.min(4, compiledInnerMin.evaluate(scope)));
+      const i2 = Math.max(i1, Math.min(4, compiledInnerMax.evaluate(scope)));
       return [i1, i2];
     },
     [compiledInnerMin, compiledInnerMax, spec.outerVar, spec.midVar]
@@ -510,7 +530,7 @@ export function TripleIntegralOrderLab() {
 
   // Actual coordinate values for outer, mid, and inner bounds
   const coords = useMemo(() => {
-    const [oMin, oMax] = spec.outerRange;
+    const [oMin, oMax] = outerRange;
     const outerVal = oMin + outerNorm * (oMax - oMin);
     const [mMin, mMax] = evalMidBounds(outerVal);
     const midVal = mMin + midNorm * Math.max(0, mMax - mMin);
@@ -524,12 +544,12 @@ export function TripleIntegralOrderLab() {
       iMax,
       rayLength: Math.max(0, iMax - iMin),
     };
-  }, [spec.outerRange, outerNorm, midNorm, evalMidBounds, evalInnerBounds]);
+  }, [outerRange, outerNorm, midNorm, evalMidBounds, evalInnerBounds]);
 
   // Compute numerical Triple Integral ∭_E f(x,y,z) dV for the user's custom expressions
   const evaluatedTripleIntegral = useMemo(() => {
     const N = 14;
-    const [oA, oB] = spec.outerRange;
+    const [oA, oB] = outerRange;
     const dOuter = (oB - oA) / N;
     let sum = 0;
 
@@ -554,7 +574,7 @@ export function TripleIntegralOrderLab() {
       }
     }
     return sum;
-  }, [spec.outerRange, evalMidBounds, evalInnerBounds, order, compiledIntegrand]);
+  }, [outerRange, evalMidBounds, evalInnerBounds, order, compiledIntegrand]);
 
   // Animate outer & middle sweep when playing
   useEffect(() => {
@@ -680,13 +700,13 @@ export function TripleIntegralOrderLab() {
       solidGroup.remove(c);
     }
 
-    const nO = 32;
-    const nM = 32;
+    const nO = 44;
+    const nM = 44;
     const topPos: number[] = [];
     const botPos: number[] = [];
     const indices: number[] = [];
 
-    const [oA, oB] = spec.outerRange;
+    const [oA, oB] = outerRange;
     for (let i = 0; i <= nO; i++) {
       const oVal = oA + (i / nO) * (oB - oA);
       const [m1, m2] = evalMidBounds(oVal);
@@ -764,7 +784,7 @@ export function TripleIntegralOrderLab() {
       );
     }
   }, [
-    spec.outerRange,
+    outerRange,
     order,
     evalMidBounds,
     evalInnerBounds,
@@ -789,10 +809,10 @@ export function TripleIntegralOrderLab() {
     clearGroup(curtainGroup);
     clearGroup(rayGroup);
 
-    const nS = 28;
+    const nS = 32;
     const shadowVerts: number[] = [];
     const shadowIdx: number[] = [];
-    const [oA, oB] = spec.outerRange;
+    const [oA, oB] = outerRange;
 
     for (let i = 0; i <= nS; i++) {
       const oVal = oA + (i / nS) * (oB - oA);
@@ -836,7 +856,7 @@ export function TripleIntegralOrderLab() {
       )
     );
 
-    const steps = 32;
+    const steps = 40;
     const curtVerts: number[] = [];
     const curtIdx: number[] = [];
     const { outerVal, mMin, mMax, midVal, iMin, iMax } = coords;
@@ -920,19 +940,25 @@ export function TripleIntegralOrderLab() {
     );
     exitSphere.position.copy(vEnd);
     rayGroup.add(exitSphere);
-  }, [spec, order, coords, evalMidBounds, evalInnerBounds]);
+  }, [spec, outerRange, order, coords, evalMidBounds, evalInnerBounds]);
 
   // Build 2D SVG for the Orthographic Shadow Projection D
   const shadowSvg = useMemo(() => {
-    const maxCoord = solid.id === "tetrahedron" ? 1.4 : 1.0;
-    const scale = 150 / maxCoord;
+    const N = 45;
+    const [oA, oB] = outerRange;
+    let maxCoord = Math.max(1.0, Math.abs(oA), Math.abs(oB));
+    for (let i = 0; i <= N; i++) {
+      const o = oA + (i / N) * (oB - oA);
+      const [m1, m2] = evalMidBounds(o);
+      maxCoord = Math.max(maxCoord, Math.abs(m1), Math.abs(m2));
+    }
+
+    const scale = 150 / Math.max(0.25, maxCoord);
     const toSvg = (horiz: number, vert: number): [number, number] => [
       32 + horiz * scale,
       175 - vert * scale,
     ];
 
-    const N = 45;
-    const [oA, oB] = spec.outerRange;
     const lowerPts: [number, number][] = [];
     const upperPts: [number, number][] = [];
 
@@ -957,9 +983,9 @@ export function TripleIntegralOrderLab() {
       stripTop,
       rayFootprint,
     };
-  }, [solid.id, spec.outerRange, coords, evalMidBounds]);
+  }, [outerRange, coords, evalMidBounds]);
 
-  const dynamicTripleLatex = `\\int_{\\textcolor{#8D9FCE}{${spec.outerRange[0]}}}^{\\textcolor{#8D9FCE}{${spec.outerRange[1]}}} \\int_{\\textcolor{#96B898}{${compiledMidMin.tex}}}^{\\textcolor{#96B898}{${compiledMidMax.tex}}} \\int_{\\textcolor{#D5658B}{${compiledInnerMin.tex}}}^{\\textcolor{#B95869}{${compiledInnerMax.tex}}} \\left(${compiledIntegrand.tex}\\right)\\,\\textcolor{#FBEAA4}{d${spec.innerVar}}\\,\\textcolor{#96B898}{d${spec.midVar}}\\,\\textcolor{#8D9FCE}{d${spec.outerVar}} \\approx \\textcolor{#FBEAA4}{${evaluatedTripleIntegral.toFixed(
+  const dynamicTripleLatex = `\\int_{\\textcolor{#8D9FCE}{${compiledOuterMin.tex}}}^{\\textcolor{#8D9FCE}{${compiledOuterMax.tex}}} \\int_{\\textcolor{#96B898}{${compiledMidMin.tex}}}^{\\textcolor{#96B898}{${compiledMidMax.tex}}} \\int_{\\textcolor{#D5658B}{${compiledInnerMin.tex}}}^{\\textcolor{#B95869}{${compiledInnerMax.tex}}} \\left(${compiledIntegrand.tex}\\right)\\,\\textcolor{#FBEAA4}{d${spec.innerVar}}\\,\\textcolor{#96B898}{d${spec.midVar}}\\,\\textcolor{#8D9FCE}{d${spec.outerVar}} \\approx \\textcolor{#FBEAA4}{${evaluatedTripleIntegral.toFixed(
     4
   )}}`;
 
@@ -983,10 +1009,10 @@ export function TripleIntegralOrderLab() {
           </h2>
           <p className="font-math-serif text-sm sm:text-base text-[var(--text-secondary)] max-w-3xl">
             Select any of the <strong>6 integration orders</strong> or type your
-            own custom 3D bounding surfaces and integrand below! Watch how the
-            innermost differential shoots a <strong>1D ray</strong>, projects a{" "}
-            <strong>2D shadow</strong> onto the coordinate wall, and sweeps a{" "}
-            <strong>2D curtain</strong>.
+            own custom 3D bounding surfaces, 2D shadow curves, outer limits, and
+            integrand below! Watch how the innermost differential shoots a{" "}
+            <strong>1D ray</strong>, projects a <strong>2D shadow</strong> onto
+            the coordinate wall, and sweeps a <strong>2D curtain</strong>.
           </p>
         </div>
 
@@ -1081,48 +1107,81 @@ export function TripleIntegralOrderLab() {
         </div>
       </div>
 
-      {/* Custom Math Typing Composer for Triple Integral Bounds & Integrand */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+      {/* Custom Math Typing Composer for All 6 Triple Integral Bounds & Integrand */}
+      <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-4 space-y-3">
         <MathExpressionInput
-          label="Integrand f(x, y, z):"
+          label="1. Integrand Function f(x, y, z):"
           value={integrandExpr}
           onChange={setIntegrandExpr}
           allowedVars={["x", "y", "z"]}
-          prefixLatex="f ="
+          prefixLatex="f(x,y,z) ="
           placeholder="1"
           accentHex="#8D9FCE"
           compact
         />
-        <MathExpressionInput
-          label={`Inner Lower Surface (${spec.innerVar}_min):`}
-          value={innerMinExpr}
-          onChange={setInnerMinExpr}
-          allowedVars={[spec.outerVar, spec.midVar]}
-          prefixLatex={`${spec.innerVar}_1 =`}
-          placeholder="0"
-          accentHex="#D5658B"
-          compact
-        />
-        <MathExpressionInput
-          label={`Inner Upper Surface (${spec.innerVar}_max):`}
-          value={innerMaxExpr}
-          onChange={setInnerMaxExpr}
-          allowedVars={[spec.outerVar, spec.midVar]}
-          prefixLatex={`${spec.innerVar}_2 =`}
-          placeholder="1.4 - x - y"
-          accentHex="#B95869"
-          compact
-        />
-        <MathExpressionInput
-          label={`2D Shadow Upper Curve (${spec.midVar}_max):`}
-          value={midMaxExpr}
-          onChange={setMidMaxExpr}
-          allowedVars={[spec.outerVar]}
-          prefixLatex={`${spec.midVar}_2 =`}
-          placeholder="1.4 - x"
-          accentHex="#96B898"
-          compact
-        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
+          <MathExpressionInput
+            label={`2. Outer Lower Limit (${spec.outerVar}_min):`}
+            value={outerMinExpr}
+            onChange={setOuterMinExpr}
+            allowedVars={[]}
+            prefixLatex={`${spec.outerVar}_{\\min} =`}
+            placeholder="0"
+            accentHex="#8D9FCE"
+            compact
+          />
+          <MathExpressionInput
+            label={`3. Outer Upper Limit (${spec.outerVar}_max):`}
+            value={outerMaxExpr}
+            onChange={setOuterMaxExpr}
+            allowedVars={[]}
+            prefixLatex={`${spec.outerVar}_{\\max} =`}
+            placeholder="1.4"
+            accentHex="#8D9FCE"
+            compact
+          />
+          <MathExpressionInput
+            label={`4. 2D Shadow Lower Curve (${spec.midVar}_min):`}
+            value={midMinExpr}
+            onChange={setMidMinExpr}
+            allowedVars={[spec.outerVar]}
+            prefixLatex={`${spec.midVar}_1 =`}
+            placeholder="0"
+            accentHex="#96B898"
+            compact
+          />
+          <MathExpressionInput
+            label={`5. 2D Shadow Upper Curve (${spec.midVar}_max):`}
+            value={midMaxExpr}
+            onChange={setMidMaxExpr}
+            allowedVars={[spec.outerVar]}
+            prefixLatex={`${spec.midVar}_2 =`}
+            placeholder="1.4 - x"
+            accentHex="#96B898"
+            compact
+          />
+          <MathExpressionInput
+            label={`6. Inner Lower Entry Surface (${spec.innerVar}_min):`}
+            value={innerMinExpr}
+            onChange={setInnerMinExpr}
+            allowedVars={[spec.outerVar, spec.midVar]}
+            prefixLatex={`${spec.innerVar}_1 =`}
+            placeholder="0"
+            accentHex="#D5658B"
+            compact
+          />
+          <MathExpressionInput
+            label={`7. Inner Upper Exit Surface (${spec.innerVar}_max):`}
+            value={innerMaxExpr}
+            onChange={setInnerMaxExpr}
+            allowedVars={[spec.outerVar, spec.midVar]}
+            prefixLatex={`${spec.innerVar}_2 =`}
+            placeholder="1.4 - x - y"
+            accentHex="#B95869"
+            compact
+          />
+        </div>
       </div>
 
       {/* Main Split Viewports: Left 3D Solid/Ray/Curtain + Right 2D Shadow Projection & Sliders */}

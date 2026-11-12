@@ -49,24 +49,44 @@ const DENSITY_PRESETS: DensityPreset[] = [
   },
 ];
 
-const SOLID_ZMAX_PRESETS: {
+const SOLID_REGION_PRESETS: {
   id: Exclude<VoxelSolidId, "custom">;
   label: string;
+  xMinExpr: string;
+  xMaxExpr: string;
+  yMinExpr: string;
+  yMaxExpr: string;
+  zMinExpr: string;
   zMaxExpr: string;
 }[] = [
   {
     id: "quarter-sphere",
     label: "Octant Sphere",
-    zMaxExpr: "sqrt(max(0, 1.5625 - x^2 - y^2))",
+    xMinExpr: "0",
+    xMaxExpr: "1.25",
+    yMinExpr: "0",
+    yMaxExpr: "sqrt(1.5625 - x^2)",
+    zMinExpr: "0",
+    zMaxExpr: "sqrt(1.5625 - x^2 - y^2)",
   },
   {
     id: "tetrahedron",
     label: "Tetrahedron",
+    xMinExpr: "0",
+    xMaxExpr: "1.35",
+    yMinExpr: "0",
+    yMaxExpr: "1.35 - x",
+    zMinExpr: "0",
     zMaxExpr: "1.35 - x - y",
   },
   {
     id: "parabolic-tunnel",
     label: "Parabolic Arch",
+    xMinExpr: "0",
+    xMaxExpr: "1.2",
+    yMinExpr: "0",
+    yMaxExpr: "1.2",
+    zMinExpr: "0",
     zMaxExpr: "1.2 - 0.8*y^2",
   },
 ];
@@ -76,8 +96,23 @@ export function TripleVoxelDensityLab() {
   const voxelGroupRef = useRef<THREE.Group | null>(null);
 
   const [solidId, setSolidId] = useState<VoxelSolidId>("quarter-sphere");
+  const [xMinExpr, setXMinExpr] = useState<string>(
+    SOLID_REGION_PRESETS[0].xMinExpr
+  );
+  const [xMaxExpr, setXMaxExpr] = useState<string>(
+    SOLID_REGION_PRESETS[0].xMaxExpr
+  );
+  const [yMinExpr, setYMinExpr] = useState<string>(
+    SOLID_REGION_PRESETS[0].yMinExpr
+  );
+  const [yMaxExpr, setYMaxExpr] = useState<string>(
+    SOLID_REGION_PRESETS[0].yMaxExpr
+  );
+  const [zMinExpr, setZMinExpr] = useState<string>(
+    SOLID_REGION_PRESETS[0].zMinExpr
+  );
   const [zMaxExpr, setZMaxExpr] = useState<string>(
-    SOLID_ZMAX_PRESETS[0].zMaxExpr
+    SOLID_REGION_PRESETS[0].zMaxExpr
   );
 
   const [densityId, setDensityId] = useState<DensityId>("stratified");
@@ -89,12 +124,32 @@ export function TripleVoxelDensityLab() {
   const [sliceZFilter, setSliceZFilter] = useState<number>(1.0);
 
   const compiledDensity = useMemo(
-    () => compileMathExpression(densityExpr, ["x", "y", "z"], 1.0),
+    () => compileMathExpression(densityExpr, ["x", "y", "z"], 0),
     [densityExpr]
   );
 
+  const compiledXMin = useMemo(
+    () => compileMathExpression(xMinExpr, [], 0),
+    [xMinExpr]
+  );
+  const compiledXMax = useMemo(
+    () => compileMathExpression(xMaxExpr, [], 1.25),
+    [xMaxExpr]
+  );
+  const compiledYMin = useMemo(
+    () => compileMathExpression(yMinExpr, ["x"], 0),
+    [yMinExpr]
+  );
+  const compiledYMax = useMemo(
+    () => compileMathExpression(yMaxExpr, ["x"], 0),
+    [yMaxExpr]
+  );
+  const compiledZMin = useMemo(
+    () => compileMathExpression(zMinExpr, ["x", "y"], 0),
+    [zMinExpr]
+  );
   const compiledZMax = useMemo(
-    () => compileMathExpression(zMaxExpr, ["x", "y"], 1.0),
+    () => compileMathExpression(zMaxExpr, ["x", "y"], 0),
     [zMaxExpr]
   );
 
@@ -108,7 +163,9 @@ export function TripleVoxelDensityLab() {
 
   // Compute 3D Voxel Lattice, Riemann Volume, Total Mass M, and Center of Mass (xBar, yBar, zBar)
   const voxelData = useMemo(() => {
-    const boxMax = 1.35;
+    const xA = Math.max(-3, Math.min(3, compiledXMin.evaluate({})));
+    const xB = Math.max(xA + 0.1, Math.min(3, compiledXMax.evaluate({})));
+    const boxMax = Math.max(1.35, Math.abs(xB));
     const step = boxMax / resolution;
     const dV = step * step * step;
 
@@ -129,12 +186,21 @@ export function TripleVoxelDensityLab() {
 
     for (let i = 0; i < resolution; i++) {
       const xc = (i + 0.5) * step;
+      if (xc < xA - 1e-6 || xc > xB + 1e-6) continue;
+
+      const yLower = compiledYMin.evaluate({ x: xc });
+      const yUpper = compiledYMax.evaluate({ x: xc });
+
       for (let j = 0; j < resolution; j++) {
         const yc = (j + 0.5) * step;
+        if (yc < yLower - 1e-6 || yc > yUpper + 1e-6) continue;
+
+        const zLower = compiledZMin.evaluate({ x: xc, y: yc });
         const zUpper = compiledZMax.evaluate({ x: xc, y: yc });
+
         for (let k = 0; k < resolution; k++) {
           const zc = (k + 0.5) * step;
-          if (zc <= zUpper) {
+          if (zc >= zLower - 1e-6 && zc <= zUpper && zUpper > zLower) {
             const rho = Math.max(
               0.05,
               compiledDensity.evaluate({ x: xc, y: yc, z: zc })
@@ -173,7 +239,17 @@ export function TripleVoxelDensityLab() {
       com,
       activeCount,
     };
-  }, [compiledDensity, compiledZMax, resolution, sliceZFilter]);
+  }, [
+    compiledDensity,
+    compiledXMin,
+    compiledXMax,
+    compiledYMin,
+    compiledYMax,
+    compiledZMin,
+    compiledZMax,
+    resolution,
+    sliceZFilter,
+  ]);
 
   // Initialize Three.js Scene
   useEffect(() => {
@@ -349,9 +425,9 @@ export function TripleVoxelDensityLab() {
           </h2>
           <p className="font-math-serif text-sm sm:text-base text-[var(--text-secondary)] max-w-3xl">
             Choose a preset or type your own 3D scalar density function{" "}
-            <KaTeXMath math="\rho(x,y,z)" /> and upper bounding surface{" "}
-            <KaTeXMath math="z_{\max}(x,y)" /> below. Watch how varying{" "}
-            <KaTeXMath math="\rho(x,y,z)" /> shifts the{" "}
+            <KaTeXMath math="\rho(x,y,z)" /> and all 6 integration limits{" "}
+            <KaTeXMath math="x \in [a,b],\; y \in [g_1(x), g_2(x)],\; z \in [u_1(x,y), u_2(x,y)]" />{" "}
+            below. Watch how varying <KaTeXMath math="\rho(x,y,z)" /> shifts the{" "}
             <strong>3D Center of Mass</strong> (cream sphere with persimmon
             crosshairs).
           </p>
@@ -387,10 +463,10 @@ export function TripleVoxelDensityLab() {
         </div>
       </div>
 
-      {/* Custom Math Typing Widgets for Density ρ(x,y,z) and Upper Surface z_max(x,y) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {/* Custom Math Typing Widgets for Density ρ(x,y,z) and All 6 3D Region Limits */}
+      <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-4 space-y-3">
         <MathExpressionInput
-          label="Custom 3D Scalar Density Function ρ(x, y, z):"
+          label="1. Custom 3D Scalar Density Function ρ(x, y, z):"
           value={densityExpr}
           onChange={(val) => {
             setDensityId("custom");
@@ -410,18 +486,86 @@ export function TripleVoxelDensityLab() {
           ]}
         />
 
-        <MathExpressionInput
-          label="Custom 3D Solid Upper Surface z = u₂(x, y):"
-          value={zMaxExpr}
-          onChange={(val) => {
-            setSolidId("custom");
-            setZMaxExpr(val);
-          }}
-          allowedVars={["x", "y"]}
-          prefixLatex="0 \le z \le"
-          placeholder="1.35 - x - y"
-          accentHex="#029091"
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
+          <MathExpressionInput
+            label="2. Outer Lower Limit x_min (a):"
+            value={xMinExpr}
+            onChange={(val) => {
+              setSolidId("custom");
+              setXMinExpr(val);
+            }}
+            allowedVars={[]}
+            prefixLatex="a ="
+            placeholder="0"
+            accentHex="#8D9FCE"
+            compact
+          />
+          <MathExpressionInput
+            label="3. Outer Upper Limit x_max (b):"
+            value={xMaxExpr}
+            onChange={(val) => {
+              setSolidId("custom");
+              setXMaxExpr(val);
+            }}
+            allowedVars={[]}
+            prefixLatex="b ="
+            placeholder="1.25"
+            accentHex="#8D9FCE"
+            compact
+          />
+          <MathExpressionInput
+            label="4. Middle Lower Curve y_min(x) = g₁(x):"
+            value={yMinExpr}
+            onChange={(val) => {
+              setSolidId("custom");
+              setYMinExpr(val);
+            }}
+            allowedVars={["x"]}
+            prefixLatex="g_1(x) ="
+            placeholder="0"
+            accentHex="#96B898"
+            compact
+          />
+          <MathExpressionInput
+            label="5. Middle Upper Curve y_max(x) = g₂(x):"
+            value={yMaxExpr}
+            onChange={(val) => {
+              setSolidId("custom");
+              setYMaxExpr(val);
+            }}
+            allowedVars={["x"]}
+            prefixLatex="g_2(x) ="
+            placeholder="sqrt(1.5625 - x^2)"
+            accentHex="#96B898"
+            compact
+          />
+          <MathExpressionInput
+            label="6. Inner Lower Surface z_min(x,y) = u₁(x,y):"
+            value={zMinExpr}
+            onChange={(val) => {
+              setSolidId("custom");
+              setZMinExpr(val);
+            }}
+            allowedVars={["x", "y"]}
+            prefixLatex="u_1(x,y) ="
+            placeholder="0"
+            accentHex="#D5658B"
+            compact
+          />
+          <MathExpressionInput
+            label="7. Inner Upper Surface z_max(x,y) = u₂(x,y):"
+            value={zMaxExpr}
+            onChange={(val) => {
+              setSolidId("custom");
+              setZMaxExpr(val);
+            }}
+            allowedVars={["x", "y"]}
+            prefixLatex="u_2(x,y) ="
+            placeholder="sqrt(1.5625 - x^2 - y^2)"
+            accentHex="#029091"
+            compact
+          />
+        </div>
       </div>
 
       {/* Main Split Workspace */}
@@ -454,12 +598,17 @@ export function TripleVoxelDensityLab() {
                 1. 3D Solid Domain Presets
               </span>
               <div className="grid grid-cols-3 gap-1.5">
-                {SOLID_ZMAX_PRESETS.map((s) => (
+                {SOLID_REGION_PRESETS.map((s) => (
                   <button
                     key={s.id}
                     type="button"
                     onClick={() => {
                       setSolidId(s.id);
+                      setXMinExpr(s.xMinExpr);
+                      setXMaxExpr(s.xMaxExpr);
+                      setYMinExpr(s.yMinExpr);
+                      setYMaxExpr(s.yMaxExpr);
+                      setZMinExpr(s.zMinExpr);
                       setZMaxExpr(s.zMaxExpr);
                     }}
                     className={`px-2 py-1.5 text-xs font-medium border transition-colors cursor-pointer ${
@@ -568,10 +717,8 @@ export function TripleVoxelDensityLab() {
             </div>
             <KaTeXMath
               block
-              math={`M = \\iiint_E \\left(${compiledDensity.tex}\\right)\\,dV \\approx \\textcolor{#D5658B}{${voxelData.totalMass.toFixed(
+              math={`M = \\int_{\\textcolor{#8D9FCE}{${compiledXMin.tex}}}^{\\textcolor{#8D9FCE}{${compiledXMax.tex}}} \\int_{\\textcolor{#96B898}{${compiledYMin.tex}}}^{\\textcolor{#96B898}{${compiledYMax.tex}}} \\int_{\\textcolor{#D5658B}{${compiledZMin.tex}}}^{\\textcolor{#029091}{${compiledZMax.tex}}} \\left(${compiledDensity.tex}\\right)\\,dz\\,dy\\,dx \\approx \\textcolor{#D5658B}{${voxelData.totalMass.toFixed(
                 4
-              )}}, \\quad \\bar{z} \\approx \\textcolor{#FBEAA4}{${voxelData.com[2].toFixed(
-                3
               )}}`}
             />
             <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">

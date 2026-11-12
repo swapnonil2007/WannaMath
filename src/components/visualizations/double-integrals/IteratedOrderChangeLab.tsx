@@ -209,8 +209,13 @@ export function IteratedOrderChangeLab() {
 
   // User-editable equation strings (seeded from active preset)
   const [integrandExpr, setIntegrandExpr] = useState<string>("exp(y^2)");
+  const [xLowerExpr, setXLowerExpr] = useState<string>("0");
+  const [xUpperExpr, setXUpperExpr] = useState<string>("1");
   const [yMinExpr, setYMinExpr] = useState<string>("x");
   const [yMaxExpr, setYMaxExpr] = useState<string>("1");
+
+  const [yLowerExpr, setYLowerExpr] = useState<string>("0");
+  const [yUpperExpr, setYUpperExpr] = useState<string>("1");
   const [xMinExpr, setXMinExpr] = useState<string>("0");
   const [xMaxExpr, setXMaxExpr] = useState<string>("y");
 
@@ -219,10 +224,18 @@ export function IteratedOrderChangeLab() {
     [presetId]
   );
 
-  // Compile user-typed expressions
+  // Compile user-typed expressions (fallbackValue = 0 so out-of-domain radicals sit at z = 0)
   const compiledIntegrand = useMemo(
-    () => compileMathExpression(integrandExpr, ["x", "y"], 1.0),
+    () => compileMathExpression(integrandExpr, ["x", "y"], 0),
     [integrandExpr]
+  );
+  const compiledXLower = useMemo(
+    () => compileMathExpression(xLowerExpr, [], 0),
+    [xLowerExpr]
+  );
+  const compiledXUpper = useMemo(
+    () => compileMathExpression(xUpperExpr, [], 1),
+    [xUpperExpr]
   );
   const compiledYMin = useMemo(
     () => compileMathExpression(yMinExpr, ["x"], 0),
@@ -231,6 +244,15 @@ export function IteratedOrderChangeLab() {
   const compiledYMax = useMemo(
     () => compileMathExpression(yMaxExpr, ["x"], 1),
     [yMaxExpr]
+  );
+
+  const compiledYLower = useMemo(
+    () => compileMathExpression(yLowerExpr, [], 0),
+    [yLowerExpr]
+  );
+  const compiledYUpper = useMemo(
+    () => compileMathExpression(yUpperExpr, [], 1),
+    [yUpperExpr]
   );
   const compiledXMin = useMemo(
     () => compileMathExpression(xMinExpr, ["y"], 0),
@@ -241,8 +263,20 @@ export function IteratedOrderChangeLab() {
     [xMaxExpr]
   );
 
+  const typeIXRange = useMemo((): [number, number] => {
+    const a = Math.max(-4, Math.min(4, compiledXLower.evaluate({})));
+    const b = Math.max(a + 0.05, Math.min(4, compiledXUpper.evaluate({})));
+    return [a, b];
+  }, [compiledXLower, compiledXUpper]);
+
+  const typeIIYRange = useMemo((): [number, number] => {
+    const c = Math.max(-4, Math.min(4, compiledYLower.evaluate({})));
+    const d = Math.max(c + 0.05, Math.min(4, compiledYUpper.evaluate({})));
+    return [c, d];
+  }, [compiledYLower, compiledYUpper]);
+
   const evalTrueF = React.useCallback(
-    (x: number, y: number) => Math.max(0.02, compiledIntegrand.evaluate({ x, y })),
+    (x: number, y: number) => Math.max(0, compiledIntegrand.evaluate({ x, y })),
     [compiledIntegrand]
   );
 
@@ -257,27 +291,31 @@ export function IteratedOrderChangeLab() {
 
   const evalYBounds = React.useCallback(
     (x: number): [number, number] => {
-      const a = Math.max(0, Math.min(preset.yMaxDomain, compiledYMin.evaluate({ x })));
-      const b = Math.max(a, Math.min(preset.yMaxDomain, compiledYMax.evaluate({ x })));
+      const a = Math.max(-4, Math.min(4, compiledYMin.evaluate({ x })));
+      const b = Math.max(a, Math.min(4, compiledYMax.evaluate({ x })));
       return [a, b];
     },
-    [compiledYMin, compiledYMax, preset.yMaxDomain]
+    [compiledYMin, compiledYMax]
   );
 
   const evalXBounds = React.useCallback(
     (y: number): [number, number] => {
-      const a = Math.max(0, Math.min(preset.xMaxDomain, compiledXMin.evaluate({ y })));
-      const b = Math.max(a, Math.min(preset.xMaxDomain, compiledXMax.evaluate({ y })));
+      const a = Math.max(-4, Math.min(4, compiledXMin.evaluate({ y })));
+      const b = Math.max(a, Math.min(4, compiledXMax.evaluate({ y })));
       return [a, b];
     },
-    [compiledXMin, compiledXMax, preset.xMaxDomain]
+    [compiledXMin, compiledXMax]
   );
 
   const handleSelectPreset = (item: DomainPreset) => {
     setPresetId(item.id);
     setIntegrandExpr(item.integrandExpr);
+    setXLowerExpr(String(item.typeI.xRange[0]));
+    setXUpperExpr(String(item.typeI.xRange[1]));
     setYMinExpr(item.typeI.yMinExpr);
     setYMaxExpr(item.typeI.yMaxExpr);
+    setYLowerExpr(String(item.typeII.yRange[0]));
+    setYUpperExpr(String(item.typeII.yRange[1]));
     setXMinExpr(item.typeII.xMinExpr);
     setXMaxExpr(item.typeII.xMaxExpr);
     setSliceNorm(0.55);
@@ -285,10 +323,9 @@ export function IteratedOrderChangeLab() {
 
   // Actual coordinate value of the outer variable (x0 for dydx, y0 for dxdy)
   const outerCoord = useMemo(() => {
-    const range =
-      order === "dydx" ? preset.typeI.xRange : preset.typeII.yRange;
+    const range = order === "dydx" ? typeIXRange : typeIIYRange;
     return range[0] + sliceNorm * (range[1] - range[0]);
-  }, [order, preset, sliceNorm]);
+  }, [order, typeIXRange, typeIIYRange, sliceNorm]);
 
   // Inner bounds at the current outer coordinate
   const activeInnerBounds = useMemo(() => {
@@ -320,7 +357,7 @@ export function IteratedOrderChangeLab() {
     const M = 28;
     let total = 0;
     if (order === "dydx") {
-      const [xA, xB] = preset.typeI.xRange;
+      const [xA, xB] = typeIXRange;
       const dx = (xB - xA) / N;
       for (let i = 0; i < N; i++) {
         const x = xA + (i + 0.5) * dx;
@@ -333,7 +370,7 @@ export function IteratedOrderChangeLab() {
         }
       }
     } else {
-      const [yC, yD] = preset.typeII.yRange;
+      const [yC, yD] = typeIIYRange;
       const dy = (yD - yC) / N;
       for (let i = 0; i < N; i++) {
         const y = yC + (i + 0.5) * dy;
@@ -348,7 +385,7 @@ export function IteratedOrderChangeLab() {
     }
 
     return { sliceArea: sArea, totalIntegralValue: total };
-  }, [activeInnerBounds, order, outerCoord, preset, evalTrueF, evalYBounds, evalXBounds]);
+  }, [activeInnerBounds, order, outerCoord, typeIXRange, typeIIYRange, evalTrueF, evalYBounds, evalXBounds]);
 
   // Animate sweep when playing
   useEffect(() => {
@@ -472,14 +509,14 @@ export function IteratedOrderChangeLab() {
 
     controls.target.set(preset.xMaxDomain * 0.5, 0.55, 0.5);
 
-    const nx = 40;
-    const ny = 32;
+    const nx = 48;
+    const ny = 48;
     const surfPos: number[] = [];
     const basePos: number[] = [];
     const indices: number[] = [];
 
     if (order === "dydx") {
-      const [xA, xB] = preset.typeI.xRange;
+      const [xA, xB] = typeIXRange;
       for (let i = 0; i <= nx; i++) {
         const x = xA + (i / nx) * (xB - xA);
         const [y1, y2] = evalYBounds(x);
@@ -491,7 +528,7 @@ export function IteratedOrderChangeLab() {
         }
       }
     } else {
-      const [yC, yD] = preset.typeII.yRange;
+      const [yC, yD] = typeIIYRange;
       for (let i = 0; i <= nx; i++) {
         const y = yC + (i / nx) * (yD - yC);
         const [x1, x2] = evalXBounds(y);
@@ -563,7 +600,7 @@ export function IteratedOrderChangeLab() {
         })
       )
     );
-  }, [preset, order, evalVisualZ, evalYBounds, evalXBounds]);
+  }, [preset, order, typeIXRange, typeIIYRange, evalVisualZ, evalYBounds, evalXBounds]);
 
   // Update Active Cross-Sectional Curtain & Partial Accumulated Volume
   useEffect(() => {
@@ -581,7 +618,7 @@ export function IteratedOrderChangeLab() {
     clearGroup(sliceGroup);
     clearGroup(accumulatedGroup);
 
-    const steps = 36;
+    const steps = 48;
     const vertices: number[] = [];
     const indices: number[] = [];
     const topPts: THREE.Vector3[] = [];
@@ -643,13 +680,13 @@ export function IteratedOrderChangeLab() {
     );
 
     if (showAccumulated) {
-      const nOuter = 20;
-      const nInner = 20;
+      const nOuter = 24;
+      const nInner = 24;
       const accPos: number[] = [];
       const accIdx: number[] = [];
 
       const [oStart] =
-        order === "dydx" ? preset.typeI.xRange : preset.typeII.yRange;
+        order === "dydx" ? typeIXRange : typeIIYRange;
 
       for (let i = 0; i <= nOuter; i++) {
         const oVal = oStart + (i / nOuter) * (outerCoord - oStart);
@@ -700,7 +737,8 @@ export function IteratedOrderChangeLab() {
     outerCoord,
     activeInnerBounds,
     order,
-    preset,
+    typeIXRange,
+    typeIIYRange,
     showAccumulated,
     evalVisualZ,
     evalYBounds,
@@ -709,21 +747,42 @@ export function IteratedOrderChangeLab() {
 
   // Build 2D SVG paths for the active bounds
   const svgPaths = useMemo(() => {
-    const scaleX = 160 / preset.xMaxDomain;
-    const scaleY = 150 / preset.yMaxDomain;
+    const N = 50;
+    let maxX = Math.max(1.0, preset.xMaxDomain);
+    let maxY = Math.max(1.0, preset.yMaxDomain);
+
+    if (order === "dydx") {
+      const [xA, xB] = typeIXRange;
+      maxX = Math.max(maxX, Math.abs(xA), Math.abs(xB));
+      for (let i = 0; i <= N; i++) {
+        const x = xA + (i / N) * (xB - xA);
+        const [y1, y2] = evalYBounds(x);
+        maxY = Math.max(maxY, Math.abs(y1), Math.abs(y2));
+      }
+    } else {
+      const [yC, yD] = typeIIYRange;
+      maxY = Math.max(maxY, Math.abs(yC), Math.abs(yD));
+      for (let i = 0; i <= N; i++) {
+        const y = yC + (i / N) * (yD - yC);
+        const [x1, x2] = evalXBounds(y);
+        maxX = Math.max(maxX, Math.abs(x1), Math.abs(x2));
+      }
+    }
+
+    const scaleX = 160 / Math.max(0.25, maxX);
+    const scaleY = 150 / Math.max(0.25, maxY);
     const toSvg = (x: number, y: number): [number, number] => [
       30 + x * scaleX,
       175 - y * scaleY,
     ];
 
-    const N = 50;
     const lowerPts: [number, number][] = [];
     const upperPts: [number, number][] = [];
     const entryCurvePts: string[] = [];
     const exitCurvePts: string[] = [];
 
     if (order === "dydx") {
-      const [xA, xB] = preset.typeI.xRange;
+      const [xA, xB] = typeIXRange;
       for (let i = 0; i <= N; i++) {
         const x = xA + (i / N) * (xB - xA);
         const [y1, y2] = evalYBounds(x);
@@ -739,7 +798,7 @@ export function IteratedOrderChangeLab() {
         );
       }
     } else {
-      const [yC, yD] = preset.typeII.yRange;
+      const [yC, yD] = typeIIYRange;
       for (let i = 0; i <= N; i++) {
         const y = yC + (i / N) * (yD - yC);
         const [x1, x2] = evalXBounds(y);
@@ -782,11 +841,20 @@ export function IteratedOrderChangeLab() {
       stripEnd,
       splitLineSvgX,
     };
-  }, [preset, order, outerCoord, activeInnerBounds, evalYBounds, evalXBounds]);
+  }, [
+    preset,
+    order,
+    typeIXRange,
+    typeIIYRange,
+    outerCoord,
+    activeInnerBounds,
+    evalYBounds,
+    evalXBounds,
+  ]);
 
-  const typeIDynamicLatex = `\\int_{\\textcolor{#8D9FCE}{${preset.typeI.xRange[0]}}}^{\\textcolor{#8D9FCE}{${preset.typeI.xRange[1]}}} \\int_{\\textcolor{#D5658B}{${compiledYMin.tex}}}^{\\textcolor{#B95869}{${compiledYMax.tex}}} \\left(${compiledIntegrand.tex}\\right)\\,\\textcolor{#D35323}{dy}\\,\\textcolor{#8D9FCE}{dx}`;
+  const typeIDynamicLatex = `\\int_{\\textcolor{#8D9FCE}{${compiledXLower.tex}}}^{\\textcolor{#8D9FCE}{${compiledXUpper.tex}}} \\int_{\\textcolor{#D5658B}{${compiledYMin.tex}}}^{\\textcolor{#B95869}{${compiledYMax.tex}}} \\left(${compiledIntegrand.tex}\\right)\\,\\textcolor{#D35323}{dy}\\,\\textcolor{#8D9FCE}{dx}`;
 
-  const typeIIDynamicLatex = `\\int_{\\textcolor{#96B898}{${preset.typeII.yRange[0]}}}^{\\textcolor{#96B898}{${preset.typeII.yRange[1]}}} \\int_{\\textcolor{#D5658B}{${compiledXMin.tex}}}^{\\textcolor{#B95869}{${compiledXMax.tex}}} \\left(${compiledIntegrand.tex}\\right)\\,\\textcolor{#D35323}{dx}\\,\\textcolor{#96B898}{dy}`;
+  const typeIIDynamicLatex = `\\int_{\\textcolor{#96B898}{${compiledYLower.tex}}}^{\\textcolor{#96B898}{${compiledYUpper.tex}}} \\int_{\\textcolor{#D5658B}{${compiledXMin.tex}}}^{\\textcolor{#B95869}{${compiledXMax.tex}}} \\left(${compiledIntegrand.tex}\\right)\\,\\textcolor{#D35323}{dx}\\,\\textcolor{#96B898}{dy}`;
 
   return (
     <section
@@ -808,8 +876,8 @@ export function IteratedOrderChangeLab() {
           </h2>
           <p className="font-math-serif text-sm sm:text-base text-[var(--text-secondary)] max-w-3xl">
             Select a preset scenario or type your own integrand{" "}
-            <KaTeXMath math="f(x,y)" /> and lower/upper boundary curves below!
-            Swap between <strong>Type I (dy dx)</strong> and{" "}
+            <KaTeXMath math="f(x,y)" /> and all 4 integral limits below! Swap
+            between <strong>Type I (dy dx)</strong> and{" "}
             <strong>Type II (dx dy)</strong> to see the slicing ray rotate and
             the integral limits invert.
           </p>
@@ -836,7 +904,7 @@ export function IteratedOrderChangeLab() {
       {/* 5 Domain & Integral Presets Selector */}
       <div id="limits-of-integration" className="space-y-2 scroll-mt-24">
         <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] block">
-          Select Integration Domain Preset (or Edit Any Equation Below):
+          Select Integration Domain Preset (or Edit Any Equation &amp; Limit Below):
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
           {PRESETS.map((item) => {
@@ -864,22 +932,40 @@ export function IteratedOrderChangeLab() {
         </div>
       </div>
 
-      {/* Custom Math Typing Composer for Integrand & Active Bounds */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      {/* Custom Math Typing Composer for Integrand & All 4 Active Integral Limits */}
+      <div className="space-y-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-4">
         <MathExpressionInput
           label="1. Integrand Function f(x, y):"
           value={integrandExpr}
           onChange={setIntegrandExpr}
           allowedVars={["x", "y"]}
           prefixLatex="f(x,y) ="
-          placeholder="exp(y^2)"
+          placeholder="sqrt(1 - (x^2 + y^2))"
           accentHex="#8D9FCE"
         />
 
         {order === "dydx" ? (
-          <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
             <MathExpressionInput
-              label="2. Type I Lower Entry Curve y = g₁(x):"
+              label="2. Outer Lower Limit x_min (a):"
+              value={xLowerExpr}
+              onChange={setXLowerExpr}
+              allowedVars={[]}
+              prefixLatex="a ="
+              placeholder="0"
+              accentHex="#8D9FCE"
+            />
+            <MathExpressionInput
+              label="3. Outer Upper Limit x_max (b):"
+              value={xUpperExpr}
+              onChange={setXUpperExpr}
+              allowedVars={[]}
+              prefixLatex="b ="
+              placeholder="1"
+              accentHex="#8D9FCE"
+            />
+            <MathExpressionInput
+              label="4. Inner Lower Entry Curve y = g₁(x):"
               value={yMinExpr}
               onChange={setYMinExpr}
               allowedVars={["x"]}
@@ -888,19 +974,37 @@ export function IteratedOrderChangeLab() {
               accentHex="#D5658B"
             />
             <MathExpressionInput
-              label="3. Type I Upper Exit Curve y = g₂(x):"
+              label="5. Inner Upper Exit Curve y = g₂(x):"
               value={yMaxExpr}
               onChange={setYMaxExpr}
               allowedVars={["x"]}
               prefixLatex="y_{\max}(x) ="
-              placeholder="1"
+              placeholder="sqrt(1 - x^2)"
               accentHex="#B95869"
             />
-          </>
+          </div>
         ) : (
-          <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
             <MathExpressionInput
-              label="2. Type II Left Entry Curve x = h₁(y):"
+              label="2. Outer Lower Limit y_min (c):"
+              value={yLowerExpr}
+              onChange={setYLowerExpr}
+              allowedVars={[]}
+              prefixLatex="c ="
+              placeholder="0"
+              accentHex="#96B898"
+            />
+            <MathExpressionInput
+              label="3. Outer Upper Limit y_max (d):"
+              value={yUpperExpr}
+              onChange={setYUpperExpr}
+              allowedVars={[]}
+              prefixLatex="d ="
+              placeholder="1"
+              accentHex="#96B898"
+            />
+            <MathExpressionInput
+              label="4. Inner Left Entry Curve x = h₁(y):"
               value={xMinExpr}
               onChange={setXMinExpr}
               allowedVars={["y"]}
@@ -909,15 +1013,15 @@ export function IteratedOrderChangeLab() {
               accentHex="#D5658B"
             />
             <MathExpressionInput
-              label="3. Type II Right Exit Curve x = h₂(y):"
+              label="5. Inner Right Exit Curve x = h₂(y):"
               value={xMaxExpr}
               onChange={setXMaxExpr}
               allowedVars={["y"]}
               prefixLatex="x_{\max}(y) ="
-              placeholder="sqrt(y)"
+              placeholder="sqrt(1 - y^2)"
               accentHex="#B95869"
             />
-          </>
+          </div>
         )}
       </div>
 

@@ -18,7 +18,7 @@
 3. **Route & Archive Updates:**
    - Wired both laboratories into `/calculus/triple-integrals` (`src/app/calculus/triple-integrals/page.tsx`).
    - Updated `src/registry/curriculum.ts`, `src/app/roadmap/page.tsx`, and `archive/01_CURRENT_STATUS.md`.
-4. **Custom Math Typing Widgets Across All Visualization Windows (`src/lib/mathParser.ts` & `src/components/math/MathExpressionInput.tsx`):**
-   - Created `compileMathExpression` in `src/lib/mathParser.ts` using `mathjs` to parse, validate allowed variables ($x, y, z, r, \theta, u, v$), convert expressions to live KaTeX LaTeX strings, and compile fast numeric evaluators with safe finite clamping.
+4. **Custom Math Typing Widgets & Full Editable Integral Limits Across All Visualization Windows (`src/lib/mathParser.ts` & `src/components/math/MathExpressionInput.tsx`):**
+   - Created `compileMathExpression` in `src/lib/mathParser.ts` using `mathjs` with real-domain-safe overrides (`sqrt`, `log`, `asin`, `acos`, `pow`) and `fallbackValue = 0` so radical surfaces like $\sqrt{1-(x^2+y^2)}$ meet the $xy$-plane cleanly at $z = 0$ instead of returning Complex numbers or jumping to a positive fallback height.
    - Built `<MathExpressionInput />` in `src/components/math/MathExpressionInput.tsx` with quick-insert mathematical tokens (`x^2`, `y^2`, `sin()`, `cos()`, `sqrt()`, `exp()`, `pi`), live KaTeX preview, accessible validation on blur/Enter, and immediate error clearing on valid edits.
-   - Integrated custom equation typing into all 5 existing interactive laboratories (`HeroIntegralPreview`, `RiemannVolumeLab`, `IteratedOrderChangeLab`, `TripleIntegralOrderLab`, and `TripleVoxelDensityLab`).
+   - Integrated custom equation typing AND full user-editable outer & inner integration limits (to define any 2D/3D region of integration) into all 5 existing interactive laboratories (`HeroIntegralPreview`, `RiemannVolumeLab`, `IteratedOrderChangeLab`, `TripleIntegralOrderLab`, and `TripleVoxelDensityLab`).
