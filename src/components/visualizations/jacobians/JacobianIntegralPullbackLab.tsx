@@ -5,6 +5,7 @@ import { Calculator, Layers } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
+import { computeJacobian2D } from "@/components/visualizations/primitives";
 
 interface PullbackPreset {
   id: string;
@@ -245,24 +246,13 @@ export function JacobianIntegralPullbackLab() {
         const yVal = compiledY.evaluate({ u: uMid, v: vMid });
         const fVal = compiledF.evaluate({ x: xVal, y: yVal });
 
-        const dxdu =
-          (compiledX.evaluate({ u: uMid + h, v: vMid }) -
-            compiledX.evaluate({ u: uMid - h, v: vMid })) /
-          (2 * h);
-        const dydu =
-          (compiledY.evaluate({ u: uMid + h, v: vMid }) -
-            compiledY.evaluate({ u: uMid - h, v: vMid })) /
-          (2 * h);
-        const dxdv =
-          (compiledX.evaluate({ u: uMid, v: vMid + h }) -
-            compiledX.evaluate({ u: uMid, v: vMid - h })) /
-          (2 * h);
-        const dydv =
-          (compiledY.evaluate({ u: uMid, v: vMid + h }) -
-            compiledY.evaluate({ u: uMid, v: vMid - h })) /
-          (2 * h);
-
-        const absJ = Math.abs(dxdu * dydv - dxdv * dydu);
+        const { absDetJ: absJ } = computeJacobian2D(
+          (u, v) => compiledX.evaluate({ u, v }),
+          (u, v) => compiledY.evaluate({ u, v }),
+          uMid,
+          vMid,
+          h
+        );
         if (absJ < minAbsJ) minAbsJ = absJ;
         if (absJ > maxAbsJ) maxAbsJ = absJ;
 

@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Phase A — 6-Volume 4-Tier Textbook Architecture, Modular Registry & Hierarchical Routing Active
+> **Last Updated:** Phase A & Track 1 Completed — 6-Volume 4-Tier Textbook Architecture, Modular Registry, Hierarchical Routing & Shared Visualization Primitives (`src/components/visualizations/primitives/`) Active
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -51,7 +51,11 @@
 
 ---
 
-## 3. Next Expansion Tracks (Ready for Selection)
-1. **Track 1:** Extract shared visualization primitives (`src/components/visualizations/primitives/`) from the 8 existing labs.
-2. **Track 2:** Build **Volume III, Module 3.1 (`multivariable-differentiation`)** — Chapters `3.1.1` through `3.1.4`.
-3. **Track 3:** Build **Volume III, Module 3.3 (`vector-calculus`)** — Chapters `3.3.1` through `3.3.5`.
+## 3. Shared Visualization Primitives & Next Expansion Tracks
+1. **Track 1 (COMPLETED):** Extracted shared visualization & numerical quadrature primitives inside [`src/components/visualizations/primitives/`](../src/components/visualizations/primitives/index.ts):
+   - `ThreeOrbitViewport.tsx` — Reusable React + Three.js WebGL stage with `OrbitControls`, camera reset, and coordinate frame badge.
+   - `threeScenePrimitives.ts` — `mathToThreeVec3`, `disposeThreeObject`, `createCoordinateAxesAndGrid`, `createParametricSurfaceMesh`, and `createVectorArrow3D`.
+   - `SvgCoordinatePlane2D.tsx` — Accessible 2D SVG coordinate plane with `worldToSvgX/Y`, grid lines, and click-to-world coordinates.
+   - `quadrature.ts` — `integrate1DGaussLegendre`, `integrate2DIterated`, `integrate3DIterated`, `computePartialDerivatives2D`, and `computeJacobian2D`.
+2. **Track 2 (Ready):** Build **Volume III, Module 3.1 (`multivariable-differentiation`)** — Chapters `3.1.1` through `3.1.4`.
+3. **Track 3 (Ready):** Build **Volume III, Module 3.3 (`vector-calculus`)** — Chapters `3.3.1` through `3.3.5`.

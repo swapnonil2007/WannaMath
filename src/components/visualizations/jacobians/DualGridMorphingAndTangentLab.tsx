@@ -5,6 +5,7 @@ import { RotateCcw, Play, Pause, Maximize2 } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
+import { computeJacobian2D } from "@/components/visualizations/primitives";
 
 interface TransformPreset {
   id: string;
@@ -244,21 +245,15 @@ export function DualGridMorphingAndTangentLab() {
     };
   }, [compiledX, compiledY, morphT]);
 
-  // Numerical Jacobian & Partial Derivatives at (safeU0, safeV0) using central finite differences
+  // Numerical Jacobian & Partial Derivatives at (safeU0, safeV0) using shared central-difference primitive
   const localJacobian = useMemo(() => {
-    const h = 1e-5;
     const [x0, y0] = evalPoint(safeU0, safeV0, morphT);
-    const [xPlusU, yPlusU] = evalPoint(safeU0 + h, safeV0, morphT);
-    const [xMinusU, yMinusU] = evalPoint(safeU0 - h, safeV0, morphT);
-    const [xPlusV, yPlusV] = evalPoint(safeU0, safeV0 + h, morphT);
-    const [xMinusV, yMinusV] = evalPoint(safeU0, safeV0 - h, morphT);
-
-    const dxdu = (xPlusU - xMinusU) / (2 * h);
-    const dydu = (yPlusU - yMinusU) / (2 * h);
-    const dxdv = (xPlusV - xMinusV) / (2 * h);
-    const dydv = (yPlusV - yMinusV) / (2 * h);
-
-    const detJ = dxdu * dydv - dxdv * dydu;
+    const { dxdu, dydu, dxdv, dydv, detJ } = computeJacobian2D(
+      (u, v) => evalPoint(u, v, morphT)[0],
+      (u, v) => evalPoint(u, v, morphT)[1],
+      safeU0,
+      safeV0
+    );
     const areaUV = du * dv;
     const areaLinear = Math.abs(detJ) * areaUV;
 
