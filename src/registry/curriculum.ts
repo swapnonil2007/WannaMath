@@ -124,7 +124,7 @@ export const MULTIVARIABLE_CALCULUS_TOPICS: MathTopic[] = [
     route: "/calculus/double-integrals",
     domainId: "calculus",
     phaseNumber: 2,
-    status: "phase-ready",
+    status: "available",
     accentHex: "#8D9FCE",
     secondaryHex: "#B95869",
     highlightHex: "#FBEAA4",

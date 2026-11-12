@@ -199,7 +199,7 @@ export function Navbar() {
               style={{ backgroundColor: "#96B898" }}
               aria-hidden="true"
             />
-            <span>v1.0 • Phase 1 Shell</span>
+            <span>v1.0 • Phase 2 Active</span>
           </div>
 
           <button

@@ -237,6 +237,39 @@ body {
   margin: 0.5rem 0;
 }
 
+/* Native <details> & <summary> disclosure styling (modern-web-guidance accordion) */
+summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6ch;
+  cursor: pointer;
+  user-select: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+details::details-content {
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  contain: layout;
+}
+
+details:not([open])::details-content {
+  block-size: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  details::details-content {
+    transition: block-size, content-visibility, display;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in-out;
+    transition-behavior: allow-discrete;
+  }
+}
+
 /* Progressive enhancement fallback for older browsers without accent-color */
 @supports not (accent-color: var(--accent-color)) {
   input[type="range"] {

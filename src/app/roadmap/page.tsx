@@ -22,7 +22,7 @@ const PHASE_TIMELINE = [
   {
     phase: "Phase 2",
     title: "Topic 01: Double Integration, Limits & Order Change Laboratory",
-    status: "Next Phase",
+    status: "Completed",
     accent: "#8D9FCE",
     route: "/calculus/double-integrals",
     details:
@@ -31,7 +31,7 @@ const PHASE_TIMELINE = [
   {
     phase: "Phase 3",
     title: "Topic 02: Triple Integration, Shadow Projections & 6 Permutations",
-    status: "Planned",
+    status: "Next Phase",
     accent: "#029091",
     route: "/calculus/triple-integrals",
     details:
