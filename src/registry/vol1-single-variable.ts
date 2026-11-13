@@ -123,7 +123,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "Secant-to-Tangent Homotopy & Instantaneous Rate",
           subtitle:
             "Scrub step h → 0 and zoom into the curve until secant chord and tangent line become indistinguishable.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.1.1"],
           dimensionBadge: "2D",
@@ -131,6 +131,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           keyEquationsLatex: [
             "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}",
           ],
+          engineeringContext:
+            "Instantaneous velocity from discrete radar/encoder sampling and local sensitivity calibration.",
+          pedagogicalRhythm: {
+            question:
+              "When does shrinking a finite difference chord Δy/Δx produce a stable instantaneous slope, and why do corners and cusps break local straightness under extreme zoom?",
+            labInteraction:
+              "Animate h → 0 and drag the micro-zoom slider in Lab 1.2.1A to watch smooth cubics flatten into their tangent line while |x - 0.5| keeps a persistent corner.",
+            symbolicFormalizationLatex:
+              "f'(x_0) = \\lim_{h \\to 0^-} \\frac{f(x_0+h)-f(x_0)}{h} = \\lim_{h \\to 0^+} \\frac{f(x_0+h)-f(x_0)}{h}",
+            edgeCasesAndBridge:
+              "When left-hand and right-hand slopes disagree or blow up vertically, f'(x₀) does not exist; next, Chapter 1.2.2 puts differentiable tangent lines to work for linear error bounds and Newton root finding.",
+          },
           labs: [
             {
               id: "lab-1-2-1a",
@@ -150,7 +162,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "Local Linearity, Differentials & Newton-Raphson",
           subtitle:
             "Compare tangent differential dy = f'(x) dx against true increment Δy and iterate tangent root-finding.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.2.1"],
           dimensionBadge: "2D",
@@ -159,6 +171,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
             "L(x) = f(a) + f'(a)(x-a)",
             "x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}",
           ],
+          engineeringContext:
+            "Tolerance propagation in measurements (dy ≈ Δy) and quadratic root solvers inside CAD and SPICE simulators.",
+          pedagogicalRhythm: {
+            question:
+              "How closely does the tangent differential dy = f'(a)Δx track the nonlinear change Δy—and how does setting that tangent line to zero turn root finding into rapid quadratic steps?",
+            labInteraction:
+              "Inspect the dy vs. Δy residual bar and step through Newton-Raphson cobweb tangents in Lab 1.2.2A across smooth roots and stationary-point oscillation traps.",
+            symbolicFormalizationLatex:
+              "0 = f(x_n) + f'(x_n)(x_{n+1} - x_n) \\implies x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}",
+            edgeCasesAndBridge:
+              "Near stationary points where f'(x_n) ≈ 0, tangent lines shoot nearly horizontally or enter limit cycles; next, Chapter 1.2.3 tracks how derivatives multiply across nested compositions.",
+          },
           labs: [
             {
               id: "lab-1-2-2a",
@@ -178,7 +202,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "Chain Rule, Implicit Differentiation & Related Rates",
           subtitle:
             "Visualize composite rate amplification dy/dx = (dy/du)(du/dx) through linked intermediate axes.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.2.1"],
           dimensionBadge: "2D",
@@ -186,6 +210,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           keyEquationsLatex: [
             "\\frac{dy}{dx} = \\frac{dy}{du}\\cdot\\frac{du}{dx}",
           ],
+          engineeringContext:
+            "Multi-stage gearboxes, neural backpropagation gradients, and coupled mechanical kinematics.",
+          pedagogicalRhythm: {
+            question:
+              "Why do derivatives multiply rather than add when one function feeds its output into another?",
+            labInteraction:
+              "Adjust input probe x₀ and perturbation Δx across the three linked plots (x → u = g(x) → y = f(u)) in Lab 1.2.3A to watch linear stretch ratios multiply stage-by-stage.",
+            symbolicFormalizationLatex:
+              "\\frac{\\Delta y}{\\Delta x} \\approx \\frac{\\Delta y}{\\Delta u} \\cdot \\frac{\\Delta u}{\\Delta x} \\xrightarrow{\\Delta x \\to 0} f'(g(x_0))\\,g'(x_0)",
+            edgeCasesAndBridge:
+              "Notice that g'(x₀) = 0 zeroes out the composite rate even when f'(u₀) ≠ 0; next, Chapter 1.2.4 pushes local approximation beyond first-order slopes to degree-n Taylor polynomials and curvature.",
+          },
           labs: [
             {
               id: "lab-1-2-3a",
@@ -205,7 +241,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "Taylor Polynomials & Curvature Osculating Circles",
           subtitle:
             "Match higher-order derivatives at x = a to hug nonlinear curves and measure radius of curvature R = 1/κ.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["1.2.2"],
           dimensionBadge: "2D",
@@ -214,6 +250,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
             "P_n(x) = \\sum_{k=0}^{n} \\frac{f^{(k)}(a)}{k!}(x-a)^k",
             "\\kappa(x) = \\frac{|f''(x)|}{\\big(1 + [f'(x)]^2\\big)^{3/2}}",
           ],
+          engineeringContext:
+            "Highway/railway transition clothoids, optics lens curvature, and embedded trigonometric look-up polynomials.",
+          pedagogicalRhythm: {
+            question:
+              "How does matching k-th derivatives at a single anchor x = a allow a polynomial P_n(x) to hug curves far away—and what geometric circle shares the exact 2nd-order Taylor bend?",
+            labInteraction:
+              "Scrub polynomial degree n ∈ [1, 12] and center a in Lab 1.2.4A while toggling the osculating circle R = 1/κ(a) and inspecting the pointwise remainder |R_n(x)|.",
+            symbolicFormalizationLatex:
+              "P_2(x) = f(a) + f'(a)(x-a) + \\frac{f''(a)}{2}(x-a)^2 \\iff \\text{Curvature match } \\kappa(a) = \\frac{|f''(a)|}{(1+[f'(a)]^2)^{3/2}}",
+            edgeCasesAndBridge:
+              "On 1/(1+x²), complex poles at x = ±i cap the convergence radius even as n → 12, and at inflection points f''(a)=0 sends the osculating radius R → ∞. Next, Module 1.3 reverses differentiation into Riemann accumulation.",
+          },
           labs: [
             {
               id: "lab-1-2-4a",

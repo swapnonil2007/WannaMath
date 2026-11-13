@@ -8,7 +8,18 @@
 
 ---
 
-## Upcoming Modules (`1.2` – `1.4`)
-- **Module 1.2: Differential Calculus & Local Linearity (`differential-calculus`)** — `1.2.1` (`SecantTangentLab`), `1.2.2` (`NewtonRaphsonLab`), `1.2.3` (`ChainRuleGearboxLab`), `1.2.4` (`TaylorDegreeScrubberLab`)
-- **Module 1.3: Single-Variable Integration & Accumulation (`integral-calculus`)** — `1.3.1`–`1.3.4`
+## Module 1.2: Differential Calculus & Local Linearity (`differential-calculus` — ALL PUBLISHED 4/4)
+3. **Chapter `1.2.1` — Secant-to-Tangent Homotopy & Instantaneous Rate (`secant-tangent-homotopy`)** *(Published)*
+   - Lab: `SecantTangentLab` (`src/components/visualizations/single-variable/SecantTangentLab.tsx`)
+4. **Chapter `1.2.2` — Local Linearity, Differentials & Newton-Raphson (`local-linearity-differentials`)** *(Published)*
+   - Lab: `NewtonRaphsonLab` (`src/components/visualizations/single-variable/NewtonRaphsonLab.tsx`)
+5. **Chapter `1.2.3` — Chain Rule, Implicit Differentiation & Related Rates (`chain-rule-kinematics`)** *(Published)*
+   - Lab: `ChainRulePropagatorLab` (`src/components/visualizations/single-variable/ChainRulePropagatorLab.tsx`)
+6. **Chapter `1.2.4` — Taylor Polynomials & Curvature Osculating Circles (`taylor-polynomials-curvature`)** *(Published)*
+   - Lab: `TaylorCurvatureLab` (`src/components/visualizations/single-variable/TaylorCurvatureLab.tsx`)
+
+---
+
+## Upcoming Modules (`1.3` – `1.4`)
+- **Module 1.3: Single-Variable Integration & Accumulation (`integral-calculus`)** — `1.3.1`–`1.3.4` (`RiemannPartition1DLab`, `FtcAccumulationSweeperLab`, `IbpAreaRectangleLab`, `RevolutionWasherShell3DLab`)
 - **Module 1.4: Infinite Series & Power Series Convergence (`infinite-series`)** — `1.4.1`–`1.4.2`

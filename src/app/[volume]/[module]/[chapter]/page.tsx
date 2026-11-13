@@ -8,6 +8,12 @@ import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { EpsilonDeltaCorridorLab } from "@/components/visualizations/single-variable/EpsilonDeltaCorridorLab";
 import { IVTBisectionLab } from "@/components/visualizations/single-variable/IVTBisectionLab";
 
+// Volume I — Module 1.2 Live Laboratories (Differential Calculus & Local Linearity)
+import { SecantTangentLab } from "@/components/visualizations/single-variable/SecantTangentLab";
+import { NewtonRaphsonLab } from "@/components/visualizations/single-variable/NewtonRaphsonLab";
+import { ChainRulePropagatorLab } from "@/components/visualizations/single-variable/ChainRulePropagatorLab";
+import { TaylorCurvatureLab } from "@/components/visualizations/single-variable/TaylorCurvatureLab";
+
 // Module 3.1 Live Laboratories (Differential Calculus)
 import { SurfaceContourSlicerLab } from "@/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab";
 import { PartialDerivativeTangentPlaneLab } from "@/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab";
@@ -178,6 +184,30 @@ export default async function ChapterPage({
               </div>
             </div>
           </section>
+        </div>
+      )}
+
+      {chapter.slug === "secant-tangent-homotopy" && (
+        <div className="space-y-10">
+          <SecantTangentLab />
+        </div>
+      )}
+
+      {chapter.slug === "local-linearity-differentials" && (
+        <div className="space-y-10">
+          <NewtonRaphsonLab />
+        </div>
+      )}
+
+      {chapter.slug === "chain-rule-kinematics" && (
+        <div className="space-y-10">
+          <ChainRulePropagatorLab />
+        </div>
+      )}
+
+      {chapter.slug === "taylor-polynomials-curvature" && (
+        <div className="space-y-10">
+          <TaylorCurvatureLab />
         </div>
       )}
 
