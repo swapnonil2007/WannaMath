@@ -121,27 +121,27 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           slug: "gradient-directional-derivatives",
           title: "The Gradient Vector & Directional Derivatives",
           subtitle:
-            "Rotate a vertical slicing plane in any unit direction u to see why steepest ascent aligns with ∇f and is orthogonal to contours.",
+            "Rotate a vertical slicing plane in any unit direction u, trace gradient ascent/descent curves orthogonal to contours, and inspect 3D level-surface normals ∇F.",
           status: "published",
-          estimatedMinutes: 30,
+          estimatedMinutes: 40,
           prerequisites: ["2.1.1", "3.1.2"],
           dimensionBadge: "2D + 3D",
           accentHex: "#D35323",
           keyEquationsLatex: [
             "D_{\\mathbf{u}}f(x,y) = \\nabla f(x,y) \\cdot \\mathbf{u} = \\|\\nabla f\\|\\cos\\theta",
-            "\\nabla f = \\left\\langle \\frac{\\partial f}{\\partial x},\\; \\frac{\\partial f}{\\partial y} \\right\\rangle \\perp C_k",
+            "\\nabla f = \\left\\langle \\frac{\\partial f}{\\partial x},\\; \\frac{\\partial f}{\\partial y} \\right\\rangle \\perp C_k, \\qquad \\nabla F(x_0,y_0,z_0) \\perp S_c",
           ],
           engineeringContext:
-            "Gradient descent optimization in machine learning, Fourier heat conduction q = -k∇T, and potential fields.",
+            "Gradient descent optimization in machine learning, Fourier heat conduction q = -k∇T, electrostatic fields E = -∇V, and surface normals in CAD/ray-tracing.",
           pedagogicalRhythm: {
             question:
-              "If you stand on a 3D hillside z = f(x,y) and face a compass heading u = ⟨cos α, sin α⟩, what is your instantaneous slope—and which direction is steepest?",
+              "If you stand on a 3D hillside z = f(x,y) or inside a 3D potential field F(x,y,z) and move along unit heading u, what is your instantaneous rate of change—and why do steepest paths always cut level curves at 90°?",
             labInteraction:
-              "Rotate the vertical slicing plane through 360° or snap directly to Steepest Ascent (θ = 0°), Level Curve Tangent (θ = 90°), and Steepest Descent (θ = 180°).",
+              "Rotate the vertical slicing plane through 360°, trace continuous RK4 gradient flow vs. discrete step-size η optimization on contour maps, and tilt 3D heading vectors against a 3D level-surface normal ∇F.",
             symbolicFormalizationLatex:
-              "D_{\\mathbf{u}}f(x_0,y_0) = \\color{#D35323}{\\nabla f(x_0,y_0)} \\cdot \\color{#8D9FCE}{\\mathbf{u}} = \\|\\nabla f\\|\\cos\\theta \\in [-\\|\\nabla f\\|,\\; +\\|\\nabla f\\|]",
+              "df = \\nabla f \\cdot d\\mathbf{r} \\implies D_{\\mathbf{u}}f = \\color{#D35323}{\\nabla f} \\cdot \\color{#8D9FCE}{\\mathbf{u}} = \\|\\nabla f\\|\\cos\\theta \\in [-\\|\\nabla f\\|,\\; +\\|\\nabla f\\|]",
             edgeCasesAndBridge:
-              "Because D_u f = 0 along a level curve, ∇f is always perpendicular to level curves—the exact geometric foundation for Lagrange Multipliers in Chapter 3.1.4.",
+              "Because D_u f = 0 along a level curve or surface, ∇f is strictly perpendicular to contours—powering Lagrange Multipliers (Ch. 3.1.4) and Conservative Vector Fields F = ∇φ (Ch. 3.3.1).",
           },
           labs: [
             {
@@ -152,6 +152,16 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
               summary:
                 "Rotate unit heading vector u through 360° and compare directional slope D_u f against ∇f.",
               formulaLatex: "D_{\\mathbf{u}}f = \\nabla f \\cdot \\mathbf{u}",
+              dimensionBadge: "2D + 3D",
+            },
+            {
+              id: "lab-3-1-3b",
+              slug: "gradient-flow-level-surface-normal",
+              title: "Gradient Flow, Polar Slope Rose & 3D Level Surface Normal Lab",
+              componentKey: "GradientAscentAndLevelSurfaceLab",
+              summary:
+                "Trace steepest ascent/descent trajectories crossing contours orthogonally, test discrete step size η stability, and inspect 3D surface normals ∇F.",
+              formulaLatex: "\\mathbf{r}'(t) = \\pm\\nabla f(\\mathbf{r}(t)), \\qquad \\nabla F \\cdot d\\mathbf{r} = 0",
               dimensionBadge: "2D + 3D",
             },
           ],
@@ -880,27 +890,27 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           slug: "vector-fields-divergence-curl",
           title: "Vector Fields, Divergence & Curl",
           subtitle:
-            "Place a microscopic flux box and paddlewheel probe inside 2D/3D velocity fields to measure local expansion (∇·F) and rotation (∇×F).",
+            "Explore 2D/3D vector field streamlines, local Jacobian expansion/strain/spin decomposition, microscopic flux boxes (∇·F), and 3D curl axes (∇×F).",
           status: "published",
-          estimatedMinutes: 30,
+          estimatedMinutes: 45,
           prerequisites: ["3.1.3"],
           dimensionBadge: "2D + 3D",
           accentHex: "#029091",
           keyEquationsLatex: [
             "\\operatorname{div}\\mathbf{F} = \\nabla \\cdot \\mathbf{F} = \\frac{\\partial P}{\\partial x} + \\frac{\\partial Q}{\\partial y} + \\frac{\\partial R}{\\partial z}",
-            "\\operatorname{curl}\\mathbf{F} = \\nabla \\times \\mathbf{F}",
+            "\\operatorname{curl}\\mathbf{F} = \\nabla \\times \\mathbf{F} = \\left\\langle \\frac{\\partial R}{\\partial y} - \\frac{\\partial Q}{\\partial z},\\; \\frac{\\partial P}{\\partial z} - \\frac{\\partial R}{\\partial x},\\; \\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y} \\right\\rangle",
           ],
           engineeringContext:
-            "Incompressible fluid continuity (∇·u = 0), aerodynamic vorticity, and electromagnetic charge/current sources.",
+            "Incompressible fluid continuity (∇·u = 0), aerodynamic vorticity, electrostatic potential fields F = -∇φ, Maxwell's differential laws, and continuum strain-rotation splitting.",
           pedagogicalRhythm: {
             question:
-              "At a single point inside a 3D velocity or force field, how do we separately measure whether flow is expanding outward (source) versus spinning locally (vortex)?",
+              "Given a vector field F(x,y,z) assigning magnitude and direction to every point in space, how do we trace particle trajectories (streamlines) and separately measure local outward expansion (∇·F) versus 3D local spin (∇×F)?",
             labInteraction:
-              "Click anywhere on the 2D cross-section plane or scrub (x₀, y₀, z₀) to move the divergence flux box and curl paddlewheel probe across sources, vortices, and shear flows.",
+              "Move the microscopic flux box and paddlewheel probe, click to seed 2D/3D streamlines over potential contours while inspecting DF, and decompose opposite cube-face fluxes alongside the tilted 3D curl axis.",
             symbolicFormalizationLatex:
-              "\\nabla\\cdot\\mathbf{F} = \\frac{\\partial P}{\\partial x}+\\frac{\\partial Q}{\\partial y}+\\frac{\\partial R}{\\partial z}, \\qquad (\\nabla\\times\\mathbf{F})_z = \\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}",
+              "\\nabla\\cdot\\mathbf{F} = \\lim_{|V|\\to 0}\\frac{1}{|V|}\\oiint_{\\partial V}\\mathbf{F}\\cdot d\\mathbf{S}, \\qquad (\\nabla\\times\\mathbf{F})\\cdot\\hat{\\mathbf{n}} = \\lim_{|A|\\to 0}\\frac{1}{|A|}\\oint_{\\partial A}\\mathbf{F}\\cdot d\\mathbf{r}",
             edgeCasesAndBridge:
-              "A straight shear flow F = ⟨y, 0, 0⟩ has zero divergence yet non-zero curl! Next, Chapter 3.3.2 accumulates F along a macroscopic curve C to compute mechanical work.",
+              "Straight streamlines like shear flow ⟨y, 0, 0⟩ carry non-zero curl, whereas circular vortex flow ⟨-y, x⟩/r² is irrotational away from 0! Always verify ∇×(∇f) = 0 and ∇·(∇×F) = 0 before accumulating work in Chapter 3.3.2.",
           },
           labs: [
             {
@@ -912,6 +922,26 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
                 "Drag a probe across sources, sinks, shears, and vortices to measure net outflow and angular velocity.",
               formulaLatex: "\\nabla \\cdot \\mathbf{F}, \\qquad \\nabla \\times \\mathbf{F}",
               dimensionBadge: "2D + 3D",
+            },
+            {
+              id: "lab-3-3-1b",
+              slug: "vector-field-streamlines",
+              title: "Vector Field Anatomy, RK4 Streamlines & Velocity-Gradient Tensor Lab",
+              componentKey: "VectorFieldStreamlineExplorerLab",
+              summary:
+                "Click to seed 2D/3D streamlines over potential contours and split local DF into expansion, shear strain, and spin.",
+              formulaLatex: "\\mathbf{r}'(t) = \\mathbf{F}(\\mathbf{r}(t)), \\qquad D\\mathbf{F} = \\mathbf{E}_{\\text{div}} + \\mathbf{S}_{\\text{shear}} + \\mathbf{\\Omega}_{\\text{curl}}",
+              dimensionBadge: "2D + 3D",
+            },
+            {
+              id: "lab-3-3-1c",
+              slug: "div-curl-decomposition",
+              title: "Component Flux Budget, Tilted 3D Curl Axis & Del Identity Verifier",
+              componentKey: "DivCurlDecompositionLab",
+              summary:
+                "Compare opposing cube-face fluxes ∂P/∂x + ∂Q/∂y + ∂R/∂z, tilt the 3D curl axis ω = ∇×F, and verify ∇·(∇×F) = 0.",
+              formulaLatex: "\\nabla\\cdot(\\nabla\\times\\mathbf{F}) = 0, \\qquad \\nabla\\times(\\nabla f) = \\mathbf{0}",
+              dimensionBadge: "3D",
             },
           ],
         },

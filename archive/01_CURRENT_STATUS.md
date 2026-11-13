@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Volume I Module 1.4 PUBLISHED (`12/12` Volume I Chapters & `22/22` Volume III Chapters PUBLISHED — `48` Interactive Labs Live Total)**
+> **Last Updated:** 2026-11-13 — **Vector Calculus & Del Operator Expansion PUBLISHED (`12/12` Volume I Chapters & `22/22` Volume III Chapters PUBLISHED — `51` Interactive Labs Live Total)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -25,7 +25,8 @@
 | **Volume I — Module 1.1** | `ca32088` | **PUBLISHED** | Published **Module 1.1 (`limits-continuity`)** in **Volume I (`single-variable-calculus`)**: Chapter `1.1.1` (`epsilon-delta-limits`: `EpsilonDeltaCorridorLab.tsx`) and Chapter `1.1.2` (`continuity-ivt`: `IVTBisectionLab.tsx`), adding global + micro-zoom $\varepsilon$-$\delta$ corridors and IVT/Bisection discontinuity traps. |
 | **Volume I — Module 1.2** | `3a22c05` | **PUBLISHED** | Published all 4 chapters of **Module 1.2 (`differential-calculus`)**: `1.2.1` (`SecantTangentLab.tsx`), `1.2.2` (`NewtonRaphsonLab.tsx`), `1.2.3` (`ChainRulePropagatorLab.tsx`), and `1.2.4` (`TaylorCurvatureLab.tsx`). |
 | **Volume I — Module 1.3** | `c6f37a8` | **PUBLISHED** | Published all 4 chapters of **Module 1.3 (`integral-calculus`)**: `1.3.1` (`Riemann1DLab.tsx`), `1.3.2` (`FTCAccumulationLab.tsx`), `1.3.3` (`SubstitutionIBPLab.tsx`), and `1.3.4` (`SolidOfRevolutionLab.tsx`). |
-| **Volume I — Module 1.4** | *Current* | **PUBLISHED** | Published **Module 1.4 (`infinite-series`)**: `1.4.1` (`PartialSumSeriesLab.tsx`) and `1.4.2` (`PowerSeriesConvergenceLab.tsx`), completing **all `12/12` chapters of Volume I (`single-variable-calculus`)**. |
+| **Volume I — Module 1.4** | `432ea9d` | **PUBLISHED** | Published **Module 1.4 (`infinite-series`)**: `1.4.1` (`PartialSumSeriesLab.tsx`) and `1.4.2` (`PowerSeriesConvergenceLab.tsx`), completing **all `12/12` chapters of Volume I (`single-variable-calculus`)**. |
+| **Vector Calculus & Gradient Expansion (Phases 1–4)** | *Current* | **PUBLISHED** | Deepened explanations & interactive exploration for Gradient, Directional Derivatives, Vector Fields, Divergence & Curl (`GradientAscentAndLevelSurfaceLab` in `3.1.3`; `VectorFieldStreamlineExplorerLab` + `DivCurlDecompositionLab` in `3.3.1`; Del Quartet, paradoxes, identities & theorem summaries across `3.3.1`–`3.3.5`). |
 
 ---
 
@@ -39,5 +40,5 @@
 ---
 
 ## 3. Immediate Next Step (Volume I & Volume III Complete → Volume II Ready)
-Both **Volume I (`12/12`)** and **Volume III (`22/22`)** are now 100% published (`34` chapters, `48` interactive labs live).
+Both **Volume I (`12/12`)** and **Volume III (`22/22`)** are now 100% published (`34` chapters, `51` interactive labs live).
 - **Next Curriculum Milestone:** Begin **Volume II: Linear Algebra & Space Geometry (`/linear-algebra`)** in [`src/registry/vol2-linear-algebra.ts`](../../src/registry/vol2-linear-algebra.ts), starting with **Module 2.1: Vectors, Span & Subspaces**.

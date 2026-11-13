@@ -7,8 +7,8 @@ All 4 foundational chapters of **Module 3.1** are live, and a **6-Phase Differen
    - Lab: `SurfaceContourSlicerLab` (`src/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab.tsx`)
 2. **Chapter `3.1.2` — Partial Derivatives, Mixed Partials, Chain Rule & Tangent Planes (`partial-derivatives-tangent-planes`)** *(Published — Deepened in Phase 2)*
    - Labs: `PartialDerivativeTangentPlaneLab`, `HigherOrderChainImplicitLab` (`src/components/visualizations/multivariable-differentiation/`)
-3. **Chapter `3.1.3` — The Gradient Vector & Directional Derivatives (`gradient-directional-derivatives`)** *(Published)*
-   - Lab: `GradientDirectionalDerivativeLab` (`src/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab.tsx`)
+3. **Chapter `3.1.3` — The Gradient Vector & Directional Derivatives (`gradient-directional-derivatives`)** *(Deepened in Vector Calculus Expansion Phase 1)*
+   - Labs: `GradientDirectionalDerivativeLab`, `GradientAscentAndLevelSurfaceLab` (`src/components/visualizations/multivariable-differentiation/`)
 4. **Chapter `3.1.4` — Lagrange Multipliers & Constrained Optimization (`lagrange-multipliers`)** *(Published)*
    - Lab: `LagrangeMultipliersLab` (`src/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab.tsx`)
 5. **Chapter `3.1.5` — Multivariable Limits, Continuity & Differentiability (`limits-and-differentiability`)** *(Published — Phase 1)*
@@ -30,11 +30,11 @@ All 4 foundational chapters of **Module 3.1** are live, and a **6-Phase Differen
 
 ---
 
-## Module 3.3 Build Index (`vector-calculus` — PUBLISHED)
-All 5 chapters and 5 interactive laboratories of **Module 3.3 (`Vector Calculus & Integral Theorems`)** are live under `/multivariable-calculus/vector-calculus/[chapter]`:
+## Module 3.3 Build Index (`vector-calculus` — PUBLISHED & EXPANDED)
+All 5 chapters and 7 interactive laboratories (plus worked derivations & Del Quartet reference guides across `3.3.1`–`3.3.5`) of **Module 3.3 (`Vector Calculus & Integral Theorems`)** are live under `/multivariable-calculus/vector-calculus/[chapter]` (plan: [`VECTOR_CALCULUS_EXPANSION_PLAN.md`](./VECTOR_CALCULUS_EXPANSION_PLAN.md)):
 
-1. **Chapter `3.3.1` — Vector Fields, Divergence & Curl (`vector-fields-divergence-curl`)**
-   - Lab: `DivCurlProbeLab` (`src/components/visualizations/vector-calculus/DivCurlProbeLab.tsx`)
+1. **Chapter `3.3.1` — Vector Fields, Divergence & Curl (`vector-fields-divergence-curl`)** *(Deepened in Vector Calculus Expansion Phases 2–3)*
+   - Labs: `DivCurlProbeLab`, `VectorFieldStreamlineExplorerLab`, `DivCurlDecompositionLab` (`src/components/visualizations/vector-calculus/`)
 2. **Chapter `3.3.2` — Line Integrals: Work & Circulation (`line-integrals-work`)**
    - Lab: `LineIntegralWorkLab` (`src/components/visualizations/vector-calculus/LineIntegralWorkLab.tsx`)
 3. **Chapter `3.3.3` — Green's Theorem (`greens-theorem`)**

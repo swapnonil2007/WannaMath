@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllResolvedChapters, getChapterBySlugs } from "@/registry/index";
 import { TopicPageShell } from "@/components/layout/TopicPageShell";
@@ -28,6 +29,7 @@ import { PowerSeriesConvergenceLab } from "@/components/visualizations/single-va
 import { SurfaceContourSlicerLab } from "@/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab";
 import { PartialDerivativeTangentPlaneLab } from "@/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab";
 import { GradientDirectionalDerivativeLab } from "@/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab";
+import { GradientAscentAndLevelSurfaceLab } from "@/components/visualizations/multivariable-differentiation/GradientAscentAndLevelSurfaceLab";
 import { LagrangeMultipliersLab } from "@/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab";
 import { MultivariableLimitsPathsLab } from "@/components/visualizations/multivariable-differentiation/MultivariableLimitsPathsLab";
 import { DifferentiabilityErrorConeLab } from "@/components/visualizations/multivariable-differentiation/DifferentiabilityErrorConeLab";
@@ -61,6 +63,8 @@ import { BetaFunctionLab } from "@/components/visualizations/integral-calculus/B
 
 // Module 3.3 Live Laboratories (Vector Calculus & Integral Theorems)
 import { DivCurlProbeLab } from "@/components/visualizations/vector-calculus/DivCurlProbeLab";
+import { VectorFieldStreamlineExplorerLab } from "@/components/visualizations/vector-calculus/VectorFieldStreamlineExplorerLab";
+import { DivCurlDecompositionLab } from "@/components/visualizations/vector-calculus/DivCurlDecompositionLab";
 import { LineIntegralWorkLab } from "@/components/visualizations/vector-calculus/LineIntegralWorkLab";
 import { GreensTheoremLab } from "@/components/visualizations/vector-calculus/GreensTheoremLab";
 import { SurfaceFluxLab } from "@/components/visualizations/vector-calculus/SurfaceFluxLab";
@@ -273,6 +277,112 @@ export default async function ChapterPage({
       {chapter.slug === "gradient-directional-derivatives" && (
         <div className="space-y-10">
           <GradientDirectionalDerivativeLab />
+          <GradientAscentAndLevelSurfaceLab />
+
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+                  First-Principles Proofs &amp; Geometric Intuition
+                </span>
+                <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                  Why the Gradient <KaTeXMath math="\nabla f" /> Governs Directional Slope, Contours &amp; Surface Normals
+                </h2>
+              </div>
+              <Link
+                href="/multivariable-calculus/vector-calculus/vector-fields-divergence-curl"
+                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#029091] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#029091] transition-colors shrink-0"
+              >
+                Continue to Vector Fields &amp; Del Quartet (3.3.1) →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. FROM TOTAL DIFFERENTIAL TO DOT PRODUCT
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\frac{d}{dt}f(\mathbf{r}_0 + t\mathbf{u})\Big|_{t=0} = \nabla f(\mathbf{r}_0) \cdot \mathbf{u} = \|\nabla f\|\cos\theta"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Walking along unit direction <KaTeXMath math="\mathbf{u}" /> (<KaTeXMath math="\|\mathbf{u}\|=1" />)
+                  applies the multivariable Chain Rule. By Cauchy–Schwarz, the directional slope{" "}
+                  <KaTeXMath math="D_{\mathbf{u}}f" /> is bounded strictly inside{" "}
+                  <KaTeXMath math="[-\|\nabla f\|, +\|\nabla f\|]" />, peaking when{" "}
+                  <KaTeXMath math="\theta = 0^\circ" /> (<KaTeXMath math="\mathbf{u} \parallel \nabla f" />).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  2. CONTOUR &amp; LEVEL-SURFACE ORTHOGONALITY
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="f(\mathbf{r}(t)) = c \implies \nabla f(\mathbf{r}(t)) \cdot \mathbf{r}'(t) = 0"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Moving along a level curve in <KaTeXMath math="\mathbb{R}^2" /> or level surface{" "}
+                  <KaTeXMath math="F(x,y,z)=c" /> in <KaTeXMath math="\mathbb{R}^3" /> keeps height
+                  constant (<KaTeXMath math="df/dt = 0" />). Hence every tangent vector{" "}
+                  <KaTeXMath math="\mathbf{r}'(t)" /> makes a <KaTeXMath math="90^\circ" /> angle
+                  with <KaTeXMath math="\nabla f" />—turning gradients into outward surface normals.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. CRITICAL VECTOR VS. SCALAR DISTINCTION
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\nabla f \in \mathbb{R}^n \text{ (vector field)}, \quad D_{\mathbf{u}}f \in \mathbb{R} \text{ (scalar slope)}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Never confuse the two: <KaTeXMath math="\nabla f" /> points in domain space{" "}
+                  <KaTeXMath math="(x,y)" /> (or <KaTeXMath math="(x,y,z)" />) where growth is fastest
+                  and spawns a <strong>conservative vector field</strong>, whereas{" "}
+                  <KaTeXMath math="D_{\mathbf{u}}f" /> is a single signed number measuring slice slope.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[#96B898] block">
+                  ENGINEERING BRIDGE • FOURIER HEAT &amp; GRADIENT DESCENT
+                </span>
+                <p>
+                  Thermal flux follows Fourier&apos;s law{" "}
+                  <KaTeXMath math="\mathbf{q} = -k\nabla T" />: heat always flows orthogonal to
+                  isotherms from hot to cold. In numerical optimization, discrete updates{" "}
+                  <KaTeXMath math="\mathbf{x}_{k+1} = \mathbf{x}_k - \eta \nabla f(\mathbf{x}_k)" />{" "}
+                  approximate continuous gradient flow; if <KaTeXMath math="\eta" /> exceeds{" "}
+                  <KaTeXMath math="2/\lambda_{\max}(H)" />, iterates zigzag across narrow canyons.
+                </p>
+              </div>
+              <div className="space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[#D5658B] block">
+                  COMMON PITFALLS TO WATCH FOR IN COMPUTATIONS
+                </span>
+                <p>
+                  (1) Always normalize direction <KaTeXMath math="\mathbf{v}" /> into{" "}
+                  <KaTeXMath math="\mathbf{u} = \mathbf{v}/\|\mathbf{v}\|" /> before dotting with{" "}
+                  <KaTeXMath math="\nabla f" />. (2) If <KaTeXMath math="f" /> is not differentiable at{" "}
+                  <KaTeXMath math="(x_0, y_0)" /> (e.g., sharp corner or saddle crease), partials may
+                  exist while <KaTeXMath math="D_{\mathbf{u}}f \neq \nabla f \cdot \mathbf{u}" />.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       )}
 
@@ -868,30 +978,383 @@ export default async function ChapterPage({
       {chapter.slug === "vector-fields-divergence-curl" && (
         <div className="space-y-10">
           <DivCurlProbeLab />
+          <VectorFieldStreamlineExplorerLab />
+          <DivCurlDecompositionLab />
+
+          {/* Comprehensive Vector Calculus Explanation Guide */}
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] block">
+                  The Del (∇) Operator Quartet &amp; Coordinate-Free Geometry
+                </span>
+                <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                  Unifying Gradient, Directional Derivatives, Vector Fields, Divergence &amp; Curl
+                </h2>
+              </div>
+              <Link
+                href="/multivariable-calculus/differential-calculus/gradient-directional-derivatives"
+                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#D35323] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#D35323] transition-colors shrink-0"
+              >
+                ← Explore Gradient &amp; Directional Slopes (3.1.3)
+              </Link>
+            </div>
+
+            {/* 4-Card Del Operator Quartet */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  1. GRADIENT: ∇f (Scalar → Vector)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\nabla f = \left\langle \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z} \right\rangle"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Converts a scalar height/potential field <KaTeXMath math="f" /> into the vector
+                  field of steepest ascent, always orthogonal to level surfaces <KaTeXMath math="f=c" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. DIRECTIONAL DERIVATIVE: D_u f
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="D_{\mathbf{u}}f = \mathbf{u}\cdot\nabla f = \|\nabla f\|\cos\theta"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Projects <KaTeXMath math="\nabla f" /> along any unit compass vector{" "}
+                  <KaTeXMath math="\mathbf{u}" /> to recover instantaneous slope along that ray
+                  or <KaTeXMath math="0" /> along contours.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  3. DIVERGENCE: ∇·F (Vector → Scalar)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\nabla\cdot\mathbf{F} = \lim_{|V|\to 0}\frac{1}{|V|}\oiint_{\partial V}\mathbf{F}\cdot d\mathbf{S}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Measures net outward flux per unit volume around a point: positive at fluid
+                  sources, negative at sinks, zero for incompressible flow.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  4. CURL: ∇×F (Vector → Vector)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="(\nabla\times\mathbf{F})\cdot\hat{\mathbf{n}} = \lim_{|A|\to 0}\frac{1}{|A|}\oint_{\partial A}\mathbf{F}\cdot d\mathbf{r}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Measures local circulation density around axis <KaTeXMath math="\hat{\mathbf{n}}" />:
+                  twice the angular velocity vector <KaTeXMath math="2\boldsymbol{\omega}" /> of an
+                  infinitesimal paddlewheel.
+                </p>
+              </div>
+            </div>
+
+            {/* Vector Field Paradoxes & Tensor Decomposition */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                  PARADOX 1 • STRAIGHT LINES WITH SPIN
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\mathbf{F} = \langle y, 0, 0 \rangle \implies \nabla\cdot\mathbf{F} = 0,\; (\nabla\times\mathbf{F})_z = -1"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Streamlines never curve, yet faster upper layers exert greater clockwise torque on
+                  a paddlewheel than slower lower layers—proving curl detects shear, not just visible
+                  swirls.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  PARADOX 2 • CURVED ORBITS WITH ZERO CURL
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\mathbf{F} = \frac{\langle -y, x \rangle}{x^2+y^2} \implies \nabla\times\mathbf{F} = \mathbf{0} \;\;(\mathbf{r}\neq\mathbf{0})"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Outer arc speed drops as <KaTeXMath math="1/r" />, balancing the shorter inner
+                  radius so local rotation cancels everywhere outside the origin singularity!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  EXACT SECOND-ORDER DEL IDENTITIES
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\nabla\times(\nabla f) = \mathbf{0}, \quad \nabla\cdot(\nabla\times\mathbf{F}) = 0, \quad \nabla^2 f = \nabla\cdot(\nabla f)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Every conservative gradient field is curl-free, and every curl field is
+                  divergence-free (solenoidal)—the backbone of Helmholtz&apos;s theorem and Maxwell&apos;s
+                  equations.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       )}
 
       {chapter.slug === "line-integrals-work" && (
         <div className="space-y-10">
           <LineIntegralWorkLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              Work Integrals vs. Scalar Line Integrals &amp; Path Independence Criterion
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. TANGENTIAL PROJECTION WORK
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="W = \int_C \mathbf{F}\cdot \hat{\mathbf{T}}\,ds = \int_a^b \mathbf{F}(\mathbf{r}(t))\cdot\mathbf{r}'(t)\,dt"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Accumulates only the component of force pushing along the curve&apos;s tangent
+                  <KaTeXMath math="\mathbf{r}'(t)\,dt = d\mathbf{r}" />; reversing orientation flips{" "}
+                  <KaTeXMath math="W \to -W" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  2. FUNDAMENTAL THEOREM FOR LINE INTEGRALS
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\mathbf{F} = \nabla f \implies \int_A^B \nabla f\cdot d\mathbf{r} = f(B) - f(A)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  In conservative fields (where <KaTeXMath math="\mathbf{F}" /> is a gradient),
+                  work collapses to potential difference between endpoints alone.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. CURL SCREEN FOR CONSERVATIVE FIELDS
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\nabla\times\mathbf{F} = \mathbf{0} \text{ on simply connected domain} \iff \oint_C \mathbf{F}\cdot d\mathbf{r} = 0"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Any loop enclosing non-zero curl extracts or loses net energy—watch out for
+                  punctured domains like <KaTeXMath math="\langle -y, x \rangle / r^2" />!
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       )}
 
       {chapter.slug === "greens-theorem" && (
         <div className="space-y-10">
           <GreensTheoremLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              Two Forms of Green&apos;s Theorem: Tangential Circulation vs. Normal 2D Flux
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  1. CIRCULATION–CURL FORM (TANGENTIAL)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\oint_{\partial D} \mathbf{F}\cdot\hat{\mathbf{T}}\,ds = \oint_{\partial D} (P\,dx + Q\,dy) = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right) dA"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Adjacent interior sub-squares traverse shared walls in opposite directions and
+                  cancel, leaving only outer boundary circulation balanced by summed z-curl.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  2. FLUX–DIVERGENCE FORM (OUTWARD NORMAL)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\oint_{\partial D} \mathbf{F}\cdot\hat{\mathbf{n}}\,ds = \oint_{\partial D} (P\,dy - Q\,dx) = \iint_D \left(\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y}\right) dA"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Rotating the tangent by <KaTeXMath math="-90^\circ" /> yields the outward normal{" "}
+                  <KaTeXMath math="\hat{\mathbf{n}}\,ds = \langle dy, -dx\rangle" />, turning
+                  Green&apos;s Theorem directly into 2D Gauss Divergence!
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       )}
 
       {chapter.slug === "surface-integrals-flux" && (
         <div className="space-y-10">
           <SurfaceFluxLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              Parameterizing Oriented Surfaces &amp; Vector Area Elements <KaTeXMath math="d\mathbf{S}" />
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  1. PARAMETRIC VECTOR ELEMENT
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="d\mathbf{S} = \hat{\mathbf{n}}\,dS = \pm(\mathbf{r}_u \times \mathbf{r}_v)\,du\,dv"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  The cross product <KaTeXMath math="\mathbf{r}_u\times\mathbf{r}_v" /> simultaneously
+                  measures patch area stretching and points normal to the surface.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. EXPLICIT GRAPH z = g(x, y)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\iint_S \mathbf{F}\cdot d\mathbf{S} = \iint_{R_{xy}} (-P g_x - Q g_y + R)\,dx\,dy"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  For upward orientation, <KaTeXMath math="\mathbf{r}_x\times\mathbf{r}_y" />{" "}
+                  simplifies directly to <KaTeXMath math="\langle -g_x, -g_y, 1\rangle" />—the exact
+                  gradient <KaTeXMath math="\nabla(z - g(x,y))" />!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. ORIENTATION REVERSAL SIGN
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\hat{\mathbf{n}} \mapsto -\hat{\mathbf{n}} \implies \Phi \mapsto -\Phi"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Unlike scalar surface area, flux is signed: always check whether the normal is
+                  outward/upward or inward/downward before integrating.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       )}
 
       {chapter.slug === "stokes-divergence-theorems" && (
         <div className="space-y-10">
           <StokesDivergenceLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              The Grand Unification Across Dimensions: FTC → Green → Stokes → Gauss
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  1. STOKES&apos; SURFACE INVARIANCE
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\iint_{S_1} (\nabla\times\mathbf{F})\cdot d\mathbf{S} = \oint_{\partial S} \mathbf{F}\cdot d\mathbf{r} = \iint_{S_2} (\nabla\times\mathbf{F})\cdot d\mathbf{S}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Any orientable surface spanned on the same oriented rim <KaTeXMath math="\partial S" />{" "}
+                  collects identical curl flux—replace tricky domes with flat disk caps!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  2. GAUSS&apos;S CONTROL-VOLUME LAW
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\oiint_{\partial E} \mathbf{F}\cdot\hat{\mathbf{n}}\,dS = \iiint_E (\nabla\cdot\mathbf{F})\,dV"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Closed-surface outward flux equals the sum of every microscopic source and sink{" "}
+                  <KaTeXMath math="\nabla\cdot\mathbf{F}" /> trapped inside solid <KaTeXMath math="E" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  3. GENERALIZED STOKES PRINCIPLE
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\int_{\Omega} d\omega = \int_{\partial\Omega} \omega"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Every integral theorem equates the total microscopic derivative (<KaTeXMath math="f'" />,{" "}
+                  <KaTeXMath math="\nabla f" />, <KaTeXMath math="\nabla\times\mathbf{F}" />, or{" "}
+                  <KaTeXMath math="\nabla\cdot\mathbf{F}" />) inside domain <KaTeXMath math="\Omega" />{" "}
+                  to evaluation on its boundary <KaTeXMath math="\partial\Omega" />.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       )}
 
