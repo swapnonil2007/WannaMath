@@ -213,16 +213,28 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
           slug: "linear-phase-portraits",
           title: "2D Linear Phase Portraits: Nodes, Saddles, Spirals & Centers",
           subtitle:
-            "Drag a point in the Trace-Determinant (τ, Δ) parabola diagram to morph the (x, y) phase portrait in real time.",
-          status: "planned",
-          estimatedMinutes: 30,
+            "Click or drag inside the Poincaré Trace–Determinant (τ, Δ) diagram to morph eigenvalues λ₁,₂, eigenvector manifolds, and (x, y) phase portraits in real time.",
+          status: "published",
+          estimatedMinutes: 35,
           prerequisites: ["2.3.1", "4.2.1"],
           dimensionBadge: "Dual 2D",
           accentHex: "#029091",
           keyEquationsLatex: [
             "\\dot{\\mathbf{x}} = A\\mathbf{x}, \\qquad \\lambda^2 - \\tau\\lambda + \\Delta = 0",
-            "\\tau = \\operatorname{tr}(A), \\quad \\Delta = \\det(A)",
+            "\\tau = \\operatorname{tr}(A) = \\lambda_1 + \\lambda_2, \\qquad \\Delta = \\det(A) = \\lambda_1\\lambda_2",
           ],
+          engineeringContext:
+            "Coupled spring-mass normal modes, dual-tank chemical mixing networks, linearized state-space control stability (τ < 0, Δ > 0), and orbital station-keeping.",
+          pedagogicalRhythm: {
+            question:
+              "Why do just two scalar invariants—the trace τ and determinant Δ of a 2×2 matrix A—completely classify every possible linear trajectory pattern around the origin?",
+            labInteraction:
+              "Click anywhere inside the Poincaré (τ, Δ) bifurcation diagram to cross the Δ = τ²/4 parabola or edit entries [[a,b],[c,d]] directly while dropping seeds onto eigenvector manifolds.",
+            symbolicFormalizationLatex:
+              "\\lambda_{1,2} = \\frac{\\tau \\pm \\sqrt{\\tau^2 - 4\\Delta}}{2}, \\qquad \\text{Asymptotically Stable} \\iff \\tau < 0 \\;\\land\\; \\Delta > 0",
+            edgeCasesAndBridge:
+              "Along the parabola Δ = τ²/4, off-diagonal shear produces defective repeated-root nodes with only one eigenvector! Next, Chapter 4.3.2 computes Jacobians J(x*, y*) to classify nonlinear systems.",
+          },
           labs: [
             {
               id: "lab-4-3-1a",
@@ -241,15 +253,28 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
           slug: "nonlinear-nullclines-limit-cycles",
           title: "Nonlinear Stability, Nullclines & Limit Cycles",
           subtitle:
-            "Linearize nonlinear pendulum, Lotka-Volterra, and Van der Pol oscillators around equilibria using the Jacobian matrix.",
-          status: "planned",
-          estimatedMinutes: 30,
+            "Inspect intersecting x/y nullclines, track closed self-sustained limit cycles in the Van der Pol oscillator, and linearize equilibria via J(x*, y*).",
+          status: "published",
+          estimatedMinutes: 35,
           prerequisites: ["3.2.4", "4.3.1"],
           dimensionBadge: "2D",
           accentHex: "#D35323",
           keyEquationsLatex: [
             "\\dot{x} = f(x,y),\\; \\dot{y} = g(x,y) \\implies J(x^*,y^*) = \\frac{\\partial(f,g)}{\\partial(x,y)}",
+            "f(x^*, y^*) = 0 \\;\\land\\; g(x^*, y^*) = 0 \\quad (\\text{Nullcline Intersection})",
           ],
+          engineeringContext:
+            "Electronic Van der Pol oscillators & neural cardiac pacemakers, biological Lotka–Volterra ecology, nonlinear pendulum dynamics, and bistable genetic toggle switches.",
+          pedagogicalRhythm: {
+            question:
+              "When nonlinearities bend straight lines into spirals, basins, and isolated closed loops, how do nullclines and the local Jacobian reveal equilibria and sustained limit cycles?",
+            labInteraction:
+              "Click anywhere in the phase plane across Van der Pol, Damped Pendulum, Duffing Double-Well, and Predator–Prey models to trace RK4 paths, toggle f=0 / g=0 nullclines, and inspect J(x*, y*).",
+            symbolicFormalizationLatex:
+              "\\dot{\\mathbf{x}} \\approx J(\\mathbf{x}^*)(\\mathbf{x} - \\mathbf{x}^*) \\quad (\\text{Hartman–Grobman valid when } \\operatorname{Re}(\\lambda_i) \\neq 0)",
+            edgeCasesAndBridge:
+              "When Re(λ) = 0 (non-hyperbolic centers), nonlinear terms can turn closed loops into faint spirals—and self-sustained limit cycles arise via Poincaré–Bendixson trapping regions! Module 4.4 expands from discrete ODE states into continuous PDE fields.",
+          },
           labs: [
             {
               id: "lab-4-3-2a",

@@ -78,6 +78,10 @@ import { AutonomousPhaseLineLab } from "@/components/visualizations/differential
 import { HarmonicOscillatorLab } from "@/components/visualizations/differential-equations/HarmonicOscillatorLab";
 import { ForcedResonanceLab } from "@/components/visualizations/differential-equations/ForcedResonanceLab";
 
+// Volume IV — Module 4.3 Live Laboratories (Systems of ODEs & Phase Plane Portraits)
+import { TraceDeterminantPhaseLab } from "@/components/visualizations/differential-equations/TraceDeterminantPhaseLab";
+import { NonlinearPhasePortraitLab } from "@/components/visualizations/differential-equations/NonlinearPhasePortraitLab";
+
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
     volume: item.volume.slug,
@@ -1622,6 +1626,133 @@ export default async function ChapterPage({
                   Viscous drag pulls maximum displacement slightly left of{" "}
                   <KaTeXMath math="\omega_n" />; once <KaTeXMath math="\zeta \ge 1/\sqrt{2}" />, the
                   peak vanishes altogether!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "linear-phase-portraits" && (
+        <div className="space-y-10">
+          <TraceDeterminantPhaseLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              Poincaré Stability Classification, Matrix Exponential <KaTeXMath math="e^{At}" /> &amp; Eigenvector Decoupling
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. INVARIANT TRACE &amp; DETERMINANT
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\det(A - \lambda I) = \lambda^2 - \tau\lambda + \Delta = 0"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Sum of eigenvalues <KaTeXMath math="\lambda_1 + \lambda_2 = \tau" /> tracks phase-area
+                  divergence rate (<KaTeXMath math="\nabla\cdot(A\mathbf{x}) = \tau" />), while{" "}
+                  <KaTeXMath math="\Delta = \lambda_1\lambda_2" /> catches opposite-sign saddle splits.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  2. STRAIGHT-LINE EIGENVECTOR RAYS
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\mathbf{x}(t) = c_1 e^{\lambda_1 t}\mathbf{v}_1 + c_2 e^{\lambda_2 t}\mathbf{v}_2"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Any seed placed on eigenvector line <KaTeXMath math="\mathbf{v}_i" /> moves purely
+                  radially along it; trajectories between two negative nodes curve toward whichever
+                  mode decays slower.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  3. MATRIX EXPONENTIAL &amp; STABILITY QUADRANT
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\mathbf{x}(t) = e^{At}\mathbf{x}_0 \xrightarrow{t\to\infty} \mathbf{0} \iff \tau < 0 \;\land\; \Delta > 0"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  The upper-left open quadrant of the Poincaré diagram collects every asymptotically
+                  stable node and spiral regardless of matrix rotation.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "nonlinear-nullclines-limit-cycles" && (
+        <div className="space-y-10">
+          <NonlinearPhasePortraitLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              Nullclines, Hartman–Grobman Linearization &amp; Limit Cycles
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. NULLCLINE SIGN QUADRANTS
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="f(x,y) = 0 \text{ (vertical flow)}, \qquad g(x,y) = 0 \text{ (horizontal flow)}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Nullclines slice the plane into directional quadrants before solving a single
+                  differential equation; intersections where both vanish simultaneously pin fixed
+                  equilibria <KaTeXMath math="(x^*, y^*)" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  2. HARTMAN–GROBMAN THEOREM
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\operatorname{Re}(\lambda_i(J)) \neq 0 \implies \text{Nonlinear Flow} \simeq \text{Linear } J\mathbf{u}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Saddles, sinks, and sources preserve their qualitative geometry locally, whereas
+                  non-hyperbolic centers (<KaTeXMath math="\operatorname{Re}(\lambda) = 0" />) are
+                  fragile unless protected by a conserved energy integral.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  3. SELF-SUSTAINED LIMIT CYCLES
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\text{Poincaré–Bendixson: Trapped Annulus } (\text{No Equilibria}) \implies \text{Closed Orbit}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Unlike fragile linear centers that scale with initial amplitude, nonlinear limit
+                  cycles (like Van der Pol) actively pump small vibrations outward and damp large
+                  swings inward onto one fixed loop.
                 </p>
               </div>
             </div>
