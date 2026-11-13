@@ -99,11 +99,13 @@ import { EigenvectorCompassLab } from "@/components/visualizations/linear-algebr
 import { QuadraticFormLab } from "@/components/visualizations/linear-algebra/QuadraticFormLab";
 import { SVDThreeStageLab } from "@/components/visualizations/linear-algebra/SVDThreeStageLab";
 
-// Volume V — Modules 5.1 & 5.2 Live Laboratories (Complex, Conformal & Contour Residues)
+// Volume V — Modules 5.1–5.3 Live Laboratories (Complex, Conformal, Residues & Laplace s-Plane)
 import { EulerHelixPhasorLab } from "@/components/visualizations/transforms-complex/EulerHelixPhasorLab";
 import { ConformalMappingLab } from "@/components/visualizations/transforms-complex/ConformalMappingLab";
 import { CauchyContourLab } from "@/components/visualizations/transforms-complex/CauchyContourLab";
 import { ResidueTheoremLab } from "@/components/visualizations/transforms-complex/ResidueTheoremLab";
+import { LaplaceSPlane3DLab } from "@/components/visualizations/transforms-complex/LaplaceSPlane3DLab";
+import { ConvolutionFlipSlideLab } from "@/components/visualizations/transforms-complex/ConvolutionFlipSlideLab";
 
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
@@ -2774,6 +2776,110 @@ export default async function ChapterPage({
                 <p className="text-xs text-[var(--text-secondary)] font-math-serif">
                   Closing the real axis with a large upper semicircle whose arc contribution vanishes as{" "}
                   <KaTeXMath math="R \to \infty" /> evaluates improper real integrals algebraically.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "s-plane-poles-zeros" && (
+        <div className="space-y-8">
+          <LaplaceSPlane3DLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              s-Plane Geometry: Poles, Zeros, ROC & The jω Bode Ridge
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  1. COMPLEX FREQUENCY FACTOR
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="F(s) = \int_{0}^{\infty} f(t)e^{-\sigma t}e^{-i\omega t}\,dt,\quad s = \sigma + i\omega" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Multiplying by <KaTeXMath math="e^{-\sigma t}" /> acts as an adjustable exponential damper that
+                  forces even growing time signals to converge inside the ROC.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  2. REGION OF CONVERGENCE & STABILITY
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\text{Causal ROC: }\operatorname{Re}(s) > \max_k \operatorname{Re}(p_k)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  A causal LTI system is BIBO stable if and only if all poles lie strictly in the left half-plane so
+                  the imaginary axis <KaTeXMath math="\sigma = 0" /> sits inside the ROC.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  3. BODE FREQUENCY SLICE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="|H(i\omega)| = |K|\frac{\prod |i\omega - z_i|}{\prod |i\omega - p_j|}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Evaluating the 3D surface along <KaTeXMath math="s = i\omega" /> equals dividing geometric vector
+                  distances from zeros by vector distances from poles!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "impulse-response-convolution" && (
+        <div className="space-y-8">
+          <ConvolutionFlipSlideLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Impulse Response Superposition & The Convolution Theorem
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. LTI SUPERPOSITION SUM
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="y(t) = (x * h)(t) = \int_{0}^{t} x(\tau)\,h(t - \tau)\,d\tau" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Every input value <KaTeXMath math="x(\tau)\,d\tau" /> triggers a scaled, delayed impulse echo{" "}
+                  <KaTeXMath math="h(t-\tau)" /> that adds linearly at observation time <KaTeXMath math="t" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  2. WHY KERNELS FLIP BACKWARD
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\text{Age of impulse emitted at }\tau\text{ equals }t - \tau" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Reversing <KaTeXMath math="h(\tau) \mapsto h(t-\tau)" /> lines up recent inputs with fresh impulse
+                  peaks and older inputs with decayed kernel tails.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  3. ALGEBRAIC s-DOMAIN PRODUCT
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\mathcal{L}\{(x * h)(t)\} = X(s)\,H(s)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Transforming to <KaTeXMath math="s" />-space replaces the sliding integral completely with simple
+                  pointwise transfer-function multiplication.
                 </p>
               </div>
             </div>

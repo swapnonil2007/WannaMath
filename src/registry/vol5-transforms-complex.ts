@@ -212,11 +212,23 @@ export const VOL5_TRANSFORMS_COMPLEX: VolumeMetadata = {
           title: "The s-Plane Surface, Poles/Zeros & Region of Convergence",
           subtitle:
             "Slice the 3D surface |F(σ + iω)| along the imaginary axis σ = 0 to reveal how nearby poles sculpt the frequency response.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["4.2.1", "5.1.1"],
           dimensionBadge: "2D + 3D",
           accentHex: "#029091",
+          engineeringContext:
+            "PID flight control root-locus tuning, analog/IIR Butterworth and Chebyshev filter synthesis, MEMS accelerometer damping, and RLC impedance analysis.",
+          pedagogicalRhythm: {
+            question:
+              "Where does the Bode frequency-response curve |H(iω)| come from geometrically—and why does a single pole crossing Re(s) > 0 destabilize an LTI system?",
+            labInteraction:
+              "Click anywhere on the 2D s-plane to drag conjugate poles σ_p ± iω_p and toggle a real zero while watching the 3D |H(s)| tent, its gold σ = 0 Bode ridge, ROC shading, and h(t) morph instantaneously.",
+            symbolicFormalizationLatex:
+              "F(s) = \\mathcal{L}\\{f(t)\\} = \\int_{0}^{\\infty} f(t)e^{-(\\sigma + i\\omega)t}\\,dt, \\qquad \\text{Stable} \\iff \\text{ROC} \\supset i\\omega",
+            edgeCasesAndBridge:
+              "Pulling σ_p → 0⁻ causes a needle-sharp resonant spike on the jω slice; pushing σ_p > 0 excludes the imaginary axis from the ROC so h(t) blows up. Next, Chapter 5.3.2 reveals why multiplying H(s)X(s) equals time-domain convolution.",
+          },
           keyEquationsLatex: [
             "F(s) = \\mathcal{L}\\{f(t)\\} = \\int_{0}^{\\infty} f(t)e^{-st}\\,dt, \\qquad s = \\sigma + i\\omega",
           ],
@@ -239,11 +251,23 @@ export const VOL5_TRANSFORMS_COMPLEX: VolumeMetadata = {
           title: "Impulse Response, Step Response & Convolution Integral",
           subtitle:
             "Slide flipped kernel h(t - τ) across input x(τ) to visualize the convolution integral (x * h)(t) step by step.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["5.3.1"],
           dimensionBadge: "2D",
           accentHex: "#8D9FCE",
+          engineeringContext:
+            "Audio room-impulse reverb, camera Gaussian optical blur, matched radar pulse detection, and LTI circuit zero-state transient response.",
+          pedagogicalRhythm: {
+            question:
+              "Why do we flip the impulse kernel backward in dummy time τ and slide it past t to compute the causal output of a linear time-invariant filter?",
+            labInteraction:
+              "Animate or scrub evaluation time t to watch h(t − τ) sweep over x(τ), shade their instantaneous product overlap, and accumulate the output waveform y(t).",
+            symbolicFormalizationLatex:
+              "(x * h)(t) = \\int_{0}^{t} x(\\tau)\\,h(t - \\tau)\\,d\\tau \\;\\longleftrightarrow\\; Y(s) = X(s)H(s)",
+            edgeCasesAndBridge:
+              "When an input sharp step enters a first-order RC exponential kernel, corners smooth out cleanly into 1 − e^{-at}. Module 5.4 specializes this Laplace jω-axis slice into Fourier Series & Transforms.",
+          },
           keyEquationsLatex: [
             "(x * h)(t) = \\int_{0}^{t} x(\\tau)\\,h(t - \\tau)\\,d\\tau \\;\\longleftrightarrow\\; X(s)H(s)",
           ],

@@ -1,6 +1,6 @@
 # Volume V — Transforms & Complex Analysis (`transforms-complex-analysis`)
 
-> **Status:** `in-progress` (`4/8` Chapters PUBLISHED — **Modules 5.1 & 5.2 Complete**, Phases 3–4 Queued) — Blueprint in [`VOLUME_5_PLAN.md`](./VOLUME_5_PLAN.md)
+> **Status:** `in-progress` (`6/8` Chapters PUBLISHED — **Modules 5.1–5.3 Complete**, Phase 4 Queued) — Blueprint in [`VOLUME_5_PLAN.md`](./VOLUME_5_PLAN.md)
 > **Canonical Route Base:** `/transforms-complex-analysis/[module]/[chapter]`
 
 ## Module & Chapter Build Index
@@ -11,9 +11,9 @@
 2. **Module 5.2 (`contour-integration`) — Contour Integration & The Residue Theorem** *(PUBLISHED — Phase 2)*
    - `5.2.1`: Complex Line Integrals & Cauchy's Integral Theorem (`cauchy-integral-formula` → `CauchyContourLab`) *(Published)*
    - `5.2.2`: Poles, Laurent Series & The Residue Theorem (`poles-residue-theorem` → `ResidueTheoremLab`) *(Published)*
-3. **Module 5.3 (`laplace-transforms`) — Laplace Transforms & s-Plane Poles/Zeros** *(Phase 3)*
-   - `5.3.1`: The s-Plane Surface, Poles/Zeros & Region of Convergence (`s-plane-poles-zeros` → `LaplaceSPlane3DLab`)
-   - `5.3.2`: Impulse Response, Step Response & Convolution Integral (`impulse-response-convolution` → `ConvolutionFlipSlideLab`)
+3. **Module 5.3 (`laplace-transforms`) — Laplace Transforms & s-Plane Poles/Zeros** *(PUBLISHED — Phase 3)*
+   - `5.3.1`: The s-Plane Surface, Poles/Zeros & Region of Convergence (`s-plane-poles-zeros` → `LaplaceSPlane3DLab`) *(Published)*
+   - `5.3.2`: Impulse Response, Step Response & Convolution Integral (`impulse-response-convolution` → `ConvolutionFlipSlideLab`) *(Published)*
 4. **Module 5.4 (`fourier-analysis`) — Fourier Series & Fourier Transforms** *(Phase 4)*
    - `5.4.1`: Orthogonal Harmonics, Epicycles & Gibbs Phenomenon (`fourier-series-gibbs` → `FourierSeriesGibbsLab`)
    - `5.4.2`: Continuous Fourier Transform & Time-Frequency Uncertainty (`fourier-transform-spectra` → `FourierTransformWindingLab`)
