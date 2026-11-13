@@ -14,6 +14,10 @@ import { DifferentiabilityErrorConeLab } from "@/components/visualizations/multi
 import { HigherOrderChainImplicitLab } from "@/components/visualizations/multivariable-differentiation/HigherOrderChainImplicitLab";
 import { SingleVariableTaylorLab } from "@/components/visualizations/multivariable-differentiation/SingleVariableTaylorLab";
 import { MultivariableTaylorHessianLab } from "@/components/visualizations/multivariable-differentiation/MultivariableTaylorHessianLab";
+import { HomogeneousScalingRayLab } from "@/components/visualizations/multivariable-differentiation/HomogeneousScalingRayLab";
+import { EulersTheoremSecondOrderLab } from "@/components/visualizations/multivariable-differentiation/EulersTheoremSecondOrderLab";
+import { HessianSecondDerivativeTestLab } from "@/components/visualizations/multivariable-differentiation/HessianSecondDerivativeTestLab";
+import { GeneralMethodDegenerateExtremaLab } from "@/components/visualizations/multivariable-differentiation/GeneralMethodDegenerateExtremaLab";
 
 // Module 3.2 Live Laboratories (Integral Calculus: Multiple Integrals, Convergence & Eulerian Functions)
 import { RiemannVolumeLab } from "@/components/visualizations/double-integrals/RiemannVolumeLab";
@@ -211,6 +215,20 @@ export default async function ChapterPage({
               </div>
             </div>
           </section>
+        </div>
+      )}
+
+      {chapter.slug === "homogeneous-functions-eulers-theorem" && (
+        <div className="space-y-10">
+          <HomogeneousScalingRayLab />
+          <EulersTheoremSecondOrderLab />
+        </div>
+      )}
+
+      {chapter.slug === "maxima-minima-extrema" && (
+        <div className="space-y-10">
+          <HessianSecondDerivativeTestLab />
+          <GeneralMethodDegenerateExtremaLab />
         </div>
       )}
 

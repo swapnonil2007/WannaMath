@@ -299,8 +299,8 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Homogeneous Functions & Euler's Theorems",
           subtitle:
             "Radial scaling invariance f(tx, ty) = tⁿf(x, y), 1st-order Euler theorem xf_x + yf_y = nf, and 2nd-order identity x²f_xx + 2xyf_xy + y²f_yy = n(n-1)f.",
-          status: "planned",
-          estimatedMinutes: 30,
+          status: "published",
+          estimatedMinutes: 35,
           prerequisites: ["3.1.2"],
           dimensionBadge: "2D + 3D",
           accentHex: "#029091",
@@ -308,6 +308,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "x\\frac{\\partial f}{\\partial x} + y\\frac{\\partial f}{\\partial y} = n f(x,y)",
             "x^2 f_{xx} + 2xy f_{xy} + y^2 f_{yy} = n(n-1)f(x,y)",
           ],
+          engineeringContext:
+            "Constant returns to scale in production functions, Buckingham Pi dimensional scaling, and Euler's equation of isotropic elasticity.",
+          pedagogicalRhythm: {
+            question:
+              "If scaling every coordinate radially by a factor t scales output by tⁿ, what universal partial differential equation must all such surfaces satisfy—both at 1st and 2nd order?",
+            labInteraction:
+              "Slide scale factor t along rays in Lab 3.1.7A to verify f(tx, ty) = tⁿf(x,y) and xf_x + yf_y = nf, then test 2nd-order Euler identities and disguised inverse-trig homogeneous forms in Lab 3.1.7B.",
+            symbolicFormalizationLatex:
+              "\\color{#8D9FCE}{x}\\frac{\\partial f}{\\partial x} + \\color{#96B898}{y}\\frac{\\partial f}{\\partial y} = nf \\implies \\color{#D35323}{x^2 f_{xx} + 2xy f_{xy} + y^2 f_{yy}} = n(n-1)f",
+            edgeCasesAndBridge:
+              "Even when u = g⁻¹(fₙ) looks non-homogeneous (such as arcsin or arctan quotients), applying Euler's Theorem to g(u) unlocks x u_x + y u_y = n g(u)/g'(u) = φ(u) and 2nd-order deduction φ(u)[φ'(u)-1].",
+          },
           labs: [
             {
               id: "lab-3-1-7a",
@@ -335,7 +347,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Maxima & Minima: General Method & Second Derivative Test",
           subtitle:
             "Classify critical points via the Hessian discriminant D = rt - s² = f_xx f_yy - f_xy² and resolve D = 0 degeneracies using Δf sign-change analysis.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["3.1.4", "3.1.6"],
           dimensionBadge: "2D + 3D",
@@ -344,6 +356,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "D = r t - s^2 = f_{xx}f_{yy} - f_{xy}^2",
             "\\Delta f(h,k) = f(x_0+h,y_0+k) - f(x_0,y_0)",
           ],
+          engineeringContext:
+            "Structural potential energy stability equilibria, least-squares regression convexity, and multi-well landscape optimization.",
+          pedagogicalRhythm: {
+            question:
+              "Once ∇f = 0 locates a stationary plateau, how does second-order curvature D = rt - s² classify bowls vs. saddles—and what happens when D = 0 renders the Hessian test inconclusive?",
+            labInteraction:
+              "Inspect Hessian eigenvalues and discriminant D = rt - s² on multi-critical surfaces in Lab 3.1.8A, then probe rays and parabolic curves y = kx² when D = 0 (including Peano's counterexample) in Lab 3.1.8B.",
+            symbolicFormalizationLatex:
+              "D = \\det(\\mathbf{H}_f) = rt - s^2 > 0 \\;\\text{with}\\; r>0 \\implies \\text{Local Min}; \\quad D=0 \\implies \\text{Inspect } \\Delta f(h,k)",
+            edgeCasesAndBridge:
+              "While Module 3.1 Chapters 3.1.1–3.1.8 explore scalar landscapes in Rⁿ, real engineering states evolve dynamically in time—leading directly into the nested Differential Equations parent starting in Chapter 3.1.9.",
+          },
           labs: [
             {
               id: "lab-3-1-8a",

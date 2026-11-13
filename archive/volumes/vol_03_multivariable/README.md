@@ -15,7 +15,11 @@ All 4 foundational chapters of **Module 3.1** are live, and a **6-Phase Differen
    - Labs: `MultivariableLimitsPathsLab`, `DifferentiabilityErrorConeLab` (`src/components/visualizations/multivariable-differentiation/`)
 6. **Chapter `3.1.6` — Taylor Expansions: Single-Variable & Multivariable (`taylor-expansions`)** *(Published — Phase 2)*
    - Labs: `SingleVariableTaylorLab`, `MultivariableTaylorHessianLab` (`src/components/visualizations/multivariable-differentiation/`)
-7. **Queued Expansion Chapters (`3.1.7` – `3.1.11`):** See [`DIFFERENTIAL_CALCULUS_PLAN.md`](./DIFFERENTIAL_CALCULUS_PLAN.md) Phases 3–6.
+7. **Chapter `3.1.7` — Homogeneous Functions & Euler's Theorems (`homogeneous-functions-eulers-theorem`)** *(Published — Phase 3)*
+   - Labs: `HomogeneousScalingRayLab`, `EulersTheoremSecondOrderLab` (`src/components/visualizations/multivariable-differentiation/`)
+8. **Chapter `3.1.8` — Maxima & Minima: General Method & Second Derivative Test (`maxima-minima-extrema`)** *(Published — Phase 3)*
+   - Labs: `HessianSecondDerivativeTestLab`, `GeneralMethodDegenerateExtremaLab` (`src/components/visualizations/multivariable-differentiation/`)
+9. **Queued Expansion Chapters (`3.1.9` – `3.1.11`, Nested Differential Equations Sub-Parent):** See [`DIFFERENTIAL_CALCULUS_PLAN.md`](./DIFFERENTIAL_CALCULUS_PLAN.md) Phases 4–6.
 
 ---
 

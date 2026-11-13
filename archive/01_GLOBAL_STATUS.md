@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Differential Calculus Phase 2 Completed — **Volume III (`17/22` Chapters Published, `26` Interactive Labs Live)**
+> **Last Updated:** Differential Calculus Phase 3 Completed — **Volume III (`19/22` Chapters Published, `30` Interactive Labs Live)**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -12,7 +12,7 @@
 | :--- | :--- | :--- | :---: | :---: | :--- |
 | **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | `planned` |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
-| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 22 | **`in-progress` (17/22 Published — 26 Labs Live)** |
+| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 22 | **`in-progress` (19/22 Published — 30 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | `planned` |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | `planned` |
 | **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | `planned` |
@@ -21,7 +21,7 @@
 
 ## 2. Detailed Chapter Status Matrix — Volume III: Multivariable & Vector Calculus (`/multivariable-calculus`)
 
-### Module 3.1: Differential Calculus (`/multivariable-calculus/differential-calculus`) — **6/11 PUBLISHED**
+### Module 3.1: Differential Calculus (`/multivariable-calculus/differential-calculus`) — **8/11 PUBLISHED**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
 | `3.1.1` | `/multivariable-calculus/differential-calculus/surfaces-level-curves` | Surfaces, Level Curves & Contour Maps | **`published`** | `SurfaceContourSlicerLab` |
@@ -30,8 +30,8 @@
 | `3.1.4` | `/multivariable-calculus/differential-calculus/lagrange-multipliers` | Lagrange Multipliers & Constrained Optimization | **`published`** | `LagrangeMultipliersLab` |
 | `3.1.5` | `/multivariable-calculus/differential-calculus/limits-and-differentiability` | Multivariable Limits, Continuity & Differentiability | **`published`** | `MultivariableLimitsPathsLab`, `DifferentiabilityErrorConeLab` |
 | `3.1.6` | `/multivariable-calculus/differential-calculus/taylor-expansions` | Taylor Expansions: Single-Variable & Multivariable | **`published`** | `SingleVariableTaylorLab`, `MultivariableTaylorHessianLab` |
-| `3.1.7` | `/multivariable-calculus/differential-calculus/homogeneous-functions-eulers-theorem` | Homogeneous Functions & Euler's Theorems | `planned` *(Phase 3)* | `HomogeneousScalingRayLab`, `EulersTheoremSecondOrderLab` |
-| `3.1.8` | `/multivariable-calculus/differential-calculus/maxima-minima-extrema` | Maxima & Minima: General Method & Second Derivative Test | `planned` *(Phase 3)* | `HessianSecondDerivativeTestLab`, `GeneralMethodDegenerateExtremaLab` |
+| `3.1.7` | `/multivariable-calculus/differential-calculus/homogeneous-functions-eulers-theorem` | Homogeneous Functions & Euler's Theorems | **`published`** | `HomogeneousScalingRayLab`, `EulersTheoremSecondOrderLab` |
+| `3.1.8` | `/multivariable-calculus/differential-calculus/maxima-minima-extrema` | Maxima & Minima: General Method & Second Derivative Test | **`published`** | `HessianSecondDerivativeTestLab`, `GeneralMethodDegenerateExtremaLab` |
 | `3.1.9` | `/multivariable-calculus/differential-calculus/first-order-lde-bernoulli` | *Sub-Parent: Differential Equations* — First-Order ODEs: LDE, Integrating Factors & Bernoulli | `planned` *(Phase 4)* | `LinearOdeIntegratingFactorLab`, `BernoulliReductionLab` |
 | `3.1.10` | `/multivariable-calculus/differential-calculus/linear-odes-wronskian-roots` | *Sub-Parent: Differential Equations* — Linear ODEs: Independence, Wronskian & Root Regimes | `planned` *(Phase 5)* | `WronskianPhaseAreaLab`, `CharacteristicRootsSolutionLab` |
 | `3.1.11` | `/multivariable-calculus/differential-calculus/operator-variation-cauchy-euler` | *Sub-Parent: Differential Equations* — Operator Method ($D$), Variation of Parameters & Cauchy-Euler | `planned` *(Phase 6)* | `OperatorMethodTutorialLab`, `VariationOfParametersCauchyEulerLab` |
