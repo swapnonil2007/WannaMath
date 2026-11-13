@@ -44,4 +44,38 @@ All project plans, design tokens, and volume/phase progress logs are stored in t
    - **Numerical Readouts:** `JetBrains Mono` with `tabular-nums` so slider changes never cause layout shift.
 4. **4-Tier Multi-Volume Textbook Architecture:**
    - Every chapter lives at `/[volume]/[module]/[chapter]` (for example, `/multivariable-calculus/multiple-integrals/double-integrals`) and is registered in `src/registry/vol1-single-variable.ts` through `src/registry/vol6-probability-numerical.ts` (aggregated in `src/registry/index.ts`).
-   - Legacy `/calculus/*` URLs redirect permanently to `/multivariable-calculus/multiple-integrals/*`.
+   - Legacy `/calculus/*` URLs redirect permanently to `/multivariable-calculus/multiple-integrals/*` via `next.config.ts` (the legacy route files in `src/app/calculus/*` also remain valid static fallbacks).
+
+---
+
+## 4. Key Folder Paths & Shared Primitives Conventions (v2.0)
+
+- **Curriculum Registry (`src/registry/`):**
+  - `src/registry/types.ts` — `VolumeMetadata`, `ModuleMetadata`, `ChapterMetadata`, `LabMetadata`, and `PedagogicalRhythm`.
+  - `src/registry/vol1-single-variable.ts` .. `vol6-probability-numerical.ts` — Per-volume curriculum manifests.
+  - `src/registry/index.ts` — Lookup helpers (`getVolumeBySlug`, `getModuleBySlugs`, `getChapterBySlugs`, `getChapterById`, `getAdjacentChapters`, `getAllResolvedChapters`).
+- **4-Tier App Router Pages (`src/app/`):**
+  - `src/app/[volume]/page.tsx` — Tier 1 Volume Overview.
+  - `src/app/[volume]/[module]/page.tsx` — Tier 2 Module Overview.
+  - `src/app/[volume]/[module]/[chapter]/page.tsx` — Tier 3 Chapter Lesson & Interactive Lab dispatcher wrapped in `TopicPageShell.tsx`.
+- **Shared Visualization Primitives (`src/components/visualizations/primitives/`):**
+  - Always import shared 3D/2D/numerical helpers from `@/components/visualizations/primitives`:
+    - `ThreeOrbitViewport` — WebGL `OrbitControls` stage with camera reset and automatic geometry/material disposal.
+    - `mathToThreeVec3`, `disposeThreeObject`, `createCoordinateAxesAndGrid`, `createParametricSurfaceMesh`, `createVectorArrow3D`.
+    - `SvgCoordinatePlane2D` — Accessible 2D SVG coordinate plane with `toSvgX`, `toSvgY`, and click-to-world probing.
+    - `extractLevelCurveSegments` — Marching-squares 2D level curve extractor.
+    - `integrate1DGaussLegendre`, `integrate2DIterated`, `integrate3DIterated`, `computePartialDerivatives2D`, `computeJacobian2D`.
+- **Math Expression Input (`src/components/math/MathExpressionInput.tsx`):**
+  - Pass `allowedVars: string[]` and `prefixLatex?: string` (e.g., `prefixLatex="f(x,y) ="`).
+  - `compileMathExpression(expr, allowedVars)` returns `{ raw, tex, valid, error, evaluate }` (use `.tex` for KaTeX strings).
+
+---
+
+## 5. Immediate Handoff Checkpoint (Next Step for Incoming Agent)
+
+- **Completed & Pushed (`origin/main`):**
+  - **v2.0 Phase A (`f849ddc`):** 6-Volume modular registry, 4-tier routing (`/[volume]/[module]/[chapter]`), `TopicPageShell.tsx` upgrade, and `TextbookSidebar.tsx` TOC drawer.
+  - **v2.0 Track 1 (`4747a9f`):** Shared visualization & quadrature primitives in `src/components/visualizations/primitives/`.
+  - **v2.0 Track 2 (`c6d4bc1`):** **Volume III, Module 3.1 (`multivariable-differentiation`)** — All 4 chapters (`3.1.1`–`3.1.4`) and 4 labs (`SurfaceContourSlicerLab`, `PartialDerivativeTangentPlaneLab`, `GradientDirectionalDerivativeLab`, `LagrangeMultipliersLab`) published alongside **Module 3.2 (`multiple-integrals`)** (`3.2.1`–`3.2.4`, 8 labs).
+- **Exact Next Step to Execute First:**
+  - **Execute Track 3 (Phase D): Build Volume III, Module 3.3 (`vector-calculus` — Vector Calculus & Integral Theorems, Chapters `3.3.1` through `3.3.5`)** inside `src/components/visualizations/vector-calculus/`, wire them into `src/app/[volume]/[module]/[chapter]/page.tsx`, and mark Chapters `3.3.1`–`3.3.5` as `'published'` in `src/registry/vol3-multivariable.ts` to complete 100% of Volume III (`13/13` chapters).

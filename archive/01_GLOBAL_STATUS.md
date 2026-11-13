@@ -51,11 +51,12 @@
 
 ---
 
-## 3. Shared Visualization Primitives & Next Expansion Tracks
-1. **Track 1 (COMPLETED):** Extracted shared visualization & numerical quadrature primitives inside [`src/components/visualizations/primitives/`](../src/components/visualizations/primitives/index.ts):
+## 3. Shared Visualization Primitives & Handoff Next Step
+1. **Track 1 (COMPLETED — `4747a9f`):** Extracted shared visualization & numerical quadrature primitives inside [`src/components/visualizations/primitives/`](../src/components/visualizations/primitives/index.ts):
    - `ThreeOrbitViewport.tsx` — Reusable React + Three.js WebGL stage with `OrbitControls`, camera reset, and coordinate frame badge.
    - `threeScenePrimitives.ts` — `mathToThreeVec3`, `disposeThreeObject`, `createCoordinateAxesAndGrid`, `createParametricSurfaceMesh`, and `createVectorArrow3D`.
    - `SvgCoordinatePlane2D.tsx` — Accessible 2D SVG coordinate plane with `worldToSvgX/Y`, grid lines, and click-to-world coordinates.
+   - `contourMarchingSquares.ts` — `extractLevelCurveSegments` marching-squares 2D contour solver.
    - `quadrature.ts` — `integrate1DGaussLegendre`, `integrate2DIterated`, `integrate3DIterated`, `computePartialDerivatives2D`, and `computeJacobian2D`.
-2. **Track 2 (COMPLETED):** Built **Volume III, Module 3.1 (`multivariable-differentiation`)** — Chapters `3.1.1` through `3.1.4` (`SurfaceContourSlicerLab`, `PartialDerivativeTangentPlaneLab`, `GradientDirectionalDerivativeLab`, `LagrangeMultipliersLab`).
-3. **Track 3 (Ready):** Build **Volume III, Module 3.3 (`vector-calculus`)** — Chapters `3.3.1` through `3.3.5`.
+2. **Track 2 (COMPLETED — `c6d4bc1`):** Built **Volume III, Module 3.1 (`multivariable-differentiation`)** — Chapters `3.1.1` through `3.1.4` (`SurfaceContourSlicerLab`, `PartialDerivativeTangentPlaneLab`, `GradientDirectionalDerivativeLab`, `LagrangeMultipliersLab`).
+3. **Track 3 (IMMEDIATE NEXT STEP FOR INCOMING AGENT):** Build **Volume III, Module 3.3 (`vector-calculus`)** — Chapters `3.3.1` through `3.3.5` inside `src/components/visualizations/vector-calculus/`, wire them into `src/app/[volume]/[module]/[chapter]/page.tsx`, and mark Chapters `3.3.1`–`3.3.5` as `'published'` in `src/registry/vol3-multivariable.ts`.
