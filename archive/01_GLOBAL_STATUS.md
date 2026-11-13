@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Differential Calculus Phase 6 Completed — **Volume III (`22/22` Chapters PUBLISHED, `36` Interactive Labs Live — 100% Complete)**
+> **Last Updated:** Volume I Module 1.1 Published — **Volume I (`2/12` Chapters, `2` Labs) | Volume III (`22/22` Chapters PUBLISHED, `36` Labs)**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -10,7 +10,7 @@
 
 | Volume | Slug | Accent Token | Modules | Chapters | Status |
 | :--- | :--- | :--- | :---: | :---: | :--- |
-| **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | `planned` |
+| **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | **`in-progress` (2/12 Published — 2 Labs Live)** |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
 | **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 22 | **`published` (22/22 Published — 36 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | `planned` |
@@ -19,7 +19,19 @@
 
 ---
 
-## 2. Detailed Chapter Status Matrix — Volume III: Multivariable & Vector Calculus (`/multivariable-calculus`)
+## 2. Detailed Chapter Status Matrix — Volume I: Single-Variable Calculus (`/single-variable-calculus`)
+
+### Module 1.1: Limits & Continuity (`/single-variable-calculus/limits-continuity`) — **ALL PUBLISHED (2/2)**
+| Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
+| :--- | :--- | :--- | :--- | :--- |
+| `1.1.1` | `/single-variable-calculus/limits-continuity/epsilon-delta-limits` | $\varepsilon$-$\delta$ Neighborhoods & Limit Convergence | **`published`** | `EpsilonDeltaCorridorLab` |
+| `1.1.2` | `/single-variable-calculus/limits-continuity/continuity-ivt` | Continuity, Intermediate Value Theorem & Asymptotes | **`published`** | `IVTBisectionLab` |
+
+*(Modules `1.2` Differential Calculus, `1.3` Integration, and `1.4` Infinite Series are `planned`; Volume I build log tracked in [`archive/volumes/vol_01_single_variable/README.md`](./volumes/vol_01_single_variable/README.md).)*
+
+---
+
+## 3. Detailed Chapter Status Matrix — Volume III: Multivariable & Vector Calculus (`/multivariable-calculus`)
 
 ### Module 3.1: Differential Calculus (`/multivariable-calculus/differential-calculus`) — **ALL PUBLISHED (11/11)**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |

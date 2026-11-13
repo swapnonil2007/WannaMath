@@ -32,7 +32,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "ε-δ Neighborhoods & Limit Convergence",
           subtitle:
             "Interactive tolerance band challenge showing how output error ε constrains input window δ around x = a.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: [],
           dimensionBadge: "2D",
@@ -72,7 +72,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "Continuity, Intermediate Value Theorem & Asymptotes",
           subtitle:
             "Visualize connected graph trajectories, root-bracketing guarantees, and asymptotic growth rates.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 20,
           prerequisites: ["1.1.1"],
           dimensionBadge: "2D",
@@ -83,6 +83,16 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Bisection root-finding algorithms and thermal equilibrium existence proofs.",
+          pedagogicalRhythm: {
+            question:
+              "When does a continuous function guarantee a crossing f(c) = N inside [a, b], and what catastrophic failure happens if a root-finder trusts sign changes blindly across a discontinuity?",
+            labInteraction:
+              "Step through bisection iterations in Lab 1.1.2A across cubic, transcendental, jump-discontinuity, and vertical-asymptote curves while shrinking the bracketing interval [a_k, b_k].",
+            symbolicFormalizationLatex:
+              "f \\in C([a,b]) \\;\\&\\; (f(a)-N)(f(b)-N) < 0 \\implies \\exists c \\in (a,b) : f(c) = N",
+            edgeCasesAndBridge:
+              "Sign flips across a jump or vertical asymptote violate the continuity hypothesis and trap bisection on non-roots; next, Module 1.2 introduces local linearity and secant-to-tangent differentiation.",
+          },
           labs: [
             {
               id: "lab-1-1-2a",

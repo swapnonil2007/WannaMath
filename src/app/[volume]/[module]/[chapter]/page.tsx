@@ -4,6 +4,10 @@ import { getAllResolvedChapters, getChapterBySlugs } from "@/registry/index";
 import { TopicPageShell } from "@/components/layout/TopicPageShell";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 
+// Volume I — Module 1.1 Live Laboratories (Limits & Continuity)
+import { EpsilonDeltaCorridorLab } from "@/components/visualizations/single-variable/EpsilonDeltaCorridorLab";
+import { IVTBisectionLab } from "@/components/visualizations/single-variable/IVTBisectionLab";
+
 // Module 3.1 Live Laboratories (Differential Calculus)
 import { SurfaceContourSlicerLab } from "@/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab";
 import { PartialDerivativeTangentPlaneLab } from "@/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab";
@@ -74,6 +78,109 @@ export default async function ChapterPage({
 
   return (
     <TopicPageShell chapterId={chapter.id}>
+      {chapter.slug === "epsilon-delta-limits" && (
+        <div className="space-y-10">
+          <EpsilonDeltaCorridorLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
+              Formal Limit Anatomy &amp; Non-Existence Signatures
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. PUNCTURED NEIGHBORHOOD
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="0 < |x - a| < \delta" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Strict inequality <KaTeXMath math="0 < |x-a|" /> ignores{" "}
+                  <KaTeXMath math="f(a)" /> completely—removable holes do not alter the limit.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  2. SQUEEZE ENVELOPE
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="g(x) \le f(x) \le h(x),\; \lim g = \lim h = L \implies \lim f = L"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Even fast oscillation like <KaTeXMath math="x\sin(8/x)" /> converges to{" "}
+                  <KaTeXMath math="0" /> because <KaTeXMath math="-|x| \le f(x) \le |x|" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. THREE FAILURE MODES
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\lim_{x\to a^-} f \neq \lim_{x\to a^+} f \;\lor\; \pm\infty \;\lor\; \sin(1/x)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Jumps, vertical poles, and bounded non-decaying oscillation fail to fit inside
+                  small <KaTeXMath math="\varepsilon" />-bands for any <KaTeXMath math="\delta > 0" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "continuity-ivt" && (
+        <div className="space-y-10">
+          <IVTBisectionLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
+              Continuity Checklist &amp; Discontinuity Taxonomy
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  1. THREE-PART CONTINUITY TEST
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="f(a) \text{ defined},\; \exists\lim_{x\to a}f(x),\; \lim_{x\to a}f(x)=f(a)"
+                    block
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  2. REMOVABLE VS. JUMP VS. INFINITE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  <strong>Removable:</strong> two-sided limit exists cleanly.{" "}
+                  <strong>Jump:</strong> finite left/right limits disagree.{" "}
+                  <strong>Infinite:</strong> at least one side diverges toward <KaTeXMath math="\pm\infty" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. BISECTION ERROR BOUND
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="|c - m_k| \le \frac{b_0 - a_0}{2^k}" block />
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
       {chapter.slug === "surfaces-level-curves" && (
         <div className="space-y-10">
           <SurfaceContourSlicerLab />

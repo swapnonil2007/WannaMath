@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Differential Calculus Phase 6 PUBLISHED (`22/22` Volume III Chapters PUBLISHED, `36` Interactive Labs Live)**
+> **Last Updated:** 2026-11-13 — **Volume I Module 1.1 PUBLISHED (`2/12` Volume I Chapters, `22/22` Volume III Chapters PUBLISHED — `38` Interactive Labs Live Total)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -21,7 +21,8 @@
 | **Differential Calculus Phase 3** | `8e321bc` | **PUBLISHED** | Published Chapter `3.1.7` (`homogeneous-functions-eulers-theorem`: `HomogeneousScalingRayLab.tsx`, `EulersTheoremSecondOrderLab.tsx`) and Chapter `3.1.8` (`maxima-minima-extrema`: `HessianSecondDerivativeTestLab.tsx`, `GeneralMethodDegenerateExtremaLab.tsx`), completing all 8 core multivariable differentiation chapters (`3.1.1`–`3.1.8`). |
 | **Differential Calculus Phase 4** | `9cd85f8` | **PUBLISHED** | Published Chapter `3.1.9` (`first-order-lde-bernoulli`: `LinearOdeIntegratingFactorLab.tsx`, `BernoulliReductionLab.tsx`), launching the nested **Differential Equations** sub-parent under Differential Calculus. |
 | **Differential Calculus Phase 5** | `9980bff` | **PUBLISHED** | Published Chapter `3.1.10` (`linear-odes-wronskian-roots`: `WronskianPhaseAreaLab.tsx`, `CharacteristicRootsSolutionLab.tsx`) covering linear independence, the Wronskian phase-plane parallelogram, Abel's identity, and distinct/repeated/complex characteristic root regimes. |
-| **Differential Calculus Phase 6** | *Current* | **PUBLISHED** | Published Chapter `3.1.11` (`operator-variation-cauchy-euler`: `OperatorMethodTutorialLab.tsx`, `VariationOfParametersCauchyEulerLab.tsx`), completing all `22/22` chapters and `36` interactive labs of **Volume III (`multivariable-calculus`)**. |
+| **Differential Calculus Phase 6** | `cce75f7` | **PUBLISHED** | Published Chapter `3.1.11` (`operator-variation-cauchy-euler`: `OperatorMethodTutorialLab.tsx`, `VariationOfParametersCauchyEulerLab.tsx`), completing all `22/22` chapters and `36` interactive labs of **Volume III (`multivariable-calculus`)**. |
+| **Volume I — Module 1.1** | *Current* | **PUBLISHED** | Published **Module 1.1 (`limits-continuity`)** in **Volume I (`single-variable-calculus`)**: Chapter `1.1.1` (`epsilon-delta-limits`: `EpsilonDeltaCorridorLab.tsx`) and Chapter `1.1.2` (`continuity-ivt`: `IVTBisectionLab.tsx`), adding global + micro-zoom $\varepsilon$-$\delta$ corridors and IVT/Bisection discontinuity traps. |
 
 ---
 
@@ -34,6 +35,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume III Complete → Volume I Ready)
-All 6 phases of **Module 3.1 Differential Calculus** (and all 22 chapters of **Volume III**) are now published!
-- **Next Curriculum Milestone:** Begin **Volume I: Single-Variable Calculus (`/single-variable-calculus`)** in [`src/registry/vol1-single-variable.ts`](../../src/registry/vol1-single-variable.ts), starting with **Module 1.1: Limits & Continuity (`epsilon-delta-limits`, `continuity-ivt`)**.
+## 3. Immediate Next Step (Volume I Module 1.2)
+**Volume III** is 100% published (`22/22`), and **Volume I Module 1.1** (`limits-continuity`) is 100% published (`2/2`).
+- **Next Curriculum Milestone:** Build **Volume I, Module 1.2: Differential Calculus & Local Linearity (`/single-variable-calculus/differential-calculus`)** in [`src/registry/vol1-single-variable.ts`](../../src/registry/vol1-single-variable.ts) (`1.2.1` `secant-tangent-homotopy`, `1.2.2` `local-linearity-differentials`, `1.2.3` `chain-rule-kinematics`, `1.2.4` `taylor-polynomials-curvature`).
