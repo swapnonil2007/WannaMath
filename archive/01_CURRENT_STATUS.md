@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Volume V COMPLETE (`12/12` Vol I + `9/9` Vol II + `24/24` Vol III + `8/8` Vol IV + `8/8` Vol V = `61` Chapters & `78` Labs Live)**
+> **Last Updated:** 2026-11-13 — **Volume VI Phase 1 PUBLISHED (`12/12` Vol I + `9/9` Vol II + `24/24` Vol III + `8/8` Vol IV + `8/8` Vol V + `2/4` Vol VI = `63` Chapters & `80` Labs Live)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -40,7 +40,8 @@
 | **Volume V — Phase 2 (Module 5.2)** | `145786f` | **PUBLISHED** | Published **Module 5.2 (`contour-integration`)**: `5.2.1` (`CauchyContourLab`) & `5.2.2` (`ResidueTheoremLab`) (`4/8` Vol V chapters, `74` labs live). |
 | **Volume V — Phase 3 (Module 5.3)** | `6b52a20` | **PUBLISHED** | Published **Module 5.3 (`laplace-transforms`)**: `5.3.1` (`LaplaceSPlane3DLab`) & `5.3.2` (`ConvolutionFlipSlideLab`) (`6/8` Vol V chapters, `76` labs live). |
 | **Volume V — Phase 4 (Module 5.4)** | `16485db` | **PUBLISHED** | Published **Module 5.4 (`fourier-analysis`)**: `5.4.1` (`FourierSeriesGibbsLab`) & `5.4.2` (`FourierTransformWindingLab`), completing **all `8/8` chapters of Volume V** (`78` labs live). |
-| **Volume VI — Planning** | *Current* | **PLANNED** | Authored 2-phase Volume VI blueprint [`VOLUME_6_PLAN.md`](./volumes/vol_06_probability_numerical/VOLUME_6_PLAN.md) & [`README.md`](./volumes/vol_06_probability_numerical/README.md) (`6.1`–`6.2`). |
+| **Volume VI — Planning** | `1e2ef01` | **PLANNED** | Authored 2-phase Volume VI blueprint [`VOLUME_6_PLAN.md`](./volumes/vol_06_probability_numerical/VOLUME_6_PLAN.md) & [`README.md`](./volumes/vol_06_probability_numerical/README.md) (`6.1`–`6.2`). |
+| **Volume VI — Phase 1 (Module 6.1)** | *Current* | **PUBLISHED** | Published **Module 6.1 (`probability-distributions`)**: `6.1.1` (`PDFCDFMomentLab`) & `6.1.2` (`BivariateGaussianLab`) (`2/4` Vol VI chapters, `80` labs live). |
 
 ---
 
@@ -53,6 +54,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume VI — Phase 1: Engineering Probability & Joint Distributions Next)
-**Volumes I (`12/12`), II (`9/9`), III (`24/24`), IV (`8/8`), and V (`8/8`)** are now **100% published** (`61` chapters, `78` interactive labs live).
-- **Active Planned Sequence:** Execute **Volume VI — Phase 1 (`Module 6.1`: Engineering Probability & Joint Distributions)** (`PDFCDFMomentLab`, `BivariateGaussianLab`) per [`VOLUME_6_PLAN.md`](./volumes/vol_06_probability_numerical/VOLUME_6_PLAN.md), followed by Phase 2 (`Module 6.2`) to complete all 6 Volumes of `wanna math` v2.0.
+## 3. Immediate Next Step (Volume VI — Phase 2: Numerical Quadrature & RK4 ODE Solvers Final Phase)
+**Volumes I (`12/12`), II (`9/9`), III (`24/24`), IV (`8/8`), and V (`8/8`)** are 100% published, and **Volume VI Module 6.1 (`2/4`)** is now live (`63` chapters, `80` interactive labs live).
+- **Active Planned Sequence:** Execute **Volume VI — Phase 2 (`Module 6.2`: Numerical Quadrature & RK4 ODE Solvers)** (`NumericalQuadratureLab`, `RungeKuttaSlopeLab`) per [`VOLUME_6_PLAN.md`](./volumes/vol_06_probability_numerical/VOLUME_6_PLAN.md) to complete **100% of all 6 Volumes (`65` chapters, `82` interactive labs)**.

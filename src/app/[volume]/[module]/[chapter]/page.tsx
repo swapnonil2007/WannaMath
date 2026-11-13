@@ -109,6 +109,10 @@ import { ConvolutionFlipSlideLab } from "@/components/visualizations/transforms-
 import { FourierSeriesGibbsLab } from "@/components/visualizations/transforms-complex/FourierSeriesGibbsLab";
 import { FourierTransformWindingLab } from "@/components/visualizations/transforms-complex/FourierTransformWindingLab";
 
+// Volume VI — Module 6.1 Live Laboratories (Engineering Probability & Joint Distributions)
+import { PDFCDFMomentLab } from "@/components/visualizations/probability-numerical/PDFCDFMomentLab";
+import { BivariateGaussianLab } from "@/components/visualizations/probability-numerical/BivariateGaussianLab";
+
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
     volume: item.volume.slug,
@@ -2986,6 +2990,109 @@ export default async function ChapterPage({
                 <p className="text-xs text-[var(--text-secondary)] font-math-serif">
                   No signal can be simultaneously ultra-narrow in time and ultra-narrow in frequency; Gaussian pulses
                   uniquely achieve equality at <KaTeXMath math="1/2" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "continuous-pdfs-cdfs" && (
+        <div className="space-y-8">
+          <PDFCDFMomentLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Probability Density, Cumulative Integrals & Mechanical Moments
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#AAA36D] block">
+                  1. INTERVAL PROBABILITY MASS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="P(a \le X \le b) = \int_a^b f_X(x)\,dx = F_X(b) - F_X(a)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Density <KaTeXMath math="f_X(x)" /> can exceed <KaTeXMath math="1" /> over narrow intervals so long
+                  as its total integral across <KaTeXMath math="\mathbb{R}" /> normalizes to unity.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  2. DERIVATIVE DUALITY
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="F_X(x) = \int_{-\infty}^x f_X(t)\,dt \iff F'_X(x) = f_X(x)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Every peak in the PDF creates the steepest upward slope in the monotonically non-decreasing CDF.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  3. BALANCE FULCRUM & INERTIA
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\mu = \int x f_X(x)\,dx,\qquad \sigma^2 = \int (x-\mu)^2 f_X(x)\,dx" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Expectation acts as the horizontal center-of-mass pivot while variance equals the rotational moment
+                  of inertia around <KaTeXMath math="\mu" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "joint-bivariate-distributions" && (
+        <div className="space-y-8">
+          <BivariateGaussianLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Marginalization, Conditional Slicing & Covariance Ellipses
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. MARGINAL PROJECTION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="f_X(x) = \int_{-\infty}^{\infty} f_{X,Y}(x,y)\,dy" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Crushing all probability mass perpendicularly onto a coordinate wall integrates out the unwanted
+                  nuisance variable.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  2. CONDITIONAL SLICE & SHRINKAGE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="Y \mid (X=x_0) \sim \mathcal{N}\!\left(\rho\frac{\sigma_y}{\sigma_x}x_0,\; \sigma_y^2(1-\rho^2)\right)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Observing correlated <KaTeXMath math="X=x_0" /> narrows the conditional bell width by factor{" "}
+                  <KaTeXMath math="\sqrt{1-\rho^2}" /> along the regression mean.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  3. MAHALANOBIS CONFIDENCE ELLIPSE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\mathbf{x}^T \Sigma^{-1} \mathbf{x} = k^2 \quad (k = 1, 2)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Spectral eigenvectors of <KaTeXMath math="\Sigma" /> orient the uncertainty ellipses dynamically as{" "}
+                  <KaTeXMath math="\rho" /> varies.
                 </p>
               </div>
             </div>

@@ -32,11 +32,23 @@ export const VOL6_PROBABILITY_NUMERICAL: VolumeMetadata = {
           title: "Continuous PDFs, CDFs & Expectation Integrals",
           subtitle:
             "Connect probability P(a ≤ X ≤ b) directly to the area under density f_X(x) and the height difference of F_X(x).",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.3.2"],
           dimensionBadge: "2D",
           accentHex: "#AAA36D",
+          engineeringContext:
+            "Component MTBF reliability lifetimes (Weibull/Exponential), Gaussian thermal sensor noise bounds, and Bayesian Beta prior updating.",
+          pedagogicalRhythm: {
+            question:
+              "If a single continuous outcome x has zero probability P(X = x) = 0, how does density f_X(x) determine interval probabilities—and why does F_X(b) − F_X(a) match the shaded area?",
+            labInteraction:
+              "Switch across Gaussian, Exponential, Weibull, and Beta distributions, slide [a, b] bounds or click quantiles, and track the E[X] balance fulcrum alongside F_X(x).",
+            symbolicFormalizationLatex:
+              "P(a \\le X \\le b) = \\int_{a}^{b} f_X(x)\\,dx = F_X(b) - F_X(a), \\qquad F'_X(x) = f_X(x)",
+            edgeCasesAndBridge:
+              "Skewed right-tail laws (Exponential & Weibull with k ≤ 1) pull E[X] above the peak mode; for joint multivariate noise, single curves expand into 3D surfaces in Chapter 6.1.2.",
+          },
           keyEquationsLatex: [
             "P(a \\le X \\le b) = \\int_{a}^{b} f_X(x)\\,dx = F_X(b) - F_X(a)",
             "\\mathbb{E}[X] = \\int_{-\\infty}^{\\infty} x\\,f_X(x)\\,dx",
@@ -60,11 +72,23 @@ export const VOL6_PROBABILITY_NUMERICAL: VolumeMetadata = {
           title: "Joint Bivariate Distributions, Marginalization & Covariance",
           subtitle:
             "Integrate 3D joint density surface f(x,y) along x or y to project marginal distributions onto coordinate walls and slice conditional densities.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["2.3.2", "3.2.1", "6.1.1"],
           dimensionBadge: "2D + 3D",
           accentHex: "#96B898",
+          engineeringContext:
+            "Kalman filter covariance prediction ellipsoids, radar (range, azimuth) correlated measurement fusion, and Gaussian Mixture anomaly detection.",
+          pedagogicalRhythm: {
+            question:
+              "How does correlation ρ tilt a 3D joint probability bell—and why does observing X = x₀ both shift E[Y | x₀] and shrink remaining uncertainty σ_y²(1 − ρ²)?",
+            labInteraction:
+              "Adjust correlation ρ ∈ (−0.92, 0.92) and spreads σ_x, σ_y while clicking slice x₀ to compare the 3D bell, back-wall marginals f_X/f_Y, 1σ/2σ ellipses, and conditional slice f_{Y|X}(y | x₀).",
+            symbolicFormalizationLatex:
+              "f_X(x) = \\int_{-\\infty}^{\\infty} f_{X,Y}(x,y)\\,dy, \\qquad f_{Y|X}(y\\mid x_0) = \\frac{f_{X,Y}(x_0,y)}{f_X(x_0)}",
+            edgeCasesAndBridge:
+              "Notice that rotating ρ tilts the conditional mean E[Y | x₀] = ρ(σ_y/σ_x)x₀ without altering either marginal bell f_X or f_Y! Next, Module 6.2 computes integrals and ODE flows numerically.",
+          },
           keyEquationsLatex: [
             "f_X(x) = \\int_{-\\infty}^{\\infty} f_{X,Y}(x,y)\\,dy, \\qquad f_{Y|X}(y|x) = \\frac{f_{X,Y}(x,y)}{f_X(x)}",
           ],
