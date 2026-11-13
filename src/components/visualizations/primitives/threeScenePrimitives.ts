@@ -222,3 +222,186 @@ export function createVectorArrow3D(
     safeLen * headLengthRatio * 0.55
   );
 }
+
+const KUHN_TETS: [number, number, number, number][] = [
+  [0, 5, 1, 6],
+  [0, 1, 2, 6],
+  [0, 2, 3, 6],
+  [0, 3, 7, 6],
+  [0, 7, 4, 6],
+  [0, 4, 5, 6],
+];
+
+/**
+ * Extracts a triangulated 3D level surface φ(x, y, z) = level inside a Cartesian box
+ * using Freudenthal/Kuhn 6-tetrahedra decomposition (Marching Tetrahedra).
+ */
+export function createImplicitLevelSurfaceMesh(
+  evalScalar: (x: number, y: number, z: number) => number,
+  level: number,
+  xRange: [number, number],
+  yRange: [number, number],
+  zRange: [number, number],
+  gridN = 16,
+  options?: {
+    color?: number;
+    opacity?: number;
+    wireframeColor?: number;
+    wireframeOpacity?: number;
+    showWireframe?: boolean;
+  }
+): THREE.Group {
+  const {
+    color = 0x029091,
+    opacity = 0.52,
+    wireframeColor = 0x8d9fce,
+    wireframeOpacity = 0.16,
+    showWireframe = true,
+  } = options ?? {};
+
+  const N = Math.max(6, Math.min(28, gridN));
+  const [xMin, xMax] = xRange;
+  const [yMin, yMax] = yRange;
+  const [zMin, zMax] = zRange;
+  const strideY = N + 1;
+  const strideX = (N + 1) * (N + 1);
+  const grid = new Float32Array((N + 1) * (N + 1) * (N + 1));
+
+  for (let i = 0; i <= N; i++) {
+    const x = xMin + (i / N) * (xMax - xMin);
+    for (let j = 0; j <= N; j++) {
+      const y = yMin + (j / N) * (yMax - yMin);
+      for (let k = 0; k <= N; k++) {
+        const z = zMin + (k / N) * (zMax - zMin);
+        const val = evalScalar(x, y, z) - level;
+        grid[i * strideX + j * strideY + k] = Number.isFinite(val) ? val : NaN;
+      }
+    }
+  }
+
+  const positions: number[] = [];
+  const interp = (
+    p1: [number, number, number],
+    p2: [number, number, number],
+    v1: number,
+    v2: number
+  ): THREE.Vector3 => {
+    const denom = v2 - v1;
+    const t = Math.abs(denom) < 1e-12 ? 0.5 : Math.max(0, Math.min(1, -v1 / denom));
+    return mathToThreeVec3(
+      p1[0] + t * (p2[0] - p1[0]),
+      p1[1] + t * (p2[1] - p1[1]),
+      p1[2] + t * (p2[2] - p1[2])
+    );
+  };
+
+  const pushTri = (a: THREE.Vector3, b: THREE.Vector3, c: THREE.Vector3) => {
+    positions.push(a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z);
+  };
+
+  const dx = (xMax - xMin) / N;
+  const dy = (yMax - yMin) / N;
+  const dz = (zMax - zMin) / N;
+
+  for (let i = 0; i < N; i++) {
+    const x0 = xMin + i * dx;
+    const x1 = x0 + dx;
+    for (let j = 0; j < N; j++) {
+      const y0 = yMin + j * dy;
+      const y1 = y0 + dy;
+      for (let k = 0; k < N; k++) {
+        const z0 = zMin + k * dz;
+        const z1 = z0 + dz;
+
+        const base = i * strideX + j * strideY + k;
+        const cornerVals = [
+          grid[base],
+          grid[base + strideX],
+          grid[base + strideX + strideY],
+          grid[base + strideY],
+          grid[base + 1],
+          grid[base + strideX + 1],
+          grid[base + strideX + strideY + 1],
+          grid[base + strideY + 1],
+        ];
+        if (cornerVals.some((v) => !Number.isFinite(v))) continue;
+
+        const cornerPts: [number, number, number][] = [
+          [x0, y0, z0],
+          [x1, y0, z0],
+          [x1, y1, z0],
+          [x0, y1, z0],
+          [x0, y0, z1],
+          [x1, y0, z1],
+          [x1, y1, z1],
+          [x0, y1, z1],
+        ];
+
+        for (const tet of KUHN_TETS) {
+          const inside: number[] = [];
+          const outside: number[] = [];
+          for (const idx of tet) {
+            if (cornerVals[idx] < 0) inside.push(idx);
+            else outside.push(idx);
+          }
+
+          if (inside.length === 0 || inside.length === 4) continue;
+
+          if (inside.length === 1 || inside.length === 3) {
+            const solo = inside.length === 1 ? inside[0] : outside[0];
+            const trio = inside.length === 1 ? outside : inside;
+            const vA = interp(cornerPts[solo], cornerPts[trio[0]], cornerVals[solo], cornerVals[trio[0]]);
+            const vB = interp(cornerPts[solo], cornerPts[trio[1]], cornerVals[solo], cornerVals[trio[1]]);
+            const vC = interp(cornerPts[solo], cornerPts[trio[2]], cornerVals[solo], cornerVals[trio[2]]);
+            pushTri(vA, vB, vC);
+          } else {
+            const [i0, i1] = inside;
+            const [o0, o1] = outside;
+            const p00 = interp(cornerPts[i0], cornerPts[o0], cornerVals[i0], cornerVals[o0]);
+            const p01 = interp(cornerPts[i0], cornerPts[o1], cornerVals[i0], cornerVals[o1]);
+            const p10 = interp(cornerPts[i1], cornerPts[o0], cornerVals[i1], cornerVals[o0]);
+            const p11 = interp(cornerPts[i1], cornerPts[o1], cornerVals[i1], cornerVals[o1]);
+            pushTri(p00, p01, p11);
+            pushTri(p00, p11, p10);
+          }
+        }
+      }
+    }
+  }
+
+  const group = new THREE.Group();
+  if (positions.length === 0) return group;
+
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geom.computeVertexNormals();
+
+  group.add(
+    new THREE.Mesh(
+      geom,
+      new THREE.MeshStandardMaterial({
+        color,
+        transparent: opacity < 1,
+        opacity,
+        side: THREE.DoubleSide,
+        roughness: 0.48,
+      })
+    )
+  );
+
+  if (showWireframe) {
+    group.add(
+      new THREE.Mesh(
+        geom.clone(),
+        new THREE.MeshBasicMaterial({
+          color: wireframeColor,
+          wireframe: true,
+          transparent: true,
+          opacity: wireframeOpacity,
+        })
+      )
+    );
+  }
+
+  return group;
+}

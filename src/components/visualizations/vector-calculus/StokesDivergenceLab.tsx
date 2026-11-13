@@ -228,7 +228,7 @@ export function StokesDivergenceLab() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
-              LAB 3.3.5 • STOKES&apos; &amp; GAUSS DIVERGENCE THEOREM UNIFICATION
+              LAB 3.3.7 • STOKES&apos; &amp; GAUSS DIVERGENCE THEOREM UNIFICATION
             </span>
           </div>
           <h2 className="font-math-serif text-xl sm:text-2xl font-semibold text-[var(--text-primary)]">

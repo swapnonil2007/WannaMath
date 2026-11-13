@@ -249,7 +249,7 @@ export function LineIntegralWorkLab() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#8D9FCE] text-[#8D9FCE] bg-[var(--bg-canvas)]">
-              LAB 3.3.2 • LINE INTEGRAL WORK &amp; PATH INDEPENDENCE
+              LAB 3.3.4 • LINE INTEGRAL WORK &amp; PATH INDEPENDENCE
             </span>
             <span
               className={`px-2 py-0.5 text-[11px] font-tabular-mono border inline-flex items-center gap-1 ${

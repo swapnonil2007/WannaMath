@@ -62,6 +62,8 @@ import { GammaFunctionLab } from "@/components/visualizations/integral-calculus/
 import { BetaFunctionLab } from "@/components/visualizations/integral-calculus/BetaFunctionLab";
 
 // Module 3.3 Live Laboratories (Vector Calculus & Integral Theorems)
+import { VectorGradientCalculatorLab } from "@/components/visualizations/vector-calculus/VectorGradientCalculatorLab";
+import { DirectionalDerivativeCalculatorLab } from "@/components/visualizations/vector-calculus/DirectionalDerivativeCalculatorLab";
 import { DivCurlProbeLab } from "@/components/visualizations/vector-calculus/DivCurlProbeLab";
 import { VectorFieldStreamlineExplorerLab } from "@/components/visualizations/vector-calculus/VectorFieldStreamlineExplorerLab";
 import { DivCurlDecompositionLab } from "@/components/visualizations/vector-calculus/DivCurlDecompositionLab";
@@ -305,7 +307,7 @@ export default async function ChapterPage({
                 href="/multivariable-calculus/vector-calculus/vector-fields-divergence-curl"
                 className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#029091] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#029091] transition-colors shrink-0"
               >
-                Continue to Vector Fields &amp; Del Quartet (3.3.1) →
+                Continue to Vector Fields &amp; Del Quartet (3.3.3) →
               </Link>
             </div>
 
@@ -987,6 +989,163 @@ export default async function ChapterPage({
       )}
 
 
+      {chapter.slug === "gradient-of-scalar-fields" && (
+        <div className="space-y-10">
+          <VectorGradientCalculatorLab />
+
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+                  Vector Differential Foundations • Module 3.3.1
+                </span>
+                <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                  The Gradient Operator <KaTeXMath math="\nabla \phi" />, Level Surfaces &amp; Surface Normals
+                </h2>
+              </div>
+              <Link
+                href="/multivariable-calculus/vector-calculus/directional-derivatives"
+                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#8D9FCE] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#8D9FCE] transition-colors shrink-0"
+              >
+                Continue to Directional Derivatives (3.3.2) →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  1. SCALAR FIELD TO VECTOR FIELD (DEL ∇)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\nabla\phi = \frac{\partial\phi}{\partial x}\mathbf{i} + \frac{\partial\phi}{\partial y}\mathbf{j} + \frac{\partial\phi}{\partial z}\mathbf{k}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Applying the vector differential operator <KaTeXMath math="\nabla" /> to any smooth
+                  scalar point function <KaTeXMath math="\phi(x,y,z)" /> produces a vector whose
+                  components measure coordinate-wise rates of change at <KaTeXMath math="P(x_0, y_0, z_0)" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  2. ORTHOGONALITY &amp; TANGENT PLANES
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\nabla\phi(P)\cdot d\mathbf{r} = d\phi = 0 \implies \nabla\phi(P) \perp S_c"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Along any curve <KaTeXMath math="\mathbf{r}(t)" /> lying inside the level surface{" "}
+                  <KaTeXMath math="\phi(x,y,z) = c" />, <KaTeXMath math="\phi(\mathbf{r}(t))" /> is
+                  constant, forcing <KaTeXMath math="\nabla\phi(P)" /> to stand normal to the golden tangent plane.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  3. PHYSICAL GRADIENTS &amp; ANGLE BETWEEN SURFACES
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\cos\psi = \frac{\nabla\phi_1 \cdot \nabla\phi_2}{\|\nabla\phi_1\|\,\|\nabla\phi_2\|}, \quad \mathbf{E} = -\nabla V"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  The angle between two intersecting surfaces <KaTeXMath math="\phi_1 = c_1" /> and{" "}
+                  <KaTeXMath math="\phi_2 = c_2" /> at a shared point equals the angle between their
+                  gradients <KaTeXMath math="\nabla\phi_1" /> and <KaTeXMath math="\nabla\phi_2" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "directional-derivatives" && (
+        <div className="space-y-10">
+          <DirectionalDerivativeCalculatorLab />
+
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
+                  Directional Rate of Change • Module 3.3.2
+                </span>
+                <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                  Directional Derivatives <KaTeXMath math="D_{\hat{\mathbf{u}}}\phi" />, Normalization &amp; Steepest Bounds
+                </h2>
+              </div>
+              <Link
+                href="/multivariable-calculus/vector-calculus/vector-fields-divergence-curl"
+                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#029091] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#029091] transition-colors shrink-0"
+              >
+                Continue to Vector Fields, Div &amp; Curl (3.3.3) →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. ALWAYS NORMALIZE v → û FIRST
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\hat{\mathbf{u}} = \frac{\mathbf{v}}{\|\mathbf{v}\|}, \qquad \|\hat{\mathbf{u}}\| = 1"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Directional derivative measures rate of change <em>per unit arc length</em>.
+                  If you are given a non-unit vector <KaTeXMath math="\mathbf{v}" />, dividing by{" "}
+                  <KaTeXMath math="\|\mathbf{v}\|" /> prevents scaling artifacts in{" "}
+                  <KaTeXMath math="D_{\hat{\mathbf{u}}}\phi" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  2. SCALAR PROJECTION FORMULA
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="D_{\hat{\mathbf{u}}}\phi(P) = \nabla\phi(P)\cdot\hat{\mathbf{u}} = \left.\frac{d}{ds}\phi(P + s\hat{\mathbf{u}})\right|_{s=0}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Restricting <KaTeXMath math="\phi" /> to the ray{" "}
+                  <KaTeXMath math="\mathbf{r}(s) = P + s\hat{\mathbf{u}}" /> reduces 3D differentiation
+                  to the slope of the single-variable 1D slice curve <KaTeXMath math="\phi(P + s\hat{\mathbf{u}})" /> at <KaTeXMath math="s=0" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. CAUCHY–SCHWARZ EXTREMES (±‖∇φ‖)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="D_{\hat{\mathbf{u}}}\phi = \|\nabla\phi\|\cos\theta \in \big[-\|\nabla\phi\|,\; +\|\nabla\phi\|\big]"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Maximum increase (<KaTeXMath math="+\|\nabla\phi\|" />) occurs at{" "}
+                  <KaTeXMath math="\theta = 0" /> along <KaTeXMath math="+\nabla\phi" />; steepest
+                  drop occurs at <KaTeXMath math="\theta = \pi" />; zero change occurs along the level tangent plane (<KaTeXMath math="\theta = \pi/2" />).
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
       {chapter.slug === "vector-fields-divergence-curl" && (
         <div className="space-y-10">
           <DivCurlProbeLab />
@@ -1004,12 +1163,20 @@ export default async function ChapterPage({
                   Unifying Gradient, Directional Derivatives, Vector Fields, Divergence &amp; Curl
                 </h2>
               </div>
-              <Link
-                href="/multivariable-calculus/differential-calculus/gradient-directional-derivatives"
-                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#D35323] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#D35323] transition-colors shrink-0"
-              >
-                ← Explore Gradient &amp; Directional Slopes (3.1.3)
-              </Link>
+              <div className="flex flex-wrap gap-2 shrink-0">
+                <Link
+                  href="/multivariable-calculus/vector-calculus/gradient-of-scalar-fields"
+                  className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#D35323] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#D35323] transition-colors"
+                >
+                  ← Gradient ∇φ (3.3.1)
+                </Link>
+                <Link
+                  href="/multivariable-calculus/vector-calculus/directional-derivatives"
+                  className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#8D9FCE] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#8D9FCE] transition-colors"
+                >
+                  ← Directional D_û f (3.3.2)
+                </Link>
+              </div>
             </div>
 
             {/* 4-Card Del Operator Quartet */}

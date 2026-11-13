@@ -410,7 +410,7 @@ export function VectorFieldStreamlineExplorerLab() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
           <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
-            Laboratory 3.3.1.2 • Vector Fields, Streamlines &amp; Velocity-Gradient Matrix
+            Laboratory 3.3.3.2 • Vector Fields, Streamlines &amp; Velocity-Gradient Matrix
           </span>
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
             2D/3D Vector Field Anatomy, Integral Curves &amp; Local Matrix Decomposition

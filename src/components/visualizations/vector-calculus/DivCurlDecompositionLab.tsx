@@ -362,7 +362,7 @@ export function DivCurlDecompositionLab() {
       {/* Header */}
       <div className="border-b border-[var(--border-subtle)] pb-4 space-y-1">
         <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] block">
-          Laboratory 3.3.1.3 • Component-Wise Divergence Budget, 3D Curl Axis &amp; Del Identities
+          Laboratory 3.3.3.3 • Component-Wise Divergence Budget, 3D Curl Axis &amp; Del Identities
         </span>
         <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
           Flux-Per-Volume Decomposition, 3D Right-Hand Spin Axis &amp; Paradox Diagnostics

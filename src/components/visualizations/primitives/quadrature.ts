@@ -174,6 +174,36 @@ export function computePartialDerivatives2D(
 }
 
 /**
+ * Central finite-difference partial derivatives and gradient vector for a 3D scalar field φ(x, y, z).
+ */
+export function computePartialDerivatives3D(
+  fn: (x: number, y: number, z: number) => number,
+  x0: number,
+  y0: number,
+  z0: number,
+  h = 1e-4
+): {
+  f0: number;
+  fx: number;
+  fy: number;
+  fz: number;
+  gradMagnitude: number;
+} {
+  const f0 = fn(x0, y0, z0);
+  const fx = (fn(x0 + h, y0, z0) - fn(x0 - h, y0, z0)) / (2 * h);
+  const fy = (fn(x0, y0 + h, z0) - fn(x0, y0 - h, z0)) / (2 * h);
+  const fz = (fn(x0, y0, z0 + h) - fn(x0, y0, z0 - h)) / (2 * h);
+
+  return {
+    f0,
+    fx,
+    fy,
+    fz,
+    gradMagnitude: Math.hypot(fx, fy, fz),
+  };
+}
+
+/**
  * Central finite-difference 2x2 Jacobian matrix and determinant at (u0, v0).
  */
 export function computeJacobian2D(

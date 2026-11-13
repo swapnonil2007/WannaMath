@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Volume IV Module 4.3 PUBLISHED (`12/12` Vol I + `22/22` Vol III + `6/8` Vol IV = `40` Chapters & `57` Labs Live)**
+> **Last Updated:** 2026-11-13 — **Vector Calculus Gradient & Directional Derivative Sections PUBLISHED (`12/12` Vol I + `24/24` Vol III + `6/8` Vol IV = `42` Chapters & `59` Labs Live)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -29,7 +29,8 @@
 | **Vector Calculus & Gradient Expansion (Phases 1–4)** | `cd2221b` | **PUBLISHED** | Deepened explanations & interactive exploration for Gradient, Directional Derivatives, Vector Fields, Divergence & Curl (`GradientAscentAndLevelSurfaceLab` in `3.1.3`; `VectorFieldStreamlineExplorerLab` + `DivCurlDecompositionLab` in `3.3.1`; Del Quartet, paradoxes, identities & theorem summaries across `3.3.1`–`3.3.5`). |
 | **Volume IV — Phase 1 (Module 4.1)** | `888034e` | **PUBLISHED** | Published **Module 4.1 (`first-order-odes`)**: `4.1.1` (`SlopeFieldTracerLab`) and `4.1.2` (`AutonomousPhaseLineLab`) with geometric slope-field/Picard and stability/bifurcation guides (`2/8` Vol IV chapters, `53` labs live). |
 | **Volume IV — Phase 2 (Module 4.2)** | `b48e504` | **PUBLISHED** | Published **Module 4.2 (`second-order-oscillations`)**: `4.2.1` (`HarmonicOscillatorLab`: $s$-plane root locus, regimes, phase orbit) and `4.2.2` (`ForcedResonanceLab`: acoustic beats, secular resonance, Bode gain & phase lag) (`4/8` Vol IV chapters, `55` labs live). |
-| **Volume IV — Phase 3 (Module 4.3)** | *Current* | **PUBLISHED** | Published **Module 4.3 (`phase-plane-systems`)**: `4.3.1` (`TraceDeterminantPhaseLab`: Poincaré $(\tau, \Delta)$ plane & eigenvector manifolds) and `4.3.2` (`NonlinearPhasePortraitLab`: nullclines, Van der Pol limit cycles, Hartman–Grobman Jacobians) (`6/8` Vol IV chapters, `57` labs live). |
+| **Volume IV — Phase 3 (Module 4.3)** | `6df03c6` | **PUBLISHED** | Published **Module 4.3 (`phase-plane-systems`)**: `4.3.1` (`TraceDeterminantPhaseLab`: Poincaré $(\tau, \Delta)$ plane & eigenvector manifolds) and `4.3.2` (`NonlinearPhasePortraitLab`: nullclines, Van der Pol limit cycles, Hartman–Grobman Jacobians) (`6/8` Vol IV chapters, `57` labs live). |
+| **Vector Calculus Gradient & Directional Derivative Calculators** | *Current* | **PUBLISHED** | Added dedicated `3.3.1` (`gradient-of-scalar-fields`: `VectorGradientCalculatorLab`) and `3.3.2` (`directional-derivatives`: `DirectionalDerivativeCalculatorLab`) chapters inside **Module 3.3 (`vector-calculus`)**, supporting custom 2D `f(x,y)` & 3D `φ(x,y,z)` function inputs, arbitrary evaluation points `P`, direction vectors `v`, marching-tetrahedra 3D level surfaces, vertical slicing planes, 1D ray profiles, and step-by-step worked derivations (`24/24` Vol III chapters, `59` labs live). |
 
 ---
 

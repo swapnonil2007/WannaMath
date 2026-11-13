@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Volume IV Module 4.3 Published — **Volume I (`12/12` PUBLISHED) | Volume III (`22/22` PUBLISHED) | Volume IV (`6/8` PUBLISHED) — `57` Labs Live**
+> **Last Updated:** Vector Calculus Gradient & Directional Derivative Expansion Published — **Volume I (`12/12` PUBLISHED) | Volume III (`24/24` PUBLISHED) | Volume IV (`6/8` PUBLISHED) — `59` Labs Live**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -12,7 +12,7 @@
 | :--- | :--- | :--- | :---: | :---: | :--- |
 | **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | **`published` (12/12 Published — 12 Labs Live)** |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
-| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 22 | **`published` (22/22 Published — 39 Labs Live)** |
+| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 24 | **`published` (24/24 Published — 41 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | **`in-progress` (6/8 Published — 6 Labs Live)** |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | `planned` |
 | **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | `planned` |
@@ -86,11 +86,13 @@
 ### Module 3.3: Vector Calculus & Integral Theorems (`/multivariable-calculus/vector-calculus`) — **ALL PUBLISHED**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
-| `3.3.1` | `/multivariable-calculus/vector-calculus/vector-fields-divergence-curl` | Vector Fields, Divergence & Curl | **`published`** | `DivCurlProbeLab`, `VectorFieldStreamlineExplorerLab`, `DivCurlDecompositionLab` |
-| `3.3.2` | `/multivariable-calculus/vector-calculus/line-integrals-work` | Line Integrals (Work & Circulation) | **`published`** | `LineIntegralWorkLab` |
-| `3.3.3` | `/multivariable-calculus/vector-calculus/greens-theorem` | Green's Theorem | **`published`** | `GreensTheoremLab` |
-| `3.3.4` | `/multivariable-calculus/vector-calculus/surface-integrals-flux` | Surface Integrals & Flux | **`published`** | `SurfaceFluxLab` |
-| `3.3.5` | `/multivariable-calculus/vector-calculus/stokes-divergence-theorems` | Stokes' Theorem & The Divergence Theorem | **`published`** | `StokesDivergenceLab` |
+| `3.3.1` | `/multivariable-calculus/vector-calculus/gradient-of-scalar-fields` | The Gradient Operator (∇φ), Level Surfaces & Normals | **`published`** | `VectorGradientCalculatorLab` |
+| `3.3.2` | `/multivariable-calculus/vector-calculus/directional-derivatives` | Directional Derivatives (D_û f = ∇f · û) & Rate of Change | **`published`** | `DirectionalDerivativeCalculatorLab` |
+| `3.3.3` | `/multivariable-calculus/vector-calculus/vector-fields-divergence-curl` | Vector Fields, Divergence & Curl | **`published`** | `DivCurlProbeLab`, `VectorFieldStreamlineExplorerLab`, `DivCurlDecompositionLab` |
+| `3.3.4` | `/multivariable-calculus/vector-calculus/line-integrals-work` | Line Integrals (Work & Circulation) | **`published`** | `LineIntegralWorkLab` |
+| `3.3.5` | `/multivariable-calculus/vector-calculus/greens-theorem` | Green's Theorem | **`published`** | `GreensTheoremLab` |
+| `3.3.6` | `/multivariable-calculus/vector-calculus/surface-integrals-flux` | Surface Integrals & Flux | **`published`** | `SurfaceFluxLab` |
+| `3.3.7` | `/multivariable-calculus/vector-calculus/stokes-divergence-theorems` | Stokes' Theorem & The Divergence Theorem | **`published`** | `StokesDivergenceLab` |
 
 ---
 

@@ -141,7 +141,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             symbolicFormalizationLatex:
               "df = \\nabla f \\cdot d\\mathbf{r} \\implies D_{\\mathbf{u}}f = \\color{#D35323}{\\nabla f} \\cdot \\color{#8D9FCE}{\\mathbf{u}} = \\|\\nabla f\\|\\cos\\theta \\in [-\\|\\nabla f\\|,\\; +\\|\\nabla f\\|]",
             edgeCasesAndBridge:
-              "Because D_u f = 0 along a level curve or surface, ∇f is strictly perpendicular to contours—powering Lagrange Multipliers (Ch. 3.1.4) and Conservative Vector Fields F = ∇φ (Ch. 3.3.1).",
+              "Because D_u f = 0 along a level curve or surface, ∇f is strictly perpendicular to contours—powering Lagrange Multipliers (Ch. 3.1.4) and Vector Calculus Gradient & Conservative Fields (Ch. 3.3.1–3.3.3).",
           },
           labs: [
             {
@@ -882,18 +882,98 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
       numberLabel: "3.3",
       title: "Vector Calculus & Integral Theorems",
       description:
-        "2D and 3D vector fields, divergence, curl, work and circulation line integrals, oriented surface flux, and the unification of Green's, Stokes', and Gauss's Theorems.",
+        "Scalar field gradients (∇φ), directional derivatives (D_û f), 2D/3D vector fields, divergence, curl, work and circulation line integrals, oriented surface flux, and Green's, Stokes', and Gauss's Theorems.",
       accentHex: "#D35323",
       chapters: [
         {
           id: "3.3.1",
+          slug: "gradient-of-scalar-fields",
+          title: "The Gradient Operator (∇φ), Level Surfaces & Normals",
+          subtitle:
+            "Input any 2D scalar field f(x,y) or 3D scalar point function φ(x,y,z), evaluate ∇φ at a chosen point P, inspect tangent planes, and visualize contour & level-surface orthogonality.",
+          status: "published",
+          estimatedMinutes: 35,
+          prerequisites: ["3.1.2", "3.1.3"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#D35323",
+          keyEquationsLatex: [
+            "\\nabla \\phi(x,y,z) = \\frac{\\partial \\phi}{\\partial x}\\,\\mathbf{i} + \\frac{\\partial \\phi}{\\partial y}\\,\\mathbf{j} + \\frac{\\partial \\phi}{\\partial z}\\,\\mathbf{k}",
+            "\\hat{\\mathbf{n}} = \\frac{\\nabla \\phi(P)}{\\|\\nabla \\phi(P)\\|}, \\qquad \\nabla\\phi(P)\\cdot(\\mathbf{r} - \\mathbf{r}_0) = 0",
+          ],
+          engineeringContext:
+            "Electric field potentials E = -∇V, Fourier thermal flux q = -k∇T, aerodynamic pressure gradients, CAD level-set surface normals, and steepest-ascent optimization.",
+          pedagogicalRhythm: {
+            question:
+              "How does the vector differential operator Del (∇) turn a scalar potential field φ(x,y,z) into a normal vector field pointing toward steepest spatial increase?",
+            labInteraction:
+              "Switch between 2D f(x,y) and 3D φ(x,y,z), type any custom scalar function and point P, inspect the step-by-step partial derivatives and tangent plane equation, and orbit the 3D surface or level surface φ = c.",
+            symbolicFormalizationLatex:
+              "\\nabla \\phi = \\left(\\mathbf{i}\\frac{\\partial}{\\partial x} + \\mathbf{j}\\frac{\\partial}{\\partial y} + \\mathbf{k}\\frac{\\partial}{\\partial z}\\right)\\phi \\perp \\{\\phi(x,y,z) = c\\}",
+            edgeCasesAndBridge:
+              "Where ∇φ = 0, the point is stationary or singular and the level surface may self-intersect or pinch; away from critical points, projecting ∇φ onto any unit direction û measures directional slope in Chapter 3.3.2.",
+          },
+          labs: [
+            {
+              id: "lab-3-3-1-grad",
+              slug: "vector-gradient-calculator",
+              title: "Interactive 2D/3D Gradient Calculator & Level-Surface Normal Lab",
+              componentKey: "VectorGradientCalculatorLab",
+              summary:
+                "Input any 2D f(x,y) or 3D φ(x,y,z) scalar field and point P to compute ∇φ(P), ‖∇φ(P)‖, unit normal n̂, and tangent plane in 2D and 3D.",
+              formulaLatex: "\\nabla\\phi(P) = \\langle \\phi_x, \\phi_y, \\phi_z \\rangle",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.3.2",
+          slug: "directional-derivatives",
+          title: "Directional Derivatives (D_û f = ∇f · û) & Rate of Change",
+          subtitle:
+            "Input any 2D or 3D scalar function, point P, and direction vector v to normalize û = v/‖v‖, calculate D_û f(P) step by step, and visualize slicing planes and 1D ray profiles.",
+          status: "published",
+          estimatedMinutes: 35,
+          prerequisites: ["3.3.1"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#8D9FCE",
+          keyEquationsLatex: [
+            "D_{\\hat{\\mathbf{u}}}\\phi(P) = \\nabla\\phi(P)\\cdot\\hat{\\mathbf{u}} = \\nabla\\phi(P)\\cdot\\frac{\\mathbf{v}}{\\|\\mathbf{v}\\|} = \\|\\nabla\\phi(P)\\|\\cos\\theta",
+            "-\\|\\nabla\\phi(P)\\| \\le D_{\\hat{\\mathbf{u}}}\\phi(P) \\le +\\|\\nabla\\phi(P)\\|",
+          ],
+          engineeringContext:
+            "Aircraft glide slope sensitivity along flight velocity v, thermal rate of change measured by a moving probe, angle between intersecting surfaces, and conservative path differentials df = ∇f · dr.",
+          pedagogicalRhythm: {
+            question:
+              "Given an arbitrary non-unit direction vector v = ⟨v_x, v_y, v_z⟩ starting at P, how fast does a scalar field φ change per unit arc length—and which directions produce extreme or zero change?",
+            labInteraction:
+              "Enter any 2D or 3D formula, point P, and vector v (or snap to +∇f, -∇f, or orthogonal tangent), watch v normalize to û, inspect the 3-step dot-product calculation, and view the 3D slice alongside the 2D projection & 1D ray slope curve.",
+            symbolicFormalizationLatex:
+              "D_{\\hat{\\mathbf{u}}}\\phi(P) = \\left.\\frac{d}{ds}\\phi(P + s\\hat{\\mathbf{u}})\\right|_{s=0} = \\color{#D35323}{\\nabla\\phi(P)} \\cdot \\color{#8D9FCE}{\\frac{\\mathbf{v}}{\\|\\mathbf{v}\\|}}",
+            edgeCasesAndBridge:
+              "Never dot ∇φ with raw v when ‖v‖ ≠ 1—always normalize to û first! With gradient vectors mastered, Chapter 3.3.3 elevates general vector fields F(x,y,z) via divergence ∇·F and curl ∇×F.",
+          },
+          labs: [
+            {
+              id: "lab-3-3-2-dir",
+              slug: "directional-derivative-calculator",
+              title: "Interactive 2D/3D Directional Derivative Calculator & Slicer Lab",
+              componentKey: "DirectionalDerivativeCalculatorLab",
+              summary:
+                "Input f(x,y) or φ(x,y,z), point P, and direction vector v to compute û, ∇φ·û, angle θ, and visualize 3D slicing planes, contours, and 1D ray profiles.",
+              formulaLatex: "D_{\\hat{\\mathbf{u}}}\\phi = \\nabla\\phi\\cdot\\hat{\\mathbf{u}}",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.3.3",
           slug: "vector-fields-divergence-curl",
           title: "Vector Fields, Divergence & Curl",
           subtitle:
             "Explore 2D/3D vector field streamlines, local Jacobian expansion/strain/spin decomposition, microscopic flux boxes (∇·F), and 3D curl axes (∇×F).",
           status: "published",
           estimatedMinutes: 45,
-          prerequisites: ["3.1.3"],
+          prerequisites: ["3.3.1", "3.3.2"],
           dimensionBadge: "2D + 3D",
           accentHex: "#029091",
           keyEquationsLatex: [
@@ -910,7 +990,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             symbolicFormalizationLatex:
               "\\nabla\\cdot\\mathbf{F} = \\lim_{|V|\\to 0}\\frac{1}{|V|}\\oiint_{\\partial V}\\mathbf{F}\\cdot d\\mathbf{S}, \\qquad (\\nabla\\times\\mathbf{F})\\cdot\\hat{\\mathbf{n}} = \\lim_{|A|\\to 0}\\frac{1}{|A|}\\oint_{\\partial A}\\mathbf{F}\\cdot d\\mathbf{r}",
             edgeCasesAndBridge:
-              "Straight streamlines like shear flow ⟨y, 0, 0⟩ carry non-zero curl, whereas circular vortex flow ⟨-y, x⟩/r² is irrotational away from 0! Always verify ∇×(∇f) = 0 and ∇·(∇×F) = 0 before accumulating work in Chapter 3.3.2.",
+              "Straight streamlines like shear flow ⟨y, 0, 0⟩ carry non-zero curl, whereas circular vortex flow ⟨-y, x⟩/r² is irrotational away from 0! Always verify ∇×(∇f) = 0 and ∇·(∇×F) = 0 before accumulating work in Chapter 3.3.4.",
           },
           labs: [
             {
@@ -946,14 +1026,14 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
         },
         {
-          id: "3.3.2",
+          id: "3.3.4",
           slug: "line-integrals-work",
           title: "Line Integrals (Work & Circulation)",
           subtitle:
             "Project vector field F onto unit tangent T along curve C to accumulate mechanical work ∫_C F · dr and test path independence.",
           status: "published",
           estimatedMinutes: 30,
-          prerequisites: ["3.1.3", "3.3.1"],
+          prerequisites: ["3.3.1", "3.3.3"],
           dimensionBadge: "2D + 3D",
           accentHex: "#8D9FCE",
           keyEquationsLatex: [
@@ -970,7 +1050,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             symbolicFormalizationLatex:
               "\\int_C \\mathbf{F}\\cdot d\\mathbf{r} = \\int_a^b \\mathbf{F}(\\mathbf{r}(t))\\cdot\\mathbf{r}'(t)\\,dt",
             edgeCasesAndBridge:
-              "When C closes into a loop ∂D, the net circulation equals the interior curl summed over D—which is Green's Theorem in Chapter 3.3.3.",
+              "When C closes into a loop ∂D, the net circulation equals the interior curl summed over D—which is Green's Theorem in Chapter 3.3.5.",
           },
           labs: [
             {
@@ -986,14 +1066,14 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
         },
         {
-          id: "3.3.3",
+          id: "3.3.5",
           slug: "greens-theorem",
           title: "Green's Theorem",
           subtitle:
             "Subdivide a 2D region D into N×N interior circulation loops to watch adjacent interior edges cancel, leaving only boundary circulation.",
           status: "published",
           estimatedMinutes: 30,
-          prerequisites: ["3.2.1", "3.3.1", "3.3.2"],
+          prerequisites: ["3.2.1", "3.3.3", "3.3.4"],
           dimensionBadge: "2D",
           accentHex: "#96B898",
           keyEquationsLatex: [
@@ -1009,7 +1089,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             symbolicFormalizationLatex:
               "\\oint_{\\partial D} (P\\,dx + Q\\,dy) = \\iint_D \\left(\\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}\\right) dA",
             edgeCasesAndBridge:
-              "Green's Theorem lives in the flat xy-plane; to generalize flux and circulation to curved 3D surfaces, we first build oriented surface flux integrals in Chapter 3.3.4.",
+              "Green's Theorem lives in the flat xy-plane; to generalize flux and circulation to curved 3D surfaces, we first build oriented surface flux integrals in Chapter 3.3.6.",
           },
           labs: [
             {
@@ -1025,14 +1105,14 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
         },
         {
-          id: "3.3.4",
+          id: "3.3.6",
           slug: "surface-integrals-flux",
           title: "Surface Integrals & Flux",
           subtitle:
             "Map parameter patch (u,v) onto 3D surface S with normal vector r_u × r_v to measure volumetric fluid and electric flux.",
           status: "published",
           estimatedMinutes: 35,
-          prerequisites: ["3.2.4", "3.3.1"],
+          prerequisites: ["3.2.4", "3.3.3"],
           dimensionBadge: "3D",
           accentHex: "#029091",
           keyEquationsLatex: [
@@ -1048,7 +1128,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             symbolicFormalizationLatex:
               "\\Phi = \\iint_S \\mathbf{F}\\cdot \\hat{\\mathbf{n}}\\,dS = \\iint_{R_{xy}} \\mathbf{F}\\cdot \\langle -g_x, -g_y, 1 \\rangle\\,dx\\,dy",
             edgeCasesAndBridge:
-              "Non-orientable surfaces (like a Möbius strip) cannot support a consistent global normal n̂. For orientable surfaces, Chapter 3.3.5 unifies flux and curl via Stokes' and Gauss's Theorems.",
+              "Non-orientable surfaces (like a Möbius strip) cannot support a consistent global normal n̂. For orientable surfaces, Chapter 3.3.7 unifies flux and curl via Stokes' and Gauss's Theorems.",
           },
           labs: [
             {
@@ -1064,14 +1144,14 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
         },
         {
-          id: "3.3.5",
+          id: "3.3.7",
           slug: "stokes-divergence-theorems",
           title: "Stokes' Theorem & The Divergence Theorem",
           subtitle:
             "Unify all integral theorems: see why surface curl flux depends only on the boundary rim ∂S and why closed-surface flux equals interior divergence.",
           status: "published",
           estimatedMinutes: 35,
-          prerequisites: ["3.2.2", "3.3.3", "3.3.4"],
+          prerequisites: ["3.2.2", "3.3.5", "3.3.6"],
           dimensionBadge: "3D",
           accentHex: "#D35323",
           keyEquationsLatex: [

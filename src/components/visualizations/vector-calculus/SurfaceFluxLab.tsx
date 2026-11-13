@@ -200,7 +200,7 @@ export function SurfaceFluxLab() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#029091] text-[#029091] bg-[var(--bg-canvas)]">
-              LAB 3.3.4 • ORIENTED SURFACE NORMAL &amp; VECTOR FLUX
+              LAB 3.3.6 • ORIENTED SURFACE NORMAL &amp; VECTOR FLUX
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
               {isCustom ? "Custom Surface & Field" : activePreset.badge}

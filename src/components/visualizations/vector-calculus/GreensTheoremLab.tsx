@@ -192,7 +192,7 @@ export function GreensTheoremLab() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#96B898] text-[#96B898] bg-[var(--bg-canvas)]">
-              LAB 3.3.3 • GREEN&apos;S THEOREM &amp; CURL CANCELLATION GRID
+              LAB 3.3.5 • GREEN&apos;S THEOREM &amp; CURL CANCELLATION GRID
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
               {isCustom ? "Custom Field" : activePreset.badge}

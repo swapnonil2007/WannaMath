@@ -101,7 +101,7 @@ export const VOL5_TRANSFORMS_COMPLEX: VolumeMetadata = {
             "Deform closed contours C in the z-plane to see why ∮ f(z) dz = 0 in analytic domains but jumps by 2πi when enclosing a pole.",
           status: "planned",
           estimatedMinutes: 30,
-          prerequisites: ["3.3.3", "5.1.2"],
+          prerequisites: ["3.3.5", "5.1.2"],
           dimensionBadge: "2D",
           accentHex: "#B95869",
           keyEquationsLatex: [

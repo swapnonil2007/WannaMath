@@ -236,7 +236,7 @@ export function DivCurlProbeLab() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#029091] text-[#029091] bg-[var(--bg-canvas)]">
-              LAB 3.3.1 • DIVERGENCE FLUX BOX &amp; CURL PADDLEWHEEL PROBE
+              LAB 3.3.3 • DIVERGENCE FLUX BOX &amp; CURL PADDLEWHEEL PROBE
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
               {isCustom ? "Custom 3D Vector Field" : activePreset.badge}
