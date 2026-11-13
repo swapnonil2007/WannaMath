@@ -198,6 +198,17 @@
     --border-subtle: CanvasText;
     --border-strong: Highlight;
   }
+
+  [aria-current="page"] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}
+
+/* High-contrast keyboard focus ring across interactive controls */
+:where(a:any-link, button, summary, input, select, textarea):focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
 }
 
 body {

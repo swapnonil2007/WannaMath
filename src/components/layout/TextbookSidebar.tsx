@@ -70,7 +70,7 @@ export function TextbookSidebar() {
         onClick={openDrawer}
         aria-expanded={isOpen}
         aria-controls={dialogId}
-        className="px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono font-medium text-[var(--text-primary)] flex items-center gap-2 cursor-pointer transition-colors"
+        className="min-h-[36px] px-2.5 sm:px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono font-medium text-[var(--text-primary)] flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-colors whitespace-nowrap"
       >
         <BookOpen className="w-3.5 h-3.5 text-[#029091]" aria-hidden="true" />
         <span>6-Volume TOC</span>

@@ -46,9 +46,23 @@ export function Footer() {
               geometry with eye-comfortable academic typography.
             </p>
             <p className="text-xs font-tabular-mono text-[var(--text-muted)]">
-              Repository Archive: <code>/archive</code> &amp;{" "}
-              <code>AGENTS.md</code> synced for multi-phase agent continuity.
+              Open-source repository synced via <code>/archive</code> &amp;{" "}
+              <code>AGENTS.md</code>.
             </p>
+            <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-tabular-mono">
+              <Link
+                href="/roadmap"
+                className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] underline underline-offset-4"
+              >
+                Syllabus Matrix
+              </Link>
+              <Link
+                href="/about"
+                className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] underline underline-offset-4"
+              >
+                About &amp; Open Source
+              </Link>
+            </div>
           </div>
 
           {/* Col 2: Volume III Live Chapters */}

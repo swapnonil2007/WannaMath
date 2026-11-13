@@ -1,34 +1,20 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Compass,
-  Grid,
-  Layers,
-  Box,
-  Sun,
-  Moon,
-  Map,
-  Menu,
-  X,
-  BookOpen,
-} from "lucide-react";
-import { MULTIVARIABLE_CALCULUS_TOPICS } from "@/registry/curriculum";
+import { Sun, Moon, Map, Info, Menu, X } from "lucide-react";
 import { TextbookSidebar } from "@/components/layout/TextbookSidebar";
-
-const TOPIC_ICONS: Record<string, React.ReactNode> = {
-  "double-integrals": <Layers className="w-4 h-4" aria-hidden="true" />,
-  "triple-integrals": <Box className="w-4 h-4" aria-hidden="true" />,
-  "coordinate-systems": <Compass className="w-4 h-4" aria-hidden="true" />,
-  jacobians: <Grid className="w-4 h-4" aria-hidden="true" />,
-};
 
 export function Navbar() {
   const pathname = usePathname();
+  const mobileMenuId = useId();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [renderedScheme, setRenderedScheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const getSystemScheme = (): "dark" | "light" =>
@@ -77,6 +63,17 @@ export function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [mobileOpen]);
+
   const handleToggleColorScheme = () => {
     const systemScheme: "dark" | "light" = window.matchMedia(
       "(prefers-color-scheme: dark)"
@@ -115,130 +112,131 @@ export function Navbar() {
     );
   };
 
+  const navLinks = [
+    {
+      href: "/roadmap",
+      label: "Syllabus Matrix",
+      icon: <Map className="w-3.5 h-3.5 text-[#AAA36D]" aria-hidden="true" />,
+      accentHex: "#AAA36D",
+    },
+    {
+      href: "/about",
+      label: "About",
+      icon: <Info className="w-3.5 h-3.5 text-[#8D9FCE]" aria-hidden="true" />,
+      accentHex: "#8D9FCE",
+    },
+  ];
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-        {/* Brand Identity + 6-Volume TOC Drawer Trigger */}
-        <div className="flex items-center gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
+        {/* Left Cluster: 1. Brand Logo/Name/Tagline, 2. 6-Volume TOC, 3–4. Syllabus Matrix & About */}
+        <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
           <Link
             href="/"
-            className="flex items-center gap-3 group focus:outline-none"
+            className="flex items-center gap-2.5 sm:gap-3 shrink-0 group"
           >
             <div
-              className="w-9 h-9 flex items-center justify-center border border-[var(--border-strong)] bg-[var(--bg-canvas)] font-math-serif text-lg font-semibold tracking-tight"
+              className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center border border-[var(--border-strong)] bg-[var(--bg-canvas)] font-math-serif text-base sm:text-lg font-semibold tracking-tight"
               style={{ color: "#8D9FCE" }}
+              aria-hidden="true"
             >
               ∬
             </div>
             <div>
-              <span className="font-math-serif text-xl font-semibold tracking-tight text-[var(--text-primary)] block leading-none">
+              <span className="font-math-serif text-lg sm:text-xl font-semibold tracking-tight text-[var(--text-primary)] block leading-none">
                 wanna math
               </span>
-              <span className="text-[11px] font-tabular-mono uppercase tracking-widest text-[var(--text-muted)] block mt-0.5">
+              <span className="text-[10px] sm:text-[11px] font-tabular-mono uppercase tracking-widest text-[var(--text-muted)] block mt-0.5">
                 6-Volume Textbook
               </span>
             </div>
           </Link>
 
-          <TextbookSidebar />
+          <span
+            className="hidden sm:block h-6 w-px bg-[var(--border-subtle)] shrink-0"
+            aria-hidden="true"
+          />
 
-          {/* Primary Navigation Links */}
+          <div className="shrink-0">
+            <TextbookSidebar />
+          </div>
+
           <nav
-            aria-label="Main Curriculum Navigation"
-            className="hidden xl:flex items-center gap-1 pl-3 border-l border-[var(--border-subtle)]"
+            aria-label="Primary"
+            className="hidden md:flex items-center gap-1.5 pl-3 border-l border-[var(--border-subtle)]"
           >
-            <Link
-              href="/multivariable-calculus"
-              aria-current={
-                pathname === "/multivariable-calculus" ? "page" : undefined
-              }
-              className={`px-2.5 py-1.5 text-xs font-medium transition-colors flex items-center gap-1.5 border ${
-                pathname === "/multivariable-calculus"
-                  ? "bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-strong)]"
-                  : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
-              }`}
-            >
-              <BookOpen className="w-3.5 h-3.5 text-[#029091]" aria-hidden="true" />
-              <span>Vol. III Hub</span>
-            </Link>
-
-            {MULTIVARIABLE_CALCULUS_TOPICS.map((topic) => {
-              const isActive = pathname === topic.route;
-              return (
-                <Link
-                  key={topic.id}
-                  href={topic.route}
-                  aria-current={isActive ? "page" : undefined}
-                  className={`px-2.5 py-1.5 text-xs font-medium transition-colors flex items-center gap-1.5 border ${
-                    isActive
-                      ? "bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-strong)]"
-                      : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
-                  }`}
-                >
-                  <span style={{ color: topic.accentHex }}>
-                    {TOPIC_ICONS[topic.id]}
-                  </span>
-                  <span>{topic.shortTitle}</span>
-                </Link>
-              );
-            })}
-
-            <Link
-              href="/roadmap"
-              aria-current={pathname === "/roadmap" ? "page" : undefined}
-              className={`px-2.5 py-1.5 text-xs font-medium transition-colors flex items-center gap-1.5 border ${
-                pathname === "/roadmap"
-                  ? "bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-strong)]"
-                  : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
-              }`}
-            >
-              <Map className="w-3.5 h-3.5 text-[#AAA36D]" aria-hidden="true" />
-              <span>Syllabus Matrix</span>
-            </Link>
+            <ul className="flex items-center gap-1.5">
+              {navLinks.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`min-h-[36px] px-3 py-1.5 text-xs font-medium transition-colors flex items-center gap-2 border whitespace-nowrap ${
+                        isActive
+                          ? "bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-strong)] font-semibold"
+                          : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)] hover:border-[var(--border-subtle)]"
+                      }`}
+                      style={
+                        isActive
+                          ? { boxShadow: `inset 0 -2px 0 ${item.accentHex}` }
+                          : undefined
+                      }
+                    >
+                      {item.icon}
+                      <span>{item.label}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </nav>
         </div>
 
-        {/* Right Controls: Version Indicator & Theme Mode Switch */}
-        <div className="flex items-center gap-2.5">
-          <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-secondary)]">
+        {/* Right Cluster: 5. Version Name & 6. Dark/Light Mode Interchange */}
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <div
+            className="hidden sm:flex items-center gap-2 min-h-[36px] px-2.5 py-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-secondary)] whitespace-nowrap"
+            aria-label="Current version v2.0, all 6 volumes live"
+          >
             <span
-              className="w-2 h-2 inline-block"
+              className="w-2 h-2 inline-block shrink-0"
               style={{ backgroundColor: "#96B898" }}
               aria-hidden="true"
             />
-            <span>v2.0 • Vol. III Live</span>
+            <span>
+              v2.0<span className="hidden lg:inline"> • 6 Vols Live</span>
+            </span>
           </div>
 
           <button
             type="button"
             onClick={handleToggleColorScheme}
-            className="px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-medium text-[var(--text-primary)] flex items-center gap-2 cursor-pointer transition-colors"
-            title={
-              renderedScheme === "dark"
-                ? "Switch to Warm Paper Light Mode"
-                : "Switch to Drafting Slate Dark Mode"
-            }
+            className="min-h-[36px] px-2.5 sm:px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-medium text-[var(--text-primary)] flex items-center gap-2 cursor-pointer transition-colors whitespace-nowrap"
           >
             {renderedScheme === "dark" ? (
               <>
-                <Sun className="w-3.5 h-3.5 text-[#FBEAA4]" aria-hidden="true" />
-                <span className="hidden md:inline">Paper Light</span>
+                <Sun className="w-3.5 h-3.5 text-[#FBEAA4] shrink-0" aria-hidden="true" />
+                <span className="sr-only sm:not-sr-only">Paper Light</span>
               </>
             ) : (
               <>
-                <Moon className="w-3.5 h-3.5 text-[#8D9FCE]" aria-hidden="true" />
-                <span className="hidden md:inline">Drafting Dark</span>
+                <Moon className="w-3.5 h-3.5 text-[#8D9FCE] shrink-0" aria-hidden="true" />
+                <span className="sr-only sm:not-sr-only">Drafting Dark</span>
               </>
             )}
           </button>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle (< md) */}
           <button
             type="button"
             onClick={() => setMobileOpen((prev) => !prev)}
-            className="xl:hidden p-2 border border-[var(--border-strong)] bg-[var(--bg-canvas)] text-[var(--text-primary)]"
+            className="md:hidden min-h-[36px] min-w-[36px] p-2 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-[var(--text-primary)] flex items-center justify-center cursor-pointer"
             aria-expanded={mobileOpen}
-            aria-label="Toggle navigation menu"
+            aria-controls={mobileMenuId}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
             {mobileOpen ? (
               <X className="w-4 h-4" aria-hidden="true" />
@@ -249,50 +247,44 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Dropdown Drawer */}
+      {/* Narrow Screen Drawer (< md) */}
       {mobileOpen && (
         <nav
-          aria-label="Mobile Navigation"
-          className="xl:hidden border-t border-[var(--border-subtle)] bg-[var(--bg-panel)] px-4 py-3 space-y-1"
+          id={mobileMenuId}
+          aria-label="Primary"
+          className="md:hidden border-t border-[var(--border-subtle)] bg-[var(--bg-panel)] px-4 py-3 space-y-2"
         >
-          <Link
-            href="/multivariable-calculus"
-            onClick={() => setMobileOpen(false)}
-            className="flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
-          >
-            <BookOpen className="w-4 h-4 text-[#029091]" aria-hidden="true" />
-            <span>Volume III: Multivariable &amp; Vector Calculus</span>
-          </Link>
+          <ul className="space-y-1">
+            {navLinks.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`min-h-[40px] flex items-center gap-2.5 px-3 py-2 text-sm font-medium border transition-colors ${
+                      isActive
+                        ? "bg-[var(--bg-canvas)] text-[var(--text-primary)] border-[var(--border-strong)] font-semibold"
+                        : "border-transparent text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
+                    }`}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
 
-          {MULTIVARIABLE_CALCULUS_TOPICS.map((topic) => (
-            <Link
-              key={topic.id}
-              href={topic.route}
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-between px-3 py-2 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
-            >
-              <span className="flex items-center gap-2.5">
-                <span style={{ color: topic.accentHex }}>
-                  {TOPIC_ICONS[topic.id]}
-                </span>
-                <span>
-                  {topic.number}. {topic.title}
-                </span>
-              </span>
-              <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
-                {topic.dimensionBadge}
-              </span>
-            </Link>
-          ))}
-
-          <Link
-            href="/roadmap"
-            onClick={() => setMobileOpen(false)}
-            className="flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]"
-          >
-            <Map className="w-4 h-4 text-[#AAA36D]" aria-hidden="true" />
-            <span>6-Volume Curriculum Matrix</span>
-          </Link>
+          <div className="sm:hidden pt-2 border-t border-[var(--border-subtle)] flex items-center gap-2 px-3 py-1 text-xs font-tabular-mono text-[var(--text-secondary)]">
+            <span
+              className="w-2 h-2 inline-block"
+              style={{ backgroundColor: "#96B898" }}
+              aria-hidden="true"
+            />
+            <span>v2.0 • 6 Vols Live</span>
+          </div>
         </nav>
       )}
     </header>
