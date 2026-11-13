@@ -31,15 +31,28 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
           slug: "direction-fields-integral-curves",
           title: "Direction Fields, Integral Curves & Picard Existence",
           subtitle:
-            "Drop initial conditions (t₀, y₀) into a slope field dy/dt = f(t, y) to trace solution curves and isoclines.",
-          status: "planned",
-          estimatedMinutes: 25,
+            "Drop initial conditions (t₀, y₀) into a slope field dy/dt = f(t, y) to trace RK4 solution curves, inspect constant-slope isoclines, and spot Picard–Lindelöf uniqueness traps.",
+          status: "published",
+          estimatedMinutes: 30,
           prerequisites: ["1.2.1", "1.3.2"],
           dimensionBadge: "2D",
           accentHex: "#D35323",
           keyEquationsLatex: [
             "\\frac{dy}{dt} = f(t, y), \\qquad y(t_0) = y_0",
+            "y_{n+1} = y_n + h f(t_n, y_n) \\quad (\\text{Euler}) \\;\\text{ vs. }\\; \\mathcal{O}(h^4)\\text{ RK4}",
           ],
+          engineeringContext:
+            "RC circuit transients under AC forcing, aerodynamic glide trajectories, Euler vs. Runge–Kutta flight simulation integrators, and singular boundary-layer uniqueness limits.",
+          pedagogicalRhythm: {
+            question:
+              "Even when an ODE dy/dt = f(t, y) cannot be integrated in closed form, how can we determine every trajectory's shape directly from geometry?",
+            labInteraction:
+              "Click anywhere in the (t, y) plane to launch forward/backward RK4 integral curves, sweep constant-slope isoclines f(t, y) = c, and compare Euler step-size drift against true solutions.",
+            symbolicFormalizationLatex:
+              "\\mathbf{T}(t,y) = \\langle 1,\\; f(t,y) \\rangle \\quad \\text{with unique curves when } f,\\; \\frac{\\partial f}{\\partial y} \\text{ are continuous}",
+            edgeCasesAndBridge:
+              "When ∂f/∂y blows up (e.g., y' = 1.4|y|^(2/3) at y = 0), solution curves peel apart and violate uniqueness! Next, Chapter 4.1.2 collapses time-independent flows onto 1D phase lines and bifurcations.",
+          },
           labs: [
             {
               id: "lab-4-1-1a",
@@ -58,16 +71,28 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
           slug: "separable-linear-odes",
           title: "Separable, Linear & Autonomous Phase-Line Models",
           subtitle:
-            "Analyze thermal cooling, mixing tanks, and logistic equilibria via 1D phase lines and integrating factors.",
-          status: "planned",
-          estimatedMinutes: 25,
-          prerequisites: ["4.1.1"],
+            "Analyze logistic harvesting, thermal cooling, and parameter bifurcations via 1D phase lines, stability linearization f'(y*), and bifurcation diagrams.",
+          status: "published",
+          estimatedMinutes: 30,
+          prerequisites: ["3.1.9", "4.1.1"],
           dimensionBadge: "2D",
           accentHex: "#96B898",
           keyEquationsLatex: [
+            "\\frac{dy}{dt} = f(y; r), \\qquad f(y^*) = 0,\\; \\begin{cases} f'(y^*) < 0 & \\text{Sink (Stable)} \\\\ f'(y^*) > 0 & \\text{Source (Unstable)} \\end{cases}",
             "y' + P(t)y = Q(t) \\implies \\mu(t) = e^{\\int P(t)\\,dt}",
-            "\\frac{dy}{dt} = r y\\left(1 - \\frac{y}{K}\\right)",
           ],
+          engineeringContext:
+            "Sustainable fishery & bioreactors harvesting thresholds, structural buckling (pitchfork bifurcation), population carrying capacity, and optical bistability.",
+          pedagogicalRhythm: {
+            question:
+              "For an autonomous system dy/dt = f(y; r), how can we predict the long-term fate of every initial condition—and when does nudging parameter r trigger a sudden regime collapse?",
+            labInteraction:
+              "Scrub bifurcation parameter r across Saddle-Node, Transcritical, Pitchfork, and Harvesting models while watching equilibria collide on the 1D phase line, time trajectories y(t), and the bifurcation diagram.",
+            symbolicFormalizationLatex:
+              "\\dot{y} = f(y; r) \\approx f'(y^*)(y - y^*) \\implies y(t) - y^* \\sim C e^{f'(y^*)t}",
+            edgeCasesAndBridge:
+              "Whenever f'(y*) = 0, linear stability stalls—marking a non-hyperbolic bifurcation tipping point! In Module 4.2, second-order inertia turns monotonous phase lines into damped and resonant oscillations.",
+          },
           labs: [
             {
               id: "lab-4-1-2a",

@@ -1,13 +1,13 @@
 # Volume IV — Differential Equations & Dynamical Systems (`differential-equations`)
 
-> **Status:** `planned` — 4-Phase Buildout Blueprint authored in [`VOLUME_4_PLAN.md`](./VOLUME_4_PLAN.md).
+> **Status:** `in-progress` (`2/8` Chapters PUBLISHED — **Module 4.1 Complete**) — 4-Phase Buildout Blueprint in [`VOLUME_4_PLAN.md`](./VOLUME_4_PLAN.md).
 > **Canonical Route Base:** `/differential-equations/[module]/[chapter]`
 
 ## Module & Chapter Build Index
 
-1. **Module 4.1 (`first-order-odes`) — First-Order ODEs & Slope Fields** *(Phase 1)*
-   - `4.1.1`: Direction Fields, Integral Curves & Picard Existence (`direction-fields-integral-curves` → `SlopeFieldTracerLab`)
-   - `4.1.2`: Separable, Linear & Autonomous Phase-Line Models (`separable-linear-odes` → `AutonomousPhaseLineLab`)
+1. **Module 4.1 (`first-order-odes`) — First-Order ODEs & Slope Fields** *(PUBLISHED — Phase 1)*
+   - `4.1.1`: Direction Fields, Integral Curves & Picard Existence (`direction-fields-integral-curves` → `SlopeFieldTracerLab`) *(Published)*
+   - `4.1.2`: Separable, Linear & Autonomous Phase-Line Models (`separable-linear-odes` → `AutonomousPhaseLineLab`) *(Published)*
 2. **Module 4.2 (`second-order-oscillations`) — Second-Order Linear ODEs & Oscillations** *(Phase 2)*
    - `4.2.1`: Harmonic Oscillators: Undamped, Underdamped & Overdamped (`damped-harmonic-oscillators` → `HarmonicOscillatorLab`)
    - `4.2.2`: Forced Oscillations, Beats & Resonance Frequency Response (`forced-oscillations-resonance` → `ForcedResonanceLab`)

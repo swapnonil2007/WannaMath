@@ -70,6 +70,10 @@ import { GreensTheoremLab } from "@/components/visualizations/vector-calculus/Gr
 import { SurfaceFluxLab } from "@/components/visualizations/vector-calculus/SurfaceFluxLab";
 import { StokesDivergenceLab } from "@/components/visualizations/vector-calculus/StokesDivergenceLab";
 
+// Volume IV — Module 4.1 Live Laboratories (First-Order ODEs & Slope Fields)
+import { SlopeFieldTracerLab } from "@/components/visualizations/differential-equations/SlopeFieldTracerLab";
+import { AutonomousPhaseLineLab } from "@/components/visualizations/differential-equations/AutonomousPhaseLineLab";
+
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
     volume: item.volume.slug,
@@ -1351,6 +1355,140 @@ export default async function ChapterPage({
                   <KaTeXMath math="\nabla f" />, <KaTeXMath math="\nabla\times\mathbf{F}" />, or{" "}
                   <KaTeXMath math="\nabla\cdot\mathbf{F}" />) inside domain <KaTeXMath math="\Omega" />{" "}
                   to evaluation on its boundary <KaTeXMath math="\partial\Omega" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "direction-fields-integral-curves" && (
+        <div className="space-y-10">
+          <SlopeFieldTracerLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              Direction-Field Geometry, Isoclines &amp; The Picard–Lindelöf Uniqueness Guarantee
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. TANGENT VECTOR FIELD INTERPRETATION
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\frac{dy}{dt} = f(t,y) \iff \text{tangent direction } \langle 1,\; f(t,y) \rangle"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Every integral curve <KaTeXMath math="y(t)" /> threads smoothly through the grid
+                  of slope ticks; curves along a level set <KaTeXMath math="f(t,y) = c" /> share an
+                  identical inclination angle <KaTeXMath math="\arctan(c)" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                  2. EULER VS. 4TH-ORDER RUNGE–KUTTA
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="y_{n+1}^{\text{Euler}} = y_n + h f(t_n, y_n) \;\text{ vs. }\; \mathcal{O}(h^4)\text{ weighted slopes}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Explicit Euler holds the initial tangent constant across the full step{" "}
+                  <KaTeXMath math="h" />, drifting off concave bends unless <KaTeXMath math="h" />{" "}
+                  is tiny or higher-order mid-interval sampling (RK4) is used.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. PICARD–LINDELÖF UNIQUENESS RULE
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="f,\; \frac{\partial f}{\partial y} \text{ continuous near } (t_0, y_0) \implies \exists!\; y(t)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Unique trajectories never intersect! Only when Lipschitz continuity breaks (such
+                  as <KaTeXMath math="y'=1.4|y|^{2/3}" /> along <KaTeXMath math="y=0" />) can two
+                  distinct solutions branch from one initial seed.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "separable-linear-odes" && (
+        <div className="space-y-10">
+          <AutonomousPhaseLineLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              1D Autonomous Stability Classification &amp; Classical Bifurcation Normal Forms
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  1. LINEARIZATION STABILITY CRITERION
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="f(y^*)=0 \implies \begin{cases} f'(y^*) < 0 & \text{Sink (Stable)} \\ f'(y^*) > 0 & \text{Source (Unstable)} \end{cases}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Expanding <KaTeXMath math="y = y^* + \eta" /> yields{" "}
+                  <KaTeXMath math="\dot{\eta} \approx f'(y^*)\eta" />; negative slope pulls nearby
+                  states inward exponentially while positive slope amplifies perturbations.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  2. THREE FUNDAMENTAL 1D BIFURCATIONS
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\underbrace{r + y^2}_{\text{Saddle-Node}}, \quad \underbrace{ry - y^2}_{\text{Transcritical}}, \quad \underbrace{ry - y^3}_{\text{Pitchfork}}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Tipping points arise exactly when <KaTeXMath math="f(y^*) = 0" /> and{" "}
+                  <KaTeXMath math="f'(y^*) = 0" /> simultaneously—creating, swapping, or splitting
+                  steady states.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  3. SEPARABLE &amp; ANALYTICAL TOOLKIT
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\int \frac{dy}{g(y)} = \int h(t)\,dt + C"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Autonomous flows <KaTeXMath math="\dot{y}=f(y)" /> are always separable by
+                  quadrature away from equilibria; see Chapter{" "}
+                  <Link
+                    href="/multivariable-calculus/differential-calculus/first-order-lde-bernoulli"
+                    className="text-[#8D9FCE] underline"
+                  >
+                    3.1.9 (Integrating Factors &amp; Bernoulli)
+                  </Link>{" "}
+                  for exact linear integration.
                 </p>
               </div>
             </div>
