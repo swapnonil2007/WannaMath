@@ -39,6 +39,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume I & Volume III Complete → Volume II Ready)
+## 3. Immediate Next Step (Volume I & Volume III Complete → Volume IV Plan Ready)
 Both **Volume I (`12/12`)** and **Volume III (`22/22`)** are now 100% published (`34` chapters, `51` interactive labs live).
-- **Next Curriculum Milestone:** Begin **Volume II: Linear Algebra & Space Geometry (`/linear-algebra`)** in [`src/registry/vol2-linear-algebra.ts`](../../src/registry/vol2-linear-algebra.ts), starting with **Module 2.1: Vectors, Span & Subspaces**.
+- **Active Planned Sequence:** Execute **Volume IV: Differential Equations & Dynamical Systems (`/differential-equations`)** phase-by-phase per [`VOLUME_4_PLAN.md`](./volumes/vol_04_differential_equations/VOLUME_4_PLAN.md), starting with **Phase 1 (Module 4.1: First-Order ODEs & Slope Fields)**. *(Volume II [`linear-algebra`] remains queued in [`src/registry/vol2-linear-algebra.ts`](../../src/registry/vol2-linear-algebra.ts)).*
