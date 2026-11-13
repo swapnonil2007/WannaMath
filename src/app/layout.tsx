@@ -24,9 +24,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "wanna math — Interactive 2D & 3D Engineering Mathematics Visualizations",
+  title: {
+    default: "Wanna Math - Interactive Engineering Mathematics Playground",
+    template: "%s | Wanna Math",
+  },
   description:
-    "Explore multivariable calculus, double and triple integration, order of integration reversal, curvilinear coordinate systems, and Jacobians through synchronized 2D and 3D interactive visualizations.",
+    "Explore single-variable calculus, linear algebra, multivariable and vector calculus, differential equations, complex transforms, and numerical methods through synchronized 2D and 3D interactive visualizations.",
 };
 
 export default function RootLayout({

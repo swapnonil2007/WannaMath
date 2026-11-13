@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About | wanna math",
+  title: "About",
   description:
     "About wanna math — an open-source interactive 6-volume engineering mathematics resource created by Swapnonil Nath (IIT Kharagpur) to make math intuitive and time-efficient.",
 };
