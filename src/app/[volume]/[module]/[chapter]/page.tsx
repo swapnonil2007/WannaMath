@@ -88,13 +88,16 @@ import { NonlinearPhasePortraitLab } from "@/components/visualizations/different
 import { HeatEquationDiffusionLab } from "@/components/visualizations/differential-equations/HeatEquationDiffusionLab";
 import { WaveEquationModesLab } from "@/components/visualizations/differential-equations/WaveEquationModesLab";
 
-// Volume II — Module 2.1 & 2.2 Live Laboratories (Vectors, Subspaces, Matrices & Determinants)
+// Volume II — Modules 2.1–2.3 Live Laboratories (Complete Linear Algebra & Space Geometry)
 import { VectorSpanExplorerLab } from "@/components/visualizations/linear-algebra/VectorSpanExplorerLab";
 import { ChangeOfBasisLab } from "@/components/visualizations/linear-algebra/ChangeOfBasisLab";
 import { FourSubspacesLab } from "@/components/visualizations/linear-algebra/FourSubspacesLab";
 import { MatrixTransformationLab } from "@/components/visualizations/linear-algebra/MatrixTransformationLab";
 import { DeterminantVolumeLab } from "@/components/visualizations/linear-algebra/DeterminantVolumeLab";
 import { LeastSquaresProjectionLab } from "@/components/visualizations/linear-algebra/LeastSquaresProjectionLab";
+import { EigenvectorCompassLab } from "@/components/visualizations/linear-algebra/EigenvectorCompassLab";
+import { QuadraticFormLab } from "@/components/visualizations/linear-algebra/QuadraticFormLab";
+import { SVDThreeStageLab } from "@/components/visualizations/linear-algebra/SVDThreeStageLab";
 
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
@@ -2402,6 +2405,162 @@ export default async function ChapterPage({
                 <p className="text-xs text-[var(--text-secondary)] font-math-serif">
                   Idempotency (<KaTeXMath math="P^2=P" />) and symmetry (<KaTeXMath math="P^T=P" />) ensure projecting
                   an already projected vector leaves it unchanged.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "eigenvalues-eigenvectors" && (
+        <div className="space-y-8">
+          <EigenvectorCompassLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Eigen-Analysis Theory: Invariant Directions, Characteristic Polynomial & Trace–Determinant Plane
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  1. INVARIANT EIGENRAYS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="A\mathbf{v} = \lambda\mathbf{v} \iff (A - \lambda I)\mathbf{v} = \mathbf{0}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Nonzero solutions exist precisely when <KaTeXMath math="A - \lambda I" /> collapses space,
+                  forcing <KaTeXMath math="\det(A - \lambda I) = 0" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. TRACE & DETERMINANT INVARIANTS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\operatorname{tr}(A) = \lambda_1 + \lambda_2,\qquad \det(A) = \lambda_1 \lambda_2" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Sum and product of eigenvalues stay identical across any change of basis{" "}
+                  <KaTeXMath math="P^{-1}AP" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                  3. ROTATION VS. DEFECTIVE SHEAR
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\Delta = \operatorname{tr}(A)^2 - 4\det(A)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Negative discriminant yields complex conjugate rotations (<KaTeXMath math="\Delta < 0" />);
+                  repeated roots can lose an independent eigenvector.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "quadratic-forms-spectral" && (
+        <div className="space-y-8">
+          <QuadraticFormLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Spectral Theorem: Orthogonal Diagonalization & Quadratic Curvature
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  1. REAL SYMMETRIC DECOMPOSITION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="A = A^T \implies A = Q\Lambda Q^T,\quad Q^T Q = I" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Distinct eigenvalues of any symmetric matrix force perpendicular eigenvectors{" "}
+                  <KaTeXMath math="\mathbf{q}_1 \perp \mathbf{q}_2" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. ERASING CROSS-TERMS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\mathbf{x}^T A \mathbf{x} = \lambda_1 y_1^2 + \lambda_2 y_2^2,\quad \mathbf{y}=Q^T\mathbf{x}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Rotating into the principal frame decouples <KaTeXMath math="2bxy" /> into pure squared
+                  curvatures weighted by eigenvalues.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. DEFINITENESS SIGN TEST
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\lambda_1,\lambda_2 > 0 \;\text{(Bowl)},\quad \lambda_1\lambda_2 < 0 \;\text{(Saddle)}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Eigenvalue signs classify energy bowls, valleys (<KaTeXMath math="\lambda_2=0" />), and unstable
+                  saddle critical points directly.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "singular-value-decomposition" && (
+        <div className="space-y-8">
+          <SVDThreeStageLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Universal Matrix Anatomy: Singular Value Decomposition & Low-Rank Approximation
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  1. ROTATE → STRETCH → ROTATE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="A = U\Sigma V^T,\qquad A\mathbf{v}_i = \sigma_i\mathbf{u}_i" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Every matrix—even non-square or defective—maps an orthonormal input basis{" "}
+                  <KaTeXMath math="\{\mathbf{v}_i\}" /> onto orthogonal semi-axes <KaTeXMath math="\{\sigma_i\mathbf{u}_i\}" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. SYMMETRIC GRAM CONNECTION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="A^T A = V\Sigma^T\Sigma V^T,\qquad \sigma_i = \sqrt{\lambda_i(A^T A)}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Right singular vectors diagonalize <KaTeXMath math="A^TA" />, guaranteeing orthogonal principal
+                  directions with non-negative stretches <KaTeXMath math="\sigma_i \ge 0" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  3. ECKART–YOUNG BEST RANK-1
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="A_1 = \sigma_1\mathbf{u}_1\mathbf{v}_1^T,\qquad \|A - A_1\|_2 = \sigma_2" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Dropping smaller singular terms yields the provably optimal low-rank compression across image, PCA,
+                  and recommender pipelines.
                 </p>
               </div>
             </div>

@@ -293,11 +293,23 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           title: "Eigenvalues, Eigenvectors & Invariant Directions",
           subtitle:
             "Sweep unit circle vector v until Av aligns collinearly with v, revealing the invariant axes of A.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["2.2.1", "2.2.2"],
           dimensionBadge: "2D",
           accentHex: "#029091",
+          engineeringContext:
+            "Structural vibration normal modes, Markov steady-state PageRank vectors, decoupled differential-equation eigensolutions, and robotic stability poles.",
+          pedagogicalRhythm: {
+            question:
+              "When a matrix twists almost every vector in space onto a new direction, which special invariant rays merely stretch or flip without rotating?",
+            labInteraction:
+              "Sweep the unit vector v(θ) around the circle until Av aligns collinearly with v, then inspect the roots of det(A − λI) = 0 on the characteristic parabola.",
+            symbolicFormalizationLatex:
+              "A\\mathbf{v} = \\lambda\\mathbf{v} \\iff (A - \\lambda I)\\mathbf{v} = \\mathbf{0} \\implies \\det(A - \\lambda I) = 0",
+            edgeCasesAndBridge:
+              "Rotation matrices have Δ < 0 (complex eigenvalues, zero real rays), while defective shears have repeated roots with only 1 eigendirection. Next, symmetric matrices unlock orthogonal diagonalization in Chapter 2.3.2.",
+          },
           keyEquationsLatex: [
             "A\\mathbf{v} = \\lambda\\mathbf{v} \\iff \\det(A - \\lambda I) = 0",
             "A = P\\Lambda P^{-1}",
@@ -321,11 +333,23 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           title: "Spectral Theorem, Quadratic Forms & Principal Axes",
           subtitle:
             "Diagonalize symmetric matrices Q = Qᵀ via orthogonal eigenvectors to align ellipses/hyperboloids with principal axes.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["2.3.1"],
           dimensionBadge: "2D + 3D",
           accentHex: "#029091",
+          engineeringContext:
+            "Rigid-body principal moments of inertia, multivariable Hessian curvature classification (minima vs. saddles), Gaussian covariance ellipsoids, and strain-energy potentials.",
+          pedagogicalRhythm: {
+            question:
+              "Why do cross-terms 2bxy tilt conic bowls and saddles—and how does an orthogonal rotation Q = [q₁ | q₂] erase every cross-term simultaneously?",
+            labInteraction:
+              "Adjust symmetric entries a, b, c to morph between elliptic bowls, hyperbolic saddles, and semidefinite troughs while clicking level contours to verify xᵀAx = λ₁y₁² + λ₂y₂².",
+            symbolicFormalizationLatex:
+              "A = Q\\Lambda Q^T \\;\\Longrightarrow\\; q(\\mathbf{x}) = \\mathbf{x}^T A \\mathbf{x} = \\color{#8D9FCE}{\\lambda_1 y_1^2} + \\color{#96B898}{\\lambda_2 y_2^2}",
+            edgeCasesAndBridge:
+              "Every real symmetric matrix has orthogonal eigenvectors, whereas arbitrary rectangular or asymmetric matrices require two distinct orthonormal bases U and V in Singular Value Decomposition (Chapter 2.3.3).",
+          },
           keyEquationsLatex: [
             "q(\\mathbf{x}) = \\mathbf{x}^T A \\mathbf{x} = \\lambda_1 y_1^2 + \\lambda_2 y_2^2",
             "A = Q\\Lambda Q^T",
@@ -349,11 +373,23 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           title: "Singular Value Decomposition (SVD) Geometry",
           subtitle:
             "Factor any matrix A = U Σ Vᵀ into an input rotation Vᵀ, principal axis stretch Σ, and output rotation U.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["2.3.2"],
           dimensionBadge: "2D + 3D",
           accentHex: "#029091",
+          engineeringContext:
+            "Principal Component Analysis (PCA), low-rank image compression, pseudoinverse robot kinematics A⁺, and latent semantic recommendation matrices.",
+          pedagogicalRhythm: {
+            question:
+              "How can ANY matrix—even a rank-deficient shear or rectangular matrix with zero eigenvectors—always turn an orthogonal pair of input axes into an orthogonal pair of ellipse semi-axes?",
+            labInteraction:
+              "Step continuously from Stage 0 to Stage 3 (x → Vᵀx → ΣVᵀx → UΣVᵀx) and toggle the rank-1 outer product σ₁u₁v₁ᵀ overlay to inspect compression energy capture.",
+            symbolicFormalizationLatex:
+              "A = U\\Sigma V^T = \\sum_{i=1}^{r} \\sigma_i \\mathbf{u}_i \\mathbf{v}_i^T, \\qquad A\\mathbf{v}_i = \\sigma_i\\mathbf{u}_i",
+            edgeCasesAndBridge:
+              "This completes Volume II (Linear Algebra & Space Geometry)! Every linear operator now decomposes cleanly through its Four Subspaces, Determinant, and SVD Spectrum.",
+          },
           keyEquationsLatex: [
             "A = U\\Sigma V^T = \\sum_{i=1}^{r} \\sigma_i \\mathbf{u}_i \\mathbf{v}_i^T",
           ],
