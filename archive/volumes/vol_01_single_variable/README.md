@@ -32,5 +32,10 @@
 
 ---
 
-## Upcoming Final Module (`1.4`)
-- **Module 1.4: Infinite Series & Power Series Convergence (`infinite-series`)** — `1.4.1` (`sequences-partial-sums`), `1.4.2` (`power-series-convergence`)
+## Module 1.4: Infinite Series & Power Series Convergence (`infinite-series` — ALL PUBLISHED 2/2)
+11. **Chapter `1.4.1` — Sequences, Partial Sums & Geometric Convergence (`sequences-partial-sums`)** *(Published)*
+    - Lab: `PartialSumSeriesLab` (`src/components/visualizations/single-variable/PartialSumSeriesLab.tsx`)
+12. **Chapter `1.4.2` — Power Series, Radius of Convergence & Analytic Functions (`power-series-convergence`)** *(Published)*
+    - Lab: `PowerSeriesConvergenceLab` (`src/components/visualizations/single-variable/PowerSeriesConvergenceLab.tsx`)
+
+*(All 4 Modules and all 12 Chapters of Volume I are 100% Published!)*

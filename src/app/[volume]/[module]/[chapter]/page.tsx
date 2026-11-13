@@ -20,6 +20,10 @@ import { FTCAccumulationLab } from "@/components/visualizations/single-variable/
 import { SubstitutionIBPLab } from "@/components/visualizations/single-variable/SubstitutionIBPLab";
 import { SolidOfRevolutionLab } from "@/components/visualizations/single-variable/SolidOfRevolutionLab";
 
+// Volume I — Module 1.4 Live Laboratories (Infinite Series & Power Series Convergence)
+import { PartialSumSeriesLab } from "@/components/visualizations/single-variable/PartialSumSeriesLab";
+import { PowerSeriesConvergenceLab } from "@/components/visualizations/single-variable/PowerSeriesConvergenceLab";
+
 // Module 3.1 Live Laboratories (Differential Calculus)
 import { SurfaceContourSlicerLab } from "@/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab";
 import { PartialDerivativeTangentPlaneLab } from "@/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab";
@@ -238,6 +242,18 @@ export default async function ChapterPage({
       {chapter.slug === "solids-of-revolution" && (
         <div className="space-y-10">
           <SolidOfRevolutionLab />
+        </div>
+      )}
+
+      {chapter.slug === "sequences-partial-sums" && (
+        <div className="space-y-10">
+          <PartialSumSeriesLab />
+        </div>
+      )}
+
+      {chapter.slug === "power-series-convergence" && (
+        <div className="space-y-10">
+          <PowerSeriesConvergenceLab />
         </div>
       )}
 

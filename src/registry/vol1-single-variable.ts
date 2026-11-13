@@ -462,7 +462,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "Sequences, Partial Sums & Geometric Convergence",
           subtitle:
             "Compare discrete partial sums S_N against continuous improper integral bounds.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.3.1"],
           dimensionBadge: "2D",
@@ -470,6 +470,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           keyEquationsLatex: [
             "S_N = \\sum_{n=1}^{N} a_n, \\qquad \\sum_{n=0}^{\\infty} ar^n = \\frac{a}{1-r}\\;(|r|<1)",
           ],
+          engineeringContext:
+            "Digital IIR filter impulse responses, compound annuity cashflows, and Monte Carlo asymptotic tail bounds.",
+          pedagogicalRhythm: {
+            question:
+              "When does an infinite sum of shrinking numbers settle onto a finite limit—and why does the harmonic series 1/n diverge even though its terms march cleanly to zero?",
+            labInteraction:
+              "Inspect sequence terms a_n alongside their continuous integral envelope f(x) and running partial-sum staircase S_N in Lab 1.4.1A across geometric, p-series, alternating harmonic, and telescoping sums.",
+            symbolicFormalizationLatex:
+              "\\int_1^N x^{-p}\\,dx \\le \\sum_{n=1}^N n^{-p} \\le 1 + \\int_1^N x^{-p}\\,dx \\implies \\text{converges} \\iff p > 1",
+            edgeCasesAndBridge:
+              "a_n → 0 is necessary but NOT sufficient for convergence (1/n diverges); alternating signs rescue 1/n to conditional convergence ln(2). Next, Chapter 1.4.2 turns numerical coefficients into power series functions f(x).",
+          },
           labs: [
             {
               id: "lab-1-4-1a",
@@ -489,7 +501,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "Power Series, Radius of Convergence & Analytic Functions",
           subtitle:
             "Visualize why 1/(1+x²) diverges outside |x| < 1 even though the real curve is smooth everywhere.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.2.4", "1.4.1"],
           dimensionBadge: "2D",
@@ -497,6 +509,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           keyEquationsLatex: [
             "f(x) = \\sum_{n=0}^{\\infty} c_n(x-a)^n, \\qquad |x - a| < R",
           ],
+          engineeringContext:
+            "Frequency-domain Z-transforms, Chebyshev/Taylor firmware approximations, and complex pole stability margins.",
+          pedagogicalRhythm: {
+            question:
+              "Why does the Maclaurin series of the completely smooth bell 1/(1+x²) abruptly explode past |x| > 1—and how do complex-plane singularities explain real convergence intervals?",
+            labInteraction:
+              "Scrub partial sum degree N and probe x₀ in Lab 1.4.2A while inspecting the complex convergence disk |z| < R and endpoint convergence vs. divergence.",
+            symbolicFormalizationLatex:
+              "R = \\lim_{n\\to\\infty}\\left|\\frac{c_n}{c_{n+1}}\\right| = \\text{distance in } \\mathbb{C} \\text{ to nearest singularity}",
+            edgeCasesAndBridge:
+              "Endpoints x = a ± R must always be tested individually (yielding open (-1,1), half-open (-1,1], or closed [-1,1]). With Chapter 1.4.2 published, all 12 chapters of Volume I are complete!",
+          },
           labs: [
             {
               id: "lab-1-4-2a",

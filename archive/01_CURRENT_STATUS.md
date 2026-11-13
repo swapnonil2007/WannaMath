@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Volume I Module 1.3 PUBLISHED (`10/12` Volume I Chapters, `22/22` Volume III Chapters PUBLISHED — `46` Interactive Labs Live Total)**
+> **Last Updated:** 2026-11-13 — **Volume I Module 1.4 PUBLISHED (`12/12` Volume I Chapters & `22/22` Volume III Chapters PUBLISHED — `48` Interactive Labs Live Total)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -24,7 +24,8 @@
 | **Differential Calculus Phase 6** | `cce75f7` | **PUBLISHED** | Published Chapter `3.1.11` (`operator-variation-cauchy-euler`: `OperatorMethodTutorialLab.tsx`, `VariationOfParametersCauchyEulerLab.tsx`), completing all `22/22` chapters and `36` interactive labs of **Volume III (`multivariable-calculus`)**. |
 | **Volume I — Module 1.1** | `ca32088` | **PUBLISHED** | Published **Module 1.1 (`limits-continuity`)** in **Volume I (`single-variable-calculus`)**: Chapter `1.1.1` (`epsilon-delta-limits`: `EpsilonDeltaCorridorLab.tsx`) and Chapter `1.1.2` (`continuity-ivt`: `IVTBisectionLab.tsx`), adding global + micro-zoom $\varepsilon$-$\delta$ corridors and IVT/Bisection discontinuity traps. |
 | **Volume I — Module 1.2** | `3a22c05` | **PUBLISHED** | Published all 4 chapters of **Module 1.2 (`differential-calculus`)**: `1.2.1` (`SecantTangentLab.tsx`), `1.2.2` (`NewtonRaphsonLab.tsx`), `1.2.3` (`ChainRulePropagatorLab.tsx`), and `1.2.4` (`TaylorCurvatureLab.tsx`). |
-| **Volume I — Module 1.3** | *Current* | **PUBLISHED** | Published all 4 chapters of **Module 1.3 (`integral-calculus`)**: `1.3.1` (`Riemann1DLab.tsx`), `1.3.2` (`FTCAccumulationLab.tsx`), `1.3.3` (`SubstitutionIBPLab.tsx`), and `1.3.4` (`SolidOfRevolutionLab.tsx`). |
+| **Volume I — Module 1.3** | `c6f37a8` | **PUBLISHED** | Published all 4 chapters of **Module 1.3 (`integral-calculus`)**: `1.3.1` (`Riemann1DLab.tsx`), `1.3.2` (`FTCAccumulationLab.tsx`), `1.3.3` (`SubstitutionIBPLab.tsx`), and `1.3.4` (`SolidOfRevolutionLab.tsx`). |
+| **Volume I — Module 1.4** | *Current* | **PUBLISHED** | Published **Module 1.4 (`infinite-series`)**: `1.4.1` (`PartialSumSeriesLab.tsx`) and `1.4.2` (`PowerSeriesConvergenceLab.tsx`), completing **all `12/12` chapters of Volume I (`single-variable-calculus`)**. |
 
 ---
 
@@ -37,6 +38,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume I Module 1.4 — Final Module of Volume I)
-**Volume I** now stands at `10/12` published chapters (**Modules 1.1, 1.2, and 1.3** 100% live).
-- **Next Curriculum Milestone:** Build **Volume I, Module 1.4: Infinite Series & Power Series Convergence (`/single-variable-calculus/infinite-series`)** in [`src/registry/vol1-single-variable.ts`](../../src/registry/vol1-single-variable.ts) (`1.4.1` `sequences-partial-sums`, `1.4.2` `power-series-convergence`).
+## 3. Immediate Next Step (Volume I & Volume III Complete → Volume II Ready)
+Both **Volume I (`12/12`)** and **Volume III (`22/22`)** are now 100% published (`34` chapters, `48` interactive labs live).
+- **Next Curriculum Milestone:** Begin **Volume II: Linear Algebra & Space Geometry (`/linear-algebra`)** in [`src/registry/vol2-linear-algebra.ts`](../../src/registry/vol2-linear-algebra.ts), starting with **Module 2.1: Vectors, Span & Subspaces**.

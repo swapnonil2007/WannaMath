@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Volume I Module 1.3 Published — **Volume I (`10/12` Chapters, `10` Labs) | Volume III (`22/22` Chapters PUBLISHED, `36` Labs)**
+> **Last Updated:** Volume I Module 1.4 Published — **Volume I (`12/12` Chapters PUBLISHED, `12` Labs) | Volume III (`22/22` Chapters PUBLISHED, `36` Labs) — `48` Labs Live**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -10,7 +10,7 @@
 
 | Volume | Slug | Accent Token | Modules | Chapters | Status |
 | :--- | :--- | :--- | :---: | :---: | :--- |
-| **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | **`in-progress` (10/12 Published — 10 Labs Live)** |
+| **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | **`published` (12/12 Published — 12 Labs Live)** |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
 | **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 22 | **`published` (22/22 Published — 36 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | `planned` |
@@ -43,7 +43,13 @@
 | `1.3.3` | `/single-variable-calculus/integral-calculus/substitution-integration-by-parts` | $u$-Substitution & Integration by Parts Geometry | **`published`** | `SubstitutionIBPLab` |
 | `1.3.4` | `/single-variable-calculus/integral-calculus/solids-of-revolution` | Solids of Revolution: Disks, Washers & Cylindrical Shells | **`published`** | `SolidOfRevolutionLab` |
 
-*(Module `1.4` Infinite Series is `planned`; Volume I build log tracked in [`archive/volumes/vol_01_single_variable/README.md`](./volumes/vol_01_single_variable/README.md).)*
+### Module 1.4: Infinite Series & Power Series Convergence (`/single-variable-calculus/infinite-series`) — **ALL PUBLISHED (2/2)**
+| Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
+| :--- | :--- | :--- | :--- | :--- |
+| `1.4.1` | `/single-variable-calculus/infinite-series/sequences-partial-sums` | Sequences, Partial Sums & Geometric Convergence | **`published`** | `PartialSumSeriesLab` |
+| `1.4.2` | `/single-variable-calculus/infinite-series/power-series-convergence` | Power Series, Radius of Convergence & Analytic Functions | **`published`** | `PowerSeriesConvergenceLab` |
+
+*(All 4 Modules and all 12 Chapters of **Volume I** are 100% Published; detailed index in [`archive/volumes/vol_01_single_variable/README.md`](./volumes/vol_01_single_variable/README.md).)*
 
 ---
 
