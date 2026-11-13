@@ -11,7 +11,17 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/calculus/:slug",
-        destination: "/multivariable-calculus/multiple-integrals/:slug",
+        destination: "/multivariable-calculus/integral-calculus/:slug",
+        permanent: true,
+      },
+      {
+        source: "/multivariable-calculus/multiple-integrals",
+        destination: "/multivariable-calculus/integral-calculus",
+        permanent: true,
+      },
+      {
+        source: "/multivariable-calculus/multiple-integrals/:slug",
+        destination: "/multivariable-calculus/integral-calculus/:slug",
         permanent: true,
       },
     ];

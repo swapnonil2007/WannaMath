@@ -30,8 +30,8 @@ All 5 chapters and 5 interactive laboratories of **Module 3.3 (`Vector Calculus 
 
 ---
 
-## Module 3.2 Historical Build & Migration Index (`multiple-integrals` — PUBLISHED)
-All 4 chapters and 8 interactive laboratories of **Module 3.2 (`multiple-integrals`)** were built, verified, and migrated into the 4-tier textbook taxonomy (`/multivariable-calculus/multiple-integrals/[chapter]`):
+## Module 3.2 Build Index (`integral-calculus` — PUBLISHED)
+All 6 chapters and 12 interactive laboratories of **Module 3.2 (`Integral Calculus`)** are live under `/multivariable-calculus/integral-calculus/[chapter]` (with permanent redirects from `/multivariable-calculus/multiple-integrals/*`):
 
 1. **Chapter `3.2.1` — Double Integrals & Fubini's Theorem (`double-integrals`)**
    - Labs: `RiemannVolumeLab`, `IteratedOrderChangeLab`
@@ -45,5 +45,9 @@ All 4 chapters and 8 interactive laboratories of **Module 3.2 (`multiple-integra
 4. **Chapter `3.2.4` — The Jacobian & Change of Variables Pullback (`jacobians`)**
    - Labs: `DualGridMorphingAndTangentLab`, `JacobianIntegralPullbackLab`
    - Historical Log: [`../../phase_logs/PHASE_05_JACOBIANS.md`](../../phase_logs/PHASE_05_JACOBIANS.md)
-5. **Foundation & Design System Log:**
+5. **Chapter `3.2.5` — Convergence & Divergence (`convergence-and-divergence`)**
+   - Labs: `ImproperIntegralConvergenceLab`, `ConvergenceTestsTutorialLab` (`src/components/visualizations/integral-calculus/`)
+6. **Chapter `3.2.6` — Gamma & Beta Functions (`gamma-and-beta-functions`)**
+   - Labs: `GammaFunctionLab`, `BetaFunctionLab` (`src/components/visualizations/integral-calculus/`)
+7. **Foundation & Design System Log:**
    - Historical Log: [`../../phase_logs/PHASE_01_FOUNDATION.md`](../../phase_logs/PHASE_01_FOUNDATION.md)

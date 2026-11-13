@@ -189,11 +189,11 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
     },
     {
       id: "mod-3-2",
-      slug: "multiple-integrals",
+      slug: "integral-calculus",
       numberLabel: "3.2",
-      title: "Multiple Integrals & Coordinate Pullbacks",
+      title: "Integral Calculus",
       description:
-        "Riemann volume convergence, Type I/II iterated slicing, Fubini order reversal, 3D triple integrals across all 6 permutations, curvilinear coordinate systems, and Jacobian transformations.",
+        "Multiple integrals (double, triple, curvilinear, and Jacobians), improper integral & infinite series convergence tests, and Euler's Gamma and Beta functions.",
       accentHex: "#029091",
       chapters: [
         {
@@ -397,6 +397,106 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
                 "Pull slanted or curved physical regions back to parameter space, color-code cells by |det J|, and inspect 3×3 3D Jacobians.",
               formulaLatex:
                 "\\left|\\frac{\\partial(x,y,z)}{\\partial(\\rho,\\phi,\\theta)}\\right| = \\rho^2\\sin\\phi",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.2.5",
+          slug: "convergence-and-divergence",
+          title: "Convergence & Divergence (Improper Integrals & Series Tests)",
+          subtitle:
+            "Master Type I (infinite-tail) and Type II (singular) improper integrals alongside interactive visual tutorials for p-tests, Comparison, Limit Comparison, Integral, Ratio, Root, and Alternating Series tests.",
+          status: "published",
+          estimatedMinutes: 45,
+          prerequisites: ["1.3.1", "1.4.1", "3.2.1"],
+          dimensionBadge: "2D",
+          accentHex: "#D5658B",
+          engineeringContext:
+            "Laplace/Fourier transform existence abscissas, Gaussian probability tail normalization, control stability margins, and infinite-horizon impulse energy bounds.",
+          keyEquationsLatex: [
+            "\\int_{a}^{\\infty} f(x)\\,dx = \\lim_{T \\to \\infty} \\int_{a}^{T} f(x)\\,dx, \\qquad \\int_{1}^{\\infty} \\frac{dx}{x^p} \\text{ converges } \\iff p > 1",
+            "\\sum_{n=1}^{\\infty} a_n \\text{ vs. } \\int_1^\\infty f(x)\\,dx, \\quad L = \\lim_{n\\to\\infty}\\left|\\frac{a_{n+1}}{a_n}\\right|, \\quad R = \\lim_{n\\to\\infty}\\sqrt[n]{|a_n|}",
+          ],
+          pedagogicalRhythm: {
+            question:
+              "How can an infinitely long region (x → ∞) or an infinitely tall vertical spike enclose a finite area—and which systematic convergence test settles any integral or infinite series?",
+            labInteraction:
+              "Scrub upper tail bound T → ∞ (or singularity gap ε → 0⁺) with Comparison envelopes g(x), then step through all 7 interactive convergence test tutorials with live partial-sum plots and counterexamples.",
+            symbolicFormalizationLatex:
+              "\\begin{aligned} &0 \\le f(x) \\le g(x),\\; \\int_a^\\infty g < \\infty \\implies \\int_a^\\infty f < \\infty \\\\ &\\lim_{n\\to\\infty}\\left|\\frac{a_{n+1}}{a_n}\\right| = L \\;\\begin{cases} < 1 & \\text{abs. convergent} \\\\ > 1 & \\text{divergent} \\\\ = 1 & \\text{inconclusive} \\end{cases} \\end{aligned}",
+            edgeCasesAndBridge:
+              "Harmonic decay (1/x, ∑1/n) sits directly on the divergence knife-edge (p = 1) even though terms vanish! Exponentially damped power integrals x^(z-1) e^(-x) converge for all z > 0—defining Euler's Gamma Function in Chapter 3.2.6.",
+          },
+          labs: [
+            {
+              id: "improper-integral-tail",
+              slug: "improper-integral-tail",
+              title: "Improper Integrals (Type I Tail & Type II Singularity) & Comparison Envelope Lab",
+              componentKey: "ImproperIntegralConvergenceLab",
+              summary:
+                "Scrub tail cutoff T or singularity gap ε across p-integrals, Gaussian/Laplace decays, and custom integrands with Direct Comparison envelopes.",
+              formulaLatex: "I(T) = \\int_a^T f(x)\\,dx \\xrightarrow{T\\to\\infty} L",
+              dimensionBadge: "2D",
+            },
+            {
+              id: "convergence-test-tutorials",
+              slug: "convergence-test-tutorials",
+              title: "Convergence Test Tutorials & Visual Comparator (Integral, Comparison, Ratio, Root, Alternating)",
+              componentKey: "ConvergenceTestsTutorialLab",
+              summary:
+                "Step-by-step interactive tutorials, worked proofs, decision rules, and live sequence/partial-sum plots for every convergence test.",
+              formulaLatex: "S_N = \\sum_{n=1}^{N} a_n \\quad\\text{vs.}\quad \\int_1^N f(x)\\,dx",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "3.2.6",
+          slug: "gamma-and-beta-functions",
+          title: "Gamma & Beta Functions (Eulerian Integrals)",
+          subtitle:
+            "Extend factorial n! smoothly to real numbers via Γ(z) = ∫₀^∞ t^(z-1) e^(-t) dt, prove Γ(1/2) = √π, and unify B(p,q) with Γ(p)Γ(q)/Γ(p+q) via polar coordinates.",
+          status: "published",
+          estimatedMinutes: 40,
+          prerequisites: ["3.2.3", "3.2.5"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#FBEAA4",
+          engineeringContext:
+            "Probability & statistics (Gamma, Chi-squared, Student-t, and Beta Bayesian priors), fractional calculus, asymptotic Stirling expansions, and quantum statistical partition integrals.",
+          keyEquationsLatex: [
+            "\\Gamma(z) = \\int_{0}^{\\infty} t^{z-1} e^{-t}\\,dt \\quad (z > 0), \\qquad \\Gamma(z+1) = z\\,\\Gamma(z), \\qquad \\Gamma\\!\\left(\\tfrac{1}{2}\\right) = \\sqrt{\\pi}",
+            "\\mathrm{B}(p,q) = \\int_{0}^{1} t^{p-1}(1-t)^{q-1}\\,dt = 2\\int_{0}^{\\pi/2} \\sin^{2p-1}\\theta\\cos^{2q-1}\\theta\\,d\\theta = \\frac{\\Gamma(p)\\Gamma(q)}{\\Gamma(p+q)}",
+          ],
+          pedagogicalRhythm: {
+            question:
+              "How can we continuously interpolate the discrete factorial n! across fractional and negative values—and how do tricky trigonometric integrals like ∫₀^(π/2) sin⁵θ cos⁴θ dθ evaluate in seconds without repeated parts?",
+            labInteraction:
+              "Scrub parameter z to reshape the Gamma kernel t^(z-1)e^(-t) and trace poles across the Γ(x) curve, then adjust (p,q) to inspect the algebraic & trigonometric Beta curves alongside the 3D polar-coordinate proof.",
+            symbolicFormalizationLatex:
+              "\\Gamma(p)\\Gamma(q) = 4\\int_0^\\infty\\int_0^\\infty x^{2p-1}y^{2q-1}e^{-(x^2+y^2)}\\,dx\\,dy = \\left(2\\int_0^\\infty r^{2(p+q)-1}e^{-r^2}\\,dr\\right)\\left(2\\int_0^{\\pi/2}\\cos^{2p-1}\\theta\\sin^{2q-1}\\theta\\,d\\theta\\right) = \\Gamma(p+q)\\mathrm{B}(p,q)",
+            edgeCasesAndBridge:
+              "Γ(z) has simple poles at zero and negative integers z = 0, -1, -2, ... where Γ(z)Γ(1-z) = π/sin(πz) blows up—tying improper convergence directly to the Complex Plane & Residue Calculus in Volume V.",
+          },
+          labs: [
+            {
+              id: "gamma-function-lab",
+              slug: "gamma-function-lab",
+              title: "Euler's Gamma Function Γ(z), Integration-by-Parts Ladder & Analytic Poles Lab",
+              componentKey: "GammaFunctionLab",
+              summary:
+                "Explore the integrand peak t^(z-1)e^(-t), recurrence Γ(z+1) = z Γ(z), Gaussian half-integer Γ(1/2) = √π, and simple poles at z ≤ 0.",
+              formulaLatex: "\\Gamma(z+1) = z\\,\\Gamma(z)",
+              dimensionBadge: "2D",
+            },
+            {
+              id: "beta-function-lab",
+              slug: "beta-function-lab",
+              title: "Beta Function B(p,q), Trigonometric Form & 3D Polar Γ-B Unification Lab",
+              componentKey: "BetaFunctionLab",
+              summary:
+                "Compare algebraic Beta distributions on [0,1], trigonometric Wallis integrals on [0, π/2], and the 3D polar transformation proving B(p,q) = Γ(p)Γ(q)/Γ(p+q).",
+              formulaLatex: "\\mathrm{B}(p,q) = \\frac{\\Gamma(p)\\Gamma(q)}{\\Gamma(p+q)}",
               dimensionBadge: "2D + 3D",
             },
           ],

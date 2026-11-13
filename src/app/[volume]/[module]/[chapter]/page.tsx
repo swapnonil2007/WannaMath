@@ -10,7 +10,7 @@ import { PartialDerivativeTangentPlaneLab } from "@/components/visualizations/mu
 import { GradientDirectionalDerivativeLab } from "@/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab";
 import { LagrangeMultipliersLab } from "@/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab";
 
-// Module 3.2 Live Laboratories (Multiple Integrals & Coordinate Pullbacks)
+// Module 3.2 Live Laboratories (Integral Calculus: Multiple Integrals, Convergence & Eulerian Functions)
 import { RiemannVolumeLab } from "@/components/visualizations/double-integrals/RiemannVolumeLab";
 import { IteratedOrderChangeLab } from "@/components/visualizations/double-integrals/IteratedOrderChangeLab";
 import { TripleIntegralOrderLab } from "@/components/visualizations/triple-integrals/TripleIntegralOrderLab";
@@ -19,6 +19,10 @@ import { PolarCoordinateAreaLab } from "@/components/visualizations/coordinate-s
 import { Curvilinear3DSurfacesAndElementLab } from "@/components/visualizations/coordinate-systems/Curvilinear3DSurfacesAndElementLab";
 import { DualGridMorphingAndTangentLab } from "@/components/visualizations/jacobians/DualGridMorphingAndTangentLab";
 import { JacobianIntegralPullbackLab } from "@/components/visualizations/jacobians/JacobianIntegralPullbackLab";
+import { ImproperIntegralConvergenceLab } from "@/components/visualizations/integral-calculus/ImproperIntegralConvergenceLab";
+import { ConvergenceTestsTutorialLab } from "@/components/visualizations/integral-calculus/ConvergenceTestsTutorialLab";
+import { GammaFunctionLab } from "@/components/visualizations/integral-calculus/GammaFunctionLab";
+import { BetaFunctionLab } from "@/components/visualizations/integral-calculus/BetaFunctionLab";
 
 // Module 3.3 Live Laboratories (Vector Calculus & Integral Theorems)
 import { DivCurlProbeLab } from "@/components/visualizations/vector-calculus/DivCurlProbeLab";
@@ -213,6 +217,126 @@ export default async function ChapterPage({
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
                   <KaTeXMath
                     math="dV = |\mathbf{r}_u \cdot (\mathbf{r}_v \times \mathbf{r}_w)|\,du\,dv\,dw = \left|\frac{\partial(x,y,z)}{\partial(u,v,w)}\right|du\,dv\,dw"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "convergence-and-divergence" && (
+        <div className="space-y-10">
+          <ImproperIntegralConvergenceLab />
+          <ConvergenceTestsTutorialLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
+              Decision Hierarchy: Which Convergence Test Should You Reach For First?
+            </h2>
+            <p className="text-sm text-[var(--text-secondary)] font-serif leading-relaxed">
+              Before expanding algebra, scan the structural shape of <KaTeXMath math="a_n" /> or{" "}
+              <KaTeXMath math="f(x)" />. Following this three-second triage resolves almost every
+              engineering convergence problem without wasted calculation:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  1. DIVERGENCE SCREENING
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\lim_{n\to\infty} a_n \neq 0 \implies \sum a_n\text{ diverges}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Always check this first—but remember that <KaTeXMath math="a_n \to 0" /> is only
+                  necessary, never sufficient!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. ALGEBRAIC POWERS &amp; RATIOS
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="a_n \sim \frac{1}{n^p} \quad\text{or}\quad b_n = \frac{\text{leading numerator}}{\text{leading denominator}}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Compare polynomials/roots against a <KaTeXMath math="p" />-series via the{" "}
+                  <strong className="text-[var(--text-primary)]">Limit Comparison Test</strong>; handle
+                  decreasing positive tails with the <strong className="text-[var(--text-primary)]">Integral Test</strong>.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  3. FACTORIALS &amp; n-TH POWERS
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="L = \lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right| \;\;\text{or}\;\; \lim_{n\to\infty}\sqrt[n]{|a_n|}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Use <strong className="text-[var(--text-primary)]">Ratio Test</strong> when{" "}
+                  <KaTeXMath math="n!" /> or exponentials appear; use{" "}
+                  <strong className="text-[var(--text-primary)]">Root Test</strong> for{" "}
+                  <KaTeXMath math="(\cdot)^n" /> structures; use Leibniz when signs strictly alternate.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "gamma-and-beta-functions" && (
+        <div className="space-y-10">
+          <GammaFunctionLab />
+          <BetaFunctionLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
+              Eulerian Reduction Toolkit: Turning Hard Integrals into Instant Arithmetic
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  1. EXPONENTIAL SUBSTITUTION
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\int_0^\infty x^a e^{-bx^c}\,dx = \frac{1}{c\,b^{(a+1)/c}}\,\Gamma\!\left(\frac{a+1}{c}\right)"
+                    block
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. WALLIS TRIGONOMETRIC FORM
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\int_0^{\pi/2} \sin^m\theta \cos^n\theta\,d\theta = \frac{\Gamma\!\left(\frac{m+1}{2}\right)\Gamma\!\left(\frac{n+1}{2}\right)}{2\,\Gamma\!\left(\frac{m+n+2}{2}\right)}"
+                    block
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  3. EULER REFLECTION &amp; INFINITE TAIL
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\Gamma(z)\Gamma(1-z) = \frac{\pi}{\sin(\pi z)}, \qquad \int_0^\infty \frac{x^{p-1}}{(1+x)^{p+q}}\,dx = \mathrm{B}(p,q)"
                     block
                   />
                 </div>

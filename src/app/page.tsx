@@ -58,7 +58,7 @@ export default function HomePage() {
 
           <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
             <Link
-              href="/multivariable-calculus/multiple-integrals/double-integrals"
+              href="/multivariable-calculus/integral-calculus/double-integrals"
               className="px-5 py-3.5 border border-[var(--border-strong)] bg-[#8D9FCE] text-[#1E1F22] font-medium text-sm flex items-center justify-between hover:opacity-95 transition-opacity"
             >
               <span>Start Chapter 3.2.1: Double Integration</span>
@@ -79,22 +79,22 @@ export default function HomePage() {
         <HeroIntegralPreview />
       </section>
 
-      {/* Section 2: Volume III, Module 3.2 Live Interactive Showcase (8 Published Laboratories) */}
+      {/* Section 2: Volume III, Module 3.2 Live Interactive Showcase (Integral Calculus) */}
       <section className="space-y-6">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
           <div>
             <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] block">
-              Volume III • Module 3.2 Live Showcase • 8 Interactive Labs Published
+              Volume III • Module 3.2 Live Showcase • Integral Calculus &amp; Special Functions
             </span>
             <h2 className="font-math-serif text-3xl font-semibold text-[var(--text-primary)] mt-1">
-              Multiple Integrals &amp; Coordinate Pullbacks (Chapters 3.2.1–3.2.4)
+              Integral Calculus (Chapters 3.2.1–3.2.6)
             </h2>
           </div>
           <Link
-            href="/multivariable-calculus/multiple-integrals"
+            href="/multivariable-calculus/integral-calculus"
             className="text-sm font-tabular-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center gap-1.5"
           >
-            <span>Open Module 3.2 Hub</span>
+            <span>Open Module 3.2: Integral Calculus</span>
             <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </Link>
         </div>
