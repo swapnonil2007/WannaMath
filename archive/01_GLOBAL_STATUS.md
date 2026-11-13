@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Phase A, Track 1 & Track 2 Completed — Volume III Modules 3.1 & 3.2 (`8/13` Chapters & `12` Interactive Labs) Live
+> **Last Updated:** Phase A, Track 1, Track 2 & Track 3 Completed — **Volume III (`13/13` Chapters, `17` Interactive Labs) 100% PUBLISHED**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -12,7 +12,7 @@
 | :--- | :--- | :--- | :---: | :---: | :--- |
 | **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | `planned` |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
-| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 13 | **`in-progress` (Modules 3.1 & 3.2 `published` — 12 Labs Live)** |
+| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 13 | **`published` (13/13 Chapters — 17 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | `planned` |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | `planned` |
 | **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | `planned` |
@@ -40,18 +40,18 @@
 > **Legacy Route Redirects:** `/calculus` $\rightarrow$ `/multivariable-calculus` and `/calculus/:slug` $\rightarrow$ `/multivariable-calculus/multiple-integrals/:slug` are permanently redirected in `next.config.ts`.
 > **Historical Build Logs:** Preserved in [`archive/phase_logs/`](./phase_logs/) and indexed in [`archive/volumes/vol_03_multivariable/README.md`](./volumes/vol_03_multivariable/README.md).
 
-### Module 3.3: Vector Calculus & Integral Theorems (`/multivariable-calculus/vector-calculus`)
-| Chapter ID | Slug | Title | Status | Interactive Labs |
+### Module 3.3: Vector Calculus & Integral Theorems (`/multivariable-calculus/vector-calculus`) — **ALL PUBLISHED**
+| Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
-| `3.3.1` | `vector-fields-divergence-curl` | Vector Fields, Divergence & Curl | `planned` | 2D/3D Flux Box & Paddlewheel Curl Probe |
-| `3.3.2` | `line-integrals-work` | Line Integrals (Work & Circulation) | `planned` | Tangential Work Accumulator & Conservative Potential Lab |
-| `3.3.3` | `greens-theorem` | Green's Theorem | `planned` | Microscopic Curl Cancellation Grid |
-| `3.3.4` | `surface-integrals-flux` | Surface Integrals & Flux | `planned` | Oriented Normal Flux Canopy Inspector |
-| `3.3.5` | `stokes-divergence-theorems` | Stokes' Theorem & The Divergence Theorem | `planned` | Boundary Rim Circulation & 3D Gauss Flux Balance |
+| `3.3.1` | `/multivariable-calculus/vector-calculus/vector-fields-divergence-curl` | Vector Fields, Divergence & Curl | **`published`** | `DivCurlProbeLab` |
+| `3.3.2` | `/multivariable-calculus/vector-calculus/line-integrals-work` | Line Integrals (Work & Circulation) | **`published`** | `LineIntegralWorkLab` |
+| `3.3.3` | `/multivariable-calculus/vector-calculus/greens-theorem` | Green's Theorem | **`published`** | `GreensTheoremLab` |
+| `3.3.4` | `/multivariable-calculus/vector-calculus/surface-integrals-flux` | Surface Integrals & Flux | **`published`** | `SurfaceFluxLab` |
+| `3.3.5` | `/multivariable-calculus/vector-calculus/stokes-divergence-theorems` | Stokes' Theorem & The Divergence Theorem | **`published`** | `StokesDivergenceLab` |
 
 ---
 
-## 3. Shared Visualization Primitives & Handoff Next Step
+## 3. Shared Visualization Primitives & Completed Volume III Tracks
 1. **Track 1 (COMPLETED — `4747a9f`):** Extracted shared visualization & numerical quadrature primitives inside [`src/components/visualizations/primitives/`](../src/components/visualizations/primitives/index.ts):
    - `ThreeOrbitViewport.tsx` — Reusable React + Three.js WebGL stage with `OrbitControls`, camera reset, and coordinate frame badge.
    - `threeScenePrimitives.ts` — `mathToThreeVec3`, `disposeThreeObject`, `createCoordinateAxesAndGrid`, `createParametricSurfaceMesh`, and `createVectorArrow3D`.
@@ -59,4 +59,5 @@
    - `contourMarchingSquares.ts` — `extractLevelCurveSegments` marching-squares 2D contour solver.
    - `quadrature.ts` — `integrate1DGaussLegendre`, `integrate2DIterated`, `integrate3DIterated`, `computePartialDerivatives2D`, and `computeJacobian2D`.
 2. **Track 2 (COMPLETED — `c6d4bc1`):** Built **Volume III, Module 3.1 (`multivariable-differentiation`)** — Chapters `3.1.1` through `3.1.4` (`SurfaceContourSlicerLab`, `PartialDerivativeTangentPlaneLab`, `GradientDirectionalDerivativeLab`, `LagrangeMultipliersLab`).
-3. **Track 3 (IMMEDIATE NEXT STEP FOR INCOMING AGENT):** Build **Volume III, Module 3.3 (`vector-calculus`)** — Chapters `3.3.1` through `3.3.5` inside `src/components/visualizations/vector-calculus/`, wire them into `src/app/[volume]/[module]/[chapter]/page.tsx`, and mark Chapters `3.3.1`–`3.3.5` as `'published'` in `src/registry/vol3-multivariable.ts`.
+3. **Track 3 (COMPLETED):** Built **Volume III, Module 3.3 (`vector-calculus`)** — Chapters `3.3.1` through `3.3.5` (`DivCurlProbeLab`, `LineIntegralWorkLab`, `GreensTheoremLab`, `SurfaceFluxLab`, `StokesDivergenceLab`), completing **100% of Volume III (`13/13` chapters)**.
+4. **Next Textbook Expansion Options:** **Volume I (`Single-Variable Calculus`)** or **Volume II (`Linear Algebra & Space Geometry`)**.

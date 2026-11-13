@@ -20,6 +20,13 @@ import { Curvilinear3DSurfacesAndElementLab } from "@/components/visualizations/
 import { DualGridMorphingAndTangentLab } from "@/components/visualizations/jacobians/DualGridMorphingAndTangentLab";
 import { JacobianIntegralPullbackLab } from "@/components/visualizations/jacobians/JacobianIntegralPullbackLab";
 
+// Module 3.3 Live Laboratories (Vector Calculus & Integral Theorems)
+import { DivCurlProbeLab } from "@/components/visualizations/vector-calculus/DivCurlProbeLab";
+import { LineIntegralWorkLab } from "@/components/visualizations/vector-calculus/LineIntegralWorkLab";
+import { GreensTheoremLab } from "@/components/visualizations/vector-calculus/GreensTheoremLab";
+import { SurfaceFluxLab } from "@/components/visualizations/vector-calculus/SurfaceFluxLab";
+import { StokesDivergenceLab } from "@/components/visualizations/vector-calculus/StokesDivergenceLab";
+
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
     volume: item.volume.slug,
@@ -212,6 +219,36 @@ export default async function ChapterPage({
               </div>
             </div>
           </section>
+        </div>
+      )}
+
+      {chapter.slug === "vector-fields-divergence-curl" && (
+        <div className="space-y-10">
+          <DivCurlProbeLab />
+        </div>
+      )}
+
+      {chapter.slug === "line-integrals-work" && (
+        <div className="space-y-10">
+          <LineIntegralWorkLab />
+        </div>
+      )}
+
+      {chapter.slug === "greens-theorem" && (
+        <div className="space-y-10">
+          <GreensTheoremLab />
+        </div>
+      )}
+
+      {chapter.slug === "surface-integrals-flux" && (
+        <div className="space-y-10">
+          <SurfaceFluxLab />
+        </div>
+      )}
+
+      {chapter.slug === "stokes-divergence-theorems" && (
+        <div className="space-y-10">
+          <StokesDivergenceLab />
         </div>
       )}
 

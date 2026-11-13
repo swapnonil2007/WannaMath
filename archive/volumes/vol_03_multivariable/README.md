@@ -14,6 +14,22 @@ All 4 chapters and 4 interactive laboratories of **Module 3.1 (`3D Geometry & Mu
 
 ---
 
+## Module 3.3 Build Index (`vector-calculus` — PUBLISHED)
+All 5 chapters and 5 interactive laboratories of **Module 3.3 (`Vector Calculus & Integral Theorems`)** are live under `/multivariable-calculus/vector-calculus/[chapter]`:
+
+1. **Chapter `3.3.1` — Vector Fields, Divergence & Curl (`vector-fields-divergence-curl`)**
+   - Lab: `DivCurlProbeLab` (`src/components/visualizations/vector-calculus/DivCurlProbeLab.tsx`)
+2. **Chapter `3.3.2` — Line Integrals: Work & Circulation (`line-integrals-work`)**
+   - Lab: `LineIntegralWorkLab` (`src/components/visualizations/vector-calculus/LineIntegralWorkLab.tsx`)
+3. **Chapter `3.3.3` — Green's Theorem (`greens-theorem`)**
+   - Lab: `GreensTheoremLab` (`src/components/visualizations/vector-calculus/GreensTheoremLab.tsx`)
+4. **Chapter `3.3.4` — Surface Integrals & Flux (`surface-integrals-flux`)**
+   - Lab: `SurfaceFluxLab` (`src/components/visualizations/vector-calculus/SurfaceFluxLab.tsx`)
+5. **Chapter `3.3.5` — Stokes' Theorem & The Divergence Theorem (`stokes-divergence-theorems`)**
+   - Lab: `StokesDivergenceLab` (`src/components/visualizations/vector-calculus/StokesDivergenceLab.tsx`)
+
+---
+
 ## Module 3.2 Historical Build & Migration Index (`multiple-integrals` — PUBLISHED)
 All 4 chapters and 8 interactive laboratories of **Module 3.2 (`multiple-integrals`)** were built, verified, and migrated into the 4-tier textbook taxonomy (`/multivariable-calculus/multiple-integrals/[chapter]`):
 

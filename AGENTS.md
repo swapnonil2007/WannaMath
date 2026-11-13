@@ -76,6 +76,7 @@ All project plans, design tokens, and volume/phase progress logs are stored in t
 - **Completed & Pushed (`origin/main`):**
   - **v2.0 Phase A (`f849ddc`):** 6-Volume modular registry, 4-tier routing (`/[volume]/[module]/[chapter]`), `TopicPageShell.tsx` upgrade, and `TextbookSidebar.tsx` TOC drawer.
   - **v2.0 Track 1 (`4747a9f`):** Shared visualization & quadrature primitives in `src/components/visualizations/primitives/`.
-  - **v2.0 Track 2 (`c6d4bc1`):** **Volume III, Module 3.1 (`multivariable-differentiation`)** — All 4 chapters (`3.1.1`–`3.1.4`) and 4 labs (`SurfaceContourSlicerLab`, `PartialDerivativeTangentPlaneLab`, `GradientDirectionalDerivativeLab`, `LagrangeMultipliersLab`) published alongside **Module 3.2 (`multiple-integrals`)** (`3.2.1`–`3.2.4`, 8 labs).
-- **Exact Next Step to Execute First:**
-  - **Execute Track 3 (Phase D): Build Volume III, Module 3.3 (`vector-calculus` — Vector Calculus & Integral Theorems, Chapters `3.3.1` through `3.3.5`)** inside `src/components/visualizations/vector-calculus/`, wire them into `src/app/[volume]/[module]/[chapter]/page.tsx`, and mark Chapters `3.3.1`–`3.3.5` as `'published'` in `src/registry/vol3-multivariable.ts` to complete 100% of Volume III (`13/13` chapters).
+  - **v2.0 Track 2 (`c6d4bc1`):** **Volume III, Module 3.1 (`multivariable-differentiation`)** — All 4 chapters (`3.1.1`–`3.1.4`) and 4 labs published.
+  - **v2.0 Track 3 (Phase D):** **Volume III, Module 3.3 (`vector-calculus`)** — All 5 chapters (`3.3.1`–`3.3.5`) and 5 labs (`DivCurlProbeLab`, `LineIntegralWorkLab`, `GreensTheoremLab`, `SurfaceFluxLab`, `StokesDivergenceLab`) published, completing **100% of Volume III (`13/13` chapters, `17` interactive labs)**.
+- **Next Textbook Expansion Options:**
+  - **Volume I (`single-variable-calculus`)** or **Volume II (`linear-algebra`)** interactive module buildouts.

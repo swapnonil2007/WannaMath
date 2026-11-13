@@ -418,7 +418,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Vector Fields, Divergence & Curl",
           subtitle:
             "Place a microscopic flux box and paddlewheel probe inside 2D/3D velocity fields to measure local expansion (∇·F) and rotation (∇×F).",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["3.1.3"],
           dimensionBadge: "2D + 3D",
@@ -429,6 +429,16 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Incompressible fluid continuity (∇·u = 0), aerodynamic vorticity, and electromagnetic charge/current sources.",
+          pedagogicalRhythm: {
+            question:
+              "At a single point inside a 3D velocity or force field, how do we separately measure whether flow is expanding outward (source) versus spinning locally (vortex)?",
+            labInteraction:
+              "Click anywhere on the 2D cross-section plane or scrub (x₀, y₀, z₀) to move the divergence flux box and curl paddlewheel probe across sources, vortices, and shear flows.",
+            symbolicFormalizationLatex:
+              "\\nabla\\cdot\\mathbf{F} = \\frac{\\partial P}{\\partial x}+\\frac{\\partial Q}{\\partial y}+\\frac{\\partial R}{\\partial z}, \\qquad (\\nabla\\times\\mathbf{F})_z = \\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}",
+            edgeCasesAndBridge:
+              "A straight shear flow F = ⟨y, 0, 0⟩ has zero divergence yet non-zero curl! Next, Chapter 3.3.2 accumulates F along a macroscopic curve C to compute mechanical work.",
+          },
           labs: [
             {
               id: "lab-3-3-1a",
@@ -448,7 +458,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Line Integrals (Work & Circulation)",
           subtitle:
             "Project vector field F onto unit tangent T along curve C to accumulate mechanical work ∫_C F · dr and test path independence.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["3.1.3", "3.3.1"],
           dimensionBadge: "2D + 3D",
@@ -457,6 +467,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "W = \\int_{C} \\mathbf{F}\\cdot d\\mathbf{r} = \\int_{a}^{b} \\mathbf{F}(\\mathbf{r}(t))\\cdot \\mathbf{r}'(t)\\,dt",
             "\\mathbf{F} = \\nabla f \\implies \\int_A^B \\mathbf{F}\\cdot d\\mathbf{r} = f(B) - f(A)",
           ],
+          engineeringContext:
+            "Mechanical work in conservative gravitational/electrostatic fields vs. dissipative aerodynamic drag and vortex circulation.",
+          pedagogicalRhythm: {
+            question:
+              "When a particle travels along a curved path C through a force field F, when does the total work depend on the chosen path versus only the endpoints A and B?",
+            labInteraction:
+              "Deform path C₁ relative to the straight chord C₀ and compare W(C₁) against W(C₀) in conservative gradient fields (∇×F = 0) versus rotational fields.",
+            symbolicFormalizationLatex:
+              "\\int_C \\mathbf{F}\\cdot d\\mathbf{r} = \\int_a^b \\mathbf{F}(\\mathbf{r}(t))\\cdot\\mathbf{r}'(t)\\,dt",
+            edgeCasesAndBridge:
+              "When C closes into a loop ∂D, the net circulation equals the interior curl summed over D—which is Green's Theorem in Chapter 3.3.3.",
+          },
           labs: [
             {
               id: "lab-3-3-2a",
@@ -476,7 +498,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Green's Theorem",
           subtitle:
             "Subdivide a 2D region D into N×N interior circulation loops to watch adjacent interior edges cancel, leaving only boundary circulation.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["3.2.1", "3.3.1", "3.3.2"],
           dimensionBadge: "2D",
@@ -484,6 +506,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           keyEquationsLatex: [
             "\\oint_{\\partial D} (P\\,dx + Q\\,dy) = \\iint_{D} \\left(\\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}\\right) dA",
           ],
+          engineeringContext:
+            "Mechanical planimeters, aerodynamic lift circulation, and 2D finite-volume conservation laws.",
+          pedagogicalRhythm: {
+            question:
+              "Why does summing microscopic spin (∂Q/∂x - ∂P/∂y) over the entire 2D interior D equal the single 1D line integral around the outer boundary ∂D?",
+            labInteraction:
+              "Increase the N×N subdivision resolution and verify numerically that the 4-edge boundary line integral matches the 2D double integral of curl.",
+            symbolicFormalizationLatex:
+              "\\oint_{\\partial D} (P\\,dx + Q\\,dy) = \\iint_D \\left(\\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}\\right) dA",
+            edgeCasesAndBridge:
+              "Green's Theorem lives in the flat xy-plane; to generalize flux and circulation to curved 3D surfaces, we first build oriented surface flux integrals in Chapter 3.3.4.",
+          },
           labs: [
             {
               id: "lab-3-3-3a",
@@ -503,7 +537,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Surface Integrals & Flux",
           subtitle:
             "Map parameter patch (u,v) onto 3D surface S with normal vector r_u × r_v to measure volumetric fluid and electric flux.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["3.2.4", "3.3.1"],
           dimensionBadge: "3D",
@@ -511,6 +545,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           keyEquationsLatex: [
             "\\Phi = \\iint_{S} \\mathbf{F}\\cdot \\hat{\\mathbf{n}}\\,dS = \\iint_{R_{uv}} \\mathbf{F}\\cdot (\\mathbf{r}_u \\times \\mathbf{r}_v)\\,du\\,dv",
           ],
+          engineeringContext:
+            "Volumetric mass flow rate across turbine blades, Gauss's law for electric flux, and radiative heat transfer.",
+          pedagogicalRhythm: {
+            question:
+              "How do we compute the total volumetric flow piercing a curved 3D canopy S when both the flow F and the surface normal n̂ vary from point to point?",
+            labInteraction:
+              "Edit surface height z = g(x,y) and field F = ⟨P, Q, R⟩, inspect local normal vectors n̂ vs. flow arrows F, and flip surface orientation to observe Φ → -Φ.",
+            symbolicFormalizationLatex:
+              "\\Phi = \\iint_S \\mathbf{F}\\cdot \\hat{\\mathbf{n}}\\,dS = \\iint_{R_{xy}} \\mathbf{F}\\cdot \\langle -g_x, -g_y, 1 \\rangle\\,dx\\,dy",
+            edgeCasesAndBridge:
+              "Non-orientable surfaces (like a Möbius strip) cannot support a consistent global normal n̂. For orientable surfaces, Chapter 3.3.5 unifies flux and curl via Stokes' and Gauss's Theorems.",
+          },
           labs: [
             {
               id: "lab-3-3-4a",
@@ -530,7 +576,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Stokes' Theorem & The Divergence Theorem",
           subtitle:
             "Unify all integral theorems: see why surface curl flux depends only on the boundary rim ∂S and why closed-surface flux equals interior divergence.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["3.2.2", "3.3.3", "3.3.4"],
           dimensionBadge: "3D",
@@ -539,6 +585,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "\\iint_{S} (\\nabla \\times \\mathbf{F})\\cdot d\\mathbf{S} = \\oint_{\\partial S} \\mathbf{F}\\cdot d\\mathbf{r}",
             "\\oiint_{\\partial E} \\mathbf{F}\\cdot d\\mathbf{S} = \\iiint_{E} (\\nabla \\cdot \\mathbf{F})\\,dV",
           ],
+          engineeringContext:
+            "Maxwell's equations in integral/differential form, control-volume CFD conservation, and topological invariance.",
+          pedagogicalRhythm: {
+            question:
+              "Why do two completely different 3D soap-film surfaces sharing the same wire boundary rim ∂S capture the exact same curl flux, and why does closed-surface flux equal interior divergence?",
+            labInteraction:
+              "Deform the 3D soap-film dome height H in Stokes' mode to verify invariant curl flux, then switch to Gauss's Control Volume to compare 6-face outward flux against 3D volume divergence.",
+            symbolicFormalizationLatex:
+              "\\int_{\\partial \\Omega} \\omega = \\int_{\\Omega} d\\omega",
+            edgeCasesAndBridge:
+              "This completes Volume III (Multivariable & Vector Calculus)! The generalized Stokes' Theorem carries directly into contour integration and Cauchy's Theorem in Volume V.",
+          },
           labs: [
             {
               id: "lab-3-3-5a",
