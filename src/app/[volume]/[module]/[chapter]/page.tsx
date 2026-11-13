@@ -99,6 +99,10 @@ import { EigenvectorCompassLab } from "@/components/visualizations/linear-algebr
 import { QuadraticFormLab } from "@/components/visualizations/linear-algebra/QuadraticFormLab";
 import { SVDThreeStageLab } from "@/components/visualizations/linear-algebra/SVDThreeStageLab";
 
+// Volume V — Module 5.1 Live Laboratories (Complex Numbers & Conformal Mappings)
+import { EulerHelixPhasorLab } from "@/components/visualizations/transforms-complex/EulerHelixPhasorLab";
+import { ConformalMappingLab } from "@/components/visualizations/transforms-complex/ConformalMappingLab";
+
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
     volume: item.volume.slug,
@@ -2561,6 +2565,109 @@ export default async function ChapterPage({
                 <p className="text-xs text-[var(--text-secondary)] font-math-serif">
                   Dropping smaller singular terms yields the provably optimal low-rank compression across image, PCA,
                   and recommender pipelines.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "euler-formula-complex-plane" && (
+        <div className="space-y-8">
+          <EulerHelixPhasorLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Euler&apos;s Formula & Complex Exponential Geometry
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                  1. TAYLOR SERIES BRIDGE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="e^{i\theta} = \cos\theta + i\sin\theta" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Splitting even and odd powers of <KaTeXMath math="\sum (i\theta)^n / n!" /> unifies exponential
+                  growth with circular trigonometry.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. ROTATION + SCALING MULTIPLICATION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="z_1 z_2 = (r_1 r_2)e^{i(\theta_1 + \theta_2)}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Multiplying by a complex number scales radii radially and adds phase angles cleanly counterclockwise.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  3. COMPLEX FREQUENCY SPIRAL
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="e^{(\sigma+i\omega)t} = e^{\sigma t}\cos\omega t + i\,e^{\sigma t}\sin\omega t" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Real decay rate <KaTeXMath math="\sigma" /> sets the envelope radius while imaginary frequency{" "}
+                  <KaTeXMath math="\omega" /> drives steady rotation.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "cauchy-riemann-conformal" && (
+        <div className="space-y-8">
+          <ConformalMappingLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Analyticity & Angle-Preserving Conformal Theory
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  1. CAUCHY–RIEMANN INVARIANCE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="u_x = v_y, \qquad u_y = -v_x" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Complex differentiability forces real and imaginary limits along <KaTeXMath math="\Delta x" /> and{" "}
+                  <KaTeXMath math="i\Delta y" /> to agree identically.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                  2. SCALED ROTATION JACOBIAN
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="J_f = |f'(z)|\begin{bmatrix} \cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha \end{bmatrix}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Locally, any analytic map with <KaTeXMath math="f'(z)\neq 0" /> acts as a pure isotropic zoom +
+                  rigid rotation, preserving 90° intersections.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  3. HARMONIC CONJUGATES
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\nabla^2 u = 0,\quad \nabla^2 v = 0,\quad \nabla u \cdot \nabla v = 0" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Both real and imaginary parts solve Laplace&apos;s equation automatically, yielding orthogonal
+                  equipotential and flow streamlines.
                 </p>
               </div>
             </div>

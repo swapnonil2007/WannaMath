@@ -32,11 +32,23 @@ export const VOL5_TRANSFORMS_COMPLEX: VolumeMetadata = {
           title: "Complex Plane, Euler's Formula & Phasor Geometry",
           subtitle:
             "See multiplication by r e^(iθ) as simultaneous radial scaling and rotation in the Argand plane.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.4.2"],
           dimensionBadge: "2D + 3D",
           accentHex: "#D5658B",
+          engineeringContext:
+            "AC impedance phasor networks, quadrature RF I/Q modulation, quantum probability-amplitude phase evolution, and damping/oscillation envelopes.",
+          pedagogicalRhythm: {
+            question:
+              "Why does imaginary exponentiation e^{iωt} produce circles and waves instead of blowing up like e^{σt}—and what does multiplying complex numbers look like geometrically?",
+            labInteraction:
+              "Play or scrub the 3D helix z(t) = A e^{(σ+iω)t} to see cosine and sine walls cast by a single rotating vector, then toggle Multiply z₁·z₂ in the 2D Argand plane.",
+            symbolicFormalizationLatex:
+              "e^{(\\sigma + i\\omega)t} = e^{\\sigma t}(\\color{#8D9FCE}{\\cos\\omega t} + i\\,\\color{#96B898}{\\sin\\omega t}), \\qquad z_1 z_2 = r_1 r_2 e^{i(\\theta_1 + \\theta_2)}",
+            edgeCasesAndBridge:
+              "Setting σ = 0 confines the spiral onto a constant cylinder; negative σ decays inward toward stability. Next, letting the full 2D plane transform under w = f(z) introduces Conformal Mappings in Chapter 5.1.2.",
+          },
           keyEquationsLatex: [
             "e^{i\\theta} = \\cos\\theta + i\\sin\\theta",
             "z_1 z_2 = r_1 r_2 e^{i(\\theta_1 + \\theta_2)}",
@@ -60,11 +72,23 @@ export const VOL5_TRANSFORMS_COMPLEX: VolumeMetadata = {
           title: "Analyticity, Cauchy-Riemann Equations & Conformal Grids",
           subtitle:
             "Compare general 2D Jacobians against complex-differentiable mappings w = f(z) whose orthogonal grid curves preserve intersection angles.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["3.2.4", "5.1.1"],
           dimensionBadge: "Dual 2D",
           accentHex: "#D5658B",
+          engineeringContext:
+            "Joukowski airfoil aerodynamics, electrostatic Laplace boundary-value mapping, 2D incompressible potential flow streamlines, and microwave waveguide design.",
+          pedagogicalRhythm: {
+            question:
+              "Out of all smooth 2D coordinate maps (u(x,y), v(x,y)), what extraordinary algebraic symmetry guarantees that infinitesimal squares map onto rotated, scaled squares without any shear distortion?",
+            labInteraction:
+              "Switch across z², e^z, 1/z, Joukowski Airfoil, and the non-analytic contrast 2x + i(y + 0.8x), clicking probes z₀ to verify 90° intersection angles and zero Cauchy–Riemann residual.",
+            symbolicFormalizationLatex:
+              "\\frac{\\partial u}{\\partial x} = \\frac{\\partial v}{\\partial y}, \\qquad \\frac{\\partial u}{\\partial y} = -\\frac{\\partial v}{\\partial x} \\;\\Longrightarrow\\; \\nabla u \\cdot \\nabla v = 0",
+            edgeCasesAndBridge:
+              "Conformality breaks at critical points where f'(z₀) = 0 (like z = 0 for z², where angles double!) or whenever Cauchy–Riemann fails. Analytic functions then power Contour Integration in Module 5.2.",
+          },
           keyEquationsLatex: [
             "f(x+iy) = u(x,y) + i\\,v(x,y)",
             "\\frac{\\partial u}{\\partial x} = \\frac{\\partial v}{\\partial y}, \\qquad \\frac{\\partial u}{\\partial y} = -\\frac{\\partial v}{\\partial x}",
