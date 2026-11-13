@@ -122,16 +122,28 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
           slug: "damped-harmonic-oscillators",
           title: "Harmonic Oscillators: Undamped, Underdamped & Overdamped",
           subtitle:
-            "Couple the complex characteristic root plane s₁,₂ with live mass-spring-damper time responses.",
-          status: "planned",
-          estimatedMinutes: 30,
-          prerequisites: ["4.1.2"],
+            "Couple the complex characteristic root plane s₁,₂ with live mass-spring-damper time responses, decay envelopes, and (x, v) phase orbits.",
+          status: "published",
+          estimatedMinutes: 35,
+          prerequisites: ["3.1.10", "4.1.2"],
           dimensionBadge: "2D",
           accentHex: "#8D9FCE",
           keyEquationsLatex: [
-            "m\\ddot{x} + c\\dot{x} + kx = 0 \\implies ms^2 + cs + k = 0",
-            "\\zeta = \\frac{c}{2\\sqrt{mk}}",
+            "m\\ddot{x} + c\\dot{x} + kx = 0 \\implies s^2 + 2\\zeta\\omega_n s + \\omega_n^2 = 0",
+            "\\zeta = \\frac{c}{2\\sqrt{mk}}, \\qquad s_{1,2} = -\\zeta\\omega_n \\pm \\omega_n\\sqrt{\\zeta^2 - 1}",
           ],
+          engineeringContext:
+            "Automotive suspension shock absorbers, MEMS accelerometer damping, seismic building isolators, and series/parallel RLC circuit transients (L, R, 1/C).",
+          pedagogicalRhythm: {
+            question:
+              "How does the dimensionless damping ratio ζ steer characteristic roots s₁,₂ in the complex plane—turning perpetual oscillation into decaying ringing or fast non-overshooting return?",
+            labInteraction:
+              "Scrub mass m, damping c, and stiffness k across ζ < 1, ζ = 1, and ζ > 1 while watching the roots trace the semicircular arc |s| = ω_n, collide at -ω_n, and split along the negative real axis.",
+            symbolicFormalizationLatex:
+              "x(t) = \\begin{cases} e^{-\\zeta\\omega_n t}(A\\cos\\omega_d t + B\\sin\\omega_d t) & \\zeta < 1 \\\\ (c_1 + c_2 t)e^{-\\omega_n t} & \\zeta = 1 \\\\ c_1 e^{s_1 t} + c_2 e^{s_2 t} & \\zeta > 1 \\end{cases}",
+            edgeCasesAndBridge:
+              "At ζ = 1, the double root produces the secular factor t·e^(-ω_n t), giving fastest return without overshoot. Next, Chapter 4.2.2 adds periodic external forcing F₀cos(ωt) to unlock beats and resonance.",
+          },
           labs: [
             {
               id: "lab-4-2-1a",
@@ -150,16 +162,28 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
           slug: "forced-oscillations-resonance",
           title: "Forced Oscillations, Beats & Resonance Frequency Response",
           subtitle:
-            "Sweep driving frequency ω against natural frequency ω_n to observe acoustic beats, phase lag, and resonant amplitude peaks.",
-          status: "planned",
-          estimatedMinutes: 30,
+            "Sweep driving frequency ω against natural frequency ω_n to observe acoustic beats, secular blowup, 90° phase lag, and resonant amplitude peaks.",
+          status: "published",
+          estimatedMinutes: 35,
           prerequisites: ["4.2.1"],
           dimensionBadge: "2D",
           accentHex: "#B95869",
           keyEquationsLatex: [
-            "m\\ddot{x} + c\\dot{x} + kx = F_0\\cos(\\omega t)",
-            "|H(i\\omega)| = \\frac{1/k}{\\sqrt{(1 - (\\omega/\\omega_n)^2)^2 + (2\\zeta\\omega/\\omega_n)^2}}",
+            "m\\ddot{x} + c\\dot{x} + kx = F_0\\cos(\\omega t), \\qquad |H(i\\omega)| = \\frac{1/k}{\\sqrt{(1 - (\\omega/\\omega_n)^2)^2 + (2\\zeta\\omega/\\omega_n)^2}}",
+            "\\omega_{\\text{res}} = \\omega_n\\sqrt{1 - 2\\zeta^2} \\quad (\\zeta < 1/\\sqrt{2}), \\qquad \\phi(\\omega) = \\operatorname{atan2}(2\\zeta r,\\; 1 - r^2)",
           ],
+          engineeringContext:
+            "Bridge structural wind-load resonance (Tacoma Narrows), RF bandpass filter Q-factor tuning, vibration isolation mounts, and acoustic beats.",
+          pedagogicalRhythm: {
+            question:
+              "When an oscillator is pushed periodically at frequency ω, why do small mismatches create slow beats while viscous friction shifts peak amplitude below ω_n?",
+            labInteraction:
+              "Click anywhere on the Bode amplitude curve or scrub ω and ζ to switch smoothly between acoustic beats, unbounded t·sin(ω_n t) resonance, sharp high-Q peaks, and flat damped isolation.",
+            symbolicFormalizationLatex:
+              "x(t) = x_h(t) + x_p(t), \\qquad x_p(t) = \\frac{F_0}{m}|H(i\\omega)|\\cos(\\omega t - \\phi(\\omega))",
+            edgeCasesAndBridge:
+              "When ζ ≥ 1/√2 ≈ 0.707, 1 - 2ζ² ≤ 0 eliminates the resonance peak completely! Next, Module 4.3 generalizes single oscillators to 2D coupled linear and nonlinear phase-plane systems.",
+          },
           labs: [
             {
               id: "lab-4-2-2a",

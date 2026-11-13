@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Volume IV Module 4.1 PUBLISHED (`12/12` Vol I + `22/22` Vol III + `2/8` Vol IV = `36` Chapters & `53` Labs Live)**
+> **Last Updated:** 2026-11-13 — **Volume IV Module 4.2 PUBLISHED (`12/12` Vol I + `22/22` Vol III + `4/8` Vol IV = `38` Chapters & `55` Labs Live)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -27,7 +27,8 @@
 | **Volume I — Module 1.3** | `c6f37a8` | **PUBLISHED** | Published all 4 chapters of **Module 1.3 (`integral-calculus`)**: `1.3.1` (`Riemann1DLab.tsx`), `1.3.2` (`FTCAccumulationLab.tsx`), `1.3.3` (`SubstitutionIBPLab.tsx`), and `1.3.4` (`SolidOfRevolutionLab.tsx`). |
 | **Volume I — Module 1.4** | `432ea9d` | **PUBLISHED** | Published **Module 1.4 (`infinite-series`)**: `1.4.1` (`PartialSumSeriesLab.tsx`) and `1.4.2` (`PowerSeriesConvergenceLab.tsx`), completing **all `12/12` chapters of Volume I (`single-variable-calculus`)**. |
 | **Vector Calculus & Gradient Expansion (Phases 1–4)** | `cd2221b` | **PUBLISHED** | Deepened explanations & interactive exploration for Gradient, Directional Derivatives, Vector Fields, Divergence & Curl (`GradientAscentAndLevelSurfaceLab` in `3.1.3`; `VectorFieldStreamlineExplorerLab` + `DivCurlDecompositionLab` in `3.3.1`; Del Quartet, paradoxes, identities & theorem summaries across `3.3.1`–`3.3.5`). |
-| **Volume IV — Phase 1 (Module 4.1)** | *Current* | **PUBLISHED** | Published **Module 4.1 (`first-order-odes`)**: `4.1.1` (`SlopeFieldTracerLab`) and `4.1.2` (`AutonomousPhaseLineLab`) with geometric slope-field/Picard and stability/bifurcation guides (`2/8` Vol IV chapters, `53` labs live). |
+| **Volume IV — Phase 1 (Module 4.1)** | `888034e` | **PUBLISHED** | Published **Module 4.1 (`first-order-odes`)**: `4.1.1` (`SlopeFieldTracerLab`) and `4.1.2` (`AutonomousPhaseLineLab`) with geometric slope-field/Picard and stability/bifurcation guides (`2/8` Vol IV chapters, `53` labs live). |
+| **Volume IV — Phase 2 (Module 4.2)** | *Current* | **PUBLISHED** | Published **Module 4.2 (`second-order-oscillations`)**: `4.2.1` (`HarmonicOscillatorLab`: $s$-plane root locus, regimes, phase orbit) and `4.2.2` (`ForcedResonanceLab`: acoustic beats, secular resonance, Bode gain & phase lag) (`4/8` Vol IV chapters, `55` labs live). |
 
 ---
 
@@ -40,6 +41,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume IV Phase 2 Next)
-Both **Volume I (`12/12`)** and **Volume III (`22/22`)** are 100% published, and **Volume IV Module 4.1 (`2/8`)** is now live (`36` chapters, `53` interactive labs live).
-- **Active Planned Sequence:** Proceed to **Volume IV Phase 2 — Module 4.2: Second-Order Linear ODEs & Oscillations (`second-order-oscillations`)** per [`VOLUME_4_PLAN.md`](./volumes/vol_04_differential_equations/VOLUME_4_PLAN.md) (`HarmonicOscillatorLab` + `ForcedResonanceLab`). *(Volume II [`linear-algebra`] remains queued in [`src/registry/vol2-linear-algebra.ts`](../../src/registry/vol2-linear-algebra.ts)).*
+## 3. Immediate Next Step (Volume IV Phase 3 Next)
+Both **Volume I (`12/12`)** and **Volume III (`22/22`)** are 100% published, and **Volume IV Modules 4.1–4.2 (`4/8`)** are now live (`38` chapters, `55` interactive labs live).
+- **Active Planned Sequence:** Proceed to **Volume IV Phase 3 — Module 4.3: Systems of ODEs & Phase Plane Portraits (`phase-plane-systems`)** per [`VOLUME_4_PLAN.md`](./volumes/vol_04_differential_equations/VOLUME_4_PLAN.md) (`TraceDeterminantPhaseLab` + `NonlinearPhasePortraitLab`). *(Volume II [`linear-algebra`] remains queued in [`src/registry/vol2-linear-algebra.ts`](../../src/registry/vol2-linear-algebra.ts)).*

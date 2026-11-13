@@ -74,6 +74,10 @@ import { StokesDivergenceLab } from "@/components/visualizations/vector-calculus
 import { SlopeFieldTracerLab } from "@/components/visualizations/differential-equations/SlopeFieldTracerLab";
 import { AutonomousPhaseLineLab } from "@/components/visualizations/differential-equations/AutonomousPhaseLineLab";
 
+// Volume IV — Module 4.2 Live Laboratories (Second-Order Linear ODEs & Oscillations)
+import { HarmonicOscillatorLab } from "@/components/visualizations/differential-equations/HarmonicOscillatorLab";
+import { ForcedResonanceLab } from "@/components/visualizations/differential-equations/ForcedResonanceLab";
+
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
     volume: item.volume.slug,
@@ -1489,6 +1493,135 @@ export default async function ChapterPage({
                     3.1.9 (Integrating Factors &amp; Bernoulli)
                   </Link>{" "}
                   for exact linear integration.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "damped-harmonic-oscillators" && (
+        <div className="space-y-10">
+          <HarmonicOscillatorLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              Harmonic Regimes: Complex Root Geometry, Mechanical–RLC Analogy &amp; Quality Factor
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. DAMPING RATIO ζ &amp; COMPLEX S-PLANE CIRCLE
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="s_{1,2} = \omega_n\bigl(-\zeta \pm i\sqrt{1-\zeta^2}\bigr) \implies |s_{1,2}| = \omega_n"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  While underdamped (<KaTeXMath math="0 \le \zeta &lt; 1" />), the roots travel along
+                  a semicircle of radius <KaTeXMath math="\omega_n = \sqrt{k/m}" /> until they
+                  coalesce at <KaTeXMath math="s = -\omega_n" /> (<KaTeXMath math="\zeta = 1" />).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  2. MECHANICAL ↔ SERIES RLC ANALOGY
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="m\ddot{x}+c\dot{x}+kx=0 \;\longleftrightarrow\; L\ddot{q}+R\dot{q}+\frac{1}{C}q=0"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Inductance <KaTeXMath math="L" /> plays the role of inertia <KaTeXMath math="m" />,
+                  resistance <KaTeXMath math="R" /> dissipates energy like dashpot friction{" "}
+                  <KaTeXMath math="c" />, and <KaTeXMath math="1/C" /> acts as spring stiffness{" "}
+                  <KaTeXMath math="k" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. CRITICAL VS. OVERDAMPED BOTTLENECK
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="Q = \frac{1}{2\zeta}, \qquad T_s^{(2\%)} \approx \frac{4}{\zeta\omega_n}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Beyond <KaTeXMath math="\zeta = 1" />, one real root pushes rightward toward{" "}
+                  <KaTeXMath math="0" />, slowing recovery drastically—which is why critical damping
+                  (<KaTeXMath math="\zeta = 1" />) settles fastest without ringing.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "forced-oscillations-resonance" && (
+        <div className="space-y-10">
+          <ForcedResonanceLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
+              Phasor Steady State, Acoustic Beats &amp; Resonance Peak Shift
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  1. ACOUSTIC BEATS IDENTITY (ζ = 0)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\cos(\omega t) - \cos(\omega_n t) = 2\sin\!\left(\frac{\omega_n-\omega}{2}t\right)\sin\!\left(\frac{\omega_n+\omega}{2}t\right)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  When <KaTeXMath math="\omega \approx \omega_n" />, fast oscillations at{" "}
+                  <KaTeXMath math="(\omega_n+\omega)/2" /> pulse slowly inside the amplitude
+                  envelope of beat half-frequency <KaTeXMath math="|\omega_n - \omega|/2" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  2. COMPLEX PHASOR TRANSFER GAIN H(iω)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="H(i\omega) = \frac{1/k}{(1 - r^2) + i(2\zeta r)}, \quad r = \frac{\omega}{\omega_n}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  In steady state, <KaTeXMath math="x_p(t)" /> trails driving force by{" "}
+                  <KaTeXMath math="\phi(\omega) = \operatorname{atan2}(2\zeta r,\, 1-r^2)" />,
+                  passing cleanly through <KaTeXMath math="90^\circ" /> at <KaTeXMath math="r = 1" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                  3. WHY PEAK RESONANCE SITS BELOW ω_n
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\frac{d}{dr}\bigl[(1-r^2)^2 + 4\zeta^2 r^2\bigr] = 0 \implies \omega_{\text{res}} = \omega_n\sqrt{1 - 2\zeta^2}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Viscous drag pulls maximum displacement slightly left of{" "}
+                  <KaTeXMath math="\omega_n" />; once <KaTeXMath math="\zeta \ge 1/\sqrt{2}" />, the
+                  peak vanishes altogether!
                 </p>
               </div>
             </div>
