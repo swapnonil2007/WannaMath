@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Volume V Phase 1 PUBLISHED (`12/12` Vol I + `9/9` Vol II + `24/24` Vol III + `8/8` Vol IV + `2/8` Vol V = `55` Chapters & `72` Labs Live)**
+> **Last Updated:** 2026-11-13 — **Volume V Phase 2 PUBLISHED (`12/12` Vol I + `9/9` Vol II + `24/24` Vol III + `8/8` Vol IV + `4/8` Vol V = `57` Chapters & `74` Labs Live)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -36,7 +36,8 @@
 | **Volume II — Phase 2 (Module 2.2)** | `cdda0fc` | **PUBLISHED** | Published **Module 2.2 (`linear-transformations`)**: `2.2.1` (`MatrixTransformationLab`), `2.2.2` (`DeterminantVolumeLab`), and `2.2.3` (`LeastSquaresProjectionLab`) (`6/9` Vol II chapters, `67` labs live). |
 | **Volume II — Phase 3 (Module 2.3)** | `acd0321` | **PUBLISHED** | Published **Module 2.3 (`eigen-systems-svd`)**: `2.3.1` (`EigenvectorCompassLab`), `2.3.2` (`QuadraticFormLab`), and `2.3.3` (`SVDThreeStageLab`), completing **all `9/9` chapters of Volume II** (`70` labs live). |
 | **Volume V — Planning** | `9cc11a3` | **PLANNED** | Authored 4-phase Volume V blueprint [`VOLUME_5_PLAN.md`](./volumes/vol_05_transforms_complex/VOLUME_5_PLAN.md) & [`README.md`](./volumes/vol_05_transforms_complex/README.md) (`5.1`–`5.4`). |
-| **Volume V — Phase 1 (Module 5.1)** | *Current* | **PUBLISHED** | Published **Module 5.1 (`complex-functions-conformal`)**: `5.1.1` (`EulerHelixPhasorLab`) & `5.1.2` (`ConformalMappingLab`) (`2/8` Vol V chapters, `72` labs live). |
+| **Volume V — Phase 1 (Module 5.1)** | `cbdb1ad` | **PUBLISHED** | Published **Module 5.1 (`complex-functions-conformal`)**: `5.1.1` (`EulerHelixPhasorLab`) & `5.1.2` (`ConformalMappingLab`) (`2/8` Vol V chapters, `72` labs live). |
+| **Volume V — Phase 2 (Module 5.2)** | *Current* | **PUBLISHED** | Published **Module 5.2 (`contour-integration`)**: `5.2.1` (`CauchyContourLab`) & `5.2.2` (`ResidueTheoremLab`) (`4/8` Vol V chapters, `74` labs live). |
 
 ---
 
@@ -49,6 +50,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume V — Phase 2: Contour Integration & The Residue Theorem Next)
-**Volumes I (`12/12`), II (`9/9`), III (`24/24`), and IV (`8/8`)** are 100% published, and **Volume V Module 5.1 (`2/8`)** is now live (`55` chapters, `72` interactive labs live).
-- **Active Planned Sequence:** Execute **Volume V — Phase 2 (`Module 5.2`: Contour Integration & The Residue Theorem)** (`CauchyContourLab`, `ResidueTheoremLab`) per [`VOLUME_5_PLAN.md`](./volumes/vol_05_transforms_complex/VOLUME_5_PLAN.md), followed by Phases 3–4 and Volume VI.
+## 3. Immediate Next Step (Volume V — Phase 3: Laplace Transforms & s-Plane Poles/Zeros Next)
+**Volumes I (`12/12`), II (`9/9`), III (`24/24`), and IV (`8/8`)** are 100% published, and **Volume V Modules 5.1–5.2 (`4/8`)** are now live (`57` chapters, `74` interactive labs live).
+- **Active Planned Sequence:** Execute **Volume V — Phase 3 (`Module 5.3`: Laplace Transforms & s-Plane Poles/Zeros)** (`LaplaceSPlane3DLab`, `ConvolutionFlipSlideLab`) per [`VOLUME_5_PLAN.md`](./volumes/vol_05_transforms_complex/VOLUME_5_PLAN.md), followed by Phase 4 (`Module 5.4`) and Volume VI.

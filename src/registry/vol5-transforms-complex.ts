@@ -123,11 +123,23 @@ export const VOL5_TRANSFORMS_COMPLEX: VolumeMetadata = {
           title: "Complex Line Integrals & Cauchy's Integral Theorem",
           subtitle:
             "Deform closed contours C in the z-plane to see why ∮ f(z) dz = 0 in analytic domains but jumps by 2πi when enclosing a pole.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["3.3.5", "5.1.2"],
           dimensionBadge: "2D",
           accentHex: "#B95869",
+          engineeringContext:
+            "Nyquist stability criterion encirclement counts in feedback control, electromagnetic Biot–Savart complex potentials, and acoustic waveguide dispersion branches.",
+          pedagogicalRhythm: {
+            question:
+              "Why can you stretch and wiggle a closed contour C arbitrarily in the complex plane without changing ∮ f(z) dz—unless the loop crosses a singularity?",
+            labInteraction:
+              "Click anywhere on the z-plane to drag contour C across poles, switch homotopy deformation or winding number (+1, +2, −1), and watch the numerical loop integral jump cleanly in multiples of 2πi f(z₀).",
+            symbolicFormalizationLatex:
+              "\\oint_{C} f(z)\\,dz = 0 \\;\\text{(analytic inside }C\\text{)}, \\qquad f(z_0) = \\frac{1}{2\\pi i}\\oint_{C} \\frac{f(z)}{z - z_0}\\,dz",
+            edgeCasesAndBridge:
+              "Enclosing two equal-and-opposite poles (±i for 1/(z²+1)) causes their residues to cancel back to zero! Next, Chapter 5.2.2 turns poles into systematic Residue Theorem calculators.",
+          },
           keyEquationsLatex: [
             "\\oint_{C} f(z)\\,dz = 0, \\qquad f(z_0) = \\frac{1}{2\\pi i}\\oint_{C} \\frac{f(z)}{z - z_0}\\,dz",
           ],
@@ -150,11 +162,23 @@ export const VOL5_TRANSFORMS_COMPLEX: VolumeMetadata = {
           title: "Poles, Laurent Series & The Residue Theorem",
           subtitle:
             "Sum local residues at enclosed poles inside a contour to evaluate improper real integrals effortlessly.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["5.2.1"],
           dimensionBadge: "2D + 3D",
           accentHex: "#B95869",
+          engineeringContext:
+            "Inverse Laplace Bromwich integration, quantum scattering amplitude poles, improper Fourier transform integrals, and signal-processing filter synthesis.",
+          pedagogicalRhythm: {
+            question:
+              "How can a single coefficient a₋₁ in the Laurent expansion around each pole collapse an entire boundary integral ∮ f(z) dz—and even solve real improper integrals ∫_{-∞}^∞ f(x) dx?",
+            labInteraction:
+              "Orbit the 3D pole-chimney landscape |f(z)| while repositioning the 2D contour or toggling the Upper-Half-Plane semicircle to sum enclosed Laurent residues.",
+            symbolicFormalizationLatex:
+              "\\oint_{C} f(z)\\,dz = 2\\pi i \\sum_{z_k \\in \\operatorname{int}(C)} \\operatorname{Res}(f, z_k), \\qquad \\operatorname{Res}\\!\\left(f, z_0\\right) = a_{-1}",
+            edgeCasesAndBridge:
+              "For higher-order poles of order m, pure 1/(z−z₀)^m loops integrate to 0 unless lower-order terms exist via derivatives of (z−z₀)^m f(z). Module 5.3 applies these poles directly to Laplace Transforms.",
+          },
           keyEquationsLatex: [
             "\\oint_{C} f(z)\\,dz = 2\\pi i \\sum_{k} \\operatorname{Res}(f, z_k)",
           ],

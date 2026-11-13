@@ -99,9 +99,11 @@ import { EigenvectorCompassLab } from "@/components/visualizations/linear-algebr
 import { QuadraticFormLab } from "@/components/visualizations/linear-algebra/QuadraticFormLab";
 import { SVDThreeStageLab } from "@/components/visualizations/linear-algebra/SVDThreeStageLab";
 
-// Volume V — Module 5.1 Live Laboratories (Complex Numbers & Conformal Mappings)
+// Volume V — Modules 5.1 & 5.2 Live Laboratories (Complex, Conformal & Contour Residues)
 import { EulerHelixPhasorLab } from "@/components/visualizations/transforms-complex/EulerHelixPhasorLab";
 import { ConformalMappingLab } from "@/components/visualizations/transforms-complex/ConformalMappingLab";
+import { CauchyContourLab } from "@/components/visualizations/transforms-complex/CauchyContourLab";
+import { ResidueTheoremLab } from "@/components/visualizations/transforms-complex/ResidueTheoremLab";
 
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
@@ -2668,6 +2670,110 @@ export default async function ChapterPage({
                 <p className="text-xs text-[var(--text-secondary)] font-math-serif">
                   Both real and imaginary parts solve Laplace&apos;s equation automatically, yielding orthogonal
                   equipotential and flow streamlines.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "cauchy-integral-formula" && (
+        <div className="space-y-8">
+          <CauchyContourLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Contour Homotopy, Green&apos;s Theorem & Cauchy&apos;s Integral Formula
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                  1. CAUCHY–GOURSAT INVARIANCE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\oint_C (u + iv)(dx + i\,dy) = 0 \iff u_x = v_y,\, u_y = -v_x" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  When a domain is analytic throughout its interior, Green&apos;s Theorem reduces both real and
+                  imaginary curls to zero by Cauchy–Riemann symmetry.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  2. TOPOLOGICAL WINDING NUMBER
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\oint_C \frac{dz}{z - z_0} = 2\pi i \cdot W(C, z_0)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Stretching the path across open analytic regions leaves the integral completely untouched—only crossing
+                  the pole <KaTeXMath math="z_0" /> jumps the winding integer <KaTeXMath math="W" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  3. BOUNDARY RECONSTRUCTION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="f(z_0) = \frac{1}{2\pi i}\oint_C \frac{f(z)}{z - z_0}\,dz" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Every analytic function&apos;s interior value <KaTeXMath math="f(z_0)" /> is uniquely locked and
+                  computable from its boundary values along <KaTeXMath math="C" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "poles-residue-theorem" && (
+        <div className="space-y-8">
+          <ResidueTheoremLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Laurent Principal Parts, Residues & Real Improper Integrals
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                  1. LAURENT SERIES RESIDUE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="f(z) = \sum_{n=-\infty}^{\infty} a_n (z-z_0)^n \implies \oint_C f\,dz = 2\pi i\,a_{-1}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Every power <KaTeXMath math="(z-z_0)^n" /> except <KaTeXMath math="n = -1" /> possesses an
+                  antiderivative on punctured circles and integrates to zero around closed loops.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  2. RESIDUE SUMMATION LAW
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\oint_C f(z)\,dz = 2\pi i \sum_{z_k \in \operatorname{int}(C)} \operatorname{Res}(f, z_k)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Higher-order poles of order <KaTeXMath math="m" /> extract <KaTeXMath math="a_{-1}" /> via{" "}
+                  <KaTeXMath math="\frac{1}{(m-1)!}\lim_{z\to z_0}\frac{d^{m-1}}{dz^{m-1}}[(z-z_0)^m f(z)]" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. UPPER-HALF-PLANE CLOSURE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\int_{-\infty}^{\infty} \frac{dx}{x^2+1} = 2\pi i\,\operatorname{Res}\!\left(f, +i\right) = \pi" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Closing the real axis with a large upper semicircle whose arc contribution vanishes as{" "}
+                  <KaTeXMath math="R \to \infty" /> evaluates improper real integrals algebraically.
                 </p>
               </div>
             </div>
