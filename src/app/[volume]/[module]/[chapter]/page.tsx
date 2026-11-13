@@ -11,6 +11,9 @@ import { GradientDirectionalDerivativeLab } from "@/components/visualizations/mu
 import { LagrangeMultipliersLab } from "@/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab";
 import { MultivariableLimitsPathsLab } from "@/components/visualizations/multivariable-differentiation/MultivariableLimitsPathsLab";
 import { DifferentiabilityErrorConeLab } from "@/components/visualizations/multivariable-differentiation/DifferentiabilityErrorConeLab";
+import { HigherOrderChainImplicitLab } from "@/components/visualizations/multivariable-differentiation/HigherOrderChainImplicitLab";
+import { SingleVariableTaylorLab } from "@/components/visualizations/multivariable-differentiation/SingleVariableTaylorLab";
+import { MultivariableTaylorHessianLab } from "@/components/visualizations/multivariable-differentiation/MultivariableTaylorHessianLab";
 
 // Module 3.2 Live Laboratories (Integral Calculus: Multiple Integrals, Convergence & Eulerian Functions)
 import { RiemannVolumeLab } from "@/components/visualizations/double-integrals/RiemannVolumeLab";
@@ -70,6 +73,7 @@ export default async function ChapterPage({
       {chapter.slug === "partial-derivatives-tangent-planes" && (
         <div className="space-y-10">
           <PartialDerivativeTangentPlaneLab />
+          <HigherOrderChainImplicitLab />
         </div>
       )}
 
@@ -140,6 +144,69 @@ export default async function ChapterPage({
                 <p className="text-xs text-[var(--text-secondary)] font-serif">
                   Partial derivatives merely test two orthogonal axes; continuity of{" "}
                   <KaTeXMath math="f_x, f_y" /> guarantees every oblique angle collapses cleanly onto the tangent plane.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+
+      {chapter.slug === "taylor-expansions" && (
+        <div className="space-y-10">
+          <SingleVariableTaylorLab />
+          <MultivariableTaylorHessianLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
+              Taylor Reference: 1D Remainder, 2D Hessian Quadratic Form &amp; Classical Maclaurin Series
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  1. LAGRANGE REMAINDER THEOREM
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x - x_0)^{n+1}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  For some intermediate <KaTeXMath math="\xi" /> between <KaTeXMath math="x_0" /> and{" "}
+                  <KaTeXMath math="x" />, the truncation error scales with <KaTeXMath math="|x-x_0|^{n+1}" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  2. MULTIVARIABLE 2ND-ORDER TAYLOR
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="T_2(x_0+h,y_0+k) = f + (h\partial_x + k\partial_y)f + \frac{1}{2!}(h\partial_x + k\partial_y)^2 f"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Expands cleanly using the binomial operator <KaTeXMath math="(h\partial_x + k\partial_y)^m f" />{" "}
+                  when Clairaut symmetry <KaTeXMath math="f_{xy} = f_{yx}" /> holds.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  3. CONVERGENCE DISK BOUNDARY
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\frac{1}{1+x^2} = \sum_{k=0}^\infty (-1)^k x^{2k} \quad (|x|<1)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Even if smooth on ℝ, complex singularities (e.g. <KaTeXMath math="x = \pm i" />) limit the
+                  real Maclaurin radius of convergence to <KaTeXMath math="R = 1" />.
                 </p>
               </div>
             </div>
@@ -233,6 +300,7 @@ export default async function ChapterPage({
         </div>
       )}
 
+
       {chapter.slug === "jacobians" && (
         <div className="space-y-10">
           <DualGridMorphingAndTangentLab />
@@ -289,6 +357,7 @@ export default async function ChapterPage({
           </section>
         </div>
       )}
+
 
       {chapter.slug === "convergence-and-divergence" && (
         <div className="space-y-10">
@@ -360,6 +429,7 @@ export default async function ChapterPage({
         </div>
       )}
 
+
       {chapter.slug === "gamma-and-beta-functions" && (
         <div className="space-y-10">
           <GammaFunctionLab />
@@ -409,6 +479,7 @@ export default async function ChapterPage({
           </section>
         </div>
       )}
+
 
       {chapter.slug === "vector-fields-divergence-curl" && (
         <div className="space-y-10">

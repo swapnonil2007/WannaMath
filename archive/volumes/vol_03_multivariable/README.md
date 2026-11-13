@@ -5,15 +5,17 @@ All 4 foundational chapters of **Module 3.1** are live, and a **6-Phase Differen
 
 1. **Chapter `3.1.1` — Surfaces, Level Curves & Contour Maps (`surfaces-level-curves`)** *(Published)*
    - Lab: `SurfaceContourSlicerLab` (`src/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab.tsx`)
-2. **Chapter `3.1.2` — Partial Derivatives & Tangent Planes (`partial-derivatives-tangent-planes`)** *(Published — Chain Rule, Implicit & Higher-Order Mixed Partials added in Phase 2)*
-   - Lab: `PartialDerivativeTangentPlaneLab` (`src/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab.tsx`)
+2. **Chapter `3.1.2` — Partial Derivatives, Mixed Partials, Chain Rule & Tangent Planes (`partial-derivatives-tangent-planes`)** *(Published — Deepened in Phase 2)*
+   - Labs: `PartialDerivativeTangentPlaneLab`, `HigherOrderChainImplicitLab` (`src/components/visualizations/multivariable-differentiation/`)
 3. **Chapter `3.1.3` — The Gradient Vector & Directional Derivatives (`gradient-directional-derivatives`)** *(Published)*
    - Lab: `GradientDirectionalDerivativeLab` (`src/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab.tsx`)
 4. **Chapter `3.1.4` — Lagrange Multipliers & Constrained Optimization (`lagrange-multipliers`)** *(Published)*
    - Lab: `LagrangeMultipliersLab` (`src/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab.tsx`)
 5. **Chapter `3.1.5` — Multivariable Limits, Continuity & Differentiability (`limits-and-differentiability`)** *(Published — Phase 1)*
    - Labs: `MultivariableLimitsPathsLab`, `DifferentiabilityErrorConeLab` (`src/components/visualizations/multivariable-differentiation/`)
-6. **Queued Expansion Chapters (`3.1.6` – `3.1.11`):** See [`DIFFERENTIAL_CALCULUS_PLAN.md`](./DIFFERENTIAL_CALCULUS_PLAN.md) Phases 2–6.
+6. **Chapter `3.1.6` — Taylor Expansions: Single-Variable & Multivariable (`taylor-expansions`)** *(Published — Phase 2)*
+   - Labs: `SingleVariableTaylorLab`, `MultivariableTaylorHessianLab` (`src/components/visualizations/multivariable-differentiation/`)
+7. **Queued Expansion Chapters (`3.1.7` – `3.1.11`):** See [`DIFFERENTIAL_CALCULUS_PLAN.md`](./DIFFERENTIAL_CALCULUS_PLAN.md) Phases 3–6.
 
 ---
 

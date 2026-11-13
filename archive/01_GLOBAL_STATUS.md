@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Differential Calculus Phase 1 Completed — **Volume III (`16/22` Planned+Published Chapters, `23` Interactive Labs Live)**
+> **Last Updated:** Differential Calculus Phase 2 Completed — **Volume III (`17/22` Chapters Published, `26` Interactive Labs Live)**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -12,7 +12,7 @@
 | :--- | :--- | :--- | :---: | :---: | :--- |
 | **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | `planned` |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
-| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 22 | **`in-progress` (16/22 Published — 23 Labs Live)** |
+| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 22 | **`in-progress` (17/22 Published — 26 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | `planned` |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | `planned` |
 | **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | `planned` |
@@ -21,15 +21,15 @@
 
 ## 2. Detailed Chapter Status Matrix — Volume III: Multivariable & Vector Calculus (`/multivariable-calculus`)
 
-### Module 3.1: Differential Calculus (`/multivariable-calculus/differential-calculus`) — **5/11 PUBLISHED**
+### Module 3.1: Differential Calculus (`/multivariable-calculus/differential-calculus`) — **6/11 PUBLISHED**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
 | `3.1.1` | `/multivariable-calculus/differential-calculus/surfaces-level-curves` | Surfaces, Level Curves & Contour Maps | **`published`** | `SurfaceContourSlicerLab` |
-| `3.1.2` | `/multivariable-calculus/differential-calculus/partial-derivatives-tangent-planes` | Partial Derivatives & Tangent Planes | **`published`** | `PartialDerivativeTangentPlaneLab` |
+| `3.1.2` | `/multivariable-calculus/differential-calculus/partial-derivatives-tangent-planes` | Partial Derivatives, Mixed Partials, Chain Rule & Tangent Planes | **`published`** | `PartialDerivativeTangentPlaneLab`, `HigherOrderChainImplicitLab` |
 | `3.1.3` | `/multivariable-calculus/differential-calculus/gradient-directional-derivatives` | The Gradient Vector & Directional Derivatives | **`published`** | `GradientDirectionalDerivativeLab` |
 | `3.1.4` | `/multivariable-calculus/differential-calculus/lagrange-multipliers` | Lagrange Multipliers & Constrained Optimization | **`published`** | `LagrangeMultipliersLab` |
 | `3.1.5` | `/multivariable-calculus/differential-calculus/limits-and-differentiability` | Multivariable Limits, Continuity & Differentiability | **`published`** | `MultivariableLimitsPathsLab`, `DifferentiabilityErrorConeLab` |
-| `3.1.6` | `/multivariable-calculus/differential-calculus/taylor-expansions` | Taylor Expansions: Single-Variable & Multivariable | `planned` *(Phase 2)* | `SingleVariableTaylorLab`, `MultivariableTaylorHessianLab` |
+| `3.1.6` | `/multivariable-calculus/differential-calculus/taylor-expansions` | Taylor Expansions: Single-Variable & Multivariable | **`published`** | `SingleVariableTaylorLab`, `MultivariableTaylorHessianLab` |
 | `3.1.7` | `/multivariable-calculus/differential-calculus/homogeneous-functions-eulers-theorem` | Homogeneous Functions & Euler's Theorems | `planned` *(Phase 3)* | `HomogeneousScalingRayLab`, `EulersTheoremSecondOrderLab` |
 | `3.1.8` | `/multivariable-calculus/differential-calculus/maxima-minima-extrema` | Maxima & Minima: General Method & Second Derivative Test | `planned` *(Phase 3)* | `HessianSecondDerivativeTestLab`, `GeneralMethodDegenerateExtremaLab` |
 | `3.1.9` | `/multivariable-calculus/differential-calculus/first-order-lde-bernoulli` | *Sub-Parent: Differential Equations* — First-Order ODEs: LDE, Integrating Factors & Bernoulli | `planned` *(Phase 4)* | `LinearOdeIntegratingFactorLab`, `BernoulliReductionLab` |

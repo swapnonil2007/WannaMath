@@ -69,27 +69,27 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
         {
           id: "3.1.2",
           slug: "partial-derivatives-tangent-planes",
-          title: "Partial Derivatives & Tangent Planes",
+          title: "Partial Derivatives, Mixed Partials, Chain Rule & Tangent Planes",
           subtitle:
-            "Freeze y = y₀ or x = x₀ to slice a 3D surface into 1D curves whose tangent vectors span the local tangent plane.",
+            "Slice surfaces into 1D partial curves, verify Clairaut's Theorem f_xy = f_yx, trace multivariable chain rule trees, and solve implicit surface tangents.",
           status: "published",
-          estimatedMinutes: 30,
+          estimatedMinutes: 40,
           prerequisites: ["1.2.1", "1.2.2", "3.1.1"],
           dimensionBadge: "2D + 3D",
           accentHex: "#96B898",
           keyEquationsLatex: [
-            "f_x(x_0,y_0) = \\lim_{h\\to 0}\\frac{f(x_0+h,y_0)-f(x_0,y_0)}{h}",
-            "z \\approx f(x_0,y_0) + f_x(x_0,y_0)(x-x_0) + f_y(x_0,y_0)(y-y_0)",
+            "f_x(x_0,y_0) = \\lim_{h\\to 0}\\frac{f(x_0+h,y_0)-f(x_0,y_0)}{h}, \\qquad f_{xy} = f_{yx}\\;(C^2)",
+            "\\frac{dz}{dt} = \\frac{\\partial z}{\\partial x}\\frac{dx}{dt} + \\frac{\\partial z}{\\partial y}\\frac{dy}{dt}, \\qquad \\frac{\\partial z}{\\partial x} = -\\frac{F_x}{F_z}",
           ],
           engineeringContext:
-            "Multivariable sensitivity analysis, thermodynamic state partials, and nonlinear control linearization.",
+            "Multivariable sensitivity analysis, thermodynamic Maxwell relations (Clairaut symmetry), kinematic chain rule rates, and implicit constraint manifolds.",
           pedagogicalRhythm: {
             question:
-              "When a surface z = f(x,y) depends on two independent variables, how do two 1D coordinate slopes combine to form a flat 2D tangent plane?",
+              "When a surface z = f(x,y) depends on two independent variables, how do first-order partials build a tangent plane—and how do second-order partials, chain rule pathways, and implicit equations generalize differentiation?",
             labInteraction:
-              "Move the probe point (x₀, y₀) to inspect the x-slice curve (y fixed) and y-slice curve (x fixed), their tangent vectors T_x = ⟨1, 0, f_x⟩ and T_y = ⟨0, 1, f_y⟩, and the spanned tangent plane.",
+              "Inspect the x-slice, y-slice, and spanned tangent plane in Lab 3.1.2A, then explore mixed-partial Clairaut symmetry (plus Peano's counterexample), chain rule dependency trees, and implicit ellipsoid slopes in Lab 3.1.2B.",
             symbolicFormalizationLatex:
-              "L(x,y) = f(x_0,y_0) + \\color{#8D9FCE}{f_x(x_0,y_0)}(x-x_0) + \\color{#96B898}{f_y(x_0,y_0)}(y-y_0), \\quad \\mathbf{n} = \\mathbf{T}_x \\times \\mathbf{T}_y = \\langle -f_x, -f_y, 1 \\rangle",
+              "L(x,y) = f(x_0,y_0) + \\color{#8D9FCE}{f_x}(x-x_0) + \\color{#96B898}{f_y}(y-y_0), \\quad \\frac{dz}{dt} = \\nabla f \\cdot \\mathbf{r}'(t)",
             edgeCasesAndBridge:
               "Coordinate partials only measure slope along the x and y axes—to find the slope in any arbitrary compass direction u, we package ⟨f_x, f_y⟩ into the gradient vector ∇f in Chapter 3.1.3.",
           },
@@ -102,6 +102,16 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
               summary:
                 "Inspect tangent vectors T_x = (1, 0, f_x) and T_y = (0, 1, f_y) and their normal n = (-f_x, -f_y, 1).",
               formulaLatex: "dz = \\frac{\\partial f}{\\partial x}dx + \\frac{\\partial f}{\\partial y}dy",
+              dimensionBadge: "2D + 3D",
+            },
+            {
+              id: "lab-3-1-2b",
+              slug: "higher-order-chain-implicit-lab",
+              title: "Higher-Order Mixed Partials, Chain Rule & Implicit Differentiation Lab",
+              componentKey: "HigherOrderChainImplicitLab",
+              summary:
+                "Test Clairaut symmetry f_xy = f_yx (and its failure), compute live Chain Rule trees, and probe implicit slopes -F_x/F_z.",
+              formulaLatex: "f_{xy} = f_{yx}, \\; \\frac{\\partial z}{\\partial x} = -\\frac{F_x}{F_z}",
               dimensionBadge: "2D + 3D",
             },
           ],
@@ -241,7 +251,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Taylor Expansions: Single-Variable & Multivariable",
           subtitle:
             "Osculating 1D Taylor polynomials T_n(x), Lagrange remainder bounds, and 2D quadratic Hessian expansions T₂(x,y) around (x₀, y₀).",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["3.1.2", "3.1.5"],
           dimensionBadge: "2D + 3D",
@@ -250,6 +260,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "T_n(x) = \\sum_{k=0}^n \\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k",
             "T_2(x,y) = f(\\mathbf{p}_0) + \\nabla f(\\mathbf{p}_0)\\cdot\\mathbf{h} + \\frac{1}{2}\\mathbf{h}^T \\mathbf{H}_f(\\mathbf{p}_0)\\mathbf{h}",
           ],
+          engineeringContext:
+            "Small-angle nonlinear pendulum linearization, finite-difference truncation error orders, and quadratic optimization trust regions.",
+          pedagogicalRhythm: {
+            question:
+              "How do higher-order derivatives let a simple polynomial match not just a function's height and slope, but also its 1D and 2D curvature around an operating point?",
+            labInteraction:
+              "Vary degree n and center x₀ in Lab 3.1.6A to see the Lagrange remainder |R_n(x)| shrink inside the convergence disk, then compare T₁ tangent planes against quadratic Hessian bowls T₂(x,y) in Lab 3.1.6B.",
+            symbolicFormalizationLatex:
+              "T_2(\\mathbf{p}_0 + \\mathbf{h}) = f(\\mathbf{p}_0) + \\color{#8D9FCE}{\\nabla f \\cdot \\mathbf{h}} + \\frac{1}{2}\\color{#D35323}{\\mathbf{h}^T \\mathbf{H}_f \\mathbf{h}}",
+            edgeCasesAndBridge:
+              "Near singularities or poles (such as 1/(1-x) at x = 1), Taylor series diverge outside the distance to the nearest singularity; meanwhile the quadratic Hessian form 1/2 h^T H h directly powers the Second Derivative Test in Chapter 3.1.8.",
+          },
           labs: [
             {
               id: "lab-3-1-6a",

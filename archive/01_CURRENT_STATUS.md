@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Differential Calculus Phase 1 PUBLISHED (`16/22` Volume III Chapters, `23` Interactive Labs Live)**
+> **Last Updated:** 2026-11-13 — **Differential Calculus Phase 2 PUBLISHED (`17/22` Volume III Chapters, `26` Interactive Labs Live)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -16,7 +16,8 @@
 | **v2.0 Track 2 (Phase C)** | `c6d4bc1` | **PUBLISHED** | Built and published all 4 chapters and 4 interactive laboratories of **Volume III, Module 3.1 (`multivariable-differentiation`)**: Chapter `3.1.1` (`SurfaceContourSlicerLab.tsx`), Chapter `3.1.2` (`PartialDerivativeTangentPlaneLab.tsx`), Chapter `3.1.3` (`GradientDirectionalDerivativeLab.tsx`), and Chapter `3.1.4` (`LagrangeMultipliersLab.tsx`), wired into `src/app/[volume]/[module]/[chapter]/page.tsx` and marked `'published'` in `src/registry/vol3-multivariable.ts`. |
 | **v2.0 Track 3 (Phase D)** | `5aa336c` | **PUBLISHED** | Built and published all 5 chapters and 5 interactive laboratories of **Volume III, Module 3.3 (`vector-calculus`)**: `DivCurlProbeLab.tsx` (`3.3.1`), `LineIntegralWorkLab.tsx` (`3.3.2`), `GreensTheoremLab.tsx` (`3.3.3`), `SurfaceFluxLab.tsx` (`3.3.4`), and `StokesDivergenceLab.tsx` (`3.3.5`). |
 | **Module 3.2 Integral Calculus Expansion** | `ec1ff6b` | **PUBLISHED** | Unified Module `3.2` under **Integral Calculus (`integral-calculus`)** (with permanent redirects from `multiple-integrals`), added `gammaReal` and `betaReal` primitives in `quadrature.ts`, and published Chapter `3.2.5` (`convergence-and-divergence`: `ImproperIntegralConvergenceLab.tsx`, `ConvergenceTestsTutorialLab.tsx`) and Chapter `3.2.6` (`gamma-and-beta-functions`: `GammaFunctionLab.tsx`, `BetaFunctionLab.tsx`). |
-| **Differential Calculus Phase 1** | *Current* | **PUBLISHED** | Unified Module `3.1` under **Differential Calculus (`differential-calculus`)** with permanent redirects from `multivariable-differentiation`, added `subParent` grouping metadata & UI across `types.ts`, `ModulePage`, and `TextbookSidebar.tsx`, registered roadmap chapters `3.1.5`–`3.1.11`, and published Chapter `3.1.5` (`limits-and-differentiability`: `MultivariableLimitsPathsLab.tsx`, `DifferentiabilityErrorConeLab.tsx`). |
+| **Differential Calculus Phase 1** | `da64a67` | **PUBLISHED** | Unified Module `3.1` under **Differential Calculus (`differential-calculus`)** with permanent redirects from `multivariable-differentiation`, added `subParent` grouping metadata & UI across `types.ts`, `ModulePage`, and `TextbookSidebar.tsx`, registered roadmap chapters `3.1.5`–`3.1.11`, and published Chapter `3.1.5` (`limits-and-differentiability`: `MultivariableLimitsPathsLab.tsx`, `DifferentiabilityErrorConeLab.tsx`). |
+| **Differential Calculus Phase 2** | *Current* | **PUBLISHED** | Published Chapter `3.1.6` (`taylor-expansions`: `SingleVariableTaylorLab.tsx`, `MultivariableTaylorHessianLab.tsx`) and deepened Chapter `3.1.2` (`partial-derivatives-tangent-planes`) by adding `HigherOrderChainImplicitLab.tsx` (mixed partials, Clairaut's Theorem + Peano counterexample, Chain Rule trees, and Implicit Surface tangents). |
 
 ---
 
@@ -31,6 +32,6 @@
 
 ## 3. Immediate Next Step (Before Touching Volume I)
 We are continuing within **Volume III (`multivariable-calculus`)** before starting **Volume I (`single-variable-calculus`)**:
-- **Execute Phase 2 of [`DIFFERENTIAL_CALCULUS_PLAN.md`](./volumes/vol_03_multivariable/DIFFERENTIAL_CALCULUS_PLAN.md):**
-  1. Build and publish **Chapter `3.1.6` (`taylor-expansions`)** with `SingleVariableTaylorLab` and `MultivariableTaylorHessianLab`.
-  2. Deepen **Chapter `3.1.2` (`partial-derivatives-tangent-planes`)** by adding `HigherOrderChainImplicitLab` (mixed partials, Clairaut's Theorem + counterexample, multivariable Chain Rule, and Implicit Differentiation).
+- **Execute Phase 3 of [`DIFFERENTIAL_CALCULUS_PLAN.md`](./volumes/vol_03_multivariable/DIFFERENTIAL_CALCULUS_PLAN.md):**
+  1. Build and publish **Chapter `3.1.7` (`homogeneous-functions-eulers-theorem`)** with `HomogeneousScalingRayLab` and `EulersTheoremSecondOrderLab` (1st & 2nd order Euler identities + composite homogeneous reductions).
+  2. Build and publish **Chapter `3.1.8` (`maxima-minima-extrema`)** with `HessianSecondDerivativeTestLab` and `GeneralMethodDegenerateExtremaLab` ($rt-s^2$ discriminant + General sign-change method for $D=0$).
