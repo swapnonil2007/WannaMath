@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Differential Calculus Phase 3 PUBLISHED (`19/22` Volume III Chapters, `30` Interactive Labs Live)**
+> **Last Updated:** 2026-11-13 — **Differential Calculus Phase 4 PUBLISHED (`20/22` Volume III Chapters, `32` Interactive Labs Live)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -18,7 +18,8 @@
 | **Module 3.2 Integral Calculus Expansion** | `ec1ff6b` | **PUBLISHED** | Unified Module `3.2` under **Integral Calculus (`integral-calculus`)** (with permanent redirects from `multiple-integrals`), added `gammaReal` and `betaReal` primitives in `quadrature.ts`, and published Chapter `3.2.5` (`convergence-and-divergence`: `ImproperIntegralConvergenceLab.tsx`, `ConvergenceTestsTutorialLab.tsx`) and Chapter `3.2.6` (`gamma-and-beta-functions`: `GammaFunctionLab.tsx`, `BetaFunctionLab.tsx`). |
 | **Differential Calculus Phase 1** | `da64a67` | **PUBLISHED** | Unified Module `3.1` under **Differential Calculus (`differential-calculus`)** with permanent redirects from `multivariable-differentiation`, added `subParent` grouping metadata & UI across `types.ts`, `ModulePage`, and `TextbookSidebar.tsx`, registered roadmap chapters `3.1.5`–`3.1.11`, and published Chapter `3.1.5` (`limits-and-differentiability`: `MultivariableLimitsPathsLab.tsx`, `DifferentiabilityErrorConeLab.tsx`). |
 | **Differential Calculus Phase 2** | `319c9f9` | **PUBLISHED** | Published Chapter `3.1.6` (`taylor-expansions`: `SingleVariableTaylorLab.tsx`, `MultivariableTaylorHessianLab.tsx`) and deepened Chapter `3.1.2` (`partial-derivatives-tangent-planes`) by adding `HigherOrderChainImplicitLab.tsx` (mixed partials, Clairaut's Theorem + Peano counterexample, Chain Rule trees, and Implicit Surface tangents). |
-| **Differential Calculus Phase 3** | *Current* | **PUBLISHED** | Published Chapter `3.1.7` (`homogeneous-functions-eulers-theorem`: `HomogeneousScalingRayLab.tsx`, `EulersTheoremSecondOrderLab.tsx`) and Chapter `3.1.8` (`maxima-minima-extrema`: `HessianSecondDerivativeTestLab.tsx`, `GeneralMethodDegenerateExtremaLab.tsx`), completing all 8 core multivariable differentiation chapters (`3.1.1`–`3.1.8`). |
+| **Differential Calculus Phase 3** | `8e321bc` | **PUBLISHED** | Published Chapter `3.1.7` (`homogeneous-functions-eulers-theorem`: `HomogeneousScalingRayLab.tsx`, `EulersTheoremSecondOrderLab.tsx`) and Chapter `3.1.8` (`maxima-minima-extrema`: `HessianSecondDerivativeTestLab.tsx`, `GeneralMethodDegenerateExtremaLab.tsx`), completing all 8 core multivariable differentiation chapters (`3.1.1`–`3.1.8`). |
+| **Differential Calculus Phase 4** | *Current* | **PUBLISHED** | Published Chapter `3.1.9` (`first-order-lde-bernoulli`: `LinearOdeIntegratingFactorLab.tsx`, `BernoulliReductionLab.tsx`), launching the nested **Differential Equations** sub-parent under Differential Calculus. |
 
 ---
 
@@ -33,5 +34,5 @@
 
 ## 3. Immediate Next Step (Before Touching Volume I)
 We are continuing within **Volume III (`multivariable-calculus`)** before starting **Volume I (`single-variable-calculus`)**:
-- **Execute Phase 4 of [`DIFFERENTIAL_CALCULUS_PLAN.md`](./volumes/vol_03_multivariable/DIFFERENTIAL_CALCULUS_PLAN.md):**
-  - Build and publish **Chapter `3.1.9` (`first-order-lde-bernoulli`)** inside the nested **Differential Equations** sub-parent under Differential Calculus, featuring `LinearOdeIntegratingFactorLab` (LDE $y'+P(x)y=Q(x)$ and integrating factors $\mu(x)$) and `BernoulliReductionLab` ($v = y^{1-n}$ nonlinear-to-linear straightening).
+- **Execute Phase 5 of [`DIFFERENTIAL_CALCULUS_PLAN.md`](./volumes/vol_03_multivariable/DIFFERENTIAL_CALCULUS_PLAN.md):**
+  - Build and publish **Chapter `3.1.10` (`linear-odes-wronskian-roots`)** inside the nested **Differential Equations** sub-parent under Differential Calculus, covering Linear ODEs, linearly independent solutions, the Wronskian determinant, and general/particular solutions (distinct, repeated, and complex roots).

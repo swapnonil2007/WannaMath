@@ -395,7 +395,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "First-Order ODEs: LDE, Integrating Factors & Bernoulli's Equation",
           subtitle:
             "Solve linear first-order differential equations y' + P(x)y = Q(x) via μ(x) = e^{∫P dx} and linearize Bernoulli equations via v = y^{1-n}.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["3.1.2", "3.2.1"],
           dimensionBadge: "Dual 2D",
@@ -409,6 +409,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "y' + P(x)y = Q(x) \\implies \\mu(x) = e^{\\int P(x)\\,dx}",
             "y' + P(x)y = Q(x)y^n \\xrightarrow{v=y^{1-n}} v' + (1-n)P(x)v = (1-n)Q(x)",
           ],
+          engineeringContext:
+            "RC/RL transient electrical circuits, Newton thermal cooling, brine tank mixing, and nonlinear logistic saturation dynamics.",
+          pedagogicalRhythm: {
+            question:
+              "Why does multiplying a non-exact linear equation y' + P(x)y = Q(x) by the integrating factor μ(x) = e^{∫P dx} collapse its left-hand side into a single product derivative—and how does Bernoulli's substitution pull nonlinear flows into the same straight framework?",
+            labInteraction:
+              "Click to launch initial conditions across slope fields and integrating factor curves in Lab 3.1.9A, then compare nonlinear Bernoulli trajectories side-by-side against their linearized (x, v) flows in Lab 3.1.9B.",
+            symbolicFormalizationLatex:
+              "\\frac{d}{dx}\\!\\left[\\color{#FBEAA4}{\\mu(x)}\\,y\\right] = \\color{#FBEAA4}{\\mu(x)}Q(x) \\implies y(x) = \\frac{1}{\\mu(x)}\\!\\left(\\int \\mu(x)Q(x)\\,dx + C\\right)",
+            edgeCasesAndBridge:
+              "Watch out for division-by-zero coefficient singularities P(x) = 2/x splitting domains at x = 0 and trivial equilibrium loss y = 0 when n > 0; next, Chapter 3.1.10 scales linearity up to 2nd- and higher-order ODEs via the Wronskian.",
+          },
           labs: [
             {
               id: "lab-3-1-9a",

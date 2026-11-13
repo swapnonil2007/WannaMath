@@ -18,6 +18,8 @@ import { HomogeneousScalingRayLab } from "@/components/visualizations/multivaria
 import { EulersTheoremSecondOrderLab } from "@/components/visualizations/multivariable-differentiation/EulersTheoremSecondOrderLab";
 import { HessianSecondDerivativeTestLab } from "@/components/visualizations/multivariable-differentiation/HessianSecondDerivativeTestLab";
 import { GeneralMethodDegenerateExtremaLab } from "@/components/visualizations/multivariable-differentiation/GeneralMethodDegenerateExtremaLab";
+import { LinearOdeIntegratingFactorLab } from "@/components/visualizations/multivariable-differentiation/LinearOdeIntegratingFactorLab";
+import { BernoulliReductionLab } from "@/components/visualizations/multivariable-differentiation/BernoulliReductionLab";
 
 // Module 3.2 Live Laboratories (Integral Calculus: Multiple Integrals, Convergence & Eulerian Functions)
 import { RiemannVolumeLab } from "@/components/visualizations/double-integrals/RiemannVolumeLab";
@@ -229,6 +231,56 @@ export default async function ChapterPage({
         <div className="space-y-10">
           <HessianSecondDerivativeTestLab />
           <GeneralMethodDegenerateExtremaLab />
+        </div>
+      )}
+
+      {chapter.slug === "first-order-lde-bernoulli" && (
+        <div className="space-y-10">
+          <LinearOdeIntegratingFactorLab />
+          <BernoulliReductionLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
+              First-Order Solution Cookbook: LDE in y, LDE in x, and Bernoulli Reduction
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  1. STANDARD LDE IN y
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\frac{dy}{dx} + P(x)y = Q(x) \implies \mu(x) = e^{\int P(x)\,dx}"
+                    block
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. REVERSED LDE IN x
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\frac{dx}{dy} + P(y)x = Q(y) \implies x\,\mu(y) = \int \mu(y)Q(y)\,dy + C"
+                    block
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  3. BERNOULLI REDUCTION
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="y^{-n}y' + P y^{1-n} = Q \xrightarrow{v = y^{1-n}} \frac{dv}{dx} + (1-n)Pv = (1-n)Q"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       )}
 
