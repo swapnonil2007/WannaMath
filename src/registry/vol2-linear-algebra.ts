@@ -32,7 +32,7 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           title: "Vectors, Linear Combinations & Span in 2D/3D",
           subtitle:
             "Sweep scalar weights c₁v₁ + c₂v₂ to see when vectors span a line, a plane, or all of ℝ³.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: [],
           dimensionBadge: "2D + 3D",
@@ -41,6 +41,18 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
             "\\mathbf{w} = c_1\\mathbf{v}_1 + c_2\\mathbf{v}_2 + \\cdots + c_k\\mathbf{v}_k",
             "\\operatorname{span}\\{\\mathbf{v}_1, \\mathbf{v}_2\\}",
           ],
+          engineeringContext:
+            "Robotic workspace reachability, RGB/CMYK color gamut mixing, truss force equilibrium, and state-space reachability subspaces.",
+          pedagogicalRhythm: {
+            question:
+              "When can two or three vectors reach every point in 2D/3D space—and what geometric collapse occurs the moment one vector becomes redundant?",
+            labInteraction:
+              "Drag or type vector components and sweep weights c₁, c₂ (or c₃ in 3D), click any point b in 2D to solve b = c₁v₁ + c₂v₂, and test coplanar collapse in 3D.",
+            symbolicFormalizationLatex:
+              "\\mathbf{w} = \\color{#8D9FCE}{c_1\\mathbf{v}_1} + \\color{#96B898}{c_2\\mathbf{v}_2} \\;\\in\\; \\operatorname{span}\\{\\mathbf{v}_1,\\mathbf{v}_2\\}",
+            edgeCasesAndBridge:
+              "When vectors align (det = 0), span drops a dimension and only points directly on the collapsed line or plane are solvable! Independent spanning vectors form a basis in Chapter 2.1.2.",
+          },
           labs: [
             {
               id: "lab-2-1-1a",
@@ -60,7 +72,7 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           title: "Linear Independence, Basis & Change of Basis",
           subtitle:
             "Translate coordinates of the same physical point between standard basis (î, ĵ) and a custom oblique basis (b₁, b₂).",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["2.1.1"],
           dimensionBadge: "2D",
@@ -68,6 +80,18 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           keyEquationsLatex: [
             "[\\mathbf{x}]_{\\mathcal{B}} = P^{-1}\\mathbf{x}",
           ],
+          engineeringContext:
+            "Computer graphics camera-to-world transforms, robot end-effector frames, crystallographic lattices, and Principal Component coordinate axes.",
+          pedagogicalRhythm: {
+            question:
+              "If a physical point stays fixed in space while we tilt and stretch our coordinate grid axes, how do its numerical coordinates transform?",
+            labInteraction:
+              "Click either the oblique ℬ-coordinate space or physical Cartesian space overlaid with the B-lattice to watch x = P[x]_ℬ and [x]_ℬ = P⁻¹x update synchronously.",
+            symbolicFormalizationLatex:
+              "\\mathbf{x} = P[\\mathbf{x}]_{\\mathcal{B}}, \\qquad [\\mathbf{x}]_{\\mathcal{B}} = P^{-1}\\mathbf{x}, \\qquad P = [\\mathbf{b}_1\\mid\\mathbf{b}_2]",
+            edgeCasesAndBridge:
+              "If b₁ and b₂ collapse onto one line (det P = 0), P is singular and unique coordinates fail—leading to Nullspace & Column Space analysis in Chapter 2.1.3.",
+          },
           labs: [
             {
               id: "lab-2-1-2a",
@@ -87,7 +111,7 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           title: "The Four Fundamental Subspaces & Rank-Nullity",
           subtitle:
             "Visualize how matrix A maps Row Space bijectively to Column Space while collapsing Nullspace to the origin.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["2.1.2"],
           dimensionBadge: "2D + 3D",
@@ -96,6 +120,18 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
             "\\mathcal{R}(A^T) \\perp \\mathcal{N}(A), \\qquad \\mathcal{C}(A) \\perp \\mathcal{N}(A^T)",
             "\\operatorname{rank}(A) + \\dim \\mathcal{N}(A) = n",
           ],
+          engineeringContext:
+            "Underdetermined control actuator nullspaces, static structural indeterminacy vs. kinematic mechanisms, and Fredholm alternative solvability.",
+          pedagogicalRhythm: {
+            question:
+              "Every linear map Ax decomposes both domain ℝⁿ and codomain ℝᵐ into perpendicular pairs—how does Row Space carry all information while Nullspace vanishes?",
+            labInteraction:
+              "Click domain vector x to watch x = x_r + x_n split orthogonally across Row Space and Nullspace, then slide α along N(A) and verify Ax stays completely fixed in Column Space C(A).",
+            symbolicFormalizationLatex:
+              "A(\\mathbf{x}_r + \\mathbf{x}_n) = A\\mathbf{x}_r + \\mathbf{0}, \\qquad \\mathcal{R}(A^T) \\xrightarrow{\\;\\sim\\;} \\mathcal{C}(A)",
+            edgeCasesAndBridge:
+              "When rank(A) < m, outputs outside C(A) have a non-zero Left Nullspace component—which Module 2.2 resolves via orthogonal least-squares projection.",
+          },
           labs: [
             {
               id: "lab-2-1-3a",

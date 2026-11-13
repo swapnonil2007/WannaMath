@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Volume IV Phase 4 Published — **Volume I (`12/12` PUBLISHED) | Volume III (`24/24` PUBLISHED) | Volume IV (`8/8` PUBLISHED) — `61` Labs Live**
+> **Last Updated:** Volume II Phase 1 Published — **Vol I (`12/12`) | Vol II (`3/9`) | Vol III (`24/24`) | Vol IV (`8/8`) — `64` Labs Live**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -11,7 +11,7 @@
 | Volume | Slug | Accent Token | Modules | Chapters | Status |
 | :--- | :--- | :--- | :---: | :---: | :--- |
 | **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | **`published` (12/12 Published — 12 Labs Live)** |
-| **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
+| **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | **`in-progress` (3/9 Published — 3 Labs Live)** |
 | **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 24 | **`published` (24/24 Published — 41 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | **`published` (8/8 Published — 8 Labs Live)** |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | `planned` |

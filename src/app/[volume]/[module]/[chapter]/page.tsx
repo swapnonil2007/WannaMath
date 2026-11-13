@@ -88,6 +88,11 @@ import { NonlinearPhasePortraitLab } from "@/components/visualizations/different
 import { HeatEquationDiffusionLab } from "@/components/visualizations/differential-equations/HeatEquationDiffusionLab";
 import { WaveEquationModesLab } from "@/components/visualizations/differential-equations/WaveEquationModesLab";
 
+// Volume II — Module 2.1 Live Laboratories (Vectors, Span & The Fundamental Subspaces)
+import { VectorSpanExplorerLab } from "@/components/visualizations/linear-algebra/VectorSpanExplorerLab";
+import { ChangeOfBasisLab } from "@/components/visualizations/linear-algebra/ChangeOfBasisLab";
+import { FourSubspacesLab } from "@/components/visualizations/linear-algebra/FourSubspacesLab";
+
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
     volume: item.volume.slug,
@@ -2054,6 +2059,189 @@ export default async function ChapterPage({
                   On a square plate, symmetric pairs <KaTeXMath math="(m,n)" /> and{" "}
                   <KaTeXMath math="(n,m)" /> vibrate at identical frequency, combining into tilted,
                   curved, or loop-shaped stationary Chladni nodal contours.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "vectors-linear-combinations" && (
+        <div className="space-y-10">
+          <VectorSpanExplorerLab />
+
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="border-b border-[var(--border-subtle)] pb-3">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+                Linear Space Foundations • Module 2.1.1
+              </span>
+              <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                Linear Combinations, Subspace Span &amp; Linear Dependence
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. COLUMN PICTURE OF Ax = b
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="c_1\mathbf{v}_1 + c_2\mathbf{v}_2 = \mathbf{b}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Solving a linear system asks which scalar weights{" "}
+                  <KaTeXMath math="(c_1, c_2)" /> blend the columns{" "}
+                  <KaTeXMath math="\mathbf{v}_1, \mathbf{v}_2" /> tip-to-tail to hit target{" "}
+                  <KaTeXMath math="\mathbf{b}" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  2. DIMENSION OF SPAN
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\dim\operatorname{span}\{\mathbf{v}_1,\dots,\mathbf{v}_k\} = \operatorname{rank}([\mathbf{v}_1\cdots\mathbf{v}_k])" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Each genuinely new direction adds one degree of freedom: one non-zero vector gives
+                  a line, two non-collinear give a plane, and three non-coplanar fill{" "}
+                  <KaTeXMath math="\mathbb{R}^3" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                  3. REDUNDANCY &amp; COLLAPSE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\det[\mathbf{v}_1\;\mathbf{v}_2] = 0 \implies \text{Dependent}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Whenever one vector already lies inside the span of the others, signed area/volume
+                  drops to zero and targets outside that collapsed line or plane have no solution.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "basis-change-of-basis" && (
+        <div className="space-y-10">
+          <ChangeOfBasisLab />
+
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="border-b border-[var(--border-subtle)] pb-3">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+                Coordinate Frames • Module 2.1.2
+              </span>
+              <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                Why Every Basis Defines a Custom Coordinate Grid
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. BASIS MATRIX P (ℬ → STANDARD)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\mathbf{x} = P[\mathbf{x}]_{\mathcal{B}}, \qquad P = [\mathbf{b}_1\mid \mathbf{b}_2]" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Placing basis vectors <KaTeXMath math="\mathbf{b}_1, \mathbf{b}_2" /> as the
+                  columns of <KaTeXMath math="P" /> converts custom grid counts{" "}
+                  <KaTeXMath math="(c_1, c_2)" /> back into standard physical coordinates.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  2. INVERSE TRANSLATION (STANDARD → ℬ)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="[\mathbf{x}]_{\mathcal{B}} = P^{-1}\mathbf{x}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Solving for how many oblique grid tiles reach a physical point requires multiplying
+                  by <KaTeXMath math="P^{-1}" />, which exists if and only if{" "}
+                  <KaTeXMath math="\det(P)\neq 0" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  3. ORTHONORMAL ADVANTAGE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="Q^T Q = I \implies Q^{-1} = Q^T" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  When basis vectors are unit length and perpendicular, matrix inversion collapses to
+                  a simple dot-product transpose <KaTeXMath math="[\mathbf{x}]_Q = Q^T\mathbf{x}" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "four-fundamental-subspaces" && (
+        <div className="space-y-10">
+          <FourSubspacesLab />
+
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="border-b border-[var(--border-subtle)] pb-3">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+                Fundamental Theorem of Linear Algebra • Module 2.1.3
+              </span>
+              <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                Row Space, Nullspace, Column Space &amp; Orthogonal Complements
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. ORTHOGONAL SPLITTING
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\mathcal{R}(A^T) \perp \mathcal{N}(A), \qquad \mathcal{C}(A) \perp \mathcal{N}(A^T)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  By definition <KaTeXMath math="A\mathbf{x}_n = \mathbf{0}" /> means{" "}
+                  <KaTeXMath math="\mathbf{x}_n" /> is dot-product zero against every row of{" "}
+                  <KaTeXMath math="A" />—splitting <KaTeXMath math="\mathbb{R}^n" /> at{" "}
+                  <KaTeXMath math="90^\circ" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  2. RANK–NULLITY BALANCE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\dim\mathcal{C}(A) + \dim\mathcal{N}(A) = n" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Every input dimension either survives bijectively from Row Space into Column Space
+                  (<KaTeXMath math="r" /> dimensions) or collapses completely into Nullspace (
+                  <KaTeXMath math="n - r" /> dimensions).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                  3. COMPLETE SOLUTION STRUCTURE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\mathbf{x}_{\text{complete}} = \mathbf{x}_{\text{row}} + \mathbf{x}_{\text{null}}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Adding any vector from <KaTeXMath math="\mathcal{N}(A)" /> moves{" "}
+                  <KaTeXMath math="\mathbf{x}" /> along a hidden fiber while keeping{" "}
+                  <KaTeXMath math="A\mathbf{x}" /> completely stationary in <KaTeXMath math="\mathcal{C}(A)" />.
                 </p>
               </div>
             </div>
