@@ -162,11 +162,23 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           title: "Matrix Multiplication as Composition of Transformations",
           subtitle:
             "Follow where the basis columns [a₁ | a₂] land to read any 2×2 or 3×3 matrix geometrically.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["2.1.1"],
           dimensionBadge: "2D + 3D",
           accentHex: "#D35323",
+          engineeringContext:
+            "Every linear neural-network layer, robot arm forward-kinematic Jacobian, finite-element stiffness stencil, and 3D graphics pipeline composes transformations by stacking matrices from right to left.",
+          pedagogicalRhythm: {
+            question:
+              "How can we read any 2×2 matrix geometrically at a glance—and why does changing multiplication order from BA to AB land at a completely different point?",
+            labInteraction:
+              "Scrub the continuous homotopy I → A to deform the unit grid, inspect column landing vectors a₁ and a₂, and compare (BA)x against (AB)x side-by-side.",
+            symbolicFormalizationLatex:
+              "A\\mathbf{x} = \\color{#8D9FCE}{x\\,\\mathbf{a}_1} + \\color{#96B898}{y\\,\\mathbf{a}_2}, \\qquad (BA)\\mathbf{x} = B(A\\mathbf{x})",
+            edgeCasesAndBridge:
+              "When rank drops, grid cells collapse into lines or the origin—whose signed scaling factor is quantified by det(A) in Chapter 2.2.2.",
+          },
           keyEquationsLatex: [
             "A\\mathbf{x} = x\\,\\mathbf{a}_1 + y\\,\\mathbf{a}_2",
             "(BA)\\mathbf{x} = B(A\\mathbf{x})",
@@ -178,7 +190,7 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
               title: "Interactive Matrix Grid Homotopy & Composition Lab",
               componentKey: "MatrixTransformationLab",
               summary:
-                "Drag matrix column tips a₁, a₂ and compare AB vs. BA non-commutativity.",
+                "Animate the grid deformation I → A and compare (BA)x vs. (AB)x non-commutativity.",
               formulaLatex: "T(\\mathbf{x}) = A\\mathbf{x}",
               dimensionBadge: "2D",
             },
@@ -190,11 +202,23 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           title: "Determinants as Oriented Area & Parallelepiped Volume Scaling",
           subtitle:
             "See det(A) as the signed scaling factor of any region's area/volume and why det(A) = 0 collapses dimension.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["2.2.1"],
           dimensionBadge: "2D + 3D",
           accentHex: "#D35323",
+          engineeringContext:
+            "Jacobians in multivariable change-of-variables, finite-element mesh element quality checks, and 3D rigid-body inertia tensors all rely on det(A) to track volume distortion and orientation preservation.",
+          pedagogicalRhythm: {
+            question:
+              "What does det(A) actually measure in 2D and 3D space—and what geometric catastrophe happens when det(A) crosses zero?",
+            labInteraction:
+              "Adjust column vectors in 2D or 3D to watch the unit square/cube stretch, flip inside-out across the mirror boundary (det < 0), or flatten onto a rank-deficient line/plane (det = 0).",
+            symbolicFormalizationLatex:
+              "\\text{Vol}(A(\\Omega)) = |\\det A|\\cdot\\text{Vol}(\\Omega), \\qquad \\det[\\mathbf{a}_1\\;\\mathbf{a}_2\\;\\mathbf{a}_3] = \\mathbf{a}_1\\cdot(\\mathbf{a}_2\\times\\mathbf{a}_3)",
+            edgeCasesAndBridge:
+              "When det(A) = 0 or a system is overdetermined (m > n), exact inversion fails and we project orthogonally onto C(A) via Least Squares in Chapter 2.2.3.",
+          },
           keyEquationsLatex: [
             "\\text{Area}(A(S)) = |\\det A|\\cdot\\text{Area}(S)",
             "\\det[\\mathbf{a}_1\\;\\mathbf{a}_2\\;\\mathbf{a}_3] = \\mathbf{a}_1 \\cdot (\\mathbf{a}_2 \\times \\mathbf{a}_3)",
@@ -218,11 +242,23 @@ export const VOL2_LINEAR_ALGEBRA: VolumeMetadata = {
           title: "Orthogonality, Projections & Least-Squares Fitting",
           subtitle:
             "Project an unreachable vector b orthogonally onto Column Space C(A) so the residual e = b - Âx is perpendicular.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["2.1.3"],
           dimensionBadge: "2D + 3D",
           accentHex: "#8D9FCE",
+          engineeringContext:
+            "Linear regression, GPS trilateration, Kalman filter measurement updates, and sensor calibration all solve overdetermined systems Ax ≈ b by dropping the shortest perpendicular from b to C(A).",
+          pedagogicalRhythm: {
+            question:
+              "When an overdetermined data vector b lies outside the Column Space plane C(A), how do we find the unique closest vector p = A x̂ inside C(A)?",
+            labInteraction:
+              "Click or slide three experimental samples (tᵢ, yᵢ) in 2D data space while watching b ∈ ℝ³ cast its orthogonal shadow p = A x̂ onto C(A) in 3D.",
+            symbolicFormalizationLatex:
+              "\\mathbf{e} = \\mathbf{b} - A\\hat{\\mathbf{x}} \\in \\mathcal{C}(A)^\\perp = \\mathcal{N}(A^T) \\;\\Longrightarrow\\; A^T A\\,\\hat{\\mathbf{x}} = A^T\\mathbf{b}",
+            edgeCasesAndBridge:
+              "If all tᵢ coincide, columns become linearly dependent (AᵀA is singular) and slope d is undetermined; next, Module 2.3 reveals eigenvalues, diagonalization, and SVD.",
+          },
           keyEquationsLatex: [
             "A^T A\\,\\hat{\\mathbf{x}} = A^T\\mathbf{b}",
             "P = A(A^T A)^{-1}A^T",

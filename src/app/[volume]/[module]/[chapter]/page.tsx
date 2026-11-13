@@ -88,10 +88,13 @@ import { NonlinearPhasePortraitLab } from "@/components/visualizations/different
 import { HeatEquationDiffusionLab } from "@/components/visualizations/differential-equations/HeatEquationDiffusionLab";
 import { WaveEquationModesLab } from "@/components/visualizations/differential-equations/WaveEquationModesLab";
 
-// Volume II — Module 2.1 Live Laboratories (Vectors, Span & The Fundamental Subspaces)
+// Volume II — Module 2.1 & 2.2 Live Laboratories (Vectors, Subspaces, Matrices & Determinants)
 import { VectorSpanExplorerLab } from "@/components/visualizations/linear-algebra/VectorSpanExplorerLab";
 import { ChangeOfBasisLab } from "@/components/visualizations/linear-algebra/ChangeOfBasisLab";
 import { FourSubspacesLab } from "@/components/visualizations/linear-algebra/FourSubspacesLab";
+import { MatrixTransformationLab } from "@/components/visualizations/linear-algebra/MatrixTransformationLab";
+import { DeterminantVolumeLab } from "@/components/visualizations/linear-algebra/DeterminantVolumeLab";
+import { LeastSquaresProjectionLab } from "@/components/visualizations/linear-algebra/LeastSquaresProjectionLab";
 
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
@@ -2242,6 +2245,163 @@ export default async function ChapterPage({
                   Adding any vector from <KaTeXMath math="\mathcal{N}(A)" /> moves{" "}
                   <KaTeXMath math="\mathbf{x}" /> along a hidden fiber while keeping{" "}
                   <KaTeXMath math="A\mathbf{x}" /> completely stationary in <KaTeXMath math="\mathcal{C}(A)" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "matrix-transformations-2d-3d" && (
+        <div className="space-y-8">
+          <MatrixTransformationLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Column-Picture Theory: Matrix Multiplication as Transformation Composition
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  1. COLUMNS TRACK BASIS VECTORS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="A = [\,T(\hat{\imath}) \;\mid\; T(\hat{\jmath})\,] = [\,\mathbf{a}_1 \;\mid\; \mathbf{a}_2\,]" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Linearity means knowing where <KaTeXMath math="\hat{\imath}" /> and{" "}
+                  <KaTeXMath math="\hat{\jmath}" /> land uniquely determines where every grid line in{" "}
+                  <KaTeXMath math="\mathbb{R}^2" /> travels.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. LINEAR COMBINATION ACTION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="A\mathbf{x} = x\,\mathbf{a}_1 + y\,\mathbf{a}_2" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Multiplying <KaTeXMath math="A" /> by <KaTeXMath math="\mathbf{x}=[x,y]^T" /> blends the
+                  transformed columns with the exact original weights <KaTeXMath math="x,y" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  3. NON-COMMUTATIVE COMPOSITION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="(BA)\mathbf{x} = B(A\mathbf{x}) \neq (AB)\mathbf{x}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  The product <KaTeXMath math="BA" /> applies <KaTeXMath math="A" /> first and{" "}
+                  <KaTeXMath math="B" /> second (right-to-left); swapping order rotates or shears along different axes.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "determinants-volume-scaling" && (
+        <div className="space-y-8">
+          <DeterminantVolumeLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Signed Measure Theory: Orientation, Cross Products & Singularity
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  1. AREA & VOLUME SCALING FACTOR
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\text{Vol}(A(\Omega)) = |\det A|\cdot\text{Vol}(\Omega)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Any unit square or unit cube is stretched uniformly in measure by{" "}
+                  <KaTeXMath math="|\det A|" />, making <KaTeXMath math="\det" /> the linear core of the Jacobian.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                  2. HANDEDNESS & ORIENTATION FLIP
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\det[\mathbf{a}_1\;\mathbf{a}_2\;\mathbf{a}_3] = \mathbf{a}_1\cdot(\mathbf{a}_2\times\mathbf{a}_3)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Positive determinants preserve right-handed orientation; negative determinants turn space inside-out
+                  through a mirror reflection.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. SINGULAR COLLAPSE & PRODUCTS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\det(A)=0 \iff \text{rank}(A) < n" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  When columns become linearly dependent, the parallelepiped flattens to zero volume and{" "}
+                  <KaTeXMath math="A^{-1}" /> ceases to exist.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "orthogonality-least-squares" && (
+        <div className="space-y-8">
+          <LeastSquaresProjectionLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Projection & Normal Equations: Orthogonal Decomposition in Overdetermined Systems
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  1. PERPENDICULAR RESIDUAL
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\mathbf{e} = \mathbf{b} - A\hat{\mathbf{x}} \in \mathcal{C}(A)^\perp = \mathcal{N}(A^T)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  The shortest distance from an unreachable target <KaTeXMath math="\mathbf{b}" /> to{" "}
+                  <KaTeXMath math="\mathcal{C}(A)" /> drops orthogonally onto the subspace plane.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. THE NORMAL EQUATIONS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="A^T A\,\hat{\mathbf{x}} = A^T\mathbf{b}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Setting <KaTeXMath math="A^T(\mathbf{b}-A\hat{\mathbf{x}})=\mathbf{0}" /> converts an unsolvable{" "}
+                  <KaTeXMath math="m\times n" /> system into a square symmetric system.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. PROJECTION OPERATOR
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="P = A(A^T A)^{-1}A^T,\quad P^2 = P" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Idempotency (<KaTeXMath math="P^2=P" />) and symmetry (<KaTeXMath math="P^T=P" />) ensure projecting
+                  an already projected vector leaves it unchanged.
                 </p>
               </div>
             </div>

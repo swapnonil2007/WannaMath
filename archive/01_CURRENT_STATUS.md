@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Volume II Phase 1 PUBLISHED (`12/12` Vol I + `3/9` Vol II + `24/24` Vol III + `8/8` Vol IV = `47` Chapters & `64` Labs Live)**
+> **Last Updated:** 2026-11-13 — **Volume II Phase 2 PUBLISHED (`12/12` Vol I + `6/9` Vol II + `24/24` Vol III + `8/8` Vol IV = `50` Chapters & `67` Labs Live)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -32,7 +32,8 @@
 | **Volume IV — Phase 3 (Module 4.3)** | `6df03c6` | **PUBLISHED** | Published **Module 4.3 (`phase-plane-systems`)**: `4.3.1` (`TraceDeterminantPhaseLab`: Poincaré $(\tau, \Delta)$ plane & eigenvector manifolds) and `4.3.2` (`NonlinearPhasePortraitLab`: nullclines, Van der Pol limit cycles, Hartman–Grobman Jacobians) (`6/8` Vol IV chapters, `57` labs live). |
 | **Vector Calculus Gradient & Directional Derivative Calculators** | `2c4370d` | **PUBLISHED** | Added dedicated `3.3.1` (`gradient-of-scalar-fields`: `VectorGradientCalculatorLab`) and `3.3.2` (`directional-derivatives`: `DirectionalDerivativeCalculatorLab`) chapters inside **Module 3.3 (`vector-calculus`)**, supporting custom 2D `f(x,y)` & 3D `φ(x,y,z)` function inputs, arbitrary evaluation points `P`, direction vectors `v`, marching-tetrahedra 3D level surfaces, vertical slicing planes, 1D ray profiles, and step-by-step worked derivations (`24/24` Vol III chapters, `59` labs live). |
 | **Volume IV — Phase 4 (Module 4.4)** | `329466f` | **PUBLISHED** | Published **Module 4.4 (`partial-differential-equations`)**: `4.4.1` (`HeatEquationDiffusionLab`: 3D space–time sheet, Dirichlet/Neumann Fourier series & $n^2$ mode damping) and `4.4.2` (`WaveEquationModesLab`: 1D D'Alembert odd-extension pulse reflections & 2D square drumhead Chladni nodal curves), completing **all `8/8` chapters of Volume IV** (`61` labs live). |
-| **Volume II — Phase 1 (Module 2.1)** | *Current* | **PUBLISHED** | Authored [`VOLUME_2_PLAN.md`](./volumes/vol_02_linear_algebra/VOLUME_2_PLAN.md) & published **Module 2.1 (`vectors-subspaces`)**: `2.1.1` (`VectorSpanExplorerLab`), `2.1.2` (`ChangeOfBasisLab`), and `2.1.3` (`FourSubspacesLab`) (`3/9` Vol II chapters, `64` labs live). |
+| **Volume II — Phase 1 (Module 2.1)** | `286299d` | **PUBLISHED** | Authored [`VOLUME_2_PLAN.md`](./volumes/vol_02_linear_algebra/VOLUME_2_PLAN.md) & published **Module 2.1 (`vectors-subspaces`)**: `2.1.1` (`VectorSpanExplorerLab`), `2.1.2` (`ChangeOfBasisLab`), and `2.1.3` (`FourSubspacesLab`) (`3/9` Vol II chapters, `64` labs live). |
+| **Volume II — Phase 2 (Module 2.2)** | *Current* | **PUBLISHED** | Published **Module 2.2 (`linear-transformations`)**: `2.2.1` (`MatrixTransformationLab`), `2.2.2` (`DeterminantVolumeLab`), and `2.2.3` (`LeastSquaresProjectionLab`) (`6/9` Vol II chapters, `67` labs live). |
 
 ---
 
@@ -45,6 +46,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume II — Phase 2: Matrices & Determinants Next)
-**Volume I (`12/12`)**, **Volume III (`24/24`)**, and **Volume IV (`8/8`)** are 100% published, and **Volume II Module 2.1 (`3/9`)** is now live (`47` chapters, `64` interactive labs live).
-- **Active Planned Sequence:** Execute **Volume II — Phase 2 (`Module 2.2`: Matrices as Linear Transformations & Determinants)** (`MatrixTransformationLab`, `DeterminantVolumeLab`, `LeastSquaresProjectionLab`) per [`VOLUME_2_PLAN.md`](./volumes/vol_02_linear_algebra/VOLUME_2_PLAN.md). *(Volumes V & VI queued after Volume II).*
+## 3. Immediate Next Step (Volume II — Phase 3: Eigenvalues, Diagonalization & SVD Next)
+**Volume I (`12/12`)**, **Volume III (`24/24`)**, and **Volume IV (`8/8`)** are 100% published, and **Volume II Modules 2.1–2.2 (`6/9`)** are now live (`50` chapters, `67` interactive labs live).
+- **Active Planned Sequence:** Execute **Volume II — Phase 3 (`Module 2.3`: Eigenvalues, Spectral Theory & SVD)** (`EigenTransformExplorerLab`, `SymmetricDiagonalizationLab`, `SvdGeometryLab`) per [`VOLUME_2_PLAN.md`](./volumes/vol_02_linear_algebra/VOLUME_2_PLAN.md). *(Volumes V & VI queued after Volume II).*
