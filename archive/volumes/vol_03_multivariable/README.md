@@ -21,7 +21,9 @@ All 4 foundational chapters of **Module 3.1** are live, and a **6-Phase Differen
    - Labs: `HessianSecondDerivativeTestLab`, `GeneralMethodDegenerateExtremaLab` (`src/components/visualizations/multivariable-differentiation/`)
 9. **Chapter `3.1.9` — First-Order ODEs: LDE, Integrating Factors & Bernoulli's Equation (`first-order-lde-bernoulli`)** *(Published — Phase 4, Nested Differential Equations Sub-Parent)*
    - Labs: `LinearOdeIntegratingFactorLab`, `BernoulliReductionLab` (`src/components/visualizations/multivariable-differentiation/`)
-10. **Queued Expansion Chapters (`3.1.10` – `3.1.11`, Nested Differential Equations Sub-Parent):** See [`DIFFERENTIAL_CALCULUS_PLAN.md`](./DIFFERENTIAL_CALCULUS_PLAN.md) Phases 5–6.
+10. **Chapter `3.1.10` — Linear ODEs: Linear Independence, Wronskian & Root Regimes (`linear-odes-wronskian-roots`)** *(Published — Phase 5, Nested Differential Equations Sub-Parent)*
+   - Labs: `WronskianPhaseAreaLab`, `CharacteristicRootsSolutionLab` (`src/components/visualizations/multivariable-differentiation/`)
+11. **Queued Final Expansion Chapter (`3.1.11`, Nested Differential Equations Sub-Parent):** See [`DIFFERENTIAL_CALCULUS_PLAN.md`](./DIFFERENTIAL_CALCULUS_PLAN.md) Phase 6.
 
 ---
 

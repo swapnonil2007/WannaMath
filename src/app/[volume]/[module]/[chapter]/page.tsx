@@ -20,6 +20,8 @@ import { HessianSecondDerivativeTestLab } from "@/components/visualizations/mult
 import { GeneralMethodDegenerateExtremaLab } from "@/components/visualizations/multivariable-differentiation/GeneralMethodDegenerateExtremaLab";
 import { LinearOdeIntegratingFactorLab } from "@/components/visualizations/multivariable-differentiation/LinearOdeIntegratingFactorLab";
 import { BernoulliReductionLab } from "@/components/visualizations/multivariable-differentiation/BernoulliReductionLab";
+import { WronskianPhaseAreaLab } from "@/components/visualizations/multivariable-differentiation/WronskianPhaseAreaLab";
+import { CharacteristicRootsSolutionLab } from "@/components/visualizations/multivariable-differentiation/CharacteristicRootsSolutionLab";
 
 // Module 3.2 Live Laboratories (Integral Calculus: Multiple Integrals, Convergence & Eulerian Functions)
 import { RiemannVolumeLab } from "@/components/visualizations/double-integrals/RiemannVolumeLab";
@@ -278,6 +280,69 @@ export default async function ChapterPage({
                     block
                   />
                 </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "linear-odes-wronskian-roots" && (
+        <div className="space-y-10">
+          <WronskianPhaseAreaLab />
+          <CharacteristicRootsSolutionLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
+              Second-Order Characteristic Root Atlas (<KaTeXMath math="\Delta = b^2 - 4ac" />)
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. DISTINCT REAL ROOTS (Δ &gt; 0)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="y_c(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x} \quad (W(x) \propto e^{(r_1+r_2)x})"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Two independent exponential modes produce overdamped decay when{" "}
+                  <KaTeXMath math="r_1, r_2 < 0" /> or a hyperbolic saddle when signs oppose.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  2. REPEATED ROOT (Δ = 0)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="y_c(x) = (C_1 + C_2 x)e^{rx} \quad \Bigl(x e^{rx} = \lim_{\varepsilon\to 0}\frac{e^{(r+\varepsilon)x}-e^{rx}}{\varepsilon}\Bigr)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Critical damping returns fastest without oscillation while preserving{" "}
+                  <KaTeXMath math="W(e^{rx}, xe^{rx}) = e^{2rx} \neq 0" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  3. COMPLEX CONJUGATE ROOTS (Δ &lt; 0)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="r = \alpha \pm i\beta \implies y_c(x) = e^{\alpha x}(C_1\cos\beta x + C_2\sin\beta x)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Euler&apos;s formula converts complex exponential poles into damped oscillations
+                  of envelope <KaTeXMath math="e^{\alpha x}" /> and angular frequency{" "}
+                  <KaTeXMath math="\beta" />.
+                </p>
               </div>
             </div>
           </section>

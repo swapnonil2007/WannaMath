@@ -448,7 +448,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Linear ODEs: Linear Independence, Wronskian & Root Regimes",
           subtitle:
             "Measure linear independence via the Wronskian area W(y₁, y₂) and construct general and particular solutions for distinct, repeated, and complex characteristic roots.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 40,
           prerequisites: ["3.1.9"],
           dimensionBadge: "2D",
@@ -462,6 +462,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "W(y_1, y_2)(x) = \\begin{vmatrix} y_1 & y_2 \\\\ y_1' & y_2' \\end{vmatrix} = W(x_0)e^{-\\int \\frac{b}{a}dx}",
             "y_c(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x} \\;\\big|\\; (C_1 + C_2 x)e^{rx} \\;\\big|\\; e^{\\alpha x}(C_1\\cos\\beta x + C_2\\sin\\beta x)",
           ],
+          engineeringContext:
+            "Mechanical spring-mass-damper suspension tuning (overdamped, critically damped, underdamped), RLC circuit resonance, and structural vibration poles.",
+          pedagogicalRhythm: {
+            question:
+              "When do two solutions y₁ and y₂ truly span the entire 2D solution space of a second-order ODE—and why does a repeated root r₁ = r₂ force an extra factor of x into the second basis function?",
+            labInteraction:
+              "Animate the sliding probe x₀ in Lab 3.1.10A to watch the Wronskian determinant trace out signed phase-plane parallelogram area, then scrub a, b, c and toggle the repeated-root limit morph in Lab 3.1.10B.",
+            symbolicFormalizationLatex:
+              "a r^2 + b r + c = 0 \\implies \\begin{cases} \\Delta > 0: & C_1 e^{r_1 x} + C_2 e^{r_2 x} \\\\ \\Delta = 0: & (C_1 + C_2 x)e^{rx} \\\\ \\Delta < 0: & e^{\\alpha x}(C_1\\cos\\beta x + C_2\\sin\\beta x) \\end{cases}",
+            edgeCasesAndBridge:
+              "At a repeated root Δ = 0, naive e^{rx} gives W ≡ 0 unless scaled by reduction of order via the limit (e^{(r+ε)x} - e^{rx})/ε → x e^{rx}; next, Chapter 3.1.11 solves non-homogeneous forcing g(x) and Cauchy-Euler equations.",
+          },
           labs: [
             {
               id: "lab-3-1-10a",
