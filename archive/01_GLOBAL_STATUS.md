@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Volume VI Phase 1 Published — **Vol I (`12/12`) | Vol II (`9/9`) | Vol III (`24/24`) | Vol IV (`8/8`) | Vol V (`8/8`) | Vol VI (`2/4`) — `80` Labs Live**
+> **Last Updated:** All 6 Volumes 100% Published — **Vol I (`12/12`) | Vol II (`9/9`) | Vol III (`24/24`) | Vol IV (`8/8`) | Vol V (`8/8`) | Vol VI (`4/4`) — `65` Chapters & `82` Labs Live**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -15,7 +15,7 @@
 | **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 24 | **`published` (24/24 Published — 41 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | **`published` (8/8 Published — 8 Labs Live)** |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | **`published` (8/8 Published — 8 Labs Live)** |
-| **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | **`in-progress` (2/4 Published — 2 Labs Live)** |
+| **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | **`published` (4/4 Published — 4 Labs Live)** |
 
 ---
 

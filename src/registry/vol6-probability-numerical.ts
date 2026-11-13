@@ -122,11 +122,23 @@ export const VOL6_PROBABILITY_NUMERICAL: VolumeMetadata = {
           title: "Trapezoidal, Simpson's & Gauss-Legendre Quadrature",
           subtitle:
             "Compare equispaced Newton-Cotes rules against optimal Gauss-Legendre nodes that integrate degree-(2n-1) polynomials exactly.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["1.2.4", "1.3.1"],
           dimensionBadge: "2D",
           accentHex: "#8D9FCE",
+          engineeringContext:
+            "Finite-element stiffness matrix assembly, robotic trajectory arc-length computation, and aerospace aerodynamic pressure integration.",
+          pedagogicalRhythm: {
+            question:
+              "Why can just n = 3 optimally placed Gauss–Legendre nodes integrate every degree-5 polynomial to machine precision, while equispaced Trapezoidal panels stall at O(h²)?",
+            labInteraction:
+              "Switch among Midpoint, Trapezoidal, Simpson 1/3, and Gauss–Legendre rules across N ∈ [2, 16] while watching panel geometry and log₁₀|Error| vs. log₁₀ N slope.",
+            symbolicFormalizationLatex:
+              "\\int_{-1}^{1} f(x)\\,dx \\approx \\sum_{i=1}^{n} w_i\\,f(x_i), \\qquad P_n(x_i) = 0",
+            edgeCasesAndBridge:
+              "Select Polynomial Degree 5 and slide N = 2 → 3 under Gauss–Legendre to witness an instantaneous plunge to 10⁻¹³! Next, carry Simpson's midpoint insight into ODE stepping.",
+          },
           keyEquationsLatex: [
             "\\int_{-1}^{1} f(x)\\,dx \\approx \\sum_{i=1}^{n} w_i\\,f(x_i)",
           ],
@@ -149,11 +161,23 @@ export const VOL6_PROBABILITY_NUMERICAL: VolumeMetadata = {
           title: "Euler, Heun & Runge-Kutta (RK4) Trajectory Stepping",
           subtitle:
             "Inspect the four intermediate slope probes (k₁, k₂, k₃, k₄) inside a single step h to see how RK4 achieves fourth-order accuracy.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["4.1.1", "6.2.1"],
           dimensionBadge: "2D",
           accentHex: "#D35323",
+          engineeringContext:
+            "Orbital propagator integration, flight dynamics simulation, autonomous vehicle MPC rollouts, and thermal transient circuit solvers.",
+          pedagogicalRhythm: {
+            question:
+              "Why does Euler drift rapidly off curved trajectories—and how do four intermediate slope probes (k₁, k₂, k₃, k₄) with weights (1, 2, 2, 1)/6 achieve O(h⁴) global accuracy?",
+            labInteraction:
+              "Coarsen step size h ∈ [0.15, 1.1] and scrub the magnified step index [t_n, t_n + h] to compare global trajectories alongside all four live slope needles k₁..k₄.",
+            symbolicFormalizationLatex:
+              "y_{n+1} = y_n + \\frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)",
+            edgeCasesAndBridge:
+              "Test the Stiff Relaxation preset near h = 0.75: Forward Euler crosses 2/|λ| and oscillates violently while RK4 tracks the decaying solution—closing all 6 textbook volumes!",
+          },
           keyEquationsLatex: [
             "y_{n+1} = y_n + \\frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)",
           ],

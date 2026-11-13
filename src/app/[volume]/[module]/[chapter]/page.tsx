@@ -109,9 +109,11 @@ import { ConvolutionFlipSlideLab } from "@/components/visualizations/transforms-
 import { FourierSeriesGibbsLab } from "@/components/visualizations/transforms-complex/FourierSeriesGibbsLab";
 import { FourierTransformWindingLab } from "@/components/visualizations/transforms-complex/FourierTransformWindingLab";
 
-// Volume VI — Module 6.1 Live Laboratories (Engineering Probability & Joint Distributions)
+// Volume VI — Modules 6.1–6.2 Live Laboratories (Complete Probability & Numerical Methods)
 import { PDFCDFMomentLab } from "@/components/visualizations/probability-numerical/PDFCDFMomentLab";
 import { BivariateGaussianLab } from "@/components/visualizations/probability-numerical/BivariateGaussianLab";
+import { NumericalQuadratureLab } from "@/components/visualizations/probability-numerical/NumericalQuadratureLab";
+import { RungeKuttaSlopeLab } from "@/components/visualizations/probability-numerical/RungeKuttaSlopeLab";
 
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
@@ -3093,6 +3095,110 @@ export default async function ChapterPage({
                 <p className="text-xs text-[var(--text-secondary)] font-math-serif">
                   Spectral eigenvectors of <KaTeXMath math="\Sigma" /> orient the uncertainty ellipses dynamically as{" "}
                   <KaTeXMath math="\rho" /> varies.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "numerical-quadrature-error" && (
+        <div className="space-y-8">
+          <NumericalQuadratureLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Newton–Cotes Error Cancellation &amp; Legendre Orthogonality
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. SECOND-ORDER NEWTON–COTES
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="E_{\text{Trap}} = -\frac{(b-a)}{12}h^2 f''(\xi) = O(h^2)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Both Midpoint and Trapezoidal fit constant or linear segments, leaving quadratic curvature errors
+                  whose magnitude halves by 4× whenever step size <KaTeXMath math="h" /> is halved.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  2. SIMPSON&apos;S BONUS ORDER O(h⁴)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\frac{1}{3}T + \frac{2}{3}M = S \implies E_S = -\frac{(b-a)}{180}h^4 f^{(4)}(\xi)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Symmetric weighting cancels cubic error terms automatically, integrating degree-3 cubics exactly
+                  with parabolic arcs.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. GAUSS–LEGENDRE DEGREE 2n−1
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="P_n(x_i) = 0 \implies \int_{-1}^{1} p_{2n-1}(x)\,dx = \sum_{i=1}^n w_i p_{2n-1}(x_i)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Freeing node locations doubles polynomial exactness from <KaTeXMath math="n-1" /> to{" "}
+                  <KaTeXMath math="2n-1" />, clustering points near <KaTeXMath math="\pm 1" /> to tame endpoint oscillations.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "runge-kutta-ode-solvers" && (
+        <div className="space-y-8">
+          <RungeKuttaSlopeLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Taylor Matching, Simpson Equivalence &amp; Step Stability
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. EULER VS. HEUN PREDICTOR
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="y_{n+1}^{\text{Heun}} = y_n + \frac{h}{2}\!\left(f(t_n,y_n) + f(t_{n+1}, y_n + h k_1)\right)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Euler freezes the left-edge slope across the entire interval (<KaTeXMath math="O(h)" /> global error),
+                  whereas Heun averages start and predicted-end tangents (<KaTeXMath math="O(h^2)" />).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  2. BUTCHER WEIGHTS &amp; SIMPSON LINK
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\bar{k} = \frac{1}{6}(k_1 + 2k_2 + 2k_3 + k_4) \xrightarrow{f(t)} \text{Simpson's } \frac{1}{3}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Sampling two refined midpoint slopes (<KaTeXMath math="k_2, k_3" />) doubles midpoint weight to match
+                  exact Taylor derivatives through <KaTeXMath math="h^4" /> (<KaTeXMath math="O(h^4)" /> global).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. NUMERICAL STABILITY REGION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="y' = \lambda y \implies |1 + h\lambda| \le 1 \;\;(\text{Euler}), \quad |R_{\text{RK4}}(h\lambda)| \le 1" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Stiff equations force explicit Euler below <KaTeXMath math="h = 2/|\lambda|" />; exceeding this threshold
+                  triggers exponentially growing sign-flipping oscillations.
                 </p>
               </div>
             </div>
