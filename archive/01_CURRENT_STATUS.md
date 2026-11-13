@@ -39,7 +39,8 @@
 | **Volume V — Phase 1 (Module 5.1)** | `cbdb1ad` | **PUBLISHED** | Published **Module 5.1 (`complex-functions-conformal`)**: `5.1.1` (`EulerHelixPhasorLab`) & `5.1.2` (`ConformalMappingLab`) (`2/8` Vol V chapters, `72` labs live). |
 | **Volume V — Phase 2 (Module 5.2)** | `145786f` | **PUBLISHED** | Published **Module 5.2 (`contour-integration`)**: `5.2.1` (`CauchyContourLab`) & `5.2.2` (`ResidueTheoremLab`) (`4/8` Vol V chapters, `74` labs live). |
 | **Volume V — Phase 3 (Module 5.3)** | `6b52a20` | **PUBLISHED** | Published **Module 5.3 (`laplace-transforms`)**: `5.3.1` (`LaplaceSPlane3DLab`) & `5.3.2` (`ConvolutionFlipSlideLab`) (`6/8` Vol V chapters, `76` labs live). |
-| **Volume V — Phase 4 (Module 5.4)** | *Current* | **PUBLISHED** | Published **Module 5.4 (`fourier-analysis`)**: `5.4.1` (`FourierSeriesGibbsLab`) & `5.4.2` (`FourierTransformWindingLab`), completing **all `8/8` chapters of Volume V** (`78` labs live). |
+| **Volume V — Phase 4 (Module 5.4)** | `16485db` | **PUBLISHED** | Published **Module 5.4 (`fourier-analysis`)**: `5.4.1` (`FourierSeriesGibbsLab`) & `5.4.2` (`FourierTransformWindingLab`), completing **all `8/8` chapters of Volume V** (`78` labs live). |
+| **Volume VI — Planning** | *Current* | **PLANNED** | Authored 2-phase Volume VI blueprint [`VOLUME_6_PLAN.md`](./volumes/vol_06_probability_numerical/VOLUME_6_PLAN.md) & [`README.md`](./volumes/vol_06_probability_numerical/README.md) (`6.1`–`6.2`). |
 
 ---
 
@@ -52,6 +53,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume VI: Probability, Statistics & Numerical Methods Next)
+## 3. Immediate Next Step (Volume VI — Phase 1: Engineering Probability & Joint Distributions Next)
 **Volumes I (`12/12`), II (`9/9`), III (`24/24`), IV (`8/8`), and V (`8/8`)** are now **100% published** (`61` chapters, `78` interactive labs live).
-- **Active Planned Sequence:** Plan & execute **Volume VI (`probability-numerical-methods`)** (`6.1` Probability Distributions & Bayesian Inference, `6.2` Numerical Analysis & Monte Carlo Simulation) to finish all 6 Volumes of `wanna math` v2.0.
+- **Active Planned Sequence:** Execute **Volume VI — Phase 1 (`Module 6.1`: Engineering Probability & Joint Distributions)** (`PDFCDFMomentLab`, `BivariateGaussianLab`) per [`VOLUME_6_PLAN.md`](./volumes/vol_06_probability_numerical/VOLUME_6_PLAN.md), followed by Phase 2 (`Module 6.2`) to complete all 6 Volumes of `wanna math` v2.0.
