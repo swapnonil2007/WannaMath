@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Volume III (`Multivariable & Vector Calculus`) 100% PUBLISHED (`15/15` Chapters, `21` Interactive Labs Live)**
+> **Last Updated:** 2026-11-13 — **Differential Calculus Phase 1 PUBLISHED (`16/22` Volume III Chapters, `23` Interactive Labs Live)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -15,20 +15,22 @@
 | **v2.0 Track 1 (Phase B)** | `4747a9f` | **COMPLETED** | Extracted shared visualization & numerical quadrature primitives in `src/components/visualizations/primitives/`: `ThreeOrbitViewport.tsx`, `threeScenePrimitives.ts` (`mathToThreeVec3`, `disposeThreeObject`, `createCoordinateAxesAndGrid`, `createParametricSurfaceMesh`, `createVectorArrow3D`), `SvgCoordinatePlane2D.tsx`, `contourMarchingSquares.ts` (`extractLevelCurveSegments`), and `quadrature.ts` (`integrate1DGaussLegendre`, `integrate2DIterated`, `integrate3DIterated`, `computePartialDerivatives2D`, `computeJacobian2D`). Integrated `computeJacobian2D` into `DualGridMorphingAndTangentLab.tsx` and `JacobianIntegralPullbackLab.tsx`. |
 | **v2.0 Track 2 (Phase C)** | `c6d4bc1` | **PUBLISHED** | Built and published all 4 chapters and 4 interactive laboratories of **Volume III, Module 3.1 (`multivariable-differentiation`)**: Chapter `3.1.1` (`SurfaceContourSlicerLab.tsx`), Chapter `3.1.2` (`PartialDerivativeTangentPlaneLab.tsx`), Chapter `3.1.3` (`GradientDirectionalDerivativeLab.tsx`), and Chapter `3.1.4` (`LagrangeMultipliersLab.tsx`), wired into `src/app/[volume]/[module]/[chapter]/page.tsx` and marked `'published'` in `src/registry/vol3-multivariable.ts`. |
 | **v2.0 Track 3 (Phase D)** | `5aa336c` | **PUBLISHED** | Built and published all 5 chapters and 5 interactive laboratories of **Volume III, Module 3.3 (`vector-calculus`)**: `DivCurlProbeLab.tsx` (`3.3.1`), `LineIntegralWorkLab.tsx` (`3.3.2`), `GreensTheoremLab.tsx` (`3.3.3`), `SurfaceFluxLab.tsx` (`3.3.4`), and `StokesDivergenceLab.tsx` (`3.3.5`). |
-| **Module 3.2 Integral Calculus Expansion** | *Current* | **PUBLISHED** | Unified Module `3.2` under **Integral Calculus (`integral-calculus`)** (with permanent redirects from `multiple-integrals`), added `gammaReal` and `betaReal` primitives in `quadrature.ts`, and published Chapter `3.2.5` (`convergence-and-divergence`: `ImproperIntegralConvergenceLab.tsx`, `ConvergenceTestsTutorialLab.tsx`) and Chapter `3.2.6` (`gamma-and-beta-functions`: `GammaFunctionLab.tsx`, `BetaFunctionLab.tsx`). |
+| **Module 3.2 Integral Calculus Expansion** | `ec1ff6b` | **PUBLISHED** | Unified Module `3.2` under **Integral Calculus (`integral-calculus`)** (with permanent redirects from `multiple-integrals`), added `gammaReal` and `betaReal` primitives in `quadrature.ts`, and published Chapter `3.2.5` (`convergence-and-divergence`: `ImproperIntegralConvergenceLab.tsx`, `ConvergenceTestsTutorialLab.tsx`) and Chapter `3.2.6` (`gamma-and-beta-functions`: `GammaFunctionLab.tsx`, `BetaFunctionLab.tsx`). |
+| **Differential Calculus Phase 1** | *Current* | **PUBLISHED** | Unified Module `3.1` under **Differential Calculus (`differential-calculus`)** with permanent redirects from `multivariable-differentiation`, added `subParent` grouping metadata & UI across `types.ts`, `ModulePage`, and `TextbookSidebar.tsx`, registered roadmap chapters `3.1.5`–`3.1.11`, and published Chapter `3.1.5` (`limits-and-differentiability`: `MultivariableLimitsPathsLab.tsx`, `DifferentiabilityErrorConeLab.tsx`). |
 
 ---
 
 ## 2. Partially Migrated Files / In-Progress Components Audit
 
-- **Uncommitted / Broken / In-Progress Components:** **None.** `npx tsc --noEmit` and `npm run build` pass with zero errors.
+- **Uncommitted / Broken / In-Progress Components:** **None.**
 - **Legacy Route Files Note (`src/app/calculus/*`):**
-  - `next.config.ts` permanently redirects `/calculus` $\rightarrow$ `/multivariable-calculus`, `/calculus/:slug` $\rightarrow$ `/multivariable-calculus/integral-calculus/:slug`, and `/multivariable-calculus/multiple-integrals(/*)` $\rightarrow$ `/multivariable-calculus/integral-calculus(/*)`.
+  - `next.config.ts` permanently redirects `/calculus` $\rightarrow$ `/multivariable-calculus`, `/calculus/:slug` $\rightarrow$ `/multivariable-calculus/integral-calculus/:slug`, `/multivariable-calculus/multiple-integrals(/*)` $\rightarrow$ `/multivariable-calculus/integral-calculus(/*)`, and `/multivariable-calculus/multivariable-differentiation(/*)` $\rightarrow$ `/multivariable-calculus/differential-calculus(/*)`.
   - The legacy files under `src/app/calculus/` (`page.tsx`, `double-integrals/page.tsx`, `triple-integrals/page.tsx`, `coordinate-systems/page.tsx`, `jacobians/page.tsx`) and `src/registry/curriculum.ts` (compat re-export layer) are intentionally retained as zero-error static fallbacks and compile cleanly.
 
 ---
 
-## 3. Next Expansion Options
-With **Volume III (`Multivariable & Vector Calculus`)** 100% published (`15/15` chapters, `21` interactive labs), the next recommended expansion tracks are:
-1. **Volume I (`single-variable-calculus`):** Limits & Continuity (`1.1`), Differential Calculus (`1.2`), Single-Variable Integration (`1.3`), and Infinite Series (`1.4`).
-2. **Volume II (`linear-algebra`):** Vectors & Subspaces (`2.1`), Linear Transformations & Determinants (`2.2`), and Eigen-Systems & SVD (`2.3`).
+## 3. Immediate Next Step (Before Touching Volume I)
+We are continuing within **Volume III (`multivariable-calculus`)** before starting **Volume I (`single-variable-calculus`)**:
+- **Execute Phase 2 of [`DIFFERENTIAL_CALCULUS_PLAN.md`](./volumes/vol_03_multivariable/DIFFERENTIAL_CALCULUS_PLAN.md):**
+  1. Build and publish **Chapter `3.1.6` (`taylor-expansions`)** with `SingleVariableTaylorLab` and `MultivariableTaylorHessianLab`.
+  2. Deepen **Chapter `3.1.2` (`partial-derivatives-tangent-planes`)** by adding `HigherOrderChainImplicitLab` (mixed partials, Clairaut's Theorem + counterexample, multivariable Chain Rule, and Implicit Differentiation).

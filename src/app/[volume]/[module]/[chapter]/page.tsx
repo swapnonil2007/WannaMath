@@ -4,11 +4,13 @@ import { getAllResolvedChapters, getChapterBySlugs } from "@/registry/index";
 import { TopicPageShell } from "@/components/layout/TopicPageShell";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 
-// Module 3.1 Live Laboratories (3D Geometry & Multivariable Differentiation)
+// Module 3.1 Live Laboratories (Differential Calculus)
 import { SurfaceContourSlicerLab } from "@/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab";
 import { PartialDerivativeTangentPlaneLab } from "@/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab";
 import { GradientDirectionalDerivativeLab } from "@/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab";
 import { LagrangeMultipliersLab } from "@/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab";
+import { MultivariableLimitsPathsLab } from "@/components/visualizations/multivariable-differentiation/MultivariableLimitsPathsLab";
+import { DifferentiabilityErrorConeLab } from "@/components/visualizations/multivariable-differentiation/DifferentiabilityErrorConeLab";
 
 // Module 3.2 Live Laboratories (Integral Calculus: Multiple Integrals, Convergence & Eulerian Functions)
 import { RiemannVolumeLab } from "@/components/visualizations/double-integrals/RiemannVolumeLab";
@@ -80,6 +82,68 @@ export default async function ChapterPage({
       {chapter.slug === "lagrange-multipliers" && (
         <div className="space-y-10">
           <LagrangeMultipliersLab />
+        </div>
+      )}
+
+      {chapter.slug === "limits-and-differentiability" && (
+        <div className="space-y-10">
+          <MultivariableLimitsPathsLab />
+          <DifferentiabilityErrorConeLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
+              The Implication Chain &amp; Non-Differentiability Pitfalls in ℝ²
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. DISPROVING A LIMIT (TWO-PATH TEST)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="L_{\text{path}_1} \neq L_{\text{path}_2} \implies \lim_{(x,y)\to(a,b)} f \text{ DNE}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Checking all lines <KaTeXMath math="y = mx" /> is never enough to prove a limit exists—curved
+                  paths like <KaTeXMath math="y = kx^2" /> can still disagree!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  2. PROVING A LIMIT (POLAR SQUEEZE)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="|f(r\cos\theta, r\sin\theta) - L| \le g(r) \xrightarrow{r\to 0} 0"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Convert to polar coordinates around <KaTeXMath math="(a,b)" /> and bound away any{" "}
+                  <KaTeXMath math="\theta" />-dependence using <KaTeXMath math="|\sin\theta|, |\cos\theta| \le 1" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. SUFFICIENT C¹ CRITERION
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="f_x, f_y \text{ continuous near }(a,b) \implies f\text{ differentiable}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Partial derivatives merely test two orthogonal axes; continuity of{" "}
+                  <KaTeXMath math="f_x, f_y" /> guarantees every oblique angle collapses cleanly onto the tangent plane.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       )}
 

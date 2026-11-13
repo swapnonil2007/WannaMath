@@ -44,7 +44,7 @@ All project plans, design tokens, and volume/phase progress logs are stored in t
    - **Numerical Readouts:** `JetBrains Mono` with `tabular-nums` so slider changes never cause layout shift.
 4. **4-Tier Multi-Volume Textbook Architecture:**
    - Every chapter lives at `/[volume]/[module]/[chapter]` (for example, `/multivariable-calculus/multiple-integrals/double-integrals`) and is registered in `src/registry/vol1-single-variable.ts` through `src/registry/vol6-probability-numerical.ts` (aggregated in `src/registry/index.ts`).
-   - Legacy `/calculus/*` and `/multivariable-calculus/multiple-integrals/*` URLs redirect permanently to `/multivariable-calculus/integral-calculus/*` via `next.config.ts` (the legacy route files in `src/app/calculus/*` also remain valid static fallbacks).
+   - Legacy `/calculus/*`, `/multivariable-calculus/multiple-integrals/*`, and `/multivariable-calculus/multivariable-differentiation/*` URLs redirect permanently to `/multivariable-calculus/integral-calculus/*` and `/multivariable-calculus/differential-calculus/*` via `next.config.ts` (the legacy route files in `src/app/calculus/*` also remain valid static fallbacks).
 
 ---
 
@@ -78,6 +78,7 @@ All project plans, design tokens, and volume/phase progress logs are stored in t
   - **v2.0 Track 1 (`4747a9f`):** Shared visualization & quadrature primitives in `src/components/visualizations/primitives/`.
   - **v2.0 Track 2 (`c6d4bc1`):** **Volume III, Module 3.1 (`multivariable-differentiation`)** — All 4 chapters (`3.1.1`–`3.1.4`) and 4 labs published.
   - **v2.0 Track 3 (Phase D — `5aa336c`):** **Volume III, Module 3.3 (`vector-calculus`)** — All 5 chapters (`3.3.1`–`3.3.5`) and 5 labs (`DivCurlProbeLab`, `LineIntegralWorkLab`, `GreensTheoremLab`, `SurfaceFluxLab`, `StokesDivergenceLab`) published.
-  - **Module 3.2 Integral Calculus Expansion:** Unified Module `3.2` under **Integral Calculus (`integral-calculus`)** (`3.2.1`–`3.2.6`) with `gammaReal`/`betaReal` primitives and published Chapter `3.2.5` (`convergence-and-divergence`: `ImproperIntegralConvergenceLab`, `ConvergenceTestsTutorialLab`) and Chapter `3.2.6` (`gamma-and-beta-functions`: `GammaFunctionLab`, `BetaFunctionLab`), bringing **Volume III to `15/15` chapters (`21` interactive labs)**.
-- **Next Textbook Expansion Options:**
-  - **Volume I (`single-variable-calculus`)** or **Volume II (`linear-algebra`)** interactive module buildouts.
+  - **Module 3.2 Integral Calculus Expansion (`ec1ff6b`):** Unified Module `3.2` under **Integral Calculus (`integral-calculus`)** (`3.2.1`–`3.2.6`) with `gammaReal`/`betaReal` primitives and published Chapter `3.2.5` (`convergence-and-divergence`) and Chapter `3.2.6` (`gamma-and-beta-functions`).
+  - **Module 3.1 Differential Calculus Expansion — Phase 1:** Unified Module `3.1` under **Differential Calculus (`differential-calculus`)**, added optional `subParent` grouping metadata (`Differential Equations` sub-parent for `3.1.9`–`3.1.11`), and published Chapter `3.1.5` (`limits-and-differentiability`: `MultivariableLimitsPathsLab`, `DifferentiabilityErrorConeLab`), bringing **Volume III to `16` published chapters (`23` interactive labs)**.
+- **Immediate Next Phase:**
+  - **Differential Calculus Phase 2** ([`archive/volumes/vol_03_multivariable/DIFFERENTIAL_CALCULUS_PLAN.md`](./archive/volumes/vol_03_multivariable/DIFFERENTIAL_CALCULUS_PLAN.md)): Chapter `3.1.6` (`taylor-expansions`) + deepening Chapter `3.1.2` (`partial-derivatives-tangent-planes`).

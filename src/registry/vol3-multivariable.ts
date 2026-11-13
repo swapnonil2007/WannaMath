@@ -19,11 +19,11 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
   modules: [
     {
       id: "mod-3-1",
-      slug: "multivariable-differentiation",
+      slug: "differential-calculus",
       numberLabel: "3.1",
-      title: "3D Geometry & Multivariable Differentiation",
+      title: "Differential Calculus",
       description:
-        "Scalar surfaces z = f(x,y), level contour maps, partial derivative cross-sections, tangent planes, directional gradients, and Lagrange multiplier optimization.",
+        "Surfaces, multivariable limits & total differentiability, Taylor expansions, partial derivatives & chain rule, homogeneous functions & Euler's theorems, maxima/minima, Lagrange multipliers, and the nested Differential Equations parent unit.",
       accentHex: "#8D9FCE",
       chapters: [
         {
@@ -182,6 +182,287 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
                 "Scrub along constraint path g(x,y) = c and observe where ∇f × ∇g = 0.",
               formulaLatex: "\\nabla f = \\lambda \\nabla g",
               dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.1.5",
+          slug: "limits-and-differentiability",
+          title: "Multivariable Limits, Continuity & Differentiability",
+          subtitle:
+            "Test limits across lines y = mx, parabolas y = kx², and polar coordinates, and distinguish partial derivative existence from true total differentiability.",
+          status: "published",
+          estimatedMinutes: 35,
+          prerequisites: ["1.1.1", "3.1.1", "3.1.2"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#8D9FCE",
+          keyEquationsLatex: [
+            "\\lim_{(x,y)\\to(a,b)} f(x,y) = L \\iff \\forall \\varepsilon>0,\\,\\exists\\delta>0 : 0<\\|(x,y)-(a,b)\\|<\\delta \\implies |f-L|<\\varepsilon",
+            "\\lim_{(h,k)\\to(0,0)} \\frac{\\bigl|f(x_0+h,y_0+k) - \\bigl(f(x_0,y_0)+f_x h + f_y k\\bigr)\\bigr|}{\\sqrt{h^2+k^2}} = 0",
+          ],
+          engineeringContext:
+            "Shock fronts, stress concentration corners, and justifying smooth linearization models in control and continuum mechanics.",
+          pedagogicalRhythm: {
+            question:
+              "Why can a function approach zero along every straight line through the origin—or even possess both partial derivatives—yet fail to have a genuine limit or tangent plane?",
+            labInteraction:
+              "Test linear rays y = m x, parabolic paths y = k x², and polar squeezes r → 0 in Lab 3.1.5A, then measure the normalized linearization error ratio |f - L|/r across every angle θ in Lab 3.1.5B.",
+            symbolicFormalizationLatex:
+              "C^1 \\implies \\text{Totally Differentiable} \\implies \\text{Continuous} \\;\\text{AND}\\; \\exists f_x, f_y \\;(\\text{Converse fails!})",
+            edgeCasesAndBridge:
+              "Once a function is smooth (Cᵏ), we can go beyond the first-order tangent plane by building higher-degree Taylor polynomial approximations in Chapter 3.1.6.",
+          },
+          labs: [
+            {
+              id: "lab-3-1-5a",
+              slug: "multivariable-limits-paths",
+              title: "Path-Dependent Limits & Polar Squeeze Laboratory",
+              componentKey: "MultivariableLimitsPathsLab",
+              summary:
+                "Sweep rays y = mx, parabolas y = kx², and polar δ-disks approaching (0, 0).",
+              formulaLatex: "y = kx^2 \\;\\text{vs.}\\; r \\to 0",
+              dimensionBadge: "2D + 3D",
+            },
+            {
+              id: "lab-3-1-5b",
+              slug: "differentiability-error-cone",
+              title: "Total Differentiability & Normalized Error Cone Inspector",
+              componentKey: "DifferentiabilityErrorConeLab",
+              summary:
+                "Compare smooth surfaces against sharp cones and √|xy| creases where partials exist yet differentiability fails.",
+              formulaLatex: "\\frac{|E(h,k)|}{\\sqrt{h^2+k^2}} \\to 0",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.1.6",
+          slug: "taylor-expansions",
+          title: "Taylor Expansions: Single-Variable & Multivariable",
+          subtitle:
+            "Osculating 1D Taylor polynomials T_n(x), Lagrange remainder bounds, and 2D quadratic Hessian expansions T₂(x,y) around (x₀, y₀).",
+          status: "planned",
+          estimatedMinutes: 35,
+          prerequisites: ["3.1.2", "3.1.5"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#FBEAA4",
+          keyEquationsLatex: [
+            "T_n(x) = \\sum_{k=0}^n \\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k",
+            "T_2(x,y) = f(\\mathbf{p}_0) + \\nabla f(\\mathbf{p}_0)\\cdot\\mathbf{h} + \\frac{1}{2}\\mathbf{h}^T \\mathbf{H}_f(\\mathbf{p}_0)\\mathbf{h}",
+          ],
+          labs: [
+            {
+              id: "lab-3-1-6a",
+              slug: "single-variable-taylor-lab",
+              title: "Single-Variable Taylor Polynomial & Remainder Band Lab",
+              componentKey: "SingleVariableTaylorLab",
+              summary: "Adjust degree n and center x₀ to watch osculating convergence.",
+              formulaLatex: "T_n(x) + R_n(x)",
+              dimensionBadge: "2D",
+            },
+            {
+              id: "lab-3-1-6b",
+              slug: "multivariable-taylor-hessian-lab",
+              title: "Multivariable 2D Taylor & Quadratic Hessian Surface Lab",
+              componentKey: "MultivariableTaylorHessianLab",
+              summary: "Overlay T₁ tangent plane and T₂ quadratic paraboloid onto z = f(x,y).",
+              formulaLatex: "T_2(x_0+h, y_0+k)",
+              dimensionBadge: "3D",
+            },
+          ],
+        },
+        {
+          id: "3.1.7",
+          slug: "homogeneous-functions-eulers-theorem",
+          title: "Homogeneous Functions & Euler's Theorems",
+          subtitle:
+            "Radial scaling invariance f(tx, ty) = tⁿf(x, y), 1st-order Euler theorem xf_x + yf_y = nf, and 2nd-order identity x²f_xx + 2xyf_xy + y²f_yy = n(n-1)f.",
+          status: "planned",
+          estimatedMinutes: 30,
+          prerequisites: ["3.1.2"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#029091",
+          keyEquationsLatex: [
+            "x\\frac{\\partial f}{\\partial x} + y\\frac{\\partial f}{\\partial y} = n f(x,y)",
+            "x^2 f_{xx} + 2xy f_{xy} + y^2 f_{yy} = n(n-1)f(x,y)",
+          ],
+          labs: [
+            {
+              id: "lab-3-1-7a",
+              slug: "homogeneous-scaling-ray-lab",
+              title: "Radial Scaling f(tx, ty) = tⁿf(x,y) & 1st-Order Euler Lab",
+              componentKey: "HomogeneousScalingRayLab",
+              summary: "Scale points radially along rays and verify xf_x + yf_y = nf.",
+              formulaLatex: "xf_x + yf_y = nf",
+              dimensionBadge: "2D + 3D",
+            },
+            {
+              id: "lab-3-1-7b",
+              slug: "eulers-theorem-second-order-lab",
+              title: "2nd-Order Euler Identity & Composite Homogeneous Deductions",
+              componentKey: "EulersTheoremSecondOrderLab",
+              summary: "Inspect x²f_xx + 2xyf_xy + y²f_yy = n(n-1)f and inverse-trig cases.",
+              formulaLatex: "x^2f_{xx}+2xyf_{xy}+y^2f_{yy}=n(n-1)f",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "3.1.8",
+          slug: "maxima-minima-extrema",
+          title: "Maxima & Minima: General Method & Second Derivative Test",
+          subtitle:
+            "Classify critical points via the Hessian discriminant D = rt - s² = f_xx f_yy - f_xy² and resolve D = 0 degeneracies using Δf sign-change analysis.",
+          status: "planned",
+          estimatedMinutes: 35,
+          prerequisites: ["3.1.4", "3.1.6"],
+          dimensionBadge: "2D + 3D",
+          accentHex: "#B95869",
+          keyEquationsLatex: [
+            "D = r t - s^2 = f_{xx}f_{yy} - f_{xy}^2",
+            "\\Delta f(h,k) = f(x_0+h,y_0+k) - f(x_0,y_0)",
+          ],
+          labs: [
+            {
+              id: "lab-3-1-8a",
+              slug: "hessian-second-derivative-test",
+              title: "3D Critical Point Classifier & Hessian Eigen-Curvature Lab",
+              componentKey: "HessianSecondDerivativeTestLab",
+              summary: "Inspect local minima, maxima, saddles, and principal curvatures.",
+              formulaLatex: "rt - s^2 > 0",
+              dimensionBadge: "2D + 3D",
+            },
+            {
+              id: "lab-3-1-8b",
+              slug: "general-method-degenerate-extrema",
+              title: "General Sign-Change Method for D = 0 & Peano's Saddle",
+              componentKey: "GeneralMethodDegenerateExtremaLab",
+              summary: "Probe rays & parabolas when D = 0 leaves the second derivative test inconclusive.",
+              formulaLatex: "(y-x^2)(y-2x^2)",
+              dimensionBadge: "2D + 3D",
+            },
+          ],
+        },
+        {
+          id: "3.1.9",
+          slug: "first-order-lde-bernoulli",
+          title: "First-Order ODEs: LDE, Integrating Factors & Bernoulli's Equation",
+          subtitle:
+            "Solve linear first-order differential equations y' + P(x)y = Q(x) via μ(x) = e^{∫P dx} and linearize Bernoulli equations via v = y^{1-n}.",
+          status: "planned",
+          estimatedMinutes: 35,
+          prerequisites: ["3.1.2", "3.2.1"],
+          dimensionBadge: "Dual 2D",
+          accentHex: "#D35323",
+          subParent: {
+            slug: "differential-equations",
+            title: "Differential Equations",
+            badge: "ODE Sub-Parent",
+          },
+          keyEquationsLatex: [
+            "y' + P(x)y = Q(x) \\implies \\mu(x) = e^{\\int P(x)\\,dx}",
+            "y' + P(x)y = Q(x)y^n \\xrightarrow{v=y^{1-n}} v' + (1-n)P(x)v = (1-n)Q(x)",
+          ],
+          labs: [
+            {
+              id: "lab-3-1-9a",
+              slug: "linear-ode-integrating-factor",
+              title: "Linear ODE Slope Field & Integrating Factor μ(x) Lab",
+              componentKey: "LinearOdeIntegratingFactorLab",
+              summary: "Trace integral curves and inspect exactness under μ(x).",
+              formulaLatex: "(\\mu y)' = \\mu Q",
+              dimensionBadge: "2D",
+            },
+            {
+              id: "lab-3-1-9b",
+              slug: "bernoulli-reduction-lab",
+              title: "Bernoulli Nonlinear-to-Linear Substitution v = y^{1-n} Lab",
+              componentKey: "BernoulliReductionLab",
+              summary: "Compare curved (x, y) Bernoulli slopes beside straightened (x, v) LDE slopes.",
+              formulaLatex: "v = y^{1-n}",
+              dimensionBadge: "Dual 2D",
+            },
+          ],
+        },
+        {
+          id: "3.1.10",
+          slug: "linear-odes-wronskian-roots",
+          title: "Linear ODEs: Linear Independence, Wronskian & Root Regimes",
+          subtitle:
+            "Measure linear independence via the Wronskian area W(y₁, y₂) and construct general and particular solutions for distinct, repeated, and complex characteristic roots.",
+          status: "planned",
+          estimatedMinutes: 40,
+          prerequisites: ["3.1.9"],
+          dimensionBadge: "2D",
+          accentHex: "#96B898",
+          subParent: {
+            slug: "differential-equations",
+            title: "Differential Equations",
+            badge: "ODE Sub-Parent",
+          },
+          keyEquationsLatex: [
+            "W(y_1, y_2)(x) = \\begin{vmatrix} y_1 & y_2 \\\\ y_1' & y_2' \\end{vmatrix} = W(x_0)e^{-\\int \\frac{b}{a}dx}",
+            "y_c(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x} \\;\\big|\\; (C_1 + C_2 x)e^{rx} \\;\\big|\\; e^{\\alpha x}(C_1\\cos\\beta x + C_2\\sin\\beta x)",
+          ],
+          labs: [
+            {
+              id: "lab-3-1-10a",
+              slug: "wronskian-phase-area-lab",
+              title: "Wronskian Determinant & Phase-Plane Area Independence Lab",
+              componentKey: "WronskianPhaseAreaLab",
+              summary: "Visualize signed parallelogram area formed by solution state vectors.",
+              formulaLatex: "W \\neq 0 \\iff \\text{Linearly Independent}",
+              dimensionBadge: "2D",
+            },
+            {
+              id: "lab-3-1-10b",
+              slug: "characteristic-roots-solution-lab",
+              title: "Distinct, Repeated & Complex Characteristic Roots Explorer",
+              componentKey: "CharacteristicRootsSolutionLab",
+              summary: "Scrub coefficients a, b, c and watch the r₂ → r₁ repeated-root limit.",
+              formulaLatex: "ar^2 + br + c = 0",
+              dimensionBadge: "2D",
+            },
+          ],
+        },
+        {
+          id: "3.1.11",
+          slug: "operator-variation-cauchy-euler",
+          title: "Operator Method (D), Variation of Parameters & Cauchy-Euler Equations",
+          subtitle:
+            "Compute particular integrals with inverse operators 1/f(D), general forcing envelopes via Variation of Parameters, and solve Cauchy-Euler equations via x = e^t.",
+          status: "planned",
+          estimatedMinutes: 45,
+          prerequisites: ["3.1.10"],
+          dimensionBadge: "2D",
+          accentHex: "#D5658B",
+          subParent: {
+            slug: "differential-equations",
+            title: "Differential Equations",
+            badge: "ODE Sub-Parent",
+          },
+          keyEquationsLatex: [
+            "y_p = \\frac{1}{f(D)}g(x), \\qquad u_1' = -\\frac{y_2 g}{W},\\; u_2' = \\frac{y_1 g}{W}",
+            "a x^2 y'' + b x y' + c y = g(x) \\xrightarrow{x = e^t,\\; \\theta = xD} \\bigl(a\\theta(\\theta-1) + b\\theta + c\\bigr)y = g(e^t)",
+          ],
+          labs: [
+            {
+              id: "lab-3-1-11a",
+              slug: "operator-method-tutorial-lab",
+              title: "Inverse Differential Operator 1/f(D) Tutorial & Step Solver",
+              componentKey: "OperatorMethodTutorialLab",
+              summary: "Rules for e^{ax}, sin(ax)/cos(ax), x^m, shift e^{ax}V(x), and resonance failure.",
+              formulaLatex: "y_p = \\frac{1}{f(D)}g(x)",
+              dimensionBadge: "2D",
+            },
+            {
+              id: "lab-3-1-11b",
+              slug: "variation-of-parameters-cauchy-euler",
+              title: "Variation of Parameters & Cauchy-Euler Log-Pullback Lab",
+              componentKey: "VariationOfParametersCauchyEulerLab",
+              summary: "Solve arbitrary forcing functions g(x) and equidimensional ODEs via t = ln x.",
+              formulaLatex: "x = e^t \\implies x^2 D^2 = \\theta(\\theta-1)",
+              dimensionBadge: "2D",
             },
           ],
         },

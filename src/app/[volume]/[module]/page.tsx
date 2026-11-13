@@ -83,9 +83,32 @@ export default async function ModulePage({
         </p>
       </section>
 
-      {/* Chapters List */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {mod.chapters.map((chapter) => {
+      {/* Chapters List (Top-Level + Optional Sub-Parent Groups) */}
+      {(() => {
+        const directChapters = mod.chapters.filter((ch) => !ch.subParent);
+        const subGroups: {
+          slug: string;
+          title: string;
+          badge?: string;
+          chapters: typeof mod.chapters;
+        }[] = [];
+
+        for (const ch of mod.chapters) {
+          if (!ch.subParent) continue;
+          let grp = subGroups.find((g) => g.slug === ch.subParent!.slug);
+          if (!grp) {
+            grp = {
+              slug: ch.subParent.slug,
+              title: ch.subParent.title,
+              badge: ch.subParent.badge,
+              chapters: [],
+            };
+            subGroups.push(grp);
+          }
+          grp.chapters.push(ch);
+        }
+
+        const renderChapterCard = (chapter: (typeof mod.chapters)[number]) => {
           const chRoute = `/${volume.slug}/${mod.slug}/${chapter.slug}`;
           const chAccent = chapter.accentHex ?? modAccent;
           const isPublished = chapter.status === "published";
@@ -187,8 +210,42 @@ export default async function ModulePage({
               </div>
             </article>
           );
-        })}
-      </section>
+        };
+
+        return (
+          <div className="space-y-10">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {directChapters.map(renderChapterCard)}
+            </section>
+
+            {subGroups.map((group) => (
+              <section
+                key={group.slug}
+                aria-label={`${group.title} Section`}
+                className="border border-[var(--border-strong)] bg-[var(--bg-canvas)] p-5 sm:p-6 space-y-5"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+                  <div className="flex items-center gap-2.5">
+                    <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-panel)]">
+                      {group.badge ?? "SUB-PARENT SECTION"}
+                    </span>
+                    <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                      {group.title}
+                    </h2>
+                  </div>
+                  <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
+                    {group.chapters.length} Chapters inside {mod.title}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {group.chapters.map(renderChapterCard)}
+                </div>
+              </section>
+            ))}
+          </div>
+        );
+      })()}
 
       {/* Back to Volume Link */}
       <div className="pt-4 border-t border-[var(--border-subtle)]">

@@ -70,17 +70,27 @@ Every chapter page (`/[volume]/[module]/[chapter]`) follows a unified 4-step ped
   - `2.3.3` Singular Value Decomposition (SVD) Geometry (`singular-value-decomposition`)
 
 ### Volume III: Multivariable & Vector Calculus (`multivariable-calculus`) — Accent: `#029091` *(ACTIVE VOLUME)*
-- **Module 3.1: 3D Geometry & Multivariable Differentiation (`multivariable-differentiation`)**
-  - `3.1.1` Surfaces, Level Curves & Contour Maps (`surfaces-level-curves`)
-  - `3.1.2` Partial Derivatives & Tangent Planes (`partial-derivatives-tangent-planes`)
-  - `3.1.3` The Gradient Vector & Directional Derivatives (`gradient-directional-derivatives`)
-  - `3.1.4` Lagrange Multipliers & Constrained Optimization (`lagrange-multipliers`)
-- **Module 3.2: Multiple Integrals & Coordinate Pullbacks (`multiple-integrals`)** *(PUBLISHED — 8 LIVE LABS)*
+- **Module 3.1: Differential Calculus (`differential-calculus`, legacy alias `multivariable-differentiation`)** *(Phases 1–6 Expansion Roadmap: [`DIFFERENTIAL_CALCULUS_PLAN.md`](./volumes/vol_03_multivariable/DIFFERENTIAL_CALCULUS_PLAN.md))*
+  - `3.1.1` Surfaces, Level Curves & Contour Maps (`surfaces-level-curves`) *(Published)*
+  - `3.1.2` Partial Derivatives, Tangent Planes, Chain Rule & Higher-Order Partials (`partial-derivatives-tangent-planes`) *(Published — deepens in Phase 2)*
+  - `3.1.3` The Gradient Vector & Directional Derivatives (`gradient-directional-derivatives`) *(Published)*
+  - `3.1.4` Lagrange Multipliers & Constrained Optimization (`lagrange-multipliers`) *(Published)*
+  - `3.1.5` Multivariable Limits, Continuity & Total Differentiability (`limits-and-differentiability`) *(Planned — Phase 1)*
+  - `3.1.6` Taylor Expansions: Single-Variable & Multivariable (`taylor-expansions`) *(Planned — Phase 2)*
+  - `3.1.7` Homogeneous Functions & Euler's Theorems (`homogeneous-functions-eulers-theorem`) *(Planned — Phase 3)*
+  - `3.1.8` Maxima & Minima (General Method & Second Derivative Test) (`maxima-minima-extrema`) *(Planned — Phase 3)*
+  - **Sub-Parent — Differential Equations (under Differential Calculus):**
+    - `3.1.9` First-Order ODEs: LDE, Integrating Factors & Bernoulli's Equation (`first-order-lde-bernoulli`) *(Planned — Phase 4)*
+    - `3.1.10` Higher-Order Linear ODEs: Linear Independence, Wronskian & Root Cases (`linear-odes-wronskian-roots`) *(Planned — Phase 5)*
+    - `3.1.11` Operator Method ($D$), Variation of Parameters & Cauchy-Euler (`operator-variation-cauchy-euler`) *(Planned — Phase 6)*
+- **Module 3.2: Integral Calculus (`integral-calculus`)** *(PUBLISHED — `3.2.1`–`3.2.6`, 12 LIVE LABS)*
   - `3.2.1` Double Integrals & Fubini's Theorem (`double-integrals`) — Labs: `RiemannVolumeLab`, `IteratedOrderChangeLab`
   - `3.2.2` Triple Integrals, 6-Order Slicing & Density (`triple-integrals`) — Labs: `TripleIntegralOrderLab`, `TripleVoxelDensityLab`
   - `3.2.3` Curvilinear Coordinates: Polar, Cylindrical & Spherical (`coordinate-systems`) — Labs: `PolarCoordinateAreaLab`, `Curvilinear3DSurfacesAndElementLab`
   - `3.2.4` The Jacobian & Change of Variables Pullback (`jacobians`) — Labs: `DualGridMorphingAndTangentLab`, `JacobianIntegralPullbackLab`
-- **Module 3.3: Vector Calculus & Integral Theorems (`vector-calculus`)**
+  - `3.2.5` Convergence & Divergence (Improper Integrals & Series Tests) (`convergence-and-divergence`) — Labs: `ImproperIntegralConvergenceLab`, `ConvergenceTestsTutorialLab`
+  - `3.2.6` Gamma & Beta Functions (`gamma-and-beta-functions`) — Labs: `GammaFunctionLab`, `BetaFunctionLab`
+- **Module 3.3: Vector Calculus & Integral Theorems (`vector-calculus`)** *(PUBLISHED — 5 LIVE LABS)*
   - `3.3.1` Vector Fields, Divergence & Curl (`vector-fields-divergence-curl`)
   - `3.3.2` Line Integrals: Work, Circulation & Conservative Fields (`line-integrals-work`)
   - `3.3.3` Green's Theorem: Microscopic Curl to Macroscopic Circulation (`greens-theorem`)

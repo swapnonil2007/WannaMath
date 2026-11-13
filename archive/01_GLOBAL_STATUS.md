@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Phase A, Track 1, Track 2, Track 3 & Integral Calculus Expansion Completed — **Volume III (`15/15` Chapters, `21` Interactive Labs) 100% PUBLISHED**
+> **Last Updated:** Differential Calculus Phase 1 Completed — **Volume III (`16/22` Planned+Published Chapters, `23` Interactive Labs Live)**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -12,7 +12,7 @@
 | :--- | :--- | :--- | :---: | :---: | :--- |
 | **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | `planned` |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
-| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 15 | **`published` (15/15 Chapters — 21 Labs Live)** |
+| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 22 | **`in-progress` (16/22 Published — 23 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | `planned` |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | `planned` |
 | **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | `planned` |
@@ -21,13 +21,20 @@
 
 ## 2. Detailed Chapter Status Matrix — Volume III: Multivariable & Vector Calculus (`/multivariable-calculus`)
 
-### Module 3.1: 3D Geometry & Multivariable Differentiation (`/multivariable-calculus/multivariable-differentiation`) — **ALL PUBLISHED**
+### Module 3.1: Differential Calculus (`/multivariable-calculus/differential-calculus`) — **5/11 PUBLISHED**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
-| `3.1.1` | `/multivariable-calculus/multivariable-differentiation/surfaces-level-curves` | Surfaces, Level Curves & Contour Maps | **`published`** | `SurfaceContourSlicerLab` |
-| `3.1.2` | `/multivariable-calculus/multivariable-differentiation/partial-derivatives-tangent-planes` | Partial Derivatives & Tangent Planes | **`published`** | `PartialDerivativeTangentPlaneLab` |
-| `3.1.3` | `/multivariable-calculus/multivariable-differentiation/gradient-directional-derivatives` | The Gradient Vector & Directional Derivatives | **`published`** | `GradientDirectionalDerivativeLab` |
-| `3.1.4` | `/multivariable-calculus/multivariable-differentiation/lagrange-multipliers` | Lagrange Multipliers & Constrained Optimization | **`published`** | `LagrangeMultipliersLab` |
+| `3.1.1` | `/multivariable-calculus/differential-calculus/surfaces-level-curves` | Surfaces, Level Curves & Contour Maps | **`published`** | `SurfaceContourSlicerLab` |
+| `3.1.2` | `/multivariable-calculus/differential-calculus/partial-derivatives-tangent-planes` | Partial Derivatives & Tangent Planes | **`published`** | `PartialDerivativeTangentPlaneLab` |
+| `3.1.3` | `/multivariable-calculus/differential-calculus/gradient-directional-derivatives` | The Gradient Vector & Directional Derivatives | **`published`** | `GradientDirectionalDerivativeLab` |
+| `3.1.4` | `/multivariable-calculus/differential-calculus/lagrange-multipliers` | Lagrange Multipliers & Constrained Optimization | **`published`** | `LagrangeMultipliersLab` |
+| `3.1.5` | `/multivariable-calculus/differential-calculus/limits-and-differentiability` | Multivariable Limits, Continuity & Differentiability | **`published`** | `MultivariableLimitsPathsLab`, `DifferentiabilityErrorConeLab` |
+| `3.1.6` | `/multivariable-calculus/differential-calculus/taylor-expansions` | Taylor Expansions: Single-Variable & Multivariable | `planned` *(Phase 2)* | `SingleVariableTaylorLab`, `MultivariableTaylorHessianLab` |
+| `3.1.7` | `/multivariable-calculus/differential-calculus/homogeneous-functions-eulers-theorem` | Homogeneous Functions & Euler's Theorems | `planned` *(Phase 3)* | `HomogeneousScalingRayLab`, `EulersTheoremSecondOrderLab` |
+| `3.1.8` | `/multivariable-calculus/differential-calculus/maxima-minima-extrema` | Maxima & Minima: General Method & Second Derivative Test | `planned` *(Phase 3)* | `HessianSecondDerivativeTestLab`, `GeneralMethodDegenerateExtremaLab` |
+| `3.1.9` | `/multivariable-calculus/differential-calculus/first-order-lde-bernoulli` | *Sub-Parent: Differential Equations* — First-Order ODEs: LDE, Integrating Factors & Bernoulli | `planned` *(Phase 4)* | `LinearOdeIntegratingFactorLab`, `BernoulliReductionLab` |
+| `3.1.10` | `/multivariable-calculus/differential-calculus/linear-odes-wronskian-roots` | *Sub-Parent: Differential Equations* — Linear ODEs: Independence, Wronskian & Root Regimes | `planned` *(Phase 5)* | `WronskianPhaseAreaLab`, `CharacteristicRootsSolutionLab` |
+| `3.1.11` | `/multivariable-calculus/differential-calculus/operator-variation-cauchy-euler` | *Sub-Parent: Differential Equations* — Operator Method ($D$), Variation of Parameters & Cauchy-Euler | `planned` *(Phase 6)* | `OperatorMethodTutorialLab`, `VariationOfParametersCauchyEulerLab` |
 
 ### Module 3.2: Integral Calculus (`/multivariable-calculus/integral-calculus`) — **ALL PUBLISHED**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
@@ -62,5 +69,13 @@
    - `quadrature.ts` — `integrate1DGaussLegendre`, `integrate2DIterated`, `integrate3DIterated`, `computePartialDerivatives2D`, and `computeJacobian2D`.
 2. **Track 2 (COMPLETED — `c6d4bc1`):** Built **Volume III, Module 3.1 (`multivariable-differentiation`)** — Chapters `3.1.1` through `3.1.4` (`SurfaceContourSlicerLab`, `PartialDerivativeTangentPlaneLab`, `GradientDirectionalDerivativeLab`, `LagrangeMultipliersLab`).
 3. **Track 3 (COMPLETED — `5aa336c`):** Built **Volume III, Module 3.3 (`vector-calculus`)** — Chapters `3.3.1` through `3.3.5` (`DivCurlProbeLab`, `LineIntegralWorkLab`, `GreensTheoremLab`, `SurfaceFluxLab`, `StokesDivergenceLab`).
-4. **Module 3.2 Integral Calculus Expansion (COMPLETED):** Unified Module `3.2` under **Integral Calculus (`/multivariable-calculus/integral-calculus`)** and published Chapter `3.2.5` (`convergence-and-divergence`: `ImproperIntegralConvergenceLab`, `ConvergenceTestsTutorialLab`) and Chapter `3.2.6` (`gamma-and-beta-functions`: `GammaFunctionLab`, `BetaFunctionLab`), bringing **Volume III to `15/15` chapters (`21` interactive labs)**.
-5. **Next Textbook Expansion Options:** **Volume I (`Single-Variable Calculus`)** or **Volume II (`Linear Algebra & Space Geometry`)**.
+4. **Module 3.2 Integral Calculus Expansion (COMPLETED — `ec1ff6b`):** Unified Module `3.2` under **Integral Calculus (`/multivariable-calculus/integral-calculus`)** and published Chapter `3.2.5` (`convergence-and-divergence`: `ImproperIntegralConvergenceLab`, `ConvergenceTestsTutorialLab`) and Chapter `3.2.6` (`gamma-and-beta-functions`: `GammaFunctionLab`, `BetaFunctionLab`), bringing **Volume III to `15/15` chapters (`21` interactive labs)**.
+5. **Active Next Expansion — Volume III Module 3.1 (`Differential Calculus`) 6-Phase Buildout ([`DIFFERENTIAL_CALCULUS_PLAN.md`](./volumes/vol_03_multivariable/DIFFERENTIAL_CALCULUS_PLAN.md)):**
+   - Unify Module `3.1` under **Differential Calculus (`differential-calculus`)** before starting Volume I (`Single-Variable Calculus`).
+   - **Phase 1:** Parent rename (`differential-calculus`) + `subParent` grouping metadata + Chapter `3.1.5` (Multivariable Limits & Differentiability).
+   - **Phase 2:** Chapter `3.1.6` (Single & Multivariable Taylor Expansions) + deepen `3.1.2` (Higher-Order Partials, Clairaut Symmetry, Chain Rule & Implicit Differentiation).
+   - **Phase 3:** Chapter `3.1.7` (Homogeneous Functions & Euler's 1st/2nd Order Theorems) + Chapter `3.1.8` (Maxima/Minima General Method & Second Derivative Test).
+   - **Phase 4:** Nested **Differential Equations** sub-parent + Chapter `3.1.9` (First-Order LDE, Integrating Factors & Bernoulli's Equation).
+   - **Phase 5:** Chapter `3.1.10` (Higher-Order Linear ODEs: Linear Independence, Wronskian & Distinct/Repeated/Complex Roots).
+   - **Phase 6:** Chapter `3.1.11` (Operator Method $D$, Variation of Parameters & Cauchy-Euler Equations).
+6. **Deferred Until Differential Calculus Phases 1–6 Complete:** **Volume I (`Single-Variable Calculus`)** and **Volume II (`Linear Algebra & Space Geometry`)**.

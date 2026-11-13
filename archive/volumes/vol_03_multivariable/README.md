@@ -1,16 +1,19 @@
 # Volume III — Multivariable & Vector Calculus (`multivariable-calculus`)
 
-## Module 3.1 Build Index (`multivariable-differentiation` — PUBLISHED)
-All 4 chapters and 4 interactive laboratories of **Module 3.1 (`3D Geometry & Multivariable Differentiation`)** are live under `/multivariable-calculus/multivariable-differentiation/[chapter]`:
+## Module 3.1 Build Index (`differential-calculus` / legacy `multivariable-differentiation`)
+All 4 foundational chapters of **Module 3.1** are live, and a **6-Phase Differential Calculus Expansion** ([`DIFFERENTIAL_CALCULUS_PLAN.md`](./DIFFERENTIAL_CALCULUS_PLAN.md)) is queued next to unify Module `3.1` under **Differential Calculus** (`3.1.1`–`3.1.11`) including a nested **Differential Equations** sub-parent (`3.1.9`–`3.1.11`):
 
-1. **Chapter `3.1.1` — Surfaces, Level Curves & Contour Maps (`surfaces-level-curves`)**
+1. **Chapter `3.1.1` — Surfaces, Level Curves & Contour Maps (`surfaces-level-curves`)** *(Published)*
    - Lab: `SurfaceContourSlicerLab` (`src/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab.tsx`)
-2. **Chapter `3.1.2` — Partial Derivatives & Tangent Planes (`partial-derivatives-tangent-planes`)**
+2. **Chapter `3.1.2` — Partial Derivatives & Tangent Planes (`partial-derivatives-tangent-planes`)** *(Published — Chain Rule, Implicit & Higher-Order Mixed Partials added in Phase 2)*
    - Lab: `PartialDerivativeTangentPlaneLab` (`src/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab.tsx`)
-3. **Chapter `3.1.3` — The Gradient Vector & Directional Derivatives (`gradient-directional-derivatives`)**
+3. **Chapter `3.1.3` — The Gradient Vector & Directional Derivatives (`gradient-directional-derivatives`)** *(Published)*
    - Lab: `GradientDirectionalDerivativeLab` (`src/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab.tsx`)
-4. **Chapter `3.1.4` — Lagrange Multipliers & Constrained Optimization (`lagrange-multipliers`)**
+4. **Chapter `3.1.4` — Lagrange Multipliers & Constrained Optimization (`lagrange-multipliers`)** *(Published)*
    - Lab: `LagrangeMultipliersLab` (`src/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab.tsx`)
+5. **Chapter `3.1.5` — Multivariable Limits, Continuity & Differentiability (`limits-and-differentiability`)** *(Published — Phase 1)*
+   - Labs: `MultivariableLimitsPathsLab`, `DifferentiabilityErrorConeLab` (`src/components/visualizations/multivariable-differentiation/`)
+6. **Queued Expansion Chapters (`3.1.6` – `3.1.11`):** See [`DIFFERENTIAL_CALCULUS_PLAN.md`](./DIFFERENTIAL_CALCULUS_PLAN.md) Phases 2–6.
 
 ---
 

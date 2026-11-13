@@ -17,6 +17,12 @@ export interface ChapterPedagogicalRhythm {
   edgeCasesAndBridge: string;
 }
 
+export interface ChapterSubParent {
+  slug: string;
+  title: string;
+  badge?: string;
+}
+
 export interface ChapterMetadata {
   id: string;
   slug: string;
@@ -31,6 +37,7 @@ export interface ChapterMetadata {
   accentHex?: string;
   engineeringContext?: string;
   pedagogicalRhythm?: ChapterPedagogicalRhythm;
+  subParent?: ChapterSubParent;
 }
 
 export interface ModuleMetadata {

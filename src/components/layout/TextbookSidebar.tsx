@@ -204,47 +204,77 @@ export function TextbookSidebar() {
                         </Link>
 
                         <ul className="space-y-1 pl-2 border-l border-[var(--border-subtle)]">
-                          {mod.chapters.map((ch) => {
-                            const chRoute = `/${vol.slug}/${mod.slug}/${ch.slug}`;
-                            const active = pathname === chRoute;
-                            const isPub = ch.status === "published";
-                            return (
-                              <li key={ch.id}>
-                                <Link
-                                  href={chRoute}
-                                  aria-current={active ? "page" : undefined}
-                                  className={`px-2 py-1.5 text-xs flex items-center justify-between gap-2 border transition-colors ${
-                                    active
-                                      ? "border-[var(--border-strong)] bg-[var(--bg-canvas)] text-[var(--text-primary)] font-semibold"
-                                      : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-canvas)]"
-                                  }`}
-                                >
-                                  <span className="truncate">
-                                    <span
-                                      className="font-tabular-mono mr-1.5"
-                                      style={{
-                                        color: ch.accentHex ?? vol.accentHex,
-                                      }}
-                                    >
-                                      {ch.id}
+                          {(() => {
+                            const renderChapterLink = (ch: (typeof mod.chapters)[number]) => {
+                              const chRoute = `/${vol.slug}/${mod.slug}/${ch.slug}`;
+                              const active = pathname === chRoute;
+                              const isPub = ch.status === "published";
+                              return (
+                                <li key={ch.id}>
+                                  <Link
+                                    href={chRoute}
+                                    aria-current={active ? "page" : undefined}
+                                    className={`px-2 py-1.5 text-xs flex items-center justify-between gap-2 border transition-colors ${
+                                      active
+                                        ? "border-[var(--border-strong)] bg-[var(--bg-canvas)] text-[var(--text-primary)] font-semibold"
+                                        : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-canvas)]"
+                                    }`}
+                                  >
+                                    <span className="truncate">
+                                      <span
+                                        className="font-tabular-mono mr-1.5"
+                                        style={{
+                                          color: ch.accentHex ?? vol.accentHex,
+                                        }}
+                                      >
+                                        {ch.id}
+                                      </span>
+                                      {ch.title}
                                     </span>
-                                    {ch.title}
-                                  </span>
 
-                                  {isPub ? (
-                                    <span className="text-[10px] font-tabular-mono px-1.5 py-0.5 border border-[#96B898] text-[#96B898] shrink-0">
-                                      LIVE
-                                    </span>
-                                  ) : (
-                                    <Clock
-                                      className="w-3 h-3 text-[var(--text-muted)] shrink-0"
-                                      aria-hidden="true"
-                                    />
-                                  )}
-                                </Link>
-                              </li>
+                                    {isPub ? (
+                                      <span className="text-[10px] font-tabular-mono px-1.5 py-0.5 border border-[#96B898] text-[#96B898] shrink-0">
+                                        LIVE
+                                      </span>
+                                    ) : (
+                                      <Clock
+                                        className="w-3 h-3 text-[var(--text-muted)] shrink-0"
+                                        aria-hidden="true"
+                                      />
+                                    )}
+                                  </Link>
+                                </li>
+                              );
+                            };
+
+                            const direct = mod.chapters.filter((c) => !c.subParent);
+                            const groups: { slug: string; title: string; items: typeof mod.chapters }[] = [];
+                            for (const c of mod.chapters) {
+                              if (!c.subParent) continue;
+                              let g = groups.find((x) => x.slug === c.subParent!.slug);
+                              if (!g) {
+                                g = { slug: c.subParent.slug, title: c.subParent.title, items: [] };
+                                groups.push(g);
+                              }
+                              g.items.push(c);
+                            }
+
+                            return (
+                              <>
+                                {direct.map(renderChapterLink)}
+                                {groups.map((grp) => (
+                                  <li key={grp.slug} className="pt-2 space-y-1">
+                                    <div className="px-2 py-1 text-[10px] font-tabular-mono uppercase tracking-wider text-[#D35323] border-b border-[var(--border-subtle)]">
+                                      ↳ {grp.title}
+                                    </div>
+                                    <ul className="space-y-1 pl-2 border-l border-[var(--border-subtle)]">
+                                      {grp.items.map(renderChapterLink)}
+                                    </ul>
+                                  </li>
+                                ))}
+                              </>
                             );
-                          })}
+                          })()}
                         </ul>
                       </div>
                     ))}
@@ -257,7 +287,14 @@ export function TextbookSidebar() {
           {/* Drawer Footer */}
           <div className="p-3.5 border-t border-[var(--border-subtle)] bg-[var(--bg-canvas)] flex items-center justify-between text-xs font-tabular-mono">
             <span className="text-[var(--text-muted)]">
-              6 Volumes • 20 Modules • 54 Chapters
+              {volumes.length} Volumes •{" "}
+              {volumes.reduce((sum, v) => sum + v.modules.length, 0)} Modules •{" "}
+              {volumes.reduce(
+                (sum, v) =>
+                  sum + v.modules.reduce((ms, m) => ms + m.chapters.length, 0),
+                0
+              )}{" "}
+              Chapters
             </span>
             <Link
               href="/roadmap"

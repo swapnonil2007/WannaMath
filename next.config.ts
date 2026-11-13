@@ -24,6 +24,16 @@ const nextConfig: NextConfig = {
         destination: "/multivariable-calculus/integral-calculus/:slug",
         permanent: true,
       },
+      {
+        source: "/multivariable-calculus/multivariable-differentiation",
+        destination: "/multivariable-calculus/differential-calculus",
+        permanent: true,
+      },
+      {
+        source: "/multivariable-calculus/multivariable-differentiation/:slug",
+        destination: "/multivariable-calculus/differential-calculus/:slug",
+        permanent: true,
+      },
     ];
   },
 };
