@@ -14,6 +14,12 @@ import { NewtonRaphsonLab } from "@/components/visualizations/single-variable/Ne
 import { ChainRulePropagatorLab } from "@/components/visualizations/single-variable/ChainRulePropagatorLab";
 import { TaylorCurvatureLab } from "@/components/visualizations/single-variable/TaylorCurvatureLab";
 
+// Volume I — Module 1.3 Live Laboratories (Single-Variable Integration & Accumulation)
+import { Riemann1DLab } from "@/components/visualizations/single-variable/Riemann1DLab";
+import { FTCAccumulationLab } from "@/components/visualizations/single-variable/FTCAccumulationLab";
+import { SubstitutionIBPLab } from "@/components/visualizations/single-variable/SubstitutionIBPLab";
+import { SolidOfRevolutionLab } from "@/components/visualizations/single-variable/SolidOfRevolutionLab";
+
 // Module 3.1 Live Laboratories (Differential Calculus)
 import { SurfaceContourSlicerLab } from "@/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab";
 import { PartialDerivativeTangentPlaneLab } from "@/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab";
@@ -208,6 +214,30 @@ export default async function ChapterPage({
       {chapter.slug === "taylor-polynomials-curvature" && (
         <div className="space-y-10">
           <TaylorCurvatureLab />
+        </div>
+      )}
+
+      {chapter.slug === "riemann-sums-1d" && (
+        <div className="space-y-10">
+          <Riemann1DLab />
+        </div>
+      )}
+
+      {chapter.slug === "fundamental-theorem-calculus" && (
+        <div className="space-y-10">
+          <FTCAccumulationLab />
+        </div>
+      )}
+
+      {chapter.slug === "substitution-integration-by-parts" && (
+        <div className="space-y-10">
+          <SubstitutionIBPLab />
+        </div>
+      )}
+
+      {chapter.slug === "solids-of-revolution" && (
+        <div className="space-y-10">
+          <SolidOfRevolutionLab />
         </div>
       )}
 

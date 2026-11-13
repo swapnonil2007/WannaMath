@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** Volume I Module 1.2 Published — **Volume I (`6/12` Chapters, `6` Labs) | Volume III (`22/22` Chapters PUBLISHED, `36` Labs)**
+> **Last Updated:** Volume I Module 1.3 Published — **Volume I (`10/12` Chapters, `10` Labs) | Volume III (`22/22` Chapters PUBLISHED, `36` Labs)**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -10,7 +10,7 @@
 
 | Volume | Slug | Accent Token | Modules | Chapters | Status |
 | :--- | :--- | :--- | :---: | :---: | :--- |
-| **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | **`in-progress` (6/12 Published — 6 Labs Live)** |
+| **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | **`in-progress` (10/12 Published — 10 Labs Live)** |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | `planned` |
 | **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 22 | **`published` (22/22 Published — 36 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | `planned` |
@@ -35,7 +35,15 @@
 | `1.2.3` | `/single-variable-calculus/differential-calculus/chain-rule-kinematics` | Chain Rule, Implicit Differentiation & Related Rates | **`published`** | `ChainRulePropagatorLab` |
 | `1.2.4` | `/single-variable-calculus/differential-calculus/taylor-polynomials-curvature` | Taylor Polynomials & Curvature Osculating Circles | **`published`** | `TaylorCurvatureLab` |
 
-*(Modules `1.3` Integration and `1.4` Infinite Series are `planned`; Volume I build log tracked in [`archive/volumes/vol_01_single_variable/README.md`](./volumes/vol_01_single_variable/README.md).)*
+### Module 1.3: Single-Variable Integration & Accumulation (`/single-variable-calculus/integral-calculus`) — **ALL PUBLISHED (4/4)**
+| Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
+| :--- | :--- | :--- | :--- | :--- |
+| `1.3.1` | `/single-variable-calculus/integral-calculus/riemann-sums-1d` | 1D Riemann Sums, Darboux Bounds & Definite Area | **`published`** | `Riemann1DLab` |
+| `1.3.2` | `/single-variable-calculus/integral-calculus/fundamental-theorem-calculus` | The Fundamental Theorem of Calculus: Accumulation vs. Slope | **`published`** | `FTCAccumulationLab` |
+| `1.3.3` | `/single-variable-calculus/integral-calculus/substitution-integration-by-parts` | $u$-Substitution & Integration by Parts Geometry | **`published`** | `SubstitutionIBPLab` |
+| `1.3.4` | `/single-variable-calculus/integral-calculus/solids-of-revolution` | Solids of Revolution: Disks, Washers & Cylindrical Shells | **`published`** | `SolidOfRevolutionLab` |
+
+*(Module `1.4` Infinite Series is `planned`; Volume I build log tracked in [`archive/volumes/vol_01_single_variable/README.md`](./volumes/vol_01_single_variable/README.md).)*
 
 ---
 

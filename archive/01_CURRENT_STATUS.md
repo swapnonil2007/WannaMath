@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Volume I Module 1.2 PUBLISHED (`6/12` Volume I Chapters, `22/22` Volume III Chapters PUBLISHED — `42` Interactive Labs Live Total)**
+> **Last Updated:** 2026-11-13 — **Volume I Module 1.3 PUBLISHED (`10/12` Volume I Chapters, `22/22` Volume III Chapters PUBLISHED — `46` Interactive Labs Live Total)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -23,7 +23,8 @@
 | **Differential Calculus Phase 5** | `9980bff` | **PUBLISHED** | Published Chapter `3.1.10` (`linear-odes-wronskian-roots`: `WronskianPhaseAreaLab.tsx`, `CharacteristicRootsSolutionLab.tsx`) covering linear independence, the Wronskian phase-plane parallelogram, Abel's identity, and distinct/repeated/complex characteristic root regimes. |
 | **Differential Calculus Phase 6** | `cce75f7` | **PUBLISHED** | Published Chapter `3.1.11` (`operator-variation-cauchy-euler`: `OperatorMethodTutorialLab.tsx`, `VariationOfParametersCauchyEulerLab.tsx`), completing all `22/22` chapters and `36` interactive labs of **Volume III (`multivariable-calculus`)**. |
 | **Volume I — Module 1.1** | `ca32088` | **PUBLISHED** | Published **Module 1.1 (`limits-continuity`)** in **Volume I (`single-variable-calculus`)**: Chapter `1.1.1` (`epsilon-delta-limits`: `EpsilonDeltaCorridorLab.tsx`) and Chapter `1.1.2` (`continuity-ivt`: `IVTBisectionLab.tsx`), adding global + micro-zoom $\varepsilon$-$\delta$ corridors and IVT/Bisection discontinuity traps. |
-| **Volume I — Module 1.2** | *Current* | **PUBLISHED** | Published all 4 chapters of **Module 1.2 (`differential-calculus`)**: `1.2.1` (`SecantTangentLab.tsx`), `1.2.2` (`NewtonRaphsonLab.tsx`), `1.2.3` (`ChainRulePropagatorLab.tsx`), and `1.2.4` (`TaylorCurvatureLab.tsx`). |
+| **Volume I — Module 1.2** | `3a22c05` | **PUBLISHED** | Published all 4 chapters of **Module 1.2 (`differential-calculus`)**: `1.2.1` (`SecantTangentLab.tsx`), `1.2.2` (`NewtonRaphsonLab.tsx`), `1.2.3` (`ChainRulePropagatorLab.tsx`), and `1.2.4` (`TaylorCurvatureLab.tsx`). |
+| **Volume I — Module 1.3** | *Current* | **PUBLISHED** | Published all 4 chapters of **Module 1.3 (`integral-calculus`)**: `1.3.1` (`Riemann1DLab.tsx`), `1.3.2` (`FTCAccumulationLab.tsx`), `1.3.3` (`SubstitutionIBPLab.tsx`), and `1.3.4` (`SolidOfRevolutionLab.tsx`). |
 
 ---
 
@@ -36,6 +37,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume I Module 1.3)
-**Volume I** now stands at `6/12` published chapters (**Module 1.1** and **Module 1.2** 100% live).
-- **Next Curriculum Milestone:** Build **Volume I, Module 1.3: Single-Variable Integration & Accumulation (`/single-variable-calculus/integral-calculus`)** in [`src/registry/vol1-single-variable.ts`](../../src/registry/vol1-single-variable.ts) (`1.3.1` `riemann-sums-1d`, `1.3.2` `fundamental-theorem-calculus`, `1.3.3` `substitution-integration-by-parts`, `1.3.4` `solids-of-revolution`).
+## 3. Immediate Next Step (Volume I Module 1.4 — Final Module of Volume I)
+**Volume I** now stands at `10/12` published chapters (**Modules 1.1, 1.2, and 1.3** 100% live).
+- **Next Curriculum Milestone:** Build **Volume I, Module 1.4: Infinite Series & Power Series Convergence (`/single-variable-calculus/infinite-series`)** in [`src/registry/vol1-single-variable.ts`](../../src/registry/vol1-single-variable.ts) (`1.4.1` `sequences-partial-sums`, `1.4.2` `power-series-convergence`).

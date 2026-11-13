@@ -20,6 +20,17 @@
 
 ---
 
-## Upcoming Modules (`1.3` – `1.4`)
-- **Module 1.3: Single-Variable Integration & Accumulation (`integral-calculus`)** — `1.3.1`–`1.3.4` (`RiemannPartition1DLab`, `FtcAccumulationSweeperLab`, `IbpAreaRectangleLab`, `RevolutionWasherShell3DLab`)
-- **Module 1.4: Infinite Series & Power Series Convergence (`infinite-series`)** — `1.4.1`–`1.4.2`
+## Module 1.3: Single-Variable Integration & Accumulation (`integral-calculus` — ALL PUBLISHED 4/4)
+7. **Chapter `1.3.1` — 1D Riemann Sums, Darboux Bounds & Definite Area (`riemann-sums-1d`)** *(Published)*
+   - Lab: `Riemann1DLab` (`src/components/visualizations/single-variable/Riemann1DLab.tsx`)
+8. **Chapter `1.3.2` — The Fundamental Theorem of Calculus: Accumulation vs. Slope (`fundamental-theorem-calculus`)** *(Published)*
+   - Lab: `FTCAccumulationLab` (`src/components/visualizations/single-variable/FTCAccumulationLab.tsx`)
+9. **Chapter `1.3.3` — u-Substitution & Integration by Parts Geometry (`substitution-integration-by-parts`)** *(Published)*
+   - Lab: `SubstitutionIBPLab` (`src/components/visualizations/single-variable/SubstitutionIBPLab.tsx`)
+10. **Chapter `1.3.4` — Solids of Revolution: Disks, Washers & Cylindrical Shells (`solids-of-revolution`)** *(Published)*
+   - Lab: `SolidOfRevolutionLab` (`src/components/visualizations/single-variable/SolidOfRevolutionLab.tsx`)
+
+---
+
+## Upcoming Final Module (`1.4`)
+- **Module 1.4: Infinite Series & Power Series Convergence (`infinite-series`)** — `1.4.1` (`sequences-partial-sums`), `1.4.2` (`power-series-convergence`)

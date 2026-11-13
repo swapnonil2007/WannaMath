@@ -292,7 +292,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "1D Riemann Sums, Darboux Bounds & Definite Area",
           subtitle:
             "Compare left, right, midpoint, and trapezoidal partitions as N → ∞ on signed curves.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.1.1"],
           dimensionBadge: "2D",
@@ -300,6 +300,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           keyEquationsLatex: [
             "\\int_{a}^{b} f(x)\\,dx = \\lim_{N \\to \\infty} \\sum_{i=1}^{N} f(x_i^*)\\,\\Delta x",
           ],
+          engineeringContext:
+            "Numerical integration of accelerometer velocity logs, discrete trapezoidal telemetry, and signed energy balance.",
+          pedagogicalRhythm: {
+            question:
+              "Why do midpoint and trapezoidal rectangles converge far faster than left/right sums—and how do inscribed/circumscribed Darboux bounds certify exact integrability?",
+            labInteraction:
+              "Scrub partition count N and switch across Left, Right, Midpoint, Trapezoidal, and Darboux Upper/Lower modes in Lab 1.3.1A while observing signed positive/negative strips.",
+            symbolicFormalizationLatex:
+              "L(f, P) = \\sum_{i=1}^N m_i \\Delta x_i \\le \\int_a^b f(x)\\,dx \\le \\sum_{i=1}^N M_i \\Delta x_i = U(f, P)",
+            edgeCasesAndBridge:
+              "Areas below the x-axis cancel positive areas in net signed integrals, whereas ∫|f(x)|dx accumulates total geometric magnitude; next, Chapter 1.3.2 connects integration directly to differentiation.",
+          },
           labs: [
             {
               id: "lab-1-3-1a",
@@ -319,7 +331,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "The Fundamental Theorem of Calculus: Accumulation vs. Slope",
           subtitle:
             "Sweep upper bound x to see why the rate of change of accumulated area A(x) equals the boundary height f(x).",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["1.2.1", "1.3.1"],
           dimensionBadge: "2D",
@@ -328,6 +340,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
             "\\frac{d}{dx}\\int_{a}^{x} f(t)\\,dt = f(x)",
             "\\int_{a}^{b} F'(x)\\,dx = F(b) - F(a)",
           ],
+          engineeringContext:
+            "Deriving position from velocity profiles, capacitor charge accumulation Q(t) = ∫I(τ)dτ, and non-elementary erf(x) tables.",
+          pedagogicalRhythm: {
+            question:
+              "Why is the derivative of accumulated area A(x) simply the boundary height f(x)—turning an infinite sum into a single endpoint subtraction F(b) - F(a)?",
+            labInteraction:
+              "Animate upper bound x in Lab 1.3.2A to watch the boundary slice dA = f(x)dx govern the tangent slope of A(x), even on non-elementary Gaussians and jump-step curves.",
+            symbolicFormalizationLatex:
+              "\\frac{A(x+\\Delta x) - A(x)}{\\Delta x} \\approx \\frac{f(x)\\,\\Delta x}{\\Delta x} \\xrightarrow{\\Delta x \\to 0} f(x)",
+            edgeCasesAndBridge:
+              "Integrating smooths jump discontinuities into continuous corners where A(x) stays continuous everywhere; next, Chapter 1.3.3 geometricizes u-substitution and integration by parts.",
+          },
           labs: [
             {
               id: "lab-1-3-2a",
@@ -347,7 +371,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "u-Substitution & Integration by Parts Geometry",
           subtitle:
             "See u-substitution as 1D interval rescaling and integration by parts as complementary rectangular area partitioning.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["1.2.3", "1.3.2"],
           dimensionBadge: "2D",
@@ -356,6 +380,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
             "\\int_{a}^{b} f(g(x))\\,g'(x)\\,dx = \\int_{g(a)}^{g(b)} f(u)\\,du",
             "\\int u\\,dv = u v - \\int v\\,du",
           ],
+          engineeringContext:
+            "Weak-form finite element integration by parts (transferring derivatives onto test functions) and coordinate normalization.",
+          pedagogicalRhythm: {
+            question:
+              "What are u-substitution and integration by parts actually doing to area under curves—and why does swapping du and dv turn intractable integrals into simple complementary rectangles?",
+            labInteraction:
+              "Toggle between the (u, v) rectangular complement partition (IBP) and synchronized x ↔ u strip-stretching planes (u-Substitution) in Lab 1.3.3A.",
+            symbolicFormalizationLatex:
+              "\\int_{u_1}^{u_2} v\\,du + \\int_{v_1}^{v_2} u\\,dv = u_2 v_2 - u_1 v_1",
+            edgeCasesAndBridge:
+              "Choosing u and dv wisely moves differentiation onto the polynomial/logarithmic factor; next, Chapter 1.3.4 sweeps 2D profiles around axes to compute 3D volumes of revolution.",
+          },
           labs: [
             {
               id: "lab-1-3-3a",
@@ -375,7 +411,7 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
           title: "Solids of Revolution: Disks, Washers & Cylindrical Shells",
           subtitle:
             "Revolve 2D regions around axes in 3D WebGL to compare perpendicular washer slices against nested cylindrical shells.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["1.3.1"],
           dimensionBadge: "2D + 3D",
@@ -384,6 +420,18 @@ export const VOL1_SINGLE_VARIABLE: VolumeMetadata = {
             "V_{\\text{washer}} = \\int_{a}^{b} \\pi\\big([R(x)]^2 - [r(x)]^2\\big)\\,dx",
             "V_{\\text{shell}} = \\int_{a}^{b} 2\\pi x\\,f(x)\\,dx",
           ],
+          engineeringContext:
+            "Turned lathe components, parabolic antenna reflectors, axisymmetric pressure vessels, and nozzle volumes.",
+          pedagogicalRhythm: {
+            question:
+              "When sweeping a flat region around an axis, when is it easier to slice perpendicular washers π(R² - r²)dx versus unrolling nested cylindrical shells 2πrh dr?",
+            labInteraction:
+              "Orbit the cutaway 3D WebGL solid of revolution in Lab 1.3.4A, scrub sweep angle φ ∈ [30°, 360°], and switch between active washer disks and cylindrical shells.",
+            symbolicFormalizationLatex:
+              "dV_{\\text{washer}} = \\pi(R^2 - r^2)\\,dx \\quad \\big| \\quad dV_{\\text{shell}} = 2\\pi r\\,h(r)\\,dr",
+            edgeCasesAndBridge:
+              "Shells avoid inverting non-monotone curves like y = sin(x) around the y-axis! Next, Module 1.4 transitions from continuous accumulation to infinite discrete series and power series.",
+          },
           labs: [
             {
               id: "lab-1-3-4a",
