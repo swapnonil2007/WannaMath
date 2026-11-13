@@ -23,7 +23,10 @@ All 4 foundational chapters of **Module 3.1** are live, and a **6-Phase Differen
    - Labs: `LinearOdeIntegratingFactorLab`, `BernoulliReductionLab` (`src/components/visualizations/multivariable-differentiation/`)
 10. **Chapter `3.1.10` — Linear ODEs: Linear Independence, Wronskian & Root Regimes (`linear-odes-wronskian-roots`)** *(Published — Phase 5, Nested Differential Equations Sub-Parent)*
    - Labs: `WronskianPhaseAreaLab`, `CharacteristicRootsSolutionLab` (`src/components/visualizations/multivariable-differentiation/`)
-11. **Queued Final Expansion Chapter (`3.1.11`, Nested Differential Equations Sub-Parent):** See [`DIFFERENTIAL_CALCULUS_PLAN.md`](./DIFFERENTIAL_CALCULUS_PLAN.md) Phase 6.
+11. **Chapter `3.1.11` — Operator Method ($D$), Variation of Parameters & Cauchy-Euler Equations (`operator-variation-cauchy-euler`)** *(Published — Phase 6, Nested Differential Equations Sub-Parent)*
+   - Labs: `OperatorMethodTutorialLab`, `VariationOfParametersCauchyEulerLab` (`src/components/visualizations/multivariable-differentiation/`)
+
+*(All 11 Chapters of Module 3.1 and all 22 Chapters of Volume III are 100% Published!)*
 
 ---
 

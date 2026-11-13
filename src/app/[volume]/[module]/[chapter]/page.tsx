@@ -22,6 +22,8 @@ import { LinearOdeIntegratingFactorLab } from "@/components/visualizations/multi
 import { BernoulliReductionLab } from "@/components/visualizations/multivariable-differentiation/BernoulliReductionLab";
 import { WronskianPhaseAreaLab } from "@/components/visualizations/multivariable-differentiation/WronskianPhaseAreaLab";
 import { CharacteristicRootsSolutionLab } from "@/components/visualizations/multivariable-differentiation/CharacteristicRootsSolutionLab";
+import { OperatorMethodTutorialLab } from "@/components/visualizations/multivariable-differentiation/OperatorMethodTutorialLab";
+import { VariationOfParametersCauchyEulerLab } from "@/components/visualizations/multivariable-differentiation/VariationOfParametersCauchyEulerLab";
 
 // Module 3.2 Live Laboratories (Integral Calculus: Multiple Integrals, Convergence & Eulerian Functions)
 import { RiemannVolumeLab } from "@/components/visualizations/double-integrals/RiemannVolumeLab";
@@ -342,6 +344,70 @@ export default async function ChapterPage({
                   Euler&apos;s formula converts complex exponential poles into damped oscillations
                   of envelope <KaTeXMath math="e^{\alpha x}" /> and angular frequency{" "}
                   <KaTeXMath math="\beta" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "operator-variation-cauchy-euler" && (
+        <div className="space-y-10">
+          <OperatorMethodTutorialLab />
+          <VariationOfParametersCauchyEulerLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
+              Particular Integrals &amp; Variable-Coefficient Quick Reference
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                  1. INVERSE OPERATOR RULES 1/f(D)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\frac{1}{f(D)}e^{ax} = \frac{e^{ax}}{f(a)}, \quad \frac{1}{f(D^2)}\sin(\omega x) = \frac{\sin(\omega x)}{f(-\omega^2)}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  When <KaTeXMath math="f(a) = 0" />, multiply by <KaTeXMath math="x" /> and
+                  replace <KaTeXMath math="f(a)" /> with <KaTeXMath math="f'(a)" /> (or use the
+                  shift theorem <KaTeXMath math="D \mapsto D + a" />).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. VARIATION OF PARAMETERS
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="y_p = -y_1\!\int \frac{y_2 g}{W}\,dx + y_2\!\int \frac{y_1 g}{W}\,dx"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Works for any continuous forcing <KaTeXMath math="g(x)" />—even{" "}
+                  <KaTeXMath math="\sec x" />, <KaTeXMath math="\tan x" />, or{" "}
+                  <KaTeXMath math="e^x/x" />—given <KaTeXMath math="y_1, y_2" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  3. CAUCHY-EULER LOG PULLBACK
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="x = e^t \implies x y' = \theta y,\quad x^2 y'' = \theta(\theta - 1)y"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-serif">
+                  Maps variable-coefficient <KaTeXMath math="x^k y^{(k)}" /> equations onto
+                  constant-coefficient linear ODEs in <KaTeXMath math="t = \ln x" />.
                 </p>
               </div>
             </div>

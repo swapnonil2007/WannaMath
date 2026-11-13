@@ -501,7 +501,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           title: "Operator Method (D), Variation of Parameters & Cauchy-Euler Equations",
           subtitle:
             "Compute particular integrals with inverse operators 1/f(D), general forcing envelopes via Variation of Parameters, and solve Cauchy-Euler equations via x = e^t.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 45,
           prerequisites: ["3.1.10"],
           dimensionBadge: "2D",
@@ -515,6 +515,18 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "y_p = \\frac{1}{f(D)}g(x), \\qquad u_1' = -\\frac{y_2 g}{W},\\; u_2' = \\frac{y_1 g}{W}",
             "a x^2 y'' + b x y' + c y = g(x) \\xrightarrow{x = e^t,\\; \\theta = xD} \\bigl(a\\theta(\\theta-1) + b\\theta + c\\bigr)y = g(e^t)",
           ],
+          engineeringContext:
+            "Forced mechanical resonance, AC circuit steady-state phasor response, radial spherical Laplace potentials (Cauchy-Euler r² R'' + 2r R' - λR = 0), and thick-walled pressure vessel stresses.",
+          pedagogicalRhythm: {
+            question:
+              "How does the algebraic symbol D = d/dx turn particular-integral calculus into fraction algebra—what rescues non-exponential forcings like sec(x)—and why does t = ln x flatten every Cauchy-Euler equation into constant coefficients?",
+            labInteraction:
+              "Test all five 1/f(D) inversion rules and resonance failures in Lab 3.1.11A (with live f(D)[y_p] = g(x) verification), then switch between Variation of Parameters and the Cauchy-Euler log-pullback in Lab 3.1.11B.",
+            symbolicFormalizationLatex:
+              "x = e^t,\\; \\theta = x\\frac{d}{dx} \\implies x^k D^k = \\theta(\\theta - 1)\\cdots(\\theta - k + 1)",
+            edgeCasesAndBridge:
+              "Watch out for resonance poles f(a) = 0 in inverse operators, singularities like sec(x) at x = ±π/2 in Variation of Parameters, and x > 0 domain restrictions (use |x| for x < 0) in Cauchy-Euler equations. With Chapter 3.1.11 published, all 22 chapters of Volume III are complete!",
+          },
           labs: [
             {
               id: "lab-3-1-11a",
