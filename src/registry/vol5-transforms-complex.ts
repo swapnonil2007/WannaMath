@@ -301,11 +301,23 @@ export const VOL5_TRANSFORMS_COMPLEX: VolumeMetadata = {
           title: "Orthogonal Harmonics, Epicycles & Gibbs Phenomenon",
           subtitle:
             "Build square, sawtooth, and triangle waves from N sinusoids and inspect the 9% Gibbs overshoot near jump discontinuities.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["1.3.1", "5.1.1"],
           dimensionBadge: "2D",
           accentHex: "#96B898",
+          engineeringContext:
+            "Digital audio harmonic synthesis, JPEG/MP3 spectral compression, JPEG blocking ringing artifacts, and structural harmonic resonance balancing.",
+          pedagogicalRhythm: {
+            question:
+              "Why do sine and cosine harmonics form perpendicular basis axes for periodic signals—and why does a ~9% Gibbs spike refuse to vanish near sudden jumps?",
+            labInteraction:
+              "Scrub harmonic count N ∈ [1, 45] across Square, Sawtooth, Triangle, and 25% Duty Pulse waveforms while spinning the rotating epicycle chain.",
+            symbolicFormalizationLatex:
+              "f(t) \\sim \\frac{a_0}{2} + \\sum_{n=1}^{N} \\big(a_n\\cos(n\\omega_0 t) + b_n\\sin(n\\omega_0 t)\\big), \\qquad \\|f\\|_2^2 = \\text{Parseval}",
+            edgeCasesAndBridge:
+              "Notice that continuous Triangle waves decay at O(1/n²) with zero Gibbs overshoot, whereas jump-discontinuous Square waves decay at O(1/n) and lock at ~8.95% peak overshoot. Chapter 5.4.2 opens the period T → ∞ to reach the continuous Fourier Transform.",
+          },
           keyEquationsLatex: [
             "f(t) \\sim \\frac{a_0}{2} + \\sum_{n=1}^{N} \\big(a_n\\cos(n\\omega_0 t) + b_n\\sin(n\\omega_0 t)\\big)",
           ],
@@ -328,11 +340,23 @@ export const VOL5_TRANSFORMS_COMPLEX: VolumeMetadata = {
           title: "Continuous Fourier Transform & Time-Frequency Uncertainty",
           subtitle:
             "Wrap signal f(t) around the origin in the complex plane at winding frequency ω to see why narrow pulses have wide spectra.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["5.4.1"],
           dimensionBadge: "Dual 2D",
           accentHex: "#96B898",
+          engineeringContext:
+            "5G OFDM spectrum allocation, radar chirp Doppler resolution, MRI k-space image reconstruction, and quantum Heisenberg position-momentum duality.",
+          pedagogicalRhythm: {
+            question:
+              "How does winding a continuous signal f(t) around the complex origin detect hidden frequencies—and why does squeezing a pulse narrower in time force its spectrum wider?",
+            labInteraction:
+              "Sweep winding frequency ω or click any peak in |f̂(ω)| to watch the winding coil's gold center of mass jump outward, then vary pulse width a to test Δt · Δω ≥ 1/2.",
+            symbolicFormalizationLatex:
+              "\\hat{f}(\\omega) = \\int_{-\\infty}^{\\infty} f(t)e^{-i\\omega t}\\,dt, \\qquad \\Delta t \\cdot \\Delta \\omega \\ge \\frac{1}{2}",
+            edgeCasesAndBridge:
+              "This completes Volume V (Transforms & Complex Analysis)! From Euler helices and Cauchy residues to Laplace s-planes and Fourier duality, time and frequency now form one unified lens.",
+          },
           keyEquationsLatex: [
             "\\hat{f}(\\omega) = \\int_{-\\infty}^{\\infty} f(t)e^{-i\\omega t}\\,dt",
             "\\Delta t \\cdot \\Delta \\omega \\ge \\frac{1}{2}",

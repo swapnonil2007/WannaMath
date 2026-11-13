@@ -99,13 +99,15 @@ import { EigenvectorCompassLab } from "@/components/visualizations/linear-algebr
 import { QuadraticFormLab } from "@/components/visualizations/linear-algebra/QuadraticFormLab";
 import { SVDThreeStageLab } from "@/components/visualizations/linear-algebra/SVDThreeStageLab";
 
-// Volume V — Modules 5.1–5.3 Live Laboratories (Complex, Conformal, Residues & Laplace s-Plane)
+// Volume V — Modules 5.1–5.4 Live Laboratories (Complete Transforms & Complex Analysis)
 import { EulerHelixPhasorLab } from "@/components/visualizations/transforms-complex/EulerHelixPhasorLab";
 import { ConformalMappingLab } from "@/components/visualizations/transforms-complex/ConformalMappingLab";
 import { CauchyContourLab } from "@/components/visualizations/transforms-complex/CauchyContourLab";
 import { ResidueTheoremLab } from "@/components/visualizations/transforms-complex/ResidueTheoremLab";
 import { LaplaceSPlane3DLab } from "@/components/visualizations/transforms-complex/LaplaceSPlane3DLab";
 import { ConvolutionFlipSlideLab } from "@/components/visualizations/transforms-complex/ConvolutionFlipSlideLab";
+import { FourierSeriesGibbsLab } from "@/components/visualizations/transforms-complex/FourierSeriesGibbsLab";
+import { FourierTransformWindingLab } from "@/components/visualizations/transforms-complex/FourierTransformWindingLab";
 
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
@@ -2880,6 +2882,110 @@ export default async function ChapterPage({
                 <p className="text-xs text-[var(--text-secondary)] font-math-serif">
                   Transforming to <KaTeXMath math="s" />-space replaces the sliding integral completely with simple
                   pointwise transfer-function multiplication.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "fourier-series-gibbs" && (
+        <div className="space-y-8">
+          <FourierSeriesGibbsLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Orthogonal Function Spaces, Parseval Energy & Wilbraham–Gibbs Overshoot
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  1. INNER-PRODUCT PROJECTION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\int_{-\pi}^{\pi} \sin(nt)\sin(mt)\,dt = \pi\,\delta_{nm}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Harmonic sinusoids act like infinite-dimensional orthogonal unit vectors, isolating each{" "}
+                  <KaTeXMath math="a_n, b_n" /> independently via projection.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  2. PARSEVAL ENERGY CONSERVATION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\frac{1}{\pi}\int_{-\pi}^{\pi} |f(t)|^2\,dt = \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Total waveform power equals the sum of squared harmonic amplitudes cleanly across time and frequency.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  3. INVARIANT GIBBS OVERSHOOT
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\frac{1}{\pi}\int_0^{\pi} \frac{\sin u}{u}\,du - \frac{1}{2} \approx 8.95\%" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Jump discontinuities compress ringing closer to the edge as <KaTeXMath math="N \to \infty" />, yet
+                  the spike height never drops below ~8.95% of the jump size.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "fourier-transform-spectra" && (
+        <div className="space-y-8">
+          <FourierTransformWindingLab />
+
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
+              Continuous Fourier Integral, Scaling Duality & Heisenberg–Gabor Uncertainty
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  1. COMPLEX WINDING CENTROID
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\hat{f}(\omega) = \int_{-\infty}^{\infty} f(t)e^{-i\omega t}\,dt" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Wrapping <KaTeXMath math="f(t)" /> around the origin at rate <KaTeXMath math="\omega" /> cancels
+                  off-resonance cycles symmetrically while snapping outward whenever <KaTeXMath math="\omega" />{" "}
+                  matches a carrier tone.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  2. RECIPROCAL TIME–FREQUENCY SCALING
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\mathcal{F}\{f(at)\} = \frac{1}{|a|}\hat{f}\!\left(\frac{\omega}{a}\right)" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Compressing a waveform in time (<KaTeXMath math="a &gt; 1" />) stretches its Fourier spectrum
+                  proportionally wider across frequency.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  3. UNCERTAINTY PRINCIPLE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\Delta t \cdot \Delta\omega \ge \frac{1}{2}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  No signal can be simultaneously ultra-narrow in time and ultra-narrow in frequency; Gaussian pulses
+                  uniquely achieve equality at <KaTeXMath math="1/2" />.
                 </p>
               </div>
             </div>

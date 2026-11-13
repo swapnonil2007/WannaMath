@@ -1,6 +1,6 @@
 # Volume V — Transforms & Complex Analysis (`transforms-complex-analysis`)
 
-> **Status:** `in-progress` (`6/8` Chapters PUBLISHED — **Modules 5.1–5.3 Complete**, Phase 4 Queued) — Blueprint in [`VOLUME_5_PLAN.md`](./VOLUME_5_PLAN.md)
+> **Status:** `published` (`8/8` Chapters PUBLISHED — **100% Volume V Complete**, `8` Live Labs) — Blueprint in [`VOLUME_5_PLAN.md`](./VOLUME_5_PLAN.md)
 > **Canonical Route Base:** `/transforms-complex-analysis/[module]/[chapter]`
 
 ## Module & Chapter Build Index
@@ -14,6 +14,6 @@
 3. **Module 5.3 (`laplace-transforms`) — Laplace Transforms & s-Plane Poles/Zeros** *(PUBLISHED — Phase 3)*
    - `5.3.1`: The s-Plane Surface, Poles/Zeros & Region of Convergence (`s-plane-poles-zeros` → `LaplaceSPlane3DLab`) *(Published)*
    - `5.3.2`: Impulse Response, Step Response & Convolution Integral (`impulse-response-convolution` → `ConvolutionFlipSlideLab`) *(Published)*
-4. **Module 5.4 (`fourier-analysis`) — Fourier Series & Fourier Transforms** *(Phase 4)*
-   - `5.4.1`: Orthogonal Harmonics, Epicycles & Gibbs Phenomenon (`fourier-series-gibbs` → `FourierSeriesGibbsLab`)
-   - `5.4.2`: Continuous Fourier Transform & Time-Frequency Uncertainty (`fourier-transform-spectra` → `FourierTransformWindingLab`)
+4. **Module 5.4 (`fourier-analysis`) — Fourier Series & Fourier Transforms** *(PUBLISHED — Phase 4)*
+   - `5.4.1`: Orthogonal Harmonics, Epicycles & Gibbs Phenomenon (`fourier-series-gibbs` → `FourierSeriesGibbsLab`) *(Published)*
+   - `5.4.2`: Continuous Fourier Transform & Time-Frequency Uncertainty (`fourier-transform-spectra` → `FourierTransformWindingLab`) *(Published)*
