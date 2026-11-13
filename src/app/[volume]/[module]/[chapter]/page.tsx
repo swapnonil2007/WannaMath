@@ -84,6 +84,10 @@ import { ForcedResonanceLab } from "@/components/visualizations/differential-equ
 import { TraceDeterminantPhaseLab } from "@/components/visualizations/differential-equations/TraceDeterminantPhaseLab";
 import { NonlinearPhasePortraitLab } from "@/components/visualizations/differential-equations/NonlinearPhasePortraitLab";
 
+// Volume IV — Module 4.4 Live Laboratories (Partial Differential Equations)
+import { HeatEquationDiffusionLab } from "@/components/visualizations/differential-equations/HeatEquationDiffusionLab";
+import { WaveEquationModesLab } from "@/components/visualizations/differential-equations/WaveEquationModesLab";
+
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
     volume: item.volume.slug,
@@ -1920,6 +1924,136 @@ export default async function ChapterPage({
                   Unlike fragile linear centers that scale with initial amplitude, nonlinear limit
                   cycles (like Van der Pol) actively pump small vibrations outward and damp large
                   swings inward onto one fixed loop.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "heat-equation-diffusion" && (
+        <div className="space-y-10">
+          <HeatEquationDiffusionLab />
+
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="border-b border-[var(--border-subtle)] pb-3">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#B95869] block">
+                Parabolic PDE Theory • Module 4.4.1
+              </span>
+              <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                Curvature Smoothing, Separation of Variables &amp; Boundary Equilibrium
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  1. CONCAVITY DRIVES TEMPERATURE RATE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  At local spikes where <KaTeXMath math="u_{xx} < 0" />, temperature immediately
+                  drops (<KaTeXMath math="u_t < 0" />); at troughs where{" "}
+                  <KaTeXMath math="u_{xx} > 0" />, neighboring heat raises temperature until all
+                  curvature vanishes (<KaTeXMath math="u_{xx} = 0" />).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                  2. n² EXPONENTIAL MODE FILTERING
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="b_n(t) = b_n(0)\,e^{-\alpha (n\pi/L)^2 t}" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Higher harmonic mode <KaTeXMath math="n = 10" /> decays{" "}
+                  <KaTeXMath math="100\times" /> faster than the fundamental mode{" "}
+                  <KaTeXMath math="n = 1" />, explaining why discontinuous step profiles become
+                  infinitely differentiable for every <KaTeXMath math="t > 0" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                  3. DIRICHLET VS. NEUMANN STEADY STATE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="u(0,t)=u(L,t)=0 \implies 0; \quad u_x=0 \implies \bar{u}_0" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Ice-bath Dirichlet boundaries drain all thermal energy to zero, whereas insulated
+                  Neumann boundaries trap all heat so temperature equalizes at the initial spatial
+                  average <KaTeXMath math="a_0/2" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "wave-equation-normal-modes" && (
+        <div className="space-y-10">
+          <WaveEquationModesLab />
+
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="border-b border-[var(--border-subtle)] pb-3">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] block">
+                Hyperbolic PDE Theory • Module 4.4.2
+              </span>
+              <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                Characteristic Coordinates, Energy Conservation &amp; Chladni Degeneracy
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                  1. FACTORIZATION INTO LEFT/RIGHT WAVES
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="(\partial_t - c\partial_x)(\partial_t + c\partial_x)u = 0 \implies u = F(x-ct) + G(x+ct)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Unlike heat diffusion, the 1D wave operator factors into two transport equations,
+                  splitting initial shape <KaTeXMath math="f(x)" /> into two un-attenuated
+                  half-pulses <KaTeXMath math="\tfrac{1}{2}\tilde{f}(x\mp ct)" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                  2. PHASE INVERSION AT PINNED ENDS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath math="\tilde{f}(-s) = -\tilde{f}(s), \quad u(0,t)=u(L,t)=0" block />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Extending <KaTeXMath math="f(x)" /> asymmetrically across <KaTeXMath math="x=0" />{" "}
+                  and <KaTeXMath math="x=L" /> causes reflected waves to invert amplitude by{" "}
+                  <KaTeXMath math="180^\circ" />, cancelling out exactly at pinned boundary clamps.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                  3. 2D CHLADNI NODAL LINES
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\omega_{mn} = c\pi\sqrt{m^2+n^2} \implies \omega_{12} = \omega_{21}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  On a square plate, symmetric pairs <KaTeXMath math="(m,n)" /> and{" "}
+                  <KaTeXMath math="(n,m)" /> vibrate at identical frequency, combining into tilted,
+                  curved, or loop-shaped stationary Chladni nodal contours.
                 </p>
               </div>
             </div>

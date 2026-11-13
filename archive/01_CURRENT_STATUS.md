@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-13 — **Vector Calculus Gradient & Directional Derivative Sections PUBLISHED (`12/12` Vol I + `24/24` Vol III + `6/8` Vol IV = `42` Chapters & `59` Labs Live)**
+> **Last Updated:** 2026-11-13 — **Volume IV COMPLETE (`12/12` Vol I + `24/24` Vol III + `8/8` Vol IV = `44` Chapters & `61` Labs Live)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
@@ -30,7 +30,8 @@
 | **Volume IV — Phase 1 (Module 4.1)** | `888034e` | **PUBLISHED** | Published **Module 4.1 (`first-order-odes`)**: `4.1.1` (`SlopeFieldTracerLab`) and `4.1.2` (`AutonomousPhaseLineLab`) with geometric slope-field/Picard and stability/bifurcation guides (`2/8` Vol IV chapters, `53` labs live). |
 | **Volume IV — Phase 2 (Module 4.2)** | `b48e504` | **PUBLISHED** | Published **Module 4.2 (`second-order-oscillations`)**: `4.2.1` (`HarmonicOscillatorLab`: $s$-plane root locus, regimes, phase orbit) and `4.2.2` (`ForcedResonanceLab`: acoustic beats, secular resonance, Bode gain & phase lag) (`4/8` Vol IV chapters, `55` labs live). |
 | **Volume IV — Phase 3 (Module 4.3)** | `6df03c6` | **PUBLISHED** | Published **Module 4.3 (`phase-plane-systems`)**: `4.3.1` (`TraceDeterminantPhaseLab`: Poincaré $(\tau, \Delta)$ plane & eigenvector manifolds) and `4.3.2` (`NonlinearPhasePortraitLab`: nullclines, Van der Pol limit cycles, Hartman–Grobman Jacobians) (`6/8` Vol IV chapters, `57` labs live). |
-| **Vector Calculus Gradient & Directional Derivative Calculators** | *Current* | **PUBLISHED** | Added dedicated `3.3.1` (`gradient-of-scalar-fields`: `VectorGradientCalculatorLab`) and `3.3.2` (`directional-derivatives`: `DirectionalDerivativeCalculatorLab`) chapters inside **Module 3.3 (`vector-calculus`)**, supporting custom 2D `f(x,y)` & 3D `φ(x,y,z)` function inputs, arbitrary evaluation points `P`, direction vectors `v`, marching-tetrahedra 3D level surfaces, vertical slicing planes, 1D ray profiles, and step-by-step worked derivations (`24/24` Vol III chapters, `59` labs live). |
+| **Vector Calculus Gradient & Directional Derivative Calculators** | `2c4370d` | **PUBLISHED** | Added dedicated `3.3.1` (`gradient-of-scalar-fields`: `VectorGradientCalculatorLab`) and `3.3.2` (`directional-derivatives`: `DirectionalDerivativeCalculatorLab`) chapters inside **Module 3.3 (`vector-calculus`)**, supporting custom 2D `f(x,y)` & 3D `φ(x,y,z)` function inputs, arbitrary evaluation points `P`, direction vectors `v`, marching-tetrahedra 3D level surfaces, vertical slicing planes, 1D ray profiles, and step-by-step worked derivations (`24/24` Vol III chapters, `59` labs live). |
+| **Volume IV — Phase 4 (Module 4.4)** | *Current* | **PUBLISHED** | Published **Module 4.4 (`partial-differential-equations`)**: `4.4.1` (`HeatEquationDiffusionLab`: 3D space–time sheet, Dirichlet/Neumann Fourier series & $n^2$ mode damping) and `4.4.2` (`WaveEquationModesLab`: 1D D'Alembert odd-extension pulse reflections & 2D square drumhead Chladni nodal curves), completing **all `8/8` chapters of Volume IV** (`61` labs live). |
 
 ---
 
@@ -43,6 +44,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume IV Phase 4 — Final Module Next)
-Both **Volume I (`12/12`)** and **Volume III (`22/22`)** are 100% published, and **Volume IV Modules 4.1–4.3 (`6/8`)** are now live (`40` chapters, `57` interactive labs live).
-- **Active Planned Sequence:** Complete **Volume IV Phase 4 — Module 4.4: Partial Differential Equations (`partial-differential-equations`)** per [`VOLUME_4_PLAN.md`](./volumes/vol_04_differential_equations/VOLUME_4_PLAN.md) (`HeatEquationDiffusionLab` + `WaveEquationModesLab`). *(Volume II [`linear-algebra`] remains queued in [`src/registry/vol2-linear-algebra.ts`](../../src/registry/vol2-linear-algebra.ts)).*
+## 3. Immediate Next Step (Volume II: Linear Algebra & Space Geometry Queued Next)
+**Volume I (`12/12`)**, **Volume III (`24/24`)**, and **Volume IV (`8/8`)** are 100% published (`44` chapters, `61` interactive labs live).
+- **Active Planned Sequence:** Begin **Volume II (`linear-algebra`: Linear Algebra & Space Geometry)** in [`src/registry/vol2-linear-algebra.ts`](../../src/registry/vol2-linear-algebra.ts) (followed by Volumes V & VI).

@@ -305,7 +305,7 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
           title: "The 1D/2D Heat Equation & Diffusive Smoothing",
           subtitle:
             "See why ∂u/∂t = α ∇²u damps high-frequency spatial jaggedness exponentially faster than fundamental modes.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["3.1.2", "4.2.1"],
           dimensionBadge: "2D + 3D",
@@ -314,6 +314,18 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
             "\\frac{\\partial u}{\\partial t} = \\alpha \\nabla^2 u",
             "u(x,t) = \\sum_{n=1}^{\\infty} b_n e^{-\\alpha (n\\pi/L)^2 t}\\sin\\!\\left(\\frac{n\\pi x}{L}\\right)",
           ],
+          engineeringContext:
+            "Laser annealing & semiconductor thermal dissipation, bridge/slab transient heat conduction, chemical Fickian concentration diffusion, and Gaussian image blur.",
+          pedagogicalRhythm: {
+            question:
+              "Why does thermal diffusion u_t = α u_xx immediately round sharp corners and spikes into smooth sinusoids instead of translating pulses sideways?",
+            labInteraction:
+              "Switch between Square Pulse, Triangle Tent, Dual Hotspots, and custom f(x) under Dirichlet (u=0) or Insulated Neumann (u_x=0) boundaries while inspecting the decaying Fourier mode spectrum.",
+            symbolicFormalizationLatex:
+              "b_n(t) = b_n(0)\\,e^{-\\alpha(n\\pi/L)^2 t}, \\qquad u_{xx} < 0 \\implies u_t < 0",
+            edgeCasesAndBridge:
+              "Under Neumann insulation u_x = 0, total heat energy is conserved and every initial profile flattens toward its spatial mean a₀/2; in contrast, hyperbolic waves (Chapter 4.4.2) propagate energy across space without decaying.",
+          },
           labs: [
             {
               id: "lab-4-4-1a",
@@ -333,7 +345,7 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
           title: "The Wave Equation, Normal Modes & D'Alembert's Solution",
           subtitle:
             "Compare standing-wave normal modes on strings and 2D membranes against traveling left/right D'Alembert pulses.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["4.4.1"],
           dimensionBadge: "2D + 3D",
@@ -342,6 +354,18 @@ export const VOL4_DIFFERENTIAL_EQUATIONS: VolumeMetadata = {
             "\\frac{\\partial^2 u}{\\partial t^2} = c^2 \\nabla^2 u",
             "u(x,t) = \\frac{1}{2}\\big[f(x - ct) + f(x + ct)\\big]",
           ],
+          engineeringContext:
+            "Acoustic musical instruments & string harmonics, seismic ground wave propagation, electromagnetic waveguides, and structural membrane vibration (Chladni resonance).",
+          pedagogicalRhythm: {
+            question:
+              "How can a single hyperbolic PDE u_tt = c² ∇²u act both as half-height pulses gliding past each other on a string AND stationary geometric Chladni nodal patterns on a drumhead?",
+            labInteraction:
+              "Watch Gaussian & custom pulses split into D'Alembert right/left waves and reflect upside-down at pinned ends in 1D, then mix degenerate square eigenmodes (m₁, n₁) + β(m₂, n₂) to carve 2D Chladni sand curves.",
+            symbolicFormalizationLatex:
+              "u_{\\xi\\eta} = 0 \\;(\\xi=x-ct,\\;\\eta=x+ct), \\qquad \\omega_{mn} = c\\pi\\sqrt{\\frac{m^2}{L_x^2} + \\frac{n^2}{L_y^2}}",
+            edgeCasesAndBridge:
+              "This completes Volume IV (Differential Equations & Dynamical Systems)! Separation of variables and Fourier modes lead directly into Fourier & Laplace Transform Spectra in Volume V.",
+          },
           labs: [
             {
               id: "lab-4-4-2a",

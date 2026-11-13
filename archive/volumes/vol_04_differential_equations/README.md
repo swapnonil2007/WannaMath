@@ -1,6 +1,6 @@
 # Volume IV — Differential Equations & Dynamical Systems (`differential-equations`)
 
-> **Status:** `in-progress` (`6/8` Chapters PUBLISHED — **Modules 4.1–4.3 Complete**) — 4-Phase Buildout Blueprint in [`VOLUME_4_PLAN.md`](./VOLUME_4_PLAN.md).
+> **Status:** `published` (`8/8` Chapters PUBLISHED — **ALL 4 Modules Complete**) — 4-Phase Buildout Blueprint in [`VOLUME_4_PLAN.md`](./VOLUME_4_PLAN.md).
 > **Canonical Route Base:** `/differential-equations/[module]/[chapter]`
 
 ## Module & Chapter Build Index
@@ -14,6 +14,6 @@
 3. **Module 4.3 (`phase-plane-systems`) — Systems of ODEs & Phase Plane Portraits** *(PUBLISHED — Phase 3)*
    - `4.3.1`: 2D Linear Phase Portraits: Nodes, Saddles, Spirals & Centers (`linear-phase-portraits` → `TraceDeterminantPhaseLab`) *(Published)*
    - `4.3.2`: Nonlinear Stability, Nullclines & Limit Cycles (`nonlinear-nullclines-limit-cycles` → `NonlinearPhasePortraitLab`) *(Published)*
-4. **Module 4.4 (`partial-differential-equations`) — Partial Differential Equations (Heat & Wave Equations)** *(Phase 4)*
-   - `4.4.1`: The 1D/2D Heat Equation & Diffusive Smoothing (`heat-equation-diffusion` → `HeatEquationDiffusionLab`)
-   - `4.4.2`: The Wave Equation, Normal Modes & D'Alembert's Solution (`wave-equation-normal-modes` → `WaveEquationModesLab`)
+4. **Module 4.4 (`partial-differential-equations`) — Partial Differential Equations (Heat & Wave Equations)** *(PUBLISHED — Phase 4)*
+   - `4.4.1`: The 1D/2D Heat Equation & Diffusive Smoothing (`heat-equation-diffusion` → `HeatEquationDiffusionLab`) *(Published)*
+   - `4.4.2`: The Wave Equation, Normal Modes & D'Alembert's Solution (`wave-equation-normal-modes` → `WaveEquationModesLab`) *(Published)*
