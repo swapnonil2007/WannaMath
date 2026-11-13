@@ -1,0 +1,19 @@
+# Volume V — Transforms & Complex Analysis (`transforms-complex-analysis`)
+
+> **Status:** `planned` (`0/8` Chapters Published — **4-Phase Buildout Blueprint Ready** in [`VOLUME_5_PLAN.md`](./VOLUME_5_PLAN.md))
+> **Canonical Route Base:** `/transforms-complex-analysis/[module]/[chapter]`
+
+## Module & Chapter Build Index
+
+1. **Module 5.1 (`complex-functions-conformal`) — Complex Numbers & Conformal Mappings** *(Phase 1)*
+   - `5.1.1`: Complex Plane, Euler's Formula & Phasor Geometry (`euler-formula-complex-plane` → `EulerHelixPhasorLab`)
+   - `5.1.2`: Analyticity, Cauchy-Riemann Equations & Conformal Grids (`cauchy-riemann-conformal` → `ConformalMappingLab`)
+2. **Module 5.2 (`contour-integration`) — Contour Integration & The Residue Theorem** *(Phase 2)*
+   - `5.2.1`: Complex Line Integrals & Cauchy's Integral Theorem (`cauchy-integral-formula` → `CauchyContourLab`)
+   - `5.2.2`: Poles, Laurent Series & The Residue Theorem (`poles-residue-theorem` → `ResidueTheoremLab`)
+3. **Module 5.3 (`laplace-transforms`) — Laplace Transforms & s-Plane Poles/Zeros** *(Phase 3)*
+   - `5.3.1`: The s-Plane Surface, Poles/Zeros & Region of Convergence (`s-plane-poles-zeros` → `LaplaceSPlane3DLab`)
+   - `5.3.2`: Impulse Response, Step Response & Convolution Integral (`impulse-response-convolution` → `ConvolutionFlipSlideLab`)
+4. **Module 5.4 (`fourier-analysis`) — Fourier Series & Fourier Transforms** *(Phase 4)*
+   - `5.4.1`: Orthogonal Harmonics, Epicycles & Gibbs Phenomenon (`fourier-series-gibbs` → `FourierSeriesGibbsLab`)
+   - `5.4.2`: Continuous Fourier Transform & Time-Frequency Uncertainty (`fourier-transform-spectra` → `FourierTransformWindingLab`)

@@ -34,7 +34,8 @@
 | **Volume IV — Phase 4 (Module 4.4)** | `329466f` | **PUBLISHED** | Published **Module 4.4 (`partial-differential-equations`)**: `4.4.1` (`HeatEquationDiffusionLab`: 3D space–time sheet, Dirichlet/Neumann Fourier series & $n^2$ mode damping) and `4.4.2` (`WaveEquationModesLab`: 1D D'Alembert odd-extension pulse reflections & 2D square drumhead Chladni nodal curves), completing **all `8/8` chapters of Volume IV** (`61` labs live). |
 | **Volume II — Phase 1 (Module 2.1)** | `286299d` | **PUBLISHED** | Authored [`VOLUME_2_PLAN.md`](./volumes/vol_02_linear_algebra/VOLUME_2_PLAN.md) & published **Module 2.1 (`vectors-subspaces`)**: `2.1.1` (`VectorSpanExplorerLab`), `2.1.2` (`ChangeOfBasisLab`), and `2.1.3` (`FourSubspacesLab`) (`3/9` Vol II chapters, `64` labs live). |
 | **Volume II — Phase 2 (Module 2.2)** | `cdda0fc` | **PUBLISHED** | Published **Module 2.2 (`linear-transformations`)**: `2.2.1` (`MatrixTransformationLab`), `2.2.2` (`DeterminantVolumeLab`), and `2.2.3` (`LeastSquaresProjectionLab`) (`6/9` Vol II chapters, `67` labs live). |
-| **Volume II — Phase 3 (Module 2.3)** | *Current* | **PUBLISHED** | Published **Module 2.3 (`eigen-systems-svd`)**: `2.3.1` (`EigenvectorCompassLab`), `2.3.2` (`QuadraticFormLab`), and `2.3.3` (`SVDThreeStageLab`), completing **all `9/9` chapters of Volume II** (`70` labs live). |
+| **Volume II — Phase 3 (Module 2.3)** | `acd0321` | **PUBLISHED** | Published **Module 2.3 (`eigen-systems-svd`)**: `2.3.1` (`EigenvectorCompassLab`), `2.3.2` (`QuadraticFormLab`), and `2.3.3` (`SVDThreeStageLab`), completing **all `9/9` chapters of Volume II** (`70` labs live). |
+| **Volume V — Planning** | *Current* | **PLANNED** | Authored 4-phase Volume V blueprint [`VOLUME_5_PLAN.md`](./volumes/vol_05_transforms_complex/VOLUME_5_PLAN.md) & [`README.md`](./volumes/vol_05_transforms_complex/README.md) (`5.1`–`5.4`). |
 
 ---
 
@@ -47,6 +48,6 @@
 
 ---
 
-## 3. Immediate Next Step (Volume V: Transforms & Complex Analysis Next)
+## 3. Immediate Next Step (Volume V — Phase 1: Complex Numbers & Conformal Mappings Next)
 **Volumes I (`12/12`), II (`9/9`), III (`24/24`), and IV (`8/8`)** are now **100% published** (`53` chapters, `70` interactive labs live).
-- **Active Planned Sequence:** Plan & execute **Volume V (`transforms-complex-analysis`)** across its 4 modules (`5.1` Laplace Transform & $s$-Plane, `5.2` Fourier Series & FFT, `5.3` Complex Mapping & Cauchy Integration, `5.4` Laurent Series & Residue Theorem), followed by **Volume VI (`probability-numerical-methods`)**.
+- **Active Planned Sequence:** Execute **Volume V — Phase 1 (`Module 5.1`: Complex Numbers & Conformal Mappings)** (`EulerHelixPhasorLab`, `ConformalMappingLab`) per [`VOLUME_5_PLAN.md`](./volumes/vol_05_transforms_complex/VOLUME_5_PLAN.md), followed by Phases 2–4 and Volume VI.
