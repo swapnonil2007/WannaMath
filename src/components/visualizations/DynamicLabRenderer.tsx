@@ -715,6 +715,27 @@ const LAB_COMPONENTS = {
       ).then((m) => m.AnovaBetweenWithinLab),
     { loading: renderLabLoading }
   ),
+  OLSRegressionAnscombeLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/OLSRegressionAnscombeLab"
+      ).then((m) => m.OLSRegressionAnscombeLab),
+    { loading: renderLabLoading }
+  ),
+  MultipleRegression3DRegularizationLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/MultipleRegression3DRegularizationLab"
+      ).then((m) => m.MultipleRegression3DRegularizationLab),
+    { loading: renderLabLoading }
+  ),
+  BayesianUpdatingAndBootstrapLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/BayesianUpdatingAndBootstrapLab"
+      ).then((m) => m.BayesianUpdatingAndBootstrapLab),
+    { loading: renderLabLoading }
+  ),
 } satisfies Record<string, ComponentType>;
 
 export type LabComponentName = keyof typeof LAB_COMPONENTS;

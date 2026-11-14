@@ -676,7 +676,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Correlation (r), OLS Linear Regression, R² & Anscombe's Quartet",
           subtitle:
             "Draw literal squared residuals to see what Least Squares minimizes—and load Anscombe's Quartet to prove why summary numbers never replace plotting.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["S.1.3", "S.5.3"],
           dimensionBadge: "2D",
@@ -715,7 +715,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Multiple Linear Regression (3D), Diagnostics & Ridge/Lasso Shrinkage",
           subtitle:
             "Fit a 3D regression plane to two predictors and see geometrically why Lasso's L₁ diamond snaps coefficients to zero while Ridge's L₂ circle shrinks smoothly.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["2.2.3", "S.6.1"],
           dimensionBadge: "2D + 3D",
@@ -754,7 +754,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Bayesian Conjugate Updating (Prior → Posterior) & Bootstrap Resampling",
           subtitle:
             "Watch prior beliefs update smoothly into posteriors as new data arrives—and compute confidence intervals on messy data via computer resampling.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["S.2.2", "S.4.2", "S.6.1"],
           dimensionBadge: "2D",

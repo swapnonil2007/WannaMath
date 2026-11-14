@@ -708,3 +708,38 @@ export function chiSquarePValue(chi2: number, df: number): number {
   if (chi2 <= 0) return 1;
   return regularizedGammaQ(Math.max(0.5, df / 2), chi2 / 2);
 }
+
+/**
+ * Beta(alpha, beta) probability density on (0, 1).
+ */
+export function betaPdf(x: number, alpha: number, beta: number): number {
+  const a = Math.max(0.05, alpha);
+  const b = Math.max(0.05, beta);
+  if (x <= 0 || x >= 1) {
+    if (x === 0 && a === 1) return b;
+    if (x === 1 && b === 1) return a;
+    return 0;
+  }
+  const logBeta = logGamma(a) + logGamma(b) - logGamma(a + b);
+  return Math.exp((a - 1) * Math.log(x) + (b - 1) * Math.log(1 - x) - logBeta);
+}
+
+/**
+ * Inverse CDF (quantile) of Beta(alpha, beta) on (0, 1) via bisection.
+ */
+export function betaInvCdf(p: number, alpha: number, beta: number): number {
+  const prob = Math.max(1e-7, Math.min(1 - 1e-7, p));
+  const a = Math.max(0.05, alpha);
+  const b = Math.max(0.05, beta);
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 48; i++) {
+    const mid = 0.5 * (lo + hi);
+    if (regularizedIncompleteBeta(mid, a, b) < prob) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+  return 0.5 * (lo + hi);
+}

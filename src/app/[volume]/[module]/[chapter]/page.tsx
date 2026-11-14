@@ -4945,6 +4945,341 @@ export default async function ChapterPage({
         </div>
       )}
 
+      {chapter.slug === "correlation-ols-linear-regression" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
+              FIRST-TIMER GUIDE • LINEAR TREND FITTING &amp; VISUAL DIAGNOSTICS
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Drawing Literal Residual Squares: What Least Squares Minimizes—And Why Anscombe&apos;s Quartet Demands Plotting
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Every straight line misses data points by a vertical gap called a{" "}
+              <strong>residual (<KaTeXMath math="e_i = y_i - \hat{y}_i" />)</strong>. Turn each gap into a
+              literal square of area <KaTeXMath math="e_i^2" />: <strong>Ordinary Least Squares (OLS)</strong>{" "}
+              picks the unique slope and intercept that make the <em>total inked yellow area</em> as small as
+              mathematically possible! Even more astonishingly, load <strong>Anscombe&apos;s Quartet</strong> below:
+              four completely different datasets share the <em>exact same</em> mean, slope, <KaTeXMath math="r = 0.816" />,
+              and <KaTeXMath math="R^2 = 66.7\%" />—proving why summary statistics never replace looking at residuals.
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="OLSRegressionAnscombeLab" />
+
+          {/* Symbol Breakdown, Why-It-Works Intuition & Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Slope vs. Correlation (<KaTeXMath math="b_1" /> vs. <KaTeXMath math="r" />), Variance Explained (<KaTeXMath math="R^2" />) &amp; Regression Toward the Mean
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  1. CORRELATION r VS. OLS SLOPE b₁
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="b_1 = r\,\frac{s_y}{s_x}, \qquad b_0 = \bar{y} - b_1\bar{x}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  <strong>Pearson <KaTeXMath math="r \in [-1, 1]" /></strong> is unit-free tightness around a line;
+                  multiplying by <KaTeXMath math="s_y / s_x" /> converts SD-units into real <KaTeXMath math="y" />-per-<KaTeXMath math="x" /> units!
+                  Notice the line <em>always</em> passes through the centroid <KaTeXMath math="(\bar{x}, \bar{y})" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  2. PROPORTION OF VARIANCE EXPLAINED (R²)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="R^2 = 1 - \frac{\text{SSE}}{\text{SST}} = r^2"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Remember <KaTeXMath math="\text{SST} = \text{SSB} + \text{SSW}" /> from ANOVA (<strong>S.5.3</strong>)?
+                  In regression, <KaTeXMath math="R^2" /> measures how much of <KaTeXMath math="y" />&apos;s vertical spread
+                  your line explains compared to predicting a flat average <KaTeXMath math="\bar{y}" />!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  3. TINY WORKED SLOPE &amp; REGRESSION CHECK
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  If <KaTeXMath math="r = 0.60" />, <KaTeXMath math="s_x = 4" />, <KaTeXMath math="s_y = 10" />, and{" "}
+                  <KaTeXMath math="(\bar{x}, \bar{y}) = (10, 50)" />:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="b_1 = 0.60 \times \frac{10}{4} = 1.50 \implies \hat{y}(14) = 50 + 1.5(4) = 56"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  A parent +2 SDs above average predicts a child only <KaTeXMath math="r \times 2 = +1.2" /> SDs above average—that&apos;s{" "}
+                  <strong>Regression Toward the Mean</strong>!
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP • CORRELATION ≠ CAUSATION &amp; EXTRAPOLATION
+                </span>
+                <p>
+                  High <KaTeXMath math="r" /> never proves <KaTeXMath math="x" /> causes <KaTeXMath math="y" /> (hidden
+                  confounders like season can drive both ice-cream sales and sunburns), and dragging a single{" "}
+                  <strong>high-leverage corner outlier</strong> can flip a slope from negative to positive!
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  BRIDGE TO S.6.2 • MULTIPLE PREDICTORS IN 3D &amp; REGULARIZATION
+                </span>
+                <p>
+                  Real systems depend on dozens of predictors (<KaTeXMath math="x_1, x_2, \dots" />). In{" "}
+                  <strong>S.6.2</strong>, our OLS line lifts into a <strong>3D Plane</strong>—and we see why correlated
+                  features need <strong>Ridge (<KaTeXMath math="L_2" />)</strong> or <strong>Lasso (<KaTeXMath math="L_1" />)</strong>!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "multiple-regression-diagnostics-regularization" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
+              FIRST-TIMER GUIDE • 3D PLANES, MULTICOLLINEARITY &amp; REGULARIZATION
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Fitting a 3D Plane to Two Predictors—And Why Lasso&apos;s Diamond Snaps Useless Weights to Exact Zero
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              With two predictors (<KaTeXMath math="x_1, x_2" />), OLS no longer fits a line—it tilts a rigid{" "}
+              <strong>3D plane</strong> (<KaTeXMath math="\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2" />) to minimize
+              vertical drop-lines! Trouble strikes when <KaTeXMath math="x_1" /> and <KaTeXMath math="x_2" /> move together
+              (<strong>multicollinearity</strong>): OLS gets confused about who deserves credit and explodes into{" "}
+              <KaTeXMath math="+50 x_1 - 49 x_2" />, failing badly on new test data. Adding a penalty{" "}
+              <KaTeXMath math="\lambda" /> shrinks weights smoothly toward stability—and changing the budget shape from a
+              smooth <strong>Ridge Circle</strong> to a pointy <strong>Lasso Diamond</strong> makes ellipses hit a corner
+              and kill redundant features!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="MultipleRegression3DRegularizationLab" />
+
+          {/* Symbol Breakdown, Why-It-Works Intuition & Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Normal Equations Projection, Multicollinearity &amp; Ridge vs. Lasso Geometry
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. NORMAL EQUATIONS PROJECTION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\hat{\boldsymbol{\beta}}_{\text{OLS}} = (X^T X)^{-1} X^T \mathbf{y}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Directly from <strong>Linear Algebra (2.2.3)</strong>: <KaTeXMath math="\hat{\mathbf{y}} = X\hat{\boldsymbol{\beta}}" />{" "}
+                  is the orthogonal shadow of <KaTeXMath math="\mathbf{y}" /> onto <KaTeXMath math="\operatorname{Col}(X)" />!
+                  When <KaTeXMath math="x_1 \approx x_2" />, <KaTeXMath math="X^T X" /> becomes nearly singular and its inverse explodes.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  2. RIDGE (L₂) VS. LASSO (L₁) CORNERS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\min_{\boldsymbol{\beta}} \;\|\mathbf{y} - X\boldsymbol{\beta}\|_2^2 + \lambda \|\boldsymbol{\beta}\|_p^p"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  A <strong>Ridge Circle (<KaTeXMath math="p=2" />)</strong> is smoothly round, so ellipses touch off-axis and
+                  shrink coefficients evenly without zeroing. A <strong>Lasso Diamond (<KaTeXMath math="p=1" />)</strong> has
+                  sharp vertices sitting right on <KaTeXMath math="\beta_1 = 0" /> or <KaTeXMath math="\beta_2 = 0" />—causing
+                  automatic sparse feature selection!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  3. TINY WORKED TRAIN VS. TEST CHECK
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Notice in the 3D footer readout: adding noise predictors ALWAYS raises{" "}
+                  <strong>Train <KaTeXMath math="R^2" /></strong>, even while <strong>Test CV <KaTeXMath math="R^2" /></strong> drops!
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="R^2_{\text{adj}} = 1 - \frac{\text{SSE}/(n - p - 1)}{\text{SST}/(n - 1)}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Always tune <KaTeXMath math="\lambda" /> using held-out <strong>Cross-Validation</strong>, never raw
+                  training <KaTeXMath math="R^2" />!
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP • STANDARDIZE FEATURES BEFORE REGULARIZING!
+                </span>
+                <p>
+                  Never apply <KaTeXMath math="\lambda(\beta_1^2 + \beta_2^2)" /> if <KaTeXMath math="x_1" /> is in{" "}
+                  <em>millimeters</em> and <KaTeXMath math="x_2" /> is in <em>kilometers</em>—unit scaling changes{" "}
+                  <KaTeXMath math="\beta" /> magnitudes! Convert every predictor to <KaTeXMath math="Z" />-scores first.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  BRIDGE TO S.6.3 • THE BAYESIAN SECRET BEHIND RIDGE!
+                </span>
+                <p>
+                  Cool mathematical plot twist: adding Ridge penalty <KaTeXMath math="\lambda \|\boldsymbol{\beta}\|_2^2" /> is{" "}
+                  <em>mathematically identical</em> to placing a zero-centered Gaussian prior{" "}
+                  <KaTeXMath math="\boldsymbol{\beta} \sim \mathcal{N}(0, \tau^2 I)" /> in <strong>Bayesian Inference (S.6.3)</strong>!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "bayesian-updating-bootstrap-mcmc" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
+              FIRST-TIMER GUIDE • BAYESIAN BELIEF UPDATING &amp; COMPUTER-AGE RESAMPLING
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Updating Beliefs Continuously With Data—And Measuring Uncertainty Without Any Bell-Curve Formula
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Classical frequentist statistics treats an unknown conversion rate <KaTeXMath math="p" /> as a fixed
+              number and only describes how random samples wobble. <strong>Bayesian inference</strong> treats your
+              knowledge about <KaTeXMath math="p" /> as a living probability curve: start with a{" "}
+              <strong>Prior (<KaTeXMath math="\operatorname{Beta}(\alpha_0, \beta_0)" />)</strong>, multiply by observed{" "}
+              <strong>Likelihood</strong>, and watch the <strong>Posterior</strong> narrow around the truth! Meanwhile, in{" "}
+              <strong>Mode B (Efron&apos;s Bootstrap)</strong>, when messy small datasets have wild skew and zero closed-form
+              median formula, simply let the computer resample your own sample <em>with replacement</em> 1,000 times!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="BayesianUpdatingAndBootstrapLab" />
+
+          {/* Symbol Breakdown, Why-It-Works Intuition & Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Conjugate Beta–Binomial Learning, Credible vs. Confidence Intervals &amp; Efron&apos;s Plug-In Principle
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  1. SEQUENTIAL BAYES CONJUGACY
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\operatorname{Beta}(\alpha_0, \beta_0) \xrightarrow{k \text{ hits in } n} \operatorname{Beta}(\alpha_0 + k,\; \beta_0 + n - k)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Think of <KaTeXMath math="\alpha_0, \beta_0" /> as &ldquo;virtual prior observations&rdquo;! Starting
+                  from <KaTeXMath math="\operatorname{Beta}(4,4)" /> acts like 4 heads + 4 tails of healthy skepticism
+                  before observing Trial #1, preventing wild 100% swings on tiny samples.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  2. CREDIBLE VS. CONFIDENCE INTERVAL
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="P(L \le p \le U \mid \text{data}) = 95\%"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  A <strong>Bayesian 95% Credible Interval</strong> really <em>does</em> mean &ldquo;95% posterior
+                  probability <KaTeXMath math="p" /> lies inside here given my prior &amp; data&rdquo;—matching what
+                  humans naturally want a Confidence Interval to mean!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  3. BOOTSTRAP PLUG-IN PRINCIPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Can&apos;t sample from the true universe? Treat your observed sample <KaTeXMath math="\hat{F}_n" /> as
+                  a mini-universe! Draw <KaTeXMath math="n" /> values <strong>with replacement</strong> 1,000 times:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="95\%\;\text{Percentile CI} = \bigl[\hat{\theta}^*_{(0.025)},\;\hat{\theta}^*_{(0.975)}\bigr]"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Works cleanly for skewed medians, quantiles, correlations, or complex ML predictions!
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP • BOOTSTRAP DOES NOT INVENT MISSING DATA
+                </span>
+                <p>
+                  Resampling <KaTeXMath math="10{,}000" /> times measures uncertainty <em>accurately</em>, it does NOT add
+                  new information! If your original sample has <KaTeXMath math="n = 4" /> heavily biased points, your
+                  bootstrap interval still reflects a biased sample of size 4.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  CONGRATULATIONS • STATISTICS VOLUME COMPLETE (S.1.1 → S.6.3)!
+                </span>
+                <p>
+                  You&apos;ve bridged exploratory histograms (<strong>S.1</strong>), probability &amp; Bayes (
+                  <strong>S.2</strong>), CLT &amp; exact sampling distributions (<strong>S.3</strong>), MLE, CIs &amp;
+                  Power (<strong>S.4</strong>), ANOVA &amp; Simpson&apos;s Paradox (<strong>S.5</strong>), all the way to
+                  regularized 3D regression, Bayesian updating, and Bootstrap resampling (<strong>S.6</strong>)!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
       {chapter.status !== "published" && (
         <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">

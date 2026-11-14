@@ -23,6 +23,11 @@ const FLAGSHIP_CHAPTER_IDS = new Set([
   "4.2.1",
   "5.4.2",
   "6.2.2",
+  "S.1.2",
+  "S.3.2",
+  "S.5.2",
+  "S.6.1",
+  "S.6.3",
 ]);
 
 export function GET() {
@@ -48,7 +53,7 @@ export function GET() {
     "",
     "## Core Entry Points",
     "",
-    `- [Home Overview](${absoluteUrl("/")}): Interactive 3D preview, Module 3.2 highlights, and 6-volume directory.`,
+    `- [Home Overview](${absoluteUrl("/")}): Interactive 3D preview, Module 3.2 highlights, 6-volume directory, and Statistics Volume (18 chapters).`,
     `- [Full Syllabus Matrix](${absoluteUrl("/roadmap")}): Complete structured map across all ${volumes.length} volumes and ${totalChapters} chapters.`,
     `- [About & Creator](${absoluteUrl("/about")}): Open-source philosophy, contributor info, and creator profile (${CREATOR.name}).`,
     `- [Full Machine-Readable Textbook Index](${absoluteUrl("/llms-full.txt")}): Complete Markdown syllabus with all ${totalChapters} chapters, prerequisites, key LaTeX equations, and ${totalLabs} interactive lab specs.`,

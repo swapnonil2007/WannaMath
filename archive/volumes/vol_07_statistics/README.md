@@ -1,6 +1,6 @@
 # Statistics Volume — Interactive Statistics: Foundations to Advanced Inference (`statistics`)
 
-> **Status:** `in-progress` (`15/18` Chapters Published — Phases 1–5 Complete; **Phase 6 Ready for Hydrogen**) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
+> **Status:** `published` (`18/18` Chapters Published — All Phases 1–6 Complete!) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
 > **Canonical Route Base:** `/statistics/[module]/[chapter]`
 > **Navbar Placement:** Dedicated **`Statistics TOC`** drawer placed beside the untouched **`6-Volume TOC`** drawer in `src/components/layout/Navbar.tsx`.
 
@@ -31,7 +31,7 @@
    - `S.5.2`: Chi-Square Goodness-of-Fit, Contingency Tables & Simpson's Paradox (`chi-square-goodness-of-fit-independence` → `ChiSquareContingencySimpsonLab`) *(Published)*
    - `S.5.3`: One-Way ANOVA: Between vs. Within Variance ($F$-Test) & Multiple Comparisons (`one-way-anova-f-test-variance-decomposition` → `AnovaBetweenWithinLab`) *(Published)*
 
-6. **Module S.6 (`regression-bayesian-advanced`) — Regression, Regularization, Bayesian Updating & Resampling** *(Phase 6)*
-   - `S.6.1`: Correlation ($r$), OLS Linear Regression, $R^2$ & Anscombe's Quartet (`correlation-ols-linear-regression` → `OLSRegressionAnscombeLab`) *(Planned)*
-   - `S.6.2`: Multiple Linear Regression (3D Plane), Diagnostics & Ridge/Lasso Shrinkage (`multiple-regression-diagnostics-regularization` → `MultipleRegression3DRegularizationLab`) *(Planned)*
-   - `S.6.3`: Bayesian Conjugate Updating (Prior $\to$ Posterior) & Bootstrap Resampling (`bayesian-updating-bootstrap-mcmc` → `BayesianUpdatingAndBootstrapLab`) *(Planned)*
+6. **Module S.6 (`regression-bayesian-advanced`) — Regression, Regularization, Bayesian Updating & Resampling** *(Phase 6 — Published)*
+   - `S.6.1`: Correlation ($r$), OLS Linear Regression, $R^2$ & Anscombe's Quartet (`correlation-ols-linear-regression` → `OLSRegressionAnscombeLab`) *(Published)*
+   - `S.6.2`: Multiple Linear Regression (3D Plane), Diagnostics & Ridge/Lasso Shrinkage (`multiple-regression-diagnostics-regularization` → `MultipleRegression3DRegularizationLab`) *(Published)*
+   - `S.6.3`: Bayesian Conjugate Updating (Prior $\to$ Posterior) & Bootstrap Resampling (`bayesian-updating-bootstrap-mcmc` → `BayesianUpdatingAndBootstrapLab`) *(Published)*
