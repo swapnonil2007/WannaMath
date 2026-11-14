@@ -570,3 +570,88 @@ export function fisherFPdf(x: number, d1: number, d2: number): number {
     logBeta;
   return Math.exp(logP);
 }
+
+function betacf(a: number, b: number, x: number): number {
+  const MAXIT = 200;
+  const EPS = 3e-12;
+  const FPMIN = 1e-30;
+  const qab = a + b;
+  const qap = a + 1;
+  const qam = a - 1;
+  let c = 1;
+  let d = 1 - (qab * x) / qap;
+  if (Math.abs(d) < FPMIN) d = FPMIN;
+  d = 1 / d;
+  let h = d;
+  for (let m = 1; m <= MAXIT; m++) {
+    const m2 = 2 * m;
+    let aa = (m * (b - m) * x) / ((qam + m2) * (a + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = 1 + aa / c;
+    if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d;
+    h *= d * c;
+    aa = (-(a + m) * (qab + m) * x) / ((a + m2) * (qap + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = 1 + aa / c;
+    if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
+    if (Math.abs(del - 1) < EPS) break;
+  }
+  return h;
+}
+
+/**
+ * Exact regularized incomplete beta function I_x(a, b).
+ */
+export function regularizedIncompleteBeta(
+  x: number,
+  a: number,
+  b: number
+): number {
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  const bt = Math.exp(
+    logGamma(a + b) -
+      logGamma(a) -
+      logGamma(b) +
+      a * Math.log(x) +
+      b * Math.log(1 - x)
+  );
+  if (x < (a + 1) / (a + b + 2)) {
+    return (bt * betacf(a, b, x)) / a;
+  }
+  return 1 - (bt * betacf(b, a, 1 - x)) / b;
+}
+
+export function studentTCdf(t: number, nu: number): number {
+  const df = Math.max(1, nu);
+  const x = df / (df + t * t);
+  const ib = 0.5 * regularizedIncompleteBeta(x, df / 2, 0.5);
+  return t >= 0 ? 1 - ib : ib;
+}
+
+export function studentTInvCdf(p: number, nu: number): number {
+  const prob = Math.max(1e-7, Math.min(1 - 1e-7, p));
+  if (Math.abs(prob - 0.5) < 1e-12) return 0;
+  const sign = prob < 0.5 ? -1 : 1;
+  const target = prob < 0.5 ? 1 - prob : prob;
+  let lo = 0;
+  let hi = 40;
+  while (studentTCdf(hi, nu) < target && hi < 1e4) {
+    hi *= 2;
+  }
+  for (let i = 0; i < 48; i++) {
+    const mid = 0.5 * (lo + hi);
+    if (studentTCdf(mid, nu) < target) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+  return sign * 0.5 * (lo + hi);
+}

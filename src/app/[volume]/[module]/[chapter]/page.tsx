@@ -4278,6 +4278,337 @@ export default async function ChapterPage({
         </div>
       )}
 
+      {chapter.slug === "point-estimation-mle-bias-variance" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
+              FIRST-TIMER GUIDE • REASONING BACKWARDS FROM OBSERVED DATA
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Probability Looks Forward; Likelihood Looks Backward: Climbing the MLE Peak
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              In <strong>Probability</strong>, someone hands you a known coin bias (<KaTeXMath math="p = 0.7" />)
+              and asks how likely 8 heads in 12 flips are. In real science, it&apos;s backwards: you already
+              observed <code>8 heads in 12 flips</code>, and you want to guess the hidden parameter{" "}
+              <KaTeXMath math="\theta" />! <strong>Maximum Likelihood Estimation (MLE)</strong> slides every
+              candidate bell curve or coin bias over your frozen dots and asks:{" "}
+              <em>&ldquo;Which parameter makes the data we actually witnessed look least miraculous?&rdquo;</em>{" "}
+              Then check the <strong>Bias–Variance Dartboard</strong> right beside it to discover why
+              accepting a tiny bias can sometimes slash your overall prediction error!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="MaximumLikelihoodBiasVarianceLab" />
+
+          {/* Symbol Breakdown, Worked Example & Traps */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Why We Maximize Log-Likelihood &amp; How Bias² + Variance Governs Accuracy
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  1. WHY LOGARITHM TURNS PRODUCTS INTO SUMS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\ell(\theta) = \ln \prod_{i=1}^n f(x_i \mid \theta) = \sum_{i=1}^n \ln f(x_i \mid \theta)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Multiplying 1,000 tiny numbers like <code>0.08 × 0.12 × ...</code> underflows computers to
+                  zero! Taking <KaTeXMath math="\ln" /> never moves the peak, prevents underflow, and turns hard
+                  products into clean sums for derivatives.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  2. MSE = BIAS² + VARIANCE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\operatorname{MSE}(\hat{\theta}) = \mathbb{E}\!\left[(\hat{\theta}-\theta)^2\right] = \operatorname{Bias}(\hat{\theta})^2 + \operatorname{Var}(\hat{\theta})"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  <strong>Bias</strong> is how far your darts land off bullseye on average;{" "}
+                  <strong>Variance</strong> is how wildly scattered they are around their own cluster. Try{" "}
+                  <strong>Zero Bias + High Var</strong> vs. <strong>Small Bias + Low Var</strong> above!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  3. TINY BERNOULLI MLE PROOF
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  With <code>k = 8</code> heads in <code>n = 12</code> flips, maximize{" "}
+                  <KaTeXMath math="\ell(p) = 8\ln p + 4\ln(1-p)" />:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\frac{d\ell}{dp} = \frac{8}{p} - \frac{4}{1-p} = 0 \implies \hat{p}_{\text{MLE}} = \frac{8}{12} \approx 0.67"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  SUBTLE TRAP • WHY GAUSSIAN MLE VARIANCE IS BIASED (÷ n)
+                </span>
+                <p>
+                  Maximizing Gaussian <KaTeXMath math="\ell(\mu, \sigma)" /> yields{" "}
+                  <KaTeXMath math="\hat{\sigma}^2_{\text{MLE}} = \frac{1}{n}\sum (x_i - \bar{x})^2" />—which, as
+                  we saw in Bessel&apos;s Correction (<strong>S.1.3</strong>), underestimates true{" "}
+                  <KaTeXMath math="\sigma^2" />! MLE is consistent as <KaTeXMath math="n \to \infty" />, not
+                  necessarily unbiased at tiny <KaTeXMath math="n" />.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-grid)] block">
+                  BRIDGE TO S.4.2 • FROM ONE GUESS TO AN UNCERTAINTY BRACKET
+                </span>
+                <p>
+                  A single point estimate <KaTeXMath math="\hat{\mu} = 5.2" /> never says whether your margin of
+                  error is <KaTeXMath math="\pm 0.1" /> or <KaTeXMath math="\pm 4.0" />! Chapter{" "}
+                  <strong>S.4.2</strong> wraps point guesses in calibrated <strong>Confidence Intervals</strong>.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "confidence-intervals-coverage" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-grid)] block">
+              FIRST-TIMER GUIDE • FIXED TARGET VS. RANDOM NETS
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Throwing 100 Rings at a Stationary Stake: What &ldquo;95% Confidence&rdquo; Truly Means
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Picture a fixed tent stake hammered into the ground at <KaTeXMath math="\mu = 50" />. You stand
+              blindfolded and toss 100 circular hoops (<KaTeXMath math="[\bar{x}_i - \text{ME},\; \bar{x}_i + \text{ME}]" />).
+              Once ONE hoop lands on the grass—say <code>[46.2, 54.8]</code>—it either trapped the stake{" "}
+              (<strong>100%</strong>) or missed it (<strong>0%</strong>); the stake never hops in or out! What{" "}
+              <strong>&ldquo;95% confidence&rdquo;</strong> promises is about the <em>throwing method</em>: in the
+              long run, <strong>95 out of every 100 intervals</strong> tossed this way capture fixed{" "}
+              <KaTeXMath math="\mu" />!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="ConfidenceIntervalCoverageLab" />
+
+          {/* Anatomy, Scaling Law & Traps */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Anatomy of a Confidence Interval &amp; Why Sample Size Must Quadruple
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  1. THE UNIVERSAL 3-PART FORMULA
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\underbrace{\bar{x}}_{\text{Center}} \;\pm\; \underbrace{t_{\alpha/2,\, n-1}}_{\text{Multiplier}} \cdot \underbrace{\frac{s}{\sqrt{n}}}_{\text{SE}}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Higher confidence (95% → 99%) stretches the multiplier wider. Larger{" "}
+                  <KaTeXMath math="n" /> shrinks <KaTeXMath math="s/\sqrt{n}" /> narrower!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  2. QUADRUPLE DATA TO HALVE WIDTH
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\text{ME}(4n) = t^*\frac{s}{\sqrt{4n}} = \frac{1}{2}\text{ME}(n)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Want to cut your poll&apos;s <KaTeXMath math="\pm 4\%" /> error bar in half down to{" "}
+                  <KaTeXMath math="\pm 2\%" />? Because of <KaTeXMath math="\sqrt{n}" />, you must interview{" "}
+                  <strong>4× as many people</strong>!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  3. TINY WORKED EXAMPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Sample <KaTeXMath math="n = 16" />, <KaTeXMath math="\bar{x} = 52" />,{" "}
+                  <KaTeXMath math="s = 8" />, <KaTeXMath math="t_{0.025, 15} = 2.131" />:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="52 \pm 2.131 \cdot \frac{8}{\sqrt{16}} = 52 \pm 4.26 = [47.74,\, 56.26]"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
+                  TRAP • OVER-OPTIMISTIC SMALL-n Z INTERVALS
+                </span>
+                <p>
+                  Try switching the method above to <strong>Naive Z with s (Trap!)</strong> at{" "}
+                  <code>n = 4</code>: coverage collapses below <code>90%</code> because <code>1.96</code>{" "}
+                  pretends sample <KaTeXMath math="s" /> has zero uncertainty! Always use{" "}
+                  <strong>Student&apos;s t</strong> whenever <KaTeXMath math="\sigma" /> is unknown.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  BRIDGE TO S.4.3 • TESTING SHARP HYPOTHESES
+                </span>
+                <p>
+                  Notice a neat duality: if a null value like <KaTeXMath math="\mu_0 = 50" /> falls{" "}
+                  <em>outside</em> your 95% CI, a two-tailed hypothesis test at <KaTeXMath math="\alpha = 0.05" />{" "}
+                  will reject <KaTeXMath math="H_0" />! Chapter <strong>S.4.3</strong> unpacks{" "}
+                  <KaTeXMath math="p" />-values and Power.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "hypothesis-testing-p-values-power" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-diff)] block">
+              FIRST-TIMER GUIDE • THE COURTROOM LOGIC OF HYPOTHESIS TESTING
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Presumed Innocent Until Proven Otherwise: Decoding p-Values, Errors (α, β) &amp; Power
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Null Hypothesis Significance Testing works just like a courtroom trial: start assuming the
+              skeptical status quo <strong><KaTeXMath math="H_0" /> (&ldquo;no real effect / innocent&rdquo;)</strong> is
+              true. Then compute the <strong><KaTeXMath math="p" />-value</strong>: if{" "}
+              <KaTeXMath math="H_0" /> really <em>were</em> true, how bizarre would it be to witness data at least
+              as extreme as ours? If <KaTeXMath math="p \le \alpha" /> (typically <code>0.05</code>), the verdict
+              crosses beyond reasonable doubt and we reject <KaTeXMath math="H_0" />. Click right along the axis
+              below to shade live <KaTeXMath math="p" />-values and see why low sample size hides genuine
+              breakthroughs (<KaTeXMath math="\beta" /> Miss Rate)!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="HypothesisPowerOverlapLab" />
+
+          {/* Four-quadrant Decision Matrix, Worked Example & Traps */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              The 2×2 Decision Matrix &amp; Stopping the Two Biggest <KaTeXMath math="p" />-Value Myths
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
+                  1. TYPE I ERROR (α) VS. TYPE II ERROR (β)
+                </span>
+                <ul className="text-xs font-math-serif text-[var(--text-secondary)] space-y-1.5 leading-relaxed">
+                  <li>
+                    <strong>Type I Error (<KaTeXMath math="\alpha" />):</strong> Convicting an innocent null
+                    (&ldquo;False Alarm&rdquo; when <KaTeXMath math="H_0" /> is true).
+                  </li>
+                  <li>
+                    <strong>Type II Error (<KaTeXMath math="\beta" />):</strong> Letting a real effect walk free
+                    (&ldquo;Missed Discovery&rdquo; when <KaTeXMath math="H_1" /> is true).
+                  </li>
+                  <li>
+                    <strong>Power (<KaTeXMath math="1 - \beta" />):</strong> Probability of catching a real
+                    effect of size <KaTeXMath math="\delta" />! Target <KaTeXMath math="\ge 80\%" />.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  2. WHAT p = 0.03 ACTUALLY SAYS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="p = P(\text{extreme data} \mid H_0) \;\neq\; P(H_0 \mid \text{data})"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Remember <strong>Bayes (S.2.2)</strong>! A 3% <KaTeXMath math="p" />-value does NOT mean
+                  &ldquo;3% chance the null is true&rdquo;—it assumes the null is true and scores how weird
+                  your data looks under that assumption!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  3. TINY WORKED POWER CHECK
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  With <KaTeXMath math="\sigma = 10" />, <KaTeXMath math="n = 25" /> (<KaTeXMath math="\text{SE}=2" />),
+                  two-tailed <KaTeXMath math="\alpha = 0.05" /> sets rejection cutoff at{" "}
+                  <KaTeXMath math="1.96 \times 2 = 3.92" />. If true <KaTeXMath math="\delta = 4" />:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="Z_{\text{pow}} = \frac{3.92 - 4}{2} = -0.04 \implies \text{Power} \approx 51.6\%"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP • STATISTICAL SIGNIFICANCE ≠ PRACTICAL IMPORTANCE
+                </span>
+                <p>
+                  Slide <strong>n = 200</strong> with a tiny <strong>δ = 0.8</strong> (<code>d = 0.08</code>) and
+                  click at <code>1.5</code>: you can easily hit <KaTeXMath math="p &lt; 0.05" /> for a trivially
+                  useless effect! Always report <strong>Confidence Intervals + Effect Size</strong> alongside{" "}
+                  <KaTeXMath math="p" />.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  BRIDGE TO MODULE S.5 • COMPARING MULTIPLE REAL GROUPS
+                </span>
+                <p>
+                  Real A/B experiments rarely test against a fixed textbook <KaTeXMath math="\mu_0" />—they
+                  compare Group A vs. Group B, contingency tables, and multi-treatment{" "}
+                  <strong>ANOVA</strong> in <strong>Module S.5</strong>!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
       {chapter.status !== "published" && (
         <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">

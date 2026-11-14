@@ -420,7 +420,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Point Estimation, Maximum Likelihood (MLE) & The Bias–Variance Tradeoff",
           subtitle:
             "Flip probability around: hold the observed data fixed, slide candidate parameters, and climb the Log-Likelihood peak.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["S.3.2"],
           dimensionBadge: "2D",
@@ -459,7 +459,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Confidence Intervals: Z vs. t Intervals, Margin of Error & Coverage",
           subtitle:
             "Run 100 repeated experiments at once to see what '95% confidence' truly means—it is the intervals that dance around fixed μ, not vice versa.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["S.3.3", "S.4.1"],
           dimensionBadge: "2D",
@@ -498,7 +498,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Hypothesis Testing, p-Values, Type I/II Errors & Statistical Power",
           subtitle:
             "Balance false alarms (α) against missed discoveries (β) on overlapping H₀ and H₁ bells—and cure the #1 p-value misconception forever.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["S.4.2"],
           dimensionBadge: "2D",

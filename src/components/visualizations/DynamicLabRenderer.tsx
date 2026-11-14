@@ -671,6 +671,29 @@ const LAB_COMPONENTS = {
       ).then((m) => m.SamplingDistributionsTChi2FLab),
     { loading: renderLabLoading }
   ),
+
+  // Statistics Volume — Module S.4
+  MaximumLikelihoodBiasVarianceLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/MaximumLikelihoodBiasVarianceLab"
+      ).then((m) => m.MaximumLikelihoodBiasVarianceLab),
+    { loading: renderLabLoading }
+  ),
+  ConfidenceIntervalCoverageLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/ConfidenceIntervalCoverageLab"
+      ).then((m) => m.ConfidenceIntervalCoverageLab),
+    { loading: renderLabLoading }
+  ),
+  HypothesisPowerOverlapLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/HypothesisPowerOverlapLab"
+      ).then((m) => m.HypothesisPowerOverlapLab),
+    { loading: renderLabLoading }
+  ),
 } satisfies Record<string, ComponentType>;
 
 export type LabComponentName = keyof typeof LAB_COMPONENTS;
