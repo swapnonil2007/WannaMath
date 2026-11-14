@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-14 — All 6 Core Volumes 100% Published (`65` Chapters, `82` Labs) + **Statistics Volume (`Volume S`, `/statistics`) Phase 1 Published (`3/18` Chapters, `3` Labs Live; `85` Labs Textbook-Wide)**
+> **Last Updated:** 2026-11-14 — All 6 Core Volumes 100% Published (`65` Chapters, `82` Labs) + **Statistics Volume (`Volume S`, `/statistics`) Phase 2 Published (`6/18` Chapters, `6` Labs Live; `88` Labs Textbook-Wide)**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -16,7 +16,7 @@
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | **`published` (8/8 Published — 8 Labs Live)** |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | **`published` (8/8 Published — 8 Labs Live)** |
 | **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | **`published` (4/4 Published — 4 Labs Live)** |
-| **Statistics Volume (`Volume S`): Statistics & Inference** *(Separate `Statistics TOC`)* | `/statistics` | `#D5658B` (Dusty Rose) | 6 | 18 | **`in-progress` (3/18 Published — Phase 1 S.1 Live)** |
+| **Statistics Volume (`Volume S`): Statistics & Inference** *(Separate `Statistics TOC`)* | `/statistics` | `#D5658B` (Dusty Rose) | 6 | 18 | **`in-progress` (6/18 Published — Phases 1–2 S.1–S.2 Live)** |
 
 ---
 

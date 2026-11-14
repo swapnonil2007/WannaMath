@@ -21,9 +21,10 @@ export function StatisticsSidebar({ volume }: { volume: TocVolumeItem }) {
   const sheetRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Default expand Module S.1 (Descriptive Statistics)
+  // Default expand published Modules S.1 and S.2
   const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>({
     "descriptive-statistics": true,
+    "probability-foundations-discrete": true,
   });
 
   const openDrawer = () => {

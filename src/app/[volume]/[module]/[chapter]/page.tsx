@@ -3498,6 +3498,421 @@ export default async function ChapterPage({
         </div>
       )}
 
+      {chapter.slug === "sample-spaces-venn-axioms" && (
+        <div className="space-y-8">
+          {/* Plain-English Story & Kolmogorov's 3 Rules */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
+              FIRST-TIMER GUIDE • PROBABILITY IS JUST NORMALIZED AREA
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Throwing Darts at the Universe: Outcomes, Events &amp; Kolmogorov&apos;s Three Rules
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Forget scary symbols for a second. Imagine a flat square tabletop{" "}
+              <KaTeXMath math="\Omega" /> (<strong>the Sample Space</strong>) whose total surface area is
+              exactly <code>1.000</code>. Every single pinpoint dot on the board is one{" "}
+              <strong>Outcome</strong>, and any painted shape <KaTeXMath math="A" /> on the board is an{" "}
+              <strong>Event</strong>. The probability <KaTeXMath math="P(A)" /> is simply the painted{" "}
+              <em>area</em> of shape <KaTeXMath math="A" />! Almost every law of probability—even{" "}
+              <em>&ldquo;not A&rdquo;</em> and <em>&ldquo;A or B&rdquo;</em>—comes straight from
+              measuring overlapping shapes on this <code>1×1</code> tabletop.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  AXIOM 1 • NON-NEGATIVITY
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs">
+                  <KaTeXMath math="P(A) \ge 0" block />
+                </div>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  No painted shape can ever have negative area. Impossible events have area{" "}
+                  <code>0</code>.
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  AXIOM 2 • NORMALIZATION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs">
+                  <KaTeXMath math="P(\Omega) = 1" block />
+                </div>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  Something in the sample space is guaranteed to happen, so the whole tabletop equals{" "}
+                  <code>100% = 1</code>.
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  AXIOM 3 • DISJOINT ADDITIVITY
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs">
+                  <KaTeXMath math="A \cap B = \emptyset \implies P(A \cup B) = P(A) + P(B)" block />
+                </div>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  When two painted shapes do not overlap at all, their combined area is just their sum!
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <DynamicLabRenderer name="VennProbabilityAreaLab" />
+
+          {/* Why Inclusion-Exclusion, De Morgan, and Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Preventing Double-Counting &amp; Breaking the #1 Beginner Trap
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. INCLUSION–EXCLUSION EXPLAINED
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="P(A \cup B) = P(A) + P(B) - P(A \cap B)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  If you paint shape <KaTeXMath math="A" /> and then paint shape <KaTeXMath math="B" />, the
+                  overlapping middle lens <KaTeXMath math="A \cap B" /> got <em>two coats of paint</em>!
+                  Subtracting <KaTeXMath math="P(A \cap B)" /> once gives the exact true union area.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-grid)] block">
+                  2. DE MORGAN&apos;S FLIP LAWS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="(A \cup B)^c = A^c \cap B^c, \quad (A \cap B)^c = A^c \cup B^c"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  &ldquo;Neither rain nor wind&rdquo; is the exact same event as &ldquo;not rain{" "}
+                  <strong>AND</strong> not wind&rdquo;—and makes finding{" "}
+                  <KaTeXMath math="\text{at least one} = 1 - P(\text{none})" /> effortless!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  3. TINY WORKED DICE EXAMPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Roll 1 fair die (<KaTeXMath math="\{1,2,3,4,5,6\}" />). Let{" "}
+                  <KaTeXMath math="A = \{2,4,6\}" /> (Even, <KaTeXMath math="3/6" />) and{" "}
+                  <KaTeXMath math="B = \{5,6\}" /> (<KaTeXMath math=">4" />, <KaTeXMath math="2/6" />):
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="P(A \cup B) = \frac{3}{6} + \frac{2}{6} - \frac{1}{6} = \frac{4}{6} = \frac{2}{3}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Check independence: <KaTeXMath math="P(A)P(B) = \frac{1}{2}\cdot\frac{1}{3} = \frac{1}{6} = P(A\cap B)" />!
+                  On a die, Even and <KaTeXMath math=">4" /> happen to be independent!
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP 1 • DISJOINT ≠ INDEPENDENT!
+                </span>
+                <p>
+                  Many beginners think &ldquo;no overlap&rdquo; sounds &ldquo;independent.&rdquo; Click the{" "}
+                  <strong>Mutually Exclusive (Disjoint)</strong> preset above and look at the Unit Square: when{" "}
+                  <KaTeXMath math="A" /> and <KaTeXMath math="B" /> cannot happen together, knowing{" "}
+                  <KaTeXMath math="A" /> happened drops <KaTeXMath math="P(B)" /> instantly to <code>0%</code>!
+                  True independence means the vertical share of <KaTeXMath math="B" /> is identical inside{" "}
+                  <KaTeXMath math="A" /> and <KaTeXMath math="A^c" />.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  BRIDGE TO S.2.2 • ZOOMING IN ON CONDITIONING
+                </span>
+                <p>
+                  Look at that horizontal line <KaTeXMath math="P(B \mid A)" /> on the Unit Square. What happens
+                  when new evidence arrives and we throw away <KaTeXMath math="A^c" />? Chapter{" "}
+                  <strong>S.2.2</strong> turns that slice-and-zoom into <strong>Bayes&apos; Theorem</strong>.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "conditional-probability-bayes-theorem" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-lower)] block">
+              FIRST-TIMER GUIDE • CONDITIONING SHRINKS THE UNIVERSE
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Why 95% Test Accuracy Still Gives Only a 16% Chance: Bayes&apos; Theorem From First Principles
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Suppose a rare condition affects only <strong>1%</strong> of people, and a screening test
+              correctly spots <strong>95%</strong> of sick people (with a <strong>5%</strong> false-positive
+              rate on healthy people). You test positive! How worried should you be? Most people guess{" "}
+              <em>95%</em>—yet the true answer is only <strong>16.1%</strong>! Why? Because there are so many
+              more healthy people than sick people that even a tiny 5% false alarm produces roughly{" "}
+              <strong>50 healthy positives</strong> alongside only <strong>10 true positives</strong>.
+              Click <strong>Zoom Into Evidence E⁺</strong> in the 1,000-person grid below to see conditioning
+              literally erase everyone who tested negative!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="BayesMosaicTreeLab" />
+
+          {/* Derivation, Tiny Worked Example & Traps */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Where Bayes&apos; Formula Comes From (One Line of Logic)
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  1. CONDITIONING = NEW DENOMINATOR
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="P(H \mid E) = \frac{P(H \cap E)}{P(E)}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Read <KaTeXMath math="H \mid E" /> as &ldquo;Hypothesis <KaTeXMath math="H" />,{" "}
+                  <em>given</em> we already know Evidence <KaTeXMath math="E" /> happened.&rdquo; We throw out
+                  all non-<KaTeXMath math="E" /> outcomes and divide the remaining{" "}
+                  <KaTeXMath math="H \cap E" /> slice by the new shrunk universe <KaTeXMath math="P(E)" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. FLIPPING BOTH WAYS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="P(H \mid E) = \frac{P(E \mid H)P(H)}{P(E \mid H)P(H) + P(E \mid H^c)P(H^c)}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Since <KaTeXMath math="P(H \cap E) = P(E \mid H)P(H)" />, Bayes simply splits all ways
+                  evidence <KaTeXMath math="E" /> can happen into two tree branches: True Positives plus False
+                  Positives (the Law of Total Probability).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  3. TINY 1,000-PERSON CALCULATION
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Out of <code>1,000</code> people at <code>1%</code> prevalence:
+                </p>
+                <ul className="text-xs font-tabular-mono text-[var(--text-secondary)] space-y-0.5 pl-3 list-disc">
+                  <li>10 sick → 9.5 test E⁺ (TP)</li>
+                  <li>990 healthy → 49.5 test E⁺ (FP)</li>
+                  <li>Total E⁺ = 9.5 + 49.5 = 59.0</li>
+                </ul>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="P(\text{Sick} \mid +) = \frac{9.5}{59.0} \approx 16.1\%"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP • CONFUSING P(E | H) WITH P(H | E)
+                </span>
+                <p>
+                  This mistake is so dangerous in courtrooms it is called the{" "}
+                  <strong>Prosecutor&apos;s Fallacy</strong>: &ldquo;Probability of a random DNA match if innocent
+                  = 0.5%&rdquo; is <KaTeXMath math="P(E \mid H^c)" />, NOT &ldquo;chance the defendant is
+                  innocent given a DNA match&rdquo; <KaTeXMath math="P(H^c \mid E)" />! Always pause and draw the
+                  1,000-person tree first.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  SEQUENTIAL LEARNING • POSTERIOR BECOMES NEXT PRIOR
+                </span>
+                <p>
+                  Click <strong>+ Apply 2nd Independent Positive Test</strong> above: your updated{" "}
+                  <code>16.1%</code> becomes the brand-new Prior, and a second positive leaps to{" "}
+                  <code>~78.4%</code>! Updating beliefs continuously as data arrives is the heartbeat of modern
+                  Bayesian AI.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "discrete-distributions-binomial-poisson" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
+              FIRST-TIMER GUIDE • FROM MESSY STORIES TO NUMBERED BARS
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              What Is a Random Variable? Four Discrete Laws That Power Counting &amp; Arrivals
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              A <strong>Random Variable</strong> <KaTeXMath math="X" /> is just a translator turning messy
+              real-world outcomes (<code>H, T, H, H</code>) into clean numbers you can average (<code>3 heads</code>).
+              Drop balls through the <strong>Galton Pegboard</strong> below: at every brass peg, a bead bounces
+              right with chance <KaTeXMath math="p" /> or left with chance <KaTeXMath math="1-p" />. Watching
+              beads pile up turns abstract factorial formulas into living geometry!
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. BERNOULLI(p)
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  One single yes/no coin flip (<KaTeXMath math="X \in \{0, 1\}" />). Example: does one user
+                  click the button?
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  2. BINOMIAL(n, p)
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  Total successes out of <KaTeXMath math="n" /> independent Bernoulli flips. Example: defective
+                  chips in a batch of 20.
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  3. GEOMETRIC(p)
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  How many trials until your <strong>first</strong> success (<KaTeXMath math="k = 1, 2, 3, \dots" />).
+                  Memoryless!
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  4. POISSON(λ)
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  Number of rare, independent arrivals in a fixed window (emails per minute, photons per second).
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <DynamicLabRenderer name="GaltonBoardDiscreteLab" />
+
+          {/* Symbol Breakdown, Worked Example & Traps */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Why Binomial Counts Paths &amp; Morphs Into Poisson
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. PASCAL&apos;S PATH MULTIPLIER
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="P(X=k) = \underbrace{\binom{n}{k}}_{\text{\# paths}} \cdot \underbrace{p^k(1-p)^{n-k}}_{\text{prob per path}}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  To land in bin <KaTeXMath math="k" /> on the Galton board, a bead must bounce right{" "}
+                  <KaTeXMath math="k" /> times and left <KaTeXMath math="n-k" /> times. Every specific path
+                  has probability <KaTeXMath math="p^k(1-p)^{n-k}" />, and there are{" "}
+                  <KaTeXMath math="\binom{n}{k}" /> routes!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  2. LAW OF RARE EVENTS
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\lim_{n\to\infty,\, np=\lambda} \binom{n}{k}p^k(1-p)^{n-k} = \frac{\lambda^k e^{-\lambda}}{k!}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Try clicking <strong>Rare-Event Limit (30, 0.06)</strong> above! Slice one minute into
+                  millions of millisecond coin flips with tiny click chance <KaTeXMath math="p=\lambda/n" />,
+                  and the Binomial pins snap right onto the Poisson diamonds.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  3. TINY WORKED EXAMPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Suppose an API sees <KaTeXMath math="\lambda = 2" /> timeouts per hour. Chance of{" "}
+                  <KaTeXMath math="0" /> or <KaTeXMath math="1" /> timeout next hour:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="P(X=0) = e^{-2} \approx 0.135, \quad P(X=1) = 2e^{-2} \approx 0.271"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP 1 • STEP-CDF OPEN VS. CLOSED CIRCLES
+                </span>
+                <p>
+                  Switch the chart to <strong>Step-CDF P(X ≤ x)</strong>: notice how every bar turns into a flat
+                  staircase! The solid dot marks <KaTeXMath math="F(k)" /> (including <KaTeXMath math="k" />), while
+                  the hollow dot sits below at <KaTeXMath math="F(k-1)" />. The vertical jump height at{" "}
+                  <KaTeXMath math="k" /> is literally <KaTeXMath math="P(X=k)" />.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  BRIDGE TO MODULE S.3 • SMOOTH BELL CURVES
+                </span>
+                <p>
+                  Look at the Binomial pins when <KaTeXMath math="n = 16, p = 0.5" />: that symmetric dome is
+                  already screaming to become a continuous <strong>Normal Bell Curve</strong>—our starting point
+                  in <strong>Module S.3</strong>!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
       {chapter.status !== "published" && (
         <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">

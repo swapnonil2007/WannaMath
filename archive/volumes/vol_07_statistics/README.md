@@ -1,6 +1,6 @@
 # Statistics Volume — Interactive Statistics: Foundations to Advanced Inference (`statistics`)
 
-> **Status:** `in-progress` (`3/18` Chapters Published — Phase 1 Complete; **Phase 2 Ready for Hydrogen**) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
+> **Status:** `in-progress` (`6/18` Chapters Published — Phases 1–2 Complete; **Phase 3 Ready for Hydrogen**) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
 > **Canonical Route Base:** `/statistics/[module]/[chapter]`
 > **Navbar Placement:** Dedicated **`Statistics TOC`** drawer placed beside the untouched **`6-Volume TOC`** drawer in `src/components/layout/Navbar.tsx`.
 
@@ -11,10 +11,10 @@
    - `S.1.2`: Measures of Center: Mean, Median, Mode & Outlier Leverage (`central-tendency-mean-median-mode` → `MeanMedianSeesawLab`) *(Published)*
    - `S.1.3`: Spread, Variance ($n-1$ Bessel's Correction), Boxplots & Z-Outliers (`dispersion-variance-iqr-boxplots` → `SpreadBoxplotBesselLab`) *(Published)*
 
-2. **Module S.2 (`probability-foundations-discrete`) — Probability Foundations, Bayes' Theorem & Discrete Laws** *(Phase 2)*
-   - `S.2.1`: Sample Spaces, Events, Set Operations & Kolmogorov Axioms (`sample-spaces-venn-axioms` → `VennProbabilityAreaLab`) *(Planned)*
-   - `S.2.2`: Conditional Probability, Tree Diagrams & Bayes' Theorem Intuition (`conditional-probability-bayes-theorem` → `BayesMosaicTreeLab`) *(Planned)*
-   - `S.2.3`: Discrete Random Variables: Bernoulli, Binomial, Geometric & Poisson (`discrete-distributions-binomial-poisson` → `GaltonBoardDiscreteLab`) *(Planned)*
+2. **Module S.2 (`probability-foundations-discrete`) — Probability Foundations, Bayes' Theorem & Discrete Laws** *(Phase 2 — Published)*
+   - `S.2.1`: Sample Spaces, Events, Set Operations & Kolmogorov Axioms (`sample-spaces-venn-axioms` → `VennProbabilityAreaLab`) *(Published)*
+   - `S.2.2`: Conditional Probability, Tree Diagrams & Bayes' Theorem Intuition (`conditional-probability-bayes-theorem` → `BayesMosaicTreeLab`) *(Published)*
+   - `S.2.3`: Discrete Random Variables: Bernoulli, Binomial, Geometric & Poisson (`discrete-distributions-binomial-poisson` → `GaltonBoardDiscreteLab`) *(Published)*
 
 3. **Module S.3 (`sampling-central-limit-theorem`) — Continuous Laws, Sampling & The Central Limit Theorem** *(Phase 3)*
    - `S.3.1`: The Normal Bell Curve, $Z$-Scores, 68–95–99.7 Rule & Q-Q Plots (`normal-distribution-z-scores-68-95-997` → `NormalZScoreQQPlotLab`) *(Planned)*

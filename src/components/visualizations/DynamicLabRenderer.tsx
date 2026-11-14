@@ -625,6 +625,29 @@ const LAB_COMPONENTS = {
       ).then((m) => m.SpreadBoxplotBesselLab),
     { loading: renderLabLoading }
   ),
+
+  // Statistics Volume — Module S.2
+  VennProbabilityAreaLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/VennProbabilityAreaLab"
+      ).then((m) => m.VennProbabilityAreaLab),
+    { loading: renderLabLoading }
+  ),
+  BayesMosaicTreeLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/BayesMosaicTreeLab"
+      ).then((m) => m.BayesMosaicTreeLab),
+    { loading: renderLabLoading }
+  ),
+  GaltonBoardDiscreteLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/GaltonBoardDiscreteLab"
+      ).then((m) => m.GaltonBoardDiscreteLab),
+    { loading: renderLabLoading }
+  ),
 } satisfies Record<string, ComponentType>;
 
 export type LabComponentName = keyof typeof LAB_COMPONENTS;

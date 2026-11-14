@@ -291,3 +291,132 @@ export function computeL2Loss(xs: readonly number[], center: number): number {
   }
   return total;
 }
+
+/**
+ * Exact log-factorial for non-negative integers via direct log-sum (fast and
+ * exact up to any interactive n used in statistics labs without overflow).
+ */
+export function logFactorial(n: number): number {
+  const k = Math.max(0, Math.floor(n));
+  let acc = 0;
+  for (let i = 2; i <= k; i++) {
+    acc += Math.log(i);
+  }
+  return acc;
+}
+
+export function binomialCoeff(n: number, k: number): number {
+  const nn = Math.floor(n);
+  const kk = Math.floor(k);
+  if (kk < 0 || kk > nn) return 0;
+  if (kk === 0 || kk === nn) return 1;
+  return Math.round(
+    Math.exp(logFactorial(nn) - logFactorial(kk) - logFactorial(nn - kk))
+  );
+}
+
+export function bernoulliPmf(k: number, p: number): number {
+  const prob = Math.max(0, Math.min(1, p));
+  if (k === 1) return prob;
+  if (k === 0) return 1 - prob;
+  return 0;
+}
+
+export function binomialPmf(k: number, n: number, p: number): number {
+  const nn = Math.max(1, Math.floor(n));
+  const kk = Math.floor(k);
+  if (kk < 0 || kk > nn) return 0;
+  const prob = Math.max(0, Math.min(1, p));
+  if (prob === 0) return kk === 0 ? 1 : 0;
+  if (prob === 1) return kk === nn ? 1 : 0;
+  const logP =
+    logFactorial(nn) -
+    logFactorial(kk) -
+    logFactorial(nn - kk) +
+    kk * Math.log(prob) +
+    (nn - kk) * Math.log(1 - prob);
+  return Math.exp(logP);
+}
+
+/**
+ * Geometric distribution: number of trials k >= 1 until the first success.
+ */
+export function geometricPmf(k: number, p: number): number {
+  const kk = Math.floor(k);
+  if (kk < 1) return 0;
+  const prob = Math.max(1e-6, Math.min(1, p));
+  if (prob === 1) return kk === 1 ? 1 : 0;
+  return Math.pow(1 - prob, kk - 1) * prob;
+}
+
+export function poissonPmf(k: number, lambda: number): number {
+  const kk = Math.floor(k);
+  if (kk < 0) return 0;
+  const lam = Math.max(0, lambda);
+  if (lam === 0) return kk === 0 ? 1 : 0;
+  const logP = kk * Math.log(lam) - lam - logFactorial(kk);
+  return Math.exp(logP);
+}
+
+/**
+ * Exact intersection area of two circles of radii r1, r2 with center distance d.
+ */
+export function circleIntersectionArea(
+  r1: number,
+  r2: number,
+  d: number
+): number {
+  if (r1 <= 0 || r2 <= 0) return 0;
+  if (d >= r1 + r2) return 0;
+  if (d <= Math.abs(r1 - r2)) {
+    const rMin = Math.min(r1, r2);
+    return Math.PI * rMin * rMin;
+  }
+  const d2 = d * d;
+  const r1Sq = r1 * r1;
+  const r2Sq = r2 * r2;
+  const alpha = Math.max(
+    -1,
+    Math.min(1, (d2 + r1Sq - r2Sq) / (2 * d * r1))
+  );
+  const beta = Math.max(
+    -1,
+    Math.min(1, (d2 + r2Sq - r1Sq) / (2 * d * r2))
+  );
+  const part1 = r1Sq * Math.acos(alpha);
+  const part2 = r2Sq * Math.acos(beta);
+  const part3 =
+    0.5 *
+    Math.sqrt(
+      Math.max(0, (-d + r1 + r2) * (d + r1 - r2) * (d - r1 + r2) * (d + r1 + r2))
+    );
+  return part1 + part2 - part3;
+}
+
+/**
+ * Solve center separation distance d such that two circles of radii r1, r2
+ * achieve target intersection area.
+ */
+export function solveCircleSeparationForArea(
+  r1: number,
+  r2: number,
+  targetArea: number
+): number {
+  const minR = Math.min(r1, r2);
+  const maxOverlap = Math.PI * minR * minR;
+  if (targetArea <= 1e-9) return r1 + r2 + 0.04;
+  if (targetArea >= maxOverlap - 1e-9) return Math.abs(r1 - r2);
+
+  let lo = Math.abs(r1 - r2);
+  let hi = r1 + r2;
+  for (let i = 0; i < 42; i++) {
+    const mid = 0.5 * (lo + hi);
+    const area = circleIntersectionArea(r1, r2, mid);
+    if (area > targetArea) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+  return 0.5 * (lo + hi);
+}

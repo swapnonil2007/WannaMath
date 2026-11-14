@@ -163,7 +163,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Sample Spaces, Events, Set Operations & Kolmogorov Axioms",
           subtitle:
             "See probability as normalized area inside a unit sample space—and resolve the classic confusion between mutually exclusive and independent events.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["S.1.1"],
           dimensionBadge: "2D",
@@ -203,7 +203,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Conditional Probability, Tree Diagrams & Bayes' Theorem Intuition",
           subtitle:
             "Watch conditioning shrink the entire universe to what actually happened—and see why rare conditions make positive tests surprising.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["S.2.1"],
           dimensionBadge: "2D",
@@ -242,7 +242,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Discrete Random Variables: Bernoulli, Binomial, Geometric & Poisson",
           subtitle:
             "Drop balls through a Galton pegboard to connect coin flips, waiting times, and rare-event Poisson arrivals.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["S.2.1", "S.2.2"],
           dimensionBadge: "2D",
