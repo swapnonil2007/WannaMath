@@ -1,7 +1,8 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-14 — **All 6 Volumes 100% PUBLISHED (`12/12` Vol I + `9/9` Vol II + `24/24` Vol III + `8/8` Vol IV + `8/8` Vol V + `4/4` Vol VI = `65` Chapters & `82` Labs Live) + Full SEO/GEO/CWV/Accessibility Optimization Verified (`100/100/100/100` Lighthouse on audited routes)**
+> **Last Updated:** 2026-11-14 — **All 6 Engineering Math Volumes 100% PUBLISHED (`65` Chapters, `82` Labs) + Statistics Volume (`Volume S`, `/statistics`) Phase 0 Blueprint Planned (`6` Modules, `18` Chapters)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
+> **Statistics Volume Master Plan:** [`archive/volumes/vol_07_statistics/STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 
 ---
@@ -43,7 +44,8 @@
 | **Volume VI — Planning** | `1e2ef01` | **PLANNED** | Authored 2-phase Volume VI blueprint [`VOLUME_6_PLAN.md`](./volumes/vol_06_probability_numerical/VOLUME_6_PLAN.md) & [`README.md`](./volumes/vol_06_probability_numerical/README.md) (`6.1`–`6.2`). |
 | **Volume VI — Phase 1 (Module 6.1)** | `e863ef4` | **PUBLISHED** | Published **Module 6.1 (`probability-distributions`)**: `6.1.1` (`PDFCDFMomentLab`) & `6.1.2` (`BivariateGaussianLab`) (`2/4` Vol VI chapters, `80` labs live). |
 | **Volume VI — Phase 2 (Module 6.2)** | `9a809f5` | **PUBLISHED** | Published **Module 6.2 (`numerical-methods`)**: `6.2.1` (`NumericalQuadratureLab`: Midpoint/Trapezoidal/Simpson/Gauss–Legendre + log–log error slope) & `6.2.2` (`RungeKuttaSlopeLab`: Euler/Heun/RK4 global comparator + 4-slope probe magnifier), completing **all `4/4` chapters of Volume VI** and **100% of all 6 Volumes (`65` chapters, `82` labs live)**. |
-| **SEO, GEO, CWV, A11y & Visual Polish (Phases 1–5)** | *Current* | **COMPLETED** | Completed 5-phase optimization: canonical metadata, Schema.org `@graph` JSON-LD (`src/lib/seo/structuredData.ts`), `robots.ts`, `sitemap.ts`, `manifest.ts`, `llms.txt` & `llms-full.txt`, OG/Twitter & PWA icon routes, brand lockup tagline `"Math ain't scary (not anymore)"`, homepage cleanup, expanded `Footer.tsx` (`Developed by` + socials/internal/external links), dynamic code-splitting (`HeroIntegral3DViewport.tsx`, `DynamicLabRenderer.tsx`, `LabLoadingSkeleton.tsx`), demand-driven Three.js render loop (`demandRenderLoop.ts`) & `core2d.ts` split, adaptive WCAG AA ink tokens (`--math-ink-*`, `src/lib/accentInk.ts`, `KaTeXMath.tsx` `role="math"` + color token remapping), ARIA/label/SVG `role="img"` compliance across 111 TSX/JSX files, and font-swap CLS hardening in `TopicPageShell.tsx` & `globals.css`. Verified `0` TypeScript errors, `113/113` static pages built, `0` AST input/ARIA/SVG issues, and `100/100/100/100` post-fix Desktop Lighthouse audits on `/`, `/single-variable-calculus/limits-continuity/epsilon-delta-limits`, and `/multivariable-calculus/integral-calculus/double-integrals` (Light & Dark). |
+| **SEO, GEO, CWV, A11y & Visual Polish (Phases 1–5)** | `469a153` | **COMPLETED** | Completed 5-phase optimization: canonical metadata, Schema.org `@graph` JSON-LD (`src/lib/seo/structuredData.ts`), `robots.ts`, `sitemap.ts`, `manifest.ts`, `llms.txt` & `llms-full.txt`, OG/Twitter & PWA icon routes, brand lockup tagline `"Math ain't scary (not anymore)"`, homepage cleanup, expanded `Footer.tsx` (`Developed by` + socials/internal/external links), dynamic code-splitting (`HeroIntegral3DViewport.tsx`, `DynamicLabRenderer.tsx`, `LabLoadingSkeleton.tsx`), demand-driven Three.js render loop (`demandRenderLoop.ts`) & `core2d.ts` split, adaptive WCAG AA ink tokens (`--math-ink-*`, `src/lib/accentInk.ts`, `KaTeXMath.tsx` `role="math"` + color token remapping), ARIA/label/SVG `role="img"` compliance across 111 TSX/JSX files, and font-swap CLS hardening in `TopicPageShell.tsx` & `globals.css`. Verified `0` TypeScript errors, `113/113` static pages built, `0` AST input/ARIA/SVG issues, and `100/100/100/100` post-fix Desktop Lighthouse audits on `/`, `/single-variable-calculus/limits-continuity/epsilon-delta-limits`, and `/multivariable-calculus/integral-calculus/double-integrals` (Light & Dark). |
+| **Statistics Volume — Phase 0 (Planning)** | *Current* | **PLANNED** | Authored 6-phase master plan [`STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md) & [`README.md`](./volumes/vol_07_statistics/README.md) (`S.1`–`S.6`, 18 chapters & interactive labs) with dedicated **`Statistics TOC`** navbar drawer beside the untouched **`6-Volume TOC`**. |
 
 ---
 
@@ -56,6 +58,7 @@
 
 ---
 
-## 3. Completion Milestone (All 6 Volumes Published)
-- **Volumes I (`12/12`), II (`9/9`), III (`24/24`), IV (`8/8`), V (`8/8`), and VI (`4/4`)** are **100% published** (**`65/65` chapters, `82` live interactive labs textbook-wide**).
-- Future optional polish may include additional interactive presets, worked exercises, or export/share features per user direction.
+## 3. Active Expansion — Statistics Volume (`Volume S`, `/statistics`)
+- **6-Volume Textbook (`I`–`VI`):** **100% published** (`65/65` chapters, `82` live interactive labs) and remains **untouched** in the **`6-Volume TOC`** drawer.
+- **Immediate Next Step (Phase 1 — Hydrogen):** Build `src/registry/vol-statistics.ts`, `src/components/layout/StatisticsSidebar.tsx` (`Statistics TOC` beside `6-Volume TOC` in `Navbar.tsx`), wire `src/registry/index.ts` & App Router static generation, and publish **Module S.1 (`descriptive-statistics`)**: Chapters `S.1.1` (`HistogramBinningShapeLab`), `S.1.2` (`MeanMedianSeesawLab`), and `S.1.3` (`SpreadBoxplotBesselLab`).
+- **Blueprint & Workflow:** [`archive/volumes/vol_07_statistics/STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md) (`S.1`–`S.6`, 6 phases, 18 chapters & interactive labs).
