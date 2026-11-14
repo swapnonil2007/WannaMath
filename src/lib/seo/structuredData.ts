@@ -216,6 +216,56 @@ export function buildAboutJsonLd() {
   };
 }
 
+export function buildHowToUseJsonLd() {
+  const pageUrl = absoluteUrl("/how-to-use");
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      getOrganizationNode(),
+      buildBreadcrumbList(
+        [
+          { name: BRAND_DISPLAY_NAME, path: "/" },
+          { name: "How to Use Wanna Math", path: "/how-to-use" },
+        ],
+        pageUrl
+      ),
+      {
+        "@type": ["WebPage", "HowTo", "LearningResource"],
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: "How to Use Wanna Math",
+        description:
+          "Interactive orientation guide explaining the 6-Volume TOC and Statistics TOC drawers, live formula syntax, 3D WebGL orbit controls, Butterfly semantic color palette, and recommended learning tracks.",
+        isPartOf: { "@id": WEBSITE_ID },
+        inLanguage: "en-US",
+        isAccessibleForFree: true,
+        learningResourceType: "User Guide",
+        step: [
+          {
+            "@type": "HowToStep",
+            position: 1,
+            name: "Choose 6-Volume TOC or Statistics TOC",
+            text: "Open either table-of-contents drawer in the navbar or explore the full Syllabus Matrix.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 2,
+            name: "Experiment with Custom Equations & Sliders",
+            text: "Use MathExpressionInput to plot custom curves and scrub interactive sliders.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 3,
+            name: "Orbit 3D Surfaces & Run Simulations",
+            text: "Drag 3D WebGL viewports to orbit, click 2D canvases directly, and inspect the Butterfly color dictionary.",
+          },
+        ],
+      },
+    ],
+  };
+}
+
 export function buildVolumeJsonLd(volume: VolumeMetadata) {
   const volumeUrl = absoluteUrl(`/${volume.slug}`);
 

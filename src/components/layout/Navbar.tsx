@@ -3,7 +3,7 @@
 import React, { useEffect, useId, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sun, Moon, Map, Info, Menu, X } from "lucide-react";
+import { Sun, Moon, Map, BookOpen, Info, Menu, X } from "lucide-react";
 import { TextbookSidebar } from "@/components/layout/TextbookSidebar";
 import { StatisticsSidebar } from "@/components/layout/StatisticsSidebar";
 import { BRAND_DISPLAY_NAME, BRAND_TAGLINE } from "@/lib/seo/siteConfig";
@@ -134,6 +134,17 @@ export function Navbar({
       accentHex: "var(--math-ink-grid)",
     },
     {
+      href: "/how-to-use",
+      label: "How to Use",
+      icon: (
+        <BookOpen
+          className="w-3.5 h-3.5 text-[var(--math-ink-y)]"
+          aria-hidden="true"
+        />
+      ),
+      accentHex: "var(--math-ink-y)",
+    },
+    {
       href: "/about",
       label: "About",
       icon: (
@@ -217,8 +228,8 @@ export function Navbar({
         {/* Right Cluster: 5. Version Name & 6. Dark/Light Mode Interchange */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           <div
-            className="hidden sm:flex md:hidden lg:flex items-center gap-2 min-h-[36px] px-2.5 py-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-secondary)] whitespace-nowrap"
-            title="Current version v2.0, all 6 volumes live"
+            className="hidden sm:flex md:hidden xl:flex items-center gap-2 min-h-[36px] px-2.5 py-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-secondary)] whitespace-nowrap"
+            title="Current version v2.0, all 6 volumes + Statistics live"
           >
             <span
               className="w-2 h-2 inline-block shrink-0"

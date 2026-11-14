@@ -55,6 +55,7 @@ export function GET() {
     "",
     `- [Home Overview](${absoluteUrl("/")}): Interactive 3D preview, Module 3.2 highlights, 6-volume directory, and Statistics Volume (18 chapters).`,
     `- [Full Syllabus Matrix](${absoluteUrl("/roadmap")}): Complete structured map across all ${volumes.length} volumes and ${totalChapters} chapters.`,
+    `- [How to Use Guide](${absoluteUrl("/how-to-use")}): Quick-start orientation, interactive formula sandbox, 2D/3D viewport controls, Butterfly color dictionary, and starter tracks.`,
     `- [About & Creator](${absoluteUrl("/about")}): Open-source philosophy, contributor info, and creator profile (${CREATOR.name}).`,
     `- [Full Machine-Readable Textbook Index](${absoluteUrl("/llms-full.txt")}): Complete Markdown syllabus with all ${totalChapters} chapters, prerequisites, key LaTeX equations, and ${totalLabs} interactive lab specs.`,
     "",

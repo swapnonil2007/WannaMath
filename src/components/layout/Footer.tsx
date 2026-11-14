@@ -14,6 +14,7 @@ import {
 const INTERNAL_EXPLORE_LINKS = [
   { href: "/", label: "Home Overview" },
   { href: "/roadmap", label: "Syllabus Matrix (65 Chapters)" },
+  { href: "/how-to-use", label: "How to Use Wanna Math" },
   { href: "/about", label: "About & Open Source" },
   {
     href: "/multivariable-calculus/integral-calculus/double-integrals",

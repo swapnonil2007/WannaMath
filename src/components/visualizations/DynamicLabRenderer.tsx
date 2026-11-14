@@ -736,6 +736,13 @@ const LAB_COMPONENTS = {
       ).then((m) => m.BayesianUpdatingAndBootstrapLab),
     { loading: renderLabLoading }
   ),
+  HowToUseInteractiveDemo: dynamic(
+    () =>
+      import("@/components/visualizations/HowToUseInteractiveDemo").then(
+        (m) => m.HowToUseInteractiveDemo
+      ),
+    { loading: renderLabLoading }
+  ),
 } satisfies Record<string, ComponentType>;
 
 export type LabComponentName = keyof typeof LAB_COMPONENTS;
