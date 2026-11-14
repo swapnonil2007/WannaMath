@@ -15,6 +15,7 @@ import { VOL3_MULTIVARIABLE } from "./vol3-multivariable";
 import { VOL4_DIFFERENTIAL_EQUATIONS } from "./vol4-differential-equations";
 import { VOL5_TRANSFORMS_COMPLEX } from "./vol5-transforms-complex";
 import { VOL6_PROBABILITY_NUMERICAL } from "./vol6-probability-numerical";
+import { VOL_STATISTICS } from "./vol-statistics";
 
 export type {
   VolumeMetadata,
@@ -37,12 +38,13 @@ export const TEXTBOOK_VOLUMES: VolumeMetadata[] = [
   VOL6_PROBABILITY_NUMERICAL,
 ];
 
-export function getAllVolumes(): VolumeMetadata[] {
-  return TEXTBOOK_VOLUMES;
-}
+export const ALL_VOLUMES: VolumeMetadata[] = [
+  ...TEXTBOOK_VOLUMES,
+  VOL_STATISTICS,
+];
 
-export function getTocVolumes(): TocVolumeItem[] {
-  return TEXTBOOK_VOLUMES.map((vol) => ({
+function mapVolumeToTocItem(vol: VolumeMetadata): TocVolumeItem {
+  return {
     id: vol.id,
     volumeNumber: vol.volumeNumber,
     slug: vol.slug,
@@ -69,11 +71,50 @@ export function getTocVolumes(): TocVolumeItem[] {
           : {}),
       })),
     })),
-  }));
+  };
+}
+
+function resolveChaptersFromVolumes(
+  volumes: VolumeMetadata[]
+): ResolvedChapterContext[] {
+  const list: ResolvedChapterContext[] = [];
+  for (const volume of volumes) {
+    for (const mod of volume.modules) {
+      for (const chapter of mod.chapters) {
+        list.push({
+          volume,
+          module: mod,
+          chapter,
+          route: getChapterRoute(volume.slug, mod.slug, chapter.slug),
+        });
+      }
+    }
+  }
+  return list;
+}
+
+export function getTextbookVolumes(): VolumeMetadata[] {
+  return TEXTBOOK_VOLUMES;
+}
+
+export function getAllVolumes(): VolumeMetadata[] {
+  return ALL_VOLUMES;
+}
+
+export function getStatisticsVolume(): VolumeMetadata {
+  return VOL_STATISTICS;
+}
+
+export function getTocVolumes(): TocVolumeItem[] {
+  return TEXTBOOK_VOLUMES.map(mapVolumeToTocItem);
+}
+
+export function getStatisticsTocVolume(): TocVolumeItem {
+  return mapVolumeToTocItem(VOL_STATISTICS);
 }
 
 export function getVolumeBySlug(volumeSlug: string): VolumeMetadata | undefined {
-  return TEXTBOOK_VOLUMES.find((v) => v.slug === volumeSlug);
+  return ALL_VOLUMES.find((v) => v.slug === volumeSlug);
 }
 
 export function getModuleBySlugs(
@@ -96,20 +137,7 @@ export function getChapterRoute(
 }
 
 export function getAllResolvedChapters(): ResolvedChapterContext[] {
-  const list: ResolvedChapterContext[] = [];
-  for (const volume of TEXTBOOK_VOLUMES) {
-    for (const mod of volume.modules) {
-      for (const chapter of mod.chapters) {
-        list.push({
-          volume,
-          module: mod,
-          chapter,
-          route: getChapterRoute(volume.slug, mod.slug, chapter.slug),
-        });
-      }
-    }
-  }
-  return list;
+  return resolveChaptersFromVolumes(ALL_VOLUMES);
 }
 
 export function getChapterBySlugs(
@@ -146,16 +174,29 @@ export function getAdjacentChapters(chapterIdOrSlug: string): {
   prev: ResolvedChapterContext | null;
   next: ResolvedChapterContext | null;
 } {
-  const all = getAllResolvedChapters();
-  const idx = all.findIndex(
+  const statChapters = resolveChaptersFromVolumes([VOL_STATISTICS]);
+  const statIdx = statChapters.findIndex(
+    (item) =>
+      item.chapter.id === chapterIdOrSlug ||
+      item.chapter.slug === chapterIdOrSlug
+  );
+  if (statIdx !== -1) {
+    return {
+      prev: statIdx > 0 ? statChapters[statIdx - 1] : null,
+      next: statIdx < statChapters.length - 1 ? statChapters[statIdx + 1] : null,
+    };
+  }
+
+  const textbookChapters = resolveChaptersFromVolumes(TEXTBOOK_VOLUMES);
+  const idx = textbookChapters.findIndex(
     (item) =>
       item.chapter.id === chapterIdOrSlug ||
       item.chapter.slug === chapterIdOrSlug
   );
   if (idx === -1) return { prev: null, next: null };
   return {
-    prev: idx > 0 ? all[idx - 1] : null,
-    next: idx < all.length - 1 ? all[idx + 1] : null,
+    prev: idx > 0 ? textbookChapters[idx - 1] : null,
+    next: idx < textbookChapters.length - 1 ? textbookChapters[idx + 1] : null,
   };
 }
 

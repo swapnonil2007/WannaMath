@@ -9,7 +9,7 @@ import {
   ArrowRight,
   Layers,
 } from "lucide-react";
-import { getAllVolumes } from "@/registry/index";
+import { getTextbookVolumes } from "@/registry/index";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildRoadmapJsonLd } from "@/lib/seo/structuredData";
@@ -24,7 +24,7 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function RoadmapPage() {
-  const volumes = getAllVolumes();
+  const volumes = getTextbookVolumes();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-14">

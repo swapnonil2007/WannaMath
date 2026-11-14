@@ -147,10 +147,10 @@ export default async function VolumePage({
             <span>Modules &amp; Chapters in Volume {volume.volumeNumber}</span>
           </h2>
           <Link
-            href="/roadmap"
+            href={volume.slug === "statistics" ? "/" : "/roadmap"}
             className="text-xs font-tabular-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center gap-1"
           >
-            <span>All 6 Volumes</span>
+            <span>{volume.slug === "statistics" ? "Home Overview" : "All 6 Volumes"}</span>
             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
           </Link>
         </div>

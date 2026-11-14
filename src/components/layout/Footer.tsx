@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ExternalLink, GitBranch, Globe, Linkedin } from "lucide-react";
 import { SEMANTIC_MATH_PALETTE } from "@/registry/curriculum";
-import { getAllVolumes } from "@/registry/index";
+import { getTextbookVolumes } from "@/registry/index";
 import {
   BRAND_DISPLAY_NAME,
   BRAND_TAGLINE,
@@ -41,7 +41,7 @@ const EXTERNAL_RESOURCE_LINKS = [
 ] as const;
 
 export function Footer() {
-  const volumes = getAllVolumes();
+  const volumes = getTextbookVolumes();
 
   return (
     <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-panel)] mt-20">

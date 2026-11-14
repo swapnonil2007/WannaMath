@@ -471,15 +471,19 @@ export function TopicPageShell({
           </Link>
         ) : (
           <Link
-            href="/roadmap"
+            href={volume.slug === "statistics" ? "/statistics" : "/roadmap"}
             className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] hover:border-[var(--border-strong)] transition-colors flex items-center justify-end gap-3 text-right"
           >
             <div>
               <span className="text-xs font-tabular-mono uppercase text-[var(--text-muted)] block">
-                Master Curriculum
+                {volume.slug === "statistics"
+                  ? "Statistics Curriculum"
+                  : "Master Curriculum"}
               </span>
               <span className="font-math-serif text-base font-semibold text-[var(--text-primary)]">
-                Explore All 6 Textbook Volumes
+                {volume.slug === "statistics"
+                  ? "Explore All Statistics Modules"
+                  : "Explore All 6 Textbook Volumes"}
               </span>
             </div>
             <ArrowRight

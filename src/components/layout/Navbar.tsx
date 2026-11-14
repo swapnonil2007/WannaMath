@@ -5,10 +5,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sun, Moon, Map, Info, Menu, X } from "lucide-react";
 import { TextbookSidebar } from "@/components/layout/TextbookSidebar";
+import { StatisticsSidebar } from "@/components/layout/StatisticsSidebar";
 import { BRAND_DISPLAY_NAME, BRAND_TAGLINE } from "@/lib/seo/siteConfig";
 import type { TocVolumeItem } from "@/registry/types";
 
-export function Navbar({ tocVolumes }: { tocVolumes: TocVolumeItem[] }) {
+export function Navbar({
+  tocVolumes,
+  statisticsVolume,
+}: {
+  tocVolumes: TocVolumeItem[];
+  statisticsVolume: TocVolumeItem;
+}) {
   const pathname = usePathname();
   const mobileMenuId = useId();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -142,8 +149,8 @@ export function Navbar({ tocVolumes }: { tocVolumes: TocVolumeItem[] }) {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--bg-panel)]">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 min-h-16 py-2 sm:py-0 sm:h-16 flex items-center justify-between gap-2 sm:gap-3 lg:gap-4">
-        {/* Left Cluster: 1. Brand Logo/Name/Tagline, 2. 6-Volume TOC, 3–4. Syllabus Matrix & About */}
-        <div className="flex items-center gap-2 sm:gap-3.5 lg:gap-4 min-w-0">
+        {/* Left Cluster: 1. Brand Logo/Name/Tagline, 2. 6-Volume TOC & Statistics TOC, 3–4. Syllabus Matrix & About */}
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 lg:gap-3.5 min-w-0">
           <Link
             href="/"
             className="flex items-center gap-2.5 sm:gap-3 min-w-0 shrink sm:shrink-0 group"
@@ -169,8 +176,9 @@ export function Navbar({ tocVolumes }: { tocVolumes: TocVolumeItem[] }) {
             aria-hidden="true"
           />
 
-          <div className="shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <TextbookSidebar volumes={tocVolumes} />
+            <StatisticsSidebar volume={statisticsVolume} />
           </div>
 
           <nav

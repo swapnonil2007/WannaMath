@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import {
   MULTIVARIABLE_CALCULUS_TOPICS,
-  getAllVolumes,
+  getTextbookVolumes,
 } from "@/registry/curriculum";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { HeroIntegralPreviewLoader } from "@/components/visualizations/HeroIntegralPreviewLoader";
@@ -42,7 +42,7 @@ const TOPIC_ICON_MAP: Record<string, React.ReactNode> = {
 };
 
 export default function HomePage() {
-  const volumes = getAllVolumes();
+  const volumes = getTextbookVolumes();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">

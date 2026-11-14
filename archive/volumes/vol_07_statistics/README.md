@@ -1,15 +1,15 @@
 # Statistics Volume — Interactive Statistics: Foundations to Advanced Inference (`statistics`)
 
-> **Status:** `planned` (`0/18` Chapters Published — Phase 0 Blueprint Complete; **Phase 1 Ready for Hydrogen**) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
+> **Status:** `in-progress` (`3/18` Chapters Published — Phase 1 Complete; **Phase 2 Ready for Hydrogen**) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
 > **Canonical Route Base:** `/statistics/[module]/[chapter]`
 > **Navbar Placement:** Dedicated **`Statistics TOC`** drawer placed beside the untouched **`6-Volume TOC`** drawer in `src/components/layout/Navbar.tsx`.
 
 ## Module & Chapter Build Index (6 Modules • 18 Chapters • 18 Interactive Labs)
 
-1. **Module S.1 (`descriptive-statistics`) — Descriptive Statistics & Exploratory Data Analysis** *(Phase 1)*
-   - `S.1.1`: Data Types, Histograms, Binning & Empirical Distributions (`data-types-histograms-eda` → `HistogramBinningShapeLab`) *(Planned)*
-   - `S.1.2`: Measures of Center: Mean, Median, Mode & Outlier Leverage (`central-tendency-mean-median-mode` → `MeanMedianSeesawLab`) *(Planned)*
-   - `S.1.3`: Spread, Variance ($n-1$ Bessel's Correction), Boxplots & Z-Outliers (`dispersion-variance-iqr-boxplots` → `SpreadBoxplotBesselLab`) *(Planned)*
+1. **Module S.1 (`descriptive-statistics`) — Descriptive Statistics & Exploratory Data Analysis** *(Phase 1 — Published)*
+   - `S.1.1`: Data Types, Histograms, Binning & Empirical Distributions (`data-types-histograms-eda` → `HistogramBinningShapeLab`) *(Published)*
+   - `S.1.2`: Measures of Center: Mean, Median, Mode & Outlier Leverage (`central-tendency-mean-median-mode` → `MeanMedianSeesawLab`) *(Published)*
+   - `S.1.3`: Spread, Variance ($n-1$ Bessel's Correction), Boxplots & Z-Outliers (`dispersion-variance-iqr-boxplots` → `SpreadBoxplotBesselLab`) *(Published)*
 
 2. **Module S.2 (`probability-foundations-discrete`) — Probability Foundations, Bayes' Theorem & Discrete Laws** *(Phase 2)*
    - `S.2.1`: Sample Spaces, Events, Set Operations & Kolmogorov Axioms (`sample-spaces-venn-axioms` → `VennProbabilityAreaLab`) *(Planned)*

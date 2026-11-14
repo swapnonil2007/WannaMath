@@ -3145,6 +3145,359 @@ export default async function ChapterPage({
         </div>
       )}
 
+      {chapter.slug === "data-types-histograms-eda" && (
+        <div className="space-y-8">
+          {/* Plain-English Story & Data Type Map */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
+              FIRST-TIMER GUIDE • BEFORE YOU TOUCH A FORMULA, LOOK AT THE DATA
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Why Lists of Numbers Lie to Our Eyes—and How Histograms Reveal the Story
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Imagine a teacher hands you 35 commute times in minutes:{" "}
+              <code>14, 41, 12, 39, 16, 43, ...</code>. Staring at a spreadsheet column, your brain
+              can barely tell whether everyone lives 25 minutes away or nobody does! In reality,
+              maybe half the class bikes 14 minutes while the other half rides a 41-minute highway bus.
+              <strong> Exploratory Data Analysis (EDA)</strong> solves this by sorting numbers into
+              buckets (bins) and stacking bars so the invisible <em>shape</em> of the crowd jumps right off the page.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. NOMINAL (LABELS)
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  Pure categories with no order: blood types (<code>A, B, O</code>) or bus routes. Use bar charts, never histograms.
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. ORDINAL (RANKED)
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  Ordered labels with uneven gaps: star ratings (<code>1★–5★</code>) or shirt sizes (<code>S, M, L</code>).
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  3. DISCRETE (COUNTS)
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  Countable whole steps with gaps between them: number of defects, coin heads, or siblings (<code>0, 1, 2, ...</code>).
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  4. CONTINUOUS (MEASURED)
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  Smooth values along a ruler: height, voltage, latency (<code>12.47 ms</code>). Histograms and density curves shine here!
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <DynamicLabRenderer name="HistogramBinningShapeLab" />
+
+          {/* Why Does This Formula Work? + Tiny Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Why Does Density Scaling Divide by Both <KaTeXMath math="n" /> and <KaTeXMath math="\Delta x" />?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. AREA = PROBABILITY SHARE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\text{Height}_j = \frac{n_j}{n \cdot \Delta x} \implies \text{Area}_j = \text{Height}_j \cdot \Delta x = \frac{n_j}{n}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  If you double bin width <KaTeXMath math="\Delta x" />, each bin catches roughly twice as many points.
+                  Dividing height by <KaTeXMath math="\Delta x" /> cancels that stretch so the histogram&apos;s total area
+                  always equals <code>1.000</code>—matching smooth probability curves!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. KERNEL DENSITY (KDE) SMOOTHING
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\hat{f}_h(x) = \frac{1}{n h}\sum_{i=1}^n K\!\left(\frac{x - x_i}{h}\right)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Think of placing a tiny soft sandpile (Gaussian bell of width <KaTeXMath math="h" />) at every single
+                  observed dot <KaTeXMath math="x_i" />, then summing all sandpiles together. Unlike rigid bins, KDE never
+                  depends on where bin edges happen to start.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-grid)] block">
+                  3. TINY WORKED MICRO-EXAMPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Suppose <KaTeXMath math="n = 10" /> quiz scores fall into bin <code>[60, 70)</code> with width{" "}
+                  <KaTeXMath math="\Delta x = 10" /> and count <KaTeXMath math="n_j = 3" />:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\text{Density} = \frac{3}{10 \times 10} = 0.03, \quad \text{Area} = 0.03 \times 10 = 30\%"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Common Beginner Traps */}
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP 1 • CHERRY-PICKING BIN WIDTHS
+                </span>
+                <p>
+                  Try setting <strong>Bin Count k = 3</strong> on the <em>Commute Times</em> preset above: the two distinct
+                  14-min and 41-min groups merge into one flat plateau! Conversely, setting <strong>k = 24</strong> creates
+                  artificial empty gaps. Always inspect multiple bin widths or overlay a KDE + rug plot.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  TRAP 2 • BAR CHARTS VS. HISTOGRAMS
+                </span>
+                <p>
+                  Bar charts plot <em>categories</em> with gaps between bars (order can often be swapped). Histograms plot
+                  <em>continuous intervals</em> touching edge-to-edge with zero gaps—unless a bin genuinely holds zero data!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "central-tendency-mean-median-mode" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
+              FIRST-TIMER GUIDE • WHAT DOES &ldquo;TYPICAL&rdquo; ACTUALLY MEAN?
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              The Billionaire in the Coffee Shop: Mean vs. Median vs. Mode
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Picture 11 students sitting in a café, each with roughly \$5,000 in savings. Both their{" "}
+              <strong>Mean</strong> and <strong>Median</strong> savings sit around \$5,500. Now imagine one billionaire
+              walks through the door. Nobody else&apos;s bank account changed by a single cent—yet the{" "}
+              <strong>arithmetic mean</strong> skyrockets, while the <strong>median</strong> (the person standing in the exact
+              middle of the line) barely moves one spot! In the interactive seesaw below, the Mean is literally a{" "}
+              <em>center-of-mass pivot</em> where distance from the pivot multiplies a point&apos;s pull.
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="MeanMedianSeesawLab" />
+
+          {/* Why Does This Formula Work? + Tiny Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Why Squaring Errors Gives Outliers Quadratic Power
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  1. THE MEAN BALANCES TORQUE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\sum_{i=1}^n (x_i - \bar{x}) = 0 \iff \bar{x} = \frac{1}{n}\sum_{i=1}^n x_i"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Just like a seesaw balances when left-side torque equals right-side torque, a single point 10 units to the
+                  right pulls as hard as ten points 1 unit to the left. That is also the exact bottom of the smooth{" "}
+                  <KaTeXMath math="L_2(c) = \sum (x_i - c)^2" /> parabola!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-grid)] block">
+                  2. THE MEDIAN ONLY COUNTS SIDES
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\frac{d}{dc}\sum_{i=1}^n |x_i - c| = (\#\text{left}) - (\#\text{right}) = 0"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  In <KaTeXMath math="L_1(c)" /> absolute loss, moving a point from <code>15</code> to{" "}
+                  <code>10,000</code> doesn&apos;t change its pull on the slope—it still counts as just <em>one vote</em> on
+                  the right! That makes the Median immune to extreme outliers (50% breakdown point).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  3. TINY WORKED MICRO-EXAMPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Take 5 numbers: <code>2, 4, 5, 5, 24</code>.
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\bar{x} = \frac{2+4+5+5+24}{5} = 8, \quad \text{Med} = 5, \quad \text{Mode} = 5"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  One outlier (<code>24</code>) pushed Mean above <strong>4 of the 5 numbers</strong>!
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  SKEWNESS COMPASS • MEAN VS. MEDIAN
+                </span>
+                <p>
+                  Because the Mean chases tails harder than the Median: <strong>Right-skewed</strong> data gives{" "}
+                  <KaTeXMath math="\text{Mean} > \text{Median}" />; <strong>Left-skewed</strong> data gives{" "}
+                  <KaTeXMath math="\text{Mean} < \text{Median}" />; symmetric unimodal data keeps{" "}
+                  <KaTeXMath math="\text{Mean} \approx \text{Median}" />.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  THE BIMODAL TRAP • &ldquo;AVERAGE&rdquo; IN AN EMPTY VALLEY
+                </span>
+                <p>
+                  Select the <strong>Two-Peak Split</strong> preset above: both Mean and Median land around <code>11</code>,
+                  where <em>not a single observation exists</em>! Never report a center without checking the distribution shape first.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "dispersion-variance-iqr-boxplots" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
+              FIRST-TIMER GUIDE • WHY CENTER ALONE CAN BE DEADLY
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              The River That Averages 3 Feet Deep: Spread, Deviation Squares &amp; Why (n − 1)
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              An old statistics joke warns: <em>never try to wade across a river whose average depth is 3 feet</em>—it
+              might be 1 foot at the edges and 12 feet in the middle! Center tells you where the middle sits;{" "}
+              <strong>dispersion (spread)</strong> tells you how wildly individual points wander around that middle.
+              Below, you can literally <em>see</em> variance as the average area of geometric squares built on each
+              point&apos;s distance from <KaTeXMath math="\bar{x}" />, compare it to outlier-proof{" "}
+              <strong>IQR boxplots</strong>, and run a live simulation proving why sample variance divides by{" "}
+              <code>n − 1</code> instead of <code>n</code>.
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="SpreadBoxplotBesselLab" />
+
+          {/* Why Does This Formula Work? + Tiny Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Three Beginner Questions Answered From First Principles
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. WHY SQUARE DEVIATIONS?
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\sum (x_i - \bar{x}) = 0 \;\text{always!}\quad s = \sqrt{\frac{\sum(x_i-\bar{x})^2}{n-1}}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Averaging plain signed deviations gives zero every single time because positives cancel negatives.
+                  Squaring makes every area positive, stays smooth for calculus, and taking <KaTeXMath math="\sqrt{\,\cdot\,}" />{" "}
+                  brings units right back from squared meters to meters!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. WHY DIVIDE BY (n − 1)?
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\sum_{i=1}^n (x_i - \bar{x})^2 = \sum_{i=1}^n (x_i - \mu)^2 - n(\bar{x} - \mu)^2"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  When true <KaTeXMath math="\mu" /> is unknown, we plug in sample <KaTeXMath math="\bar{x}" />—which
+                  is fitted to minimize squared distance to <em>its own sample</em>! That shrinks the sum by{" "}
+                  <KaTeXMath math="n(\bar{x}-\mu)^2" /> (worth <KaTeXMath math="\sigma^2" /> on average), leaving only{" "}
+                  <KaTeXMath math="(n-1)\sigma^2" />. Dividing by <KaTeXMath math="n-1" /> restores exact unbiasedness!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-grid)] block">
+                  3. TINY WORKED MICRO-EXAMPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Data: <code>2, 4, 6</code> (<KaTeXMath math="n = 3, \;\bar{x} = 4" />):
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="s^2 = \frac{(2-4)^2 + (4-4)^2 + (6-4)^2}{3 - 1} = \frac{4 + 0 + 4}{2} = 4,\; s = 2"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  ROBUST PAIRINGS • MATCH YOUR CENTER TO YOUR SPREAD
+                </span>
+                <p>
+                  Pair <strong>Mean + Standard Deviation</strong> for roughly symmetric, outlier-free data. Pair{" "}
+                  <strong>Median + IQR (<KaTeXMath math="Q_3 - Q_1" />)</strong> for skewed incomes, latencies, or datasets
+                  with extreme outliers beyond the <KaTeXMath math="1.5\times\text{IQR}" /> Tukey fences.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  WHAT EXCESS KURTOSIS (<KaTeXMath math="\gamma_2" />) WARNS ABOUT
+                </span>
+                <p>
+                  While skewness (<KaTeXMath math="\gamma_1" />) measures asymmetry, <strong>excess kurtosis</strong>{" "}
+                  measures tail heaviness relative to a Normal bell (<KaTeXMath math="\gamma_2 = 0" />). Positive{" "}
+                  <KaTeXMath math="\gamma_2 \gg 0" /> warns of rare, extreme black-swan spikes!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
       {chapter.status !== "published" && (
         <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">

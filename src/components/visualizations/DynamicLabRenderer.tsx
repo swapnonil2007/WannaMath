@@ -602,6 +602,29 @@ const LAB_COMPONENTS = {
       ).then((m) => m.RungeKuttaSlopeLab),
     { loading: renderLabLoading }
   ),
+
+  // Statistics Volume — Module S.1
+  HistogramBinningShapeLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/HistogramBinningShapeLab"
+      ).then((m) => m.HistogramBinningShapeLab),
+    { loading: renderLabLoading }
+  ),
+  MeanMedianSeesawLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/MeanMedianSeesawLab"
+      ).then((m) => m.MeanMedianSeesawLab),
+    { loading: renderLabLoading }
+  ),
+  SpreadBoxplotBesselLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/SpreadBoxplotBesselLab"
+      ).then((m) => m.SpreadBoxplotBesselLab),
+    { loading: renderLabLoading }
+  ),
 } satisfies Record<string, ComponentType>;
 
 export type LabComponentName = keyof typeof LAB_COMPONENTS;

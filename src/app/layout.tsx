@@ -3,7 +3,7 @@ import { Newsreader, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { getTocVolumes } from "@/registry/index";
+import { getStatisticsTocVolume, getTocVolumes } from "@/registry/index";
 import {
   CREATOR,
   SITE_DESCRIPTION,
@@ -95,6 +95,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const tocVolumes = getTocVolumes();
+  const statisticsVolume = getStatisticsTocVolume();
 
   return (
     <html
@@ -111,7 +112,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col antialiased">
-        <Navbar tocVolumes={tocVolumes} />
+        <Navbar tocVolumes={tocVolumes} statisticsVolume={statisticsVolume} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
