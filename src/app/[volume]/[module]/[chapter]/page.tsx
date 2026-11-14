@@ -3913,6 +3913,371 @@ export default async function ChapterPage({
         </div>
       )}
 
+      {chapter.slug === "normal-distribution-z-scores-68-95-997" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
+              FIRST-TIMER GUIDE • ONE UNIVERSAL RULER FOR EVERY BELL CURVE
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Comparing Apples, Bolts &amp; Exam Scores: Why Z-Scores Replace Infinity With One Table
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Imagine you scored <code>130</code> on a test with mean <KaTeXMath math="\mu = 100" /> and spread{" "}
+              <KaTeXMath math="\sigma = 15" />, while your friend stands <code>186 cm</code> tall in a class of
+              average <code>170 cm</code> (<KaTeXMath math="\sigma = 8" />). Who is more unusual? Subtracting the
+              average and dividing by one standard deviation step turns both into the exact same{" "}
+              <strong>Standard Score</strong>: <KaTeXMath math="Z = +2.0\sigma" />! On the interactive curves
+              below, shifting <KaTeXMath math="\mu" /> slides the upper bell curve while stretching{" "}
+              <KaTeXMath math="\sigma" /> flattens it—yet the shaded probability area{" "}
+              <KaTeXMath math="\Phi(z_2) - \Phi(z_1)" /> stays glued identically onto{" "}
+              <KaTeXMath math="\mathcal{N}(0, 1)" />!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="NormalZScoreQQPlotLab" />
+
+          {/* Symbol Breakdown, Worked Example, Q-Q & Traps */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Understanding Standardization, Empirical Bands &amp; Reading Q-Q Bends
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. THE Z-SCORE TRANSLATION
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="Z = \frac{X - \mu}{\sigma} \quad (\text{unitless steps of }\sigma)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  First subtract <KaTeXMath math="\mu" /> (centering the peak at <code>0</code>); then divide by{" "}
+                  <KaTeXMath math="\sigma" /> (canceling centimeters, grams, or dollars into pure{" "}
+                  <em>&ldquo;standard deviations above average&rdquo;</em>).
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. THE 68–95–99.7 EMPIRICAL RULE
+                </span>
+                <ul className="text-xs font-tabular-mono text-[var(--text-secondary)] space-y-1">
+                  <li>
+                    <KaTeXMath math="\mu \pm 1\sigma" /> → <strong>68.27%</strong> of data
+                  </li>
+                  <li>
+                    <KaTeXMath math="\mu \pm 2\sigma" /> → <strong>95.45%</strong> of data
+                  </li>
+                  <li>
+                    <KaTeXMath math="\mu \pm 3\sigma" /> → <strong>99.73%</strong> of data
+                  </li>
+                </ul>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Anything beyond <KaTeXMath math="|Z| &gt; 3" /> happens under <code>0.3%</code> of the time in a
+                  true Gaussian bell!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-grid)] block">
+                  3. TINY WORKED EXAMPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Coffee packs average <KaTeXMath math="\mu = 250\text{ g}" /> with{" "}
+                  <KaTeXMath math="\sigma = 4\text{ g}" />. A pack weighs <code>242 g</code>:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="Z = \frac{242 - 250}{4} = -2.0 \implies P(X \le 242) \approx 2.28\%"
+                    block
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP • ASSUMING REAL DATA IS NORMAL WITHOUT CHECKING Q-Q
+                </span>
+                <p>
+                  The 68–95–99.7 rule ONLY holds for bell-shaped Normal distributions! Use the{" "}
+                  <strong>Normal Q-Q Plot</strong> above: an <strong>S-curve</strong> warns of fat outlier
+                  tails (like stock crashes), while a <strong>U-bend</strong> warns of strong skew (like incomes).
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  BRIDGE TO S.3.2 • WHY BELL CURVES ARE EVERYWHERE ANYWAY
+                </span>
+                <p>
+                  Even when raw data looks wildly skewed or U-shaped, Chapter <strong>S.3.2</strong> reveals the
+                  miracle of the <strong>Central Limit Theorem</strong>: their sample averages STILL snap into a
+                  Normal bell!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "law-of-large-numbers-central-limit-theorem" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
+              FIRST-TIMER GUIDE • THE CROWN JEWEL OF ALL STATISTICS
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Why Skewed Waiting Times Turn Into a Symmetric Bell When Averaged: LLN &amp; CLT
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Individual customer calls might be horribly right-skewed: most last 2 minutes, a few drag on for 9!
+              Now suppose you record the <em>average</em> of <code>n = 25</code> random calls, repeat that
+              hundreds of times, and make a histogram of those <strong>sample averages</strong>{" "}
+              <KaTeXMath math="\bar{X}" />. Even though the individual calls looked nothing like a bell curve,
+              extreme low and high calls inside each batch cancel each other out—causing the averages{" "}
+              <KaTeXMath math="\bar{X}" /> to pile symmetrically around true <KaTeXMath math="\mu" /> in a clean{" "}
+              <strong>Gaussian Bell Curve</strong>! Select <strong>U-Shaped (Arcsine)</strong> or{" "}
+              <strong>Heavily Right-Skewed</strong> below and hit <strong>Simulate +1,000</strong> to watch it happen live!
+            </p>
+
+            {/* The 3 Distributions Distinction */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. POPULATION DISTRIBUTION
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  Shape of ALL individual measurements (<KaTeXMath math="X" />). Can be flat, skewed, U-shaped,
+                  or bimodal—increasing <KaTeXMath math="n" /> never changes its parent shape!
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. ONE SAMPLE OF SIZE n
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  The <KaTeXMath math="n" /> teal dots drawn right now. It gives us ONE sample mean{" "}
+                  <KaTeXMath math="\bar{x}" /> (vertical orange pin).
+                </p>
+              </div>
+              <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
+                <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  3. SAMPLING DISTRIBUTION OF X̄
+                </span>
+                <p className="text-xs font-math-serif text-[var(--text-secondary)]">
+                  The histogram of MANY sample means <KaTeXMath math="\bar{X}" /> across repeated surveys.{" "}
+                  <strong>THIS</strong> is what turns Normal with spread <KaTeXMath math="\sigma/\sqrt{n}" />!
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <DynamicLabRenderer name="CentralLimitTheoremAnimatorLab" />
+
+          {/* Why sqrt(n), LLN vs CLT, and Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Why Standard Error Shrinks by <KaTeXMath math="1/\sqrt{n}" /> (Not <KaTeXMath math="1/n" />)
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  1. VARIANCE ADDS, SO SD GROWS AS √n
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\operatorname{Var}\!\left(\frac{1}{n}\sum_{i=1}^n X_i\right) = \frac{n\sigma^2}{n^2} = \frac{\sigma^2}{n} \implies \operatorname{SE} = \frac{\sigma}{\sqrt{n}}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Because independent random draws fluctuate in opposite directions, <em>variances</em> add
+                  linearly (<KaTeXMath math="n\sigma^2" />), making the average&apos;s standard error shrink at the
+                  square-root rate <KaTeXMath math="\sigma/\sqrt{n}" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. LLN VS. CLT IN ONE BREATH
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  <strong>Law of Large Numbers (LLN):</strong> tells you <em>where</em> the running mean goes (it
+                  locks onto true <KaTeXMath math="\mu" /> as draws grow).
+                  <br />
+                  <strong>Central Limit Theorem (CLT):</strong> tells you the <em>bell-curve shape and width</em>{" "}
+                  (<KaTeXMath math="\sigma/\sqrt{n}" />) of those sample means at moderate/large{" "}
+                  <KaTeXMath math="n" />!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-grid)] block">
+                  3. TINY WORKED POLLING EXAMPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Suppose individual daily noise has <KaTeXMath math="\sigma = 10" />. Compare averaging{" "}
+                  <code>n = 4</code> vs <code>n = 100</code> measurements:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\operatorname{SE}(4) = \frac{10}{\sqrt{4}} = 5, \qquad \operatorname{SE}(100) = \frac{10}{\sqrt{100}} = 1"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
+                  Need <strong>4× more data</strong> just to cut error in half!
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP • CLT DOES NOT MAKE INDIVIDUAL RAW DATA NORMAL!
+                </span>
+                <p>
+                  Look at the upper plot above: the parent population stays skewed even at <code>n = 50</code>.
+                  Only the <em>averages</em> (lower plot) turn Normal—and if the population has infinite variance
+                  (like heavy-tailed Cauchy), even CLT fails!
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  BRIDGE TO S.3.3 • WHEN TRUE σ IS UNKNOWN
+                </span>
+                <p>
+                  Real life never hands us true <KaTeXMath math="\sigma" />—we must plug in noisy sample{" "}
+                  <KaTeXMath math="s" />. Chapter <strong>S.3.3</strong> shows how that extra wobble births{" "}
+                  <strong>Student&apos;s t</strong>, <KaTeXMath math="\chi^2" />, and <KaTeXMath math="F" />!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "sampling-distributions-student-t-chi2-f" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
+              FIRST-TIMER GUIDE • WHERE DO t, χ² &amp; F TABLES COME FROM?
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Building Student&apos;s t, Chi-Square &amp; F Straight Out of Plain Normal Noise
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              In 1908, Guinness brewery chemist William Gosset (pen name <em>&ldquo;Student&rdquo;</em>) tested
+              small batches of barley (<KaTeXMath math="n = 4" />). He noticed something crucial: when you
+              standardize a sample mean using the <em>sample</em> standard deviation{" "}
+              <KaTeXMath math="s" /> instead of the unknown true <KaTeXMath math="\sigma" />, occasionally a
+              small batch happens to look suspiciously tight (<KaTeXMath math="s" /> lands way too tiny!), making{" "}
+              <KaTeXMath math="(\bar{X}-\mu)/(s/\sqrt{n})" /> blow up far outside normal Z bounds! That accidental
+              denominator wobble stretches the Normal bell into heavier tails—creating{" "}
+              <strong>Student&apos;s t</strong>, while squaring and dividing those Normal deviations creates{" "}
+              <KaTeXMath math="\chi^2" /> and <KaTeXMath math="F" />!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="SamplingDistributionsTChi2FLab" />
+
+          {/* Symbol Breakdown, Degrees of Freedom & Traps */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              The Big Three Sampling Families Constructed From <KaTeXMath math="Z_i \sim \mathcal{N}(0, 1)" />
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  1. STUDENT&apos;S t (MEAN WITH UNKNOWN σ)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="t_\nu = \frac{\bar{X} - \mu}{S/\sqrt{n}} = \frac{Z}{\sqrt{\chi^2_\nu / \nu}}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Top is standard Normal <KaTeXMath math="Z" />; bottom is noisy sample SD{" "}
+                  <KaTeXMath math="S/\sigma = \sqrt{\chi^2_{n-1}/(n-1)}" />. As{" "}
+                  <KaTeXMath math="\nu = n-1 \to \infty" />, <KaTeXMath math="S \to \sigma" /> and{" "}
+                  <KaTeXMath math="t_\nu" /> merges smoothly into <KaTeXMath math="\mathcal{N}(0,1)" />!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  2. CHI-SQUARE χ² (SUM OF SQUARES)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\chi^2_k = \sum_{i=1}^k Z_i^2, \qquad \mathbb{E}[\chi^2_k] = k"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Since every squared error <KaTeXMath math="Z_i^2 \ge 0" />, <KaTeXMath math="\chi^2_k" />{" "}
+                  lives strictly on <KaTeXMath math="[0, \infty)" />, leans right, and powers variance intervals
+                  and Chi-square goodness-of-fit tests!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  3. FISHER&apos;S F (RATIO OF VARIANCES)
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="F_{d_1, d_2} = \frac{\chi^2_{d_1}/d_1}{\chi^2_{d_2}/d_2} = \frac{S_1^2 / \sigma_1^2}{S_2^2 / \sigma_2^2}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Compares two scaled variance estimates (Signal-to-Noise!). Notice a neat identity: squaring a{" "}
+                  <KaTeXMath math="t_\nu" /> statistic gives <KaTeXMath math="t_\nu^2 = F_{1, \nu}" />!
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  WORKED INTUITION • WHY t HAS FAT TAILS AT ν = 2
+                </span>
+                <p>
+                  Suppose <KaTeXMath math="n = 3" /> (<KaTeXMath math="\nu = 2" />). You happen to draw{" "}
+                  <code>10.1, 10.1, 10.2</code> when true <KaTeXMath math="\mu = 8" />: sample{" "}
+                  <KaTeXMath math="s \approx 0.058" /> makes <KaTeXMath math="t = (10.13-8)/(0.058/\sqrt{3}) \approx +64" />!
+                  Even though Gaussian outliers never hit <KaTeXMath math="64\sigma" />, noisy tiny{" "}
+                  <KaTeXMath math="s" /> easily produces huge <KaTeXMath math="t" /> values.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  BRIDGE TO MODULE S.4 • ENTER STATISTICAL INFERENCE!
+                </span>
+                <p>
+                  With Normal, <KaTeXMath math="t" />, <KaTeXMath math="\chi^2" />, and <KaTeXMath math="F" />{" "}
+                  sampling distributions unlocked, <strong>Module S.4</strong> flips probability backwards:
+                  estimating unknown parameters, building <strong>Confidence Intervals</strong>, and testing
+                  hypotheses!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
       {chapter.status !== "published" && (
         <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">

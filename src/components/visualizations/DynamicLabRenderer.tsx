@@ -648,6 +648,29 @@ const LAB_COMPONENTS = {
       ).then((m) => m.GaltonBoardDiscreteLab),
     { loading: renderLabLoading }
   ),
+
+  // Statistics Volume — Module S.3
+  NormalZScoreQQPlotLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/NormalZScoreQQPlotLab"
+      ).then((m) => m.NormalZScoreQQPlotLab),
+    { loading: renderLabLoading }
+  ),
+  CentralLimitTheoremAnimatorLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/CentralLimitTheoremAnimatorLab"
+      ).then((m) => m.CentralLimitTheoremAnimatorLab),
+    { loading: renderLabLoading }
+  ),
+  SamplingDistributionsTChi2FLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/SamplingDistributionsTChi2FLab"
+      ).then((m) => m.SamplingDistributionsTChi2FLab),
+    { loading: renderLabLoading }
+  ),
 } satisfies Record<string, ComponentType>;
 
 export type LabComponentName = keyof typeof LAB_COMPONENTS;

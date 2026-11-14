@@ -292,7 +292,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "The Normal Bell Curve, Z-Scores, 68–95–99.7 Rule & Q-Q Plots",
           subtitle:
             "Turn any Normal measurement into unitless standard deviations from the mean—and learn to spot fat tails or skew on a Q-Q plot.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 25,
           prerequisites: ["S.1.3", "S.2.3"],
           dimensionBadge: "2D",
@@ -331,7 +331,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "The Law of Large Numbers (LLN) & The Central Limit Theorem (CLT)",
           subtitle:
             "Watch sample averages from skewed, uniform, and U-shaped populations morph into a tight Gaussian bell at speed 1/√n.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 35,
           prerequisites: ["S.1.2", "S.3.1"],
           dimensionBadge: "2D",
@@ -370,7 +370,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Exact Sampling Distributions: Student's t, Chi-Square (χ²) & Fisher's F",
           subtitle:
             "See how Student's t, χ², and F emerge naturally by combining standard Normal draws when estimating means and variances.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["S.1.3", "S.3.2"],
           dimensionBadge: "2D",

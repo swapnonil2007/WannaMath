@@ -1,6 +1,6 @@
 # Statistics Volume — Interactive Statistics: Foundations to Advanced Inference (`statistics`)
 
-> **Status:** `in-progress` (`6/18` Chapters Published — Phases 1–2 Complete; **Phase 3 Ready for Hydrogen**) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
+> **Status:** `in-progress` (`9/18` Chapters Published — Phases 1–3 Complete; **Phase 4 Ready for Hydrogen**) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
 > **Canonical Route Base:** `/statistics/[module]/[chapter]`
 > **Navbar Placement:** Dedicated **`Statistics TOC`** drawer placed beside the untouched **`6-Volume TOC`** drawer in `src/components/layout/Navbar.tsx`.
 
@@ -16,10 +16,10 @@
    - `S.2.2`: Conditional Probability, Tree Diagrams & Bayes' Theorem Intuition (`conditional-probability-bayes-theorem` → `BayesMosaicTreeLab`) *(Published)*
    - `S.2.3`: Discrete Random Variables: Bernoulli, Binomial, Geometric & Poisson (`discrete-distributions-binomial-poisson` → `GaltonBoardDiscreteLab`) *(Published)*
 
-3. **Module S.3 (`sampling-central-limit-theorem`) — Continuous Laws, Sampling & The Central Limit Theorem** *(Phase 3)*
-   - `S.3.1`: The Normal Bell Curve, $Z$-Scores, 68–95–99.7 Rule & Q-Q Plots (`normal-distribution-z-scores-68-95-997` → `NormalZScoreQQPlotLab`) *(Planned)*
-   - `S.3.2`: The Law of Large Numbers (LLN) & The Central Limit Theorem (CLT) (`law-of-large-numbers-central-limit-theorem` → `CentralLimitTheoremAnimatorLab`) *(Planned)*
-   - `S.3.3`: Exact Sampling Distributions: Student's $t$, Chi-Square ($\chi^2$) & Fisher's $F$ (`sampling-distributions-student-t-chi2-f` → `SamplingDistributionsTChi2FLab`) *(Planned)*
+3. **Module S.3 (`sampling-central-limit-theorem`) — Continuous Laws, Sampling & The Central Limit Theorem** *(Phase 3 — Published)*
+   - `S.3.1`: The Normal Bell Curve, $Z$-Scores, 68–95–99.7 Rule & Q-Q Plots (`normal-distribution-z-scores-68-95-997` → `NormalZScoreQQPlotLab`) *(Published)*
+   - `S.3.2`: The Law of Large Numbers (LLN) & The Central Limit Theorem (CLT) (`law-of-large-numbers-central-limit-theorem` → `CentralLimitTheoremAnimatorLab`) *(Published)*
+   - `S.3.3`: Exact Sampling Distributions: Student's $t$, Chi-Square ($\chi^2$) & Fisher's $F$ (`sampling-distributions-student-t-chi2-f` → `SamplingDistributionsTChi2FLab`) *(Published)*
 
 4. **Module S.4 (`statistical-inference`) — Statistical Inference: Estimation, Confidence Intervals & Hypothesis Testing** *(Phase 4)*
    - `S.4.1`: Point Estimation, Maximum Likelihood (MLE) & The Bias–Variance Tradeoff (`point-estimation-mle-bias-variance` → `MaximumLikelihoodBiasVarianceLab`) *(Planned)*

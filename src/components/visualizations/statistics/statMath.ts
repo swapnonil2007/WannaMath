@@ -420,3 +420,153 @@ export function solveCircleSeparationForArea(
   }
   return 0.5 * (lo + hi);
 }
+
+// ============================================================================
+// Continuous Distributions (Normal, Student's t, Chi-Square, Fisher's F)
+// ============================================================================
+
+const LANCZOS_COEFFS = [
+  0.99999999999980993,
+  676.5203681218851,
+  -1259.1392167224028,
+  771.32342877765313,
+  -176.61502916214059,
+  12.507343278686905,
+  -0.13857109526572012,
+  9.9843695780195716e-6,
+  1.5056327351493116e-7,
+];
+
+export function logGamma(z: number): number {
+  if (z < 0.5) {
+    return Math.log(Math.PI) - Math.log(Math.sin(Math.PI * z)) - logGamma(1 - z);
+  }
+  const shifted = z - 1;
+  let x = LANCZOS_COEFFS[0];
+  for (let i = 1; i < LANCZOS_COEFFS.length; i++) {
+    x += LANCZOS_COEFFS[i] / (shifted + i);
+  }
+  const t = shifted + 7.5;
+  return (
+    0.5 * Math.log(2 * Math.PI) +
+    (shifted + 0.5) * Math.log(t) -
+    t +
+    Math.log(x)
+  );
+}
+
+export function erfApprox(x: number): number {
+  const sign = x < 0 ? -1 : 1;
+  const ax = Math.abs(x);
+  const t = 1 / (1 + 0.3275911 * ax);
+  const y =
+    1 -
+    (((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) *
+      t +
+      0.254829592) *
+      t) *
+      Math.exp(-ax * ax);
+  return sign * y;
+}
+
+export function normalPdf(x: number, mean = 0, stdDev = 1): number {
+  const s = Math.max(1e-6, stdDev);
+  const z = (x - mean) / s;
+  return Math.exp(-0.5 * z * z) / (s * Math.sqrt(2 * Math.PI));
+}
+
+export function normalCdf(x: number, mean = 0, stdDev = 1): number {
+  const s = Math.max(1e-6, stdDev);
+  return 0.5 * (1 + erfApprox((x - mean) / (s * Math.SQRT2)));
+}
+
+/**
+ * Peter Acklam's inverse standard normal CDF approximation (error < 1.15e-9).
+ */
+export function normalInvCdf(p: number): number {
+  const prob = Math.max(1e-12, Math.min(1 - 1e-12, p));
+  const a = [
+    -3.969683028665376e1,
+    2.209460984245205e2,
+    -2.759285104469687e2,
+    1.38357751867269e2,
+    -3.066479806614716e1,
+    2.506628277459239,
+  ];
+  const b = [
+    -5.447609879822406e1,
+    1.615858368580409e2,
+    -1.556989798598866e2,
+    6.680131188771972e1,
+    -1.328068155288572e1,
+  ];
+  const c = [
+    -7.784894002430293e-3,
+    -3.223964580411365e-1,
+    -2.400758277161838,
+    -2.549732539343734,
+    4.374664141464968,
+    2.938163982698783,
+  ];
+  const d = [
+    7.784695709041462e-3,
+    3.224671290700398e-1,
+    2.445134137142996,
+    3.754408661907416,
+  ];
+  const pLow = 0.02425;
+  const pHigh = 1 - pLow;
+
+  if (prob < pLow) {
+    const q = Math.sqrt(-2 * Math.log(prob));
+    return (
+      (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+      ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1)
+    );
+  }
+  if (prob > pHigh) {
+    const q = Math.sqrt(-2 * Math.log(1 - prob));
+    return -(
+      (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+      ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1)
+    );
+  }
+  const q = prob - 0.5;
+  const r = q * q;
+  return (
+    ((((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * q) /
+    (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1)
+  );
+}
+
+export function studentTPdf(t: number, nu: number): number {
+  const df = Math.max(1, nu);
+  const logCoeff =
+    logGamma((df + 1) / 2) - logGamma(df / 2) - 0.5 * Math.log(df * Math.PI);
+  const logKernel = -((df + 1) / 2) * Math.log(1 + (t * t) / df);
+  return Math.exp(logCoeff + logKernel);
+}
+
+export function chiSquarePdf(x: number, k: number): number {
+  const df = Math.max(1, k);
+  if (x <= 0) return df === 2 ? 0.5 : 0;
+  const half = df / 2;
+  const logP =
+    (half - 1) * Math.log(x) - x / 2 - half * Math.LN2 - logGamma(half);
+  return Math.exp(logP);
+}
+
+export function fisherFPdf(x: number, d1: number, d2: number): number {
+  const n1 = Math.max(1, d1);
+  const n2 = Math.max(1, d2);
+  if (x <= 0) return n1 === 2 ? 1 : 0;
+  const h1 = n1 / 2;
+  const h2 = n2 / 2;
+  const logBeta = logGamma(h1) + logGamma(h2) - logGamma(h1 + h2);
+  const logP =
+    h1 * Math.log(n1 / n2) +
+    (h1 - 1) * Math.log(x) -
+    (h1 + h2) * Math.log(1 + (n1 / n2) * x) -
+    logBeta;
+  return Math.exp(logP);
+}

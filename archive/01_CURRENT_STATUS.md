@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-14 — **All 6 Engineering Math Volumes 100% PUBLISHED (`65` Chapters, `82` Labs) + Statistics Volume (`Volume S`, `/statistics`) Phase 2 PUBLISHED (`6/18` Chapters, `88` Labs Textbook-Wide)**
+> **Last Updated:** 2026-11-14 — **All 6 Engineering Math Volumes 100% PUBLISHED (`65` Chapters, `82` Labs) + Statistics Volume (`Volume S`, `/statistics`) Phase 3 PUBLISHED (`9/18` Chapters, `91` Labs Textbook-Wide)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Statistics Volume Master Plan:** [`archive/volumes/vol_07_statistics/STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
@@ -47,7 +47,8 @@
 | **SEO, GEO, CWV, A11y & Visual Polish (Phases 1–5)** | `469a153` | **COMPLETED** | Completed 5-phase optimization: canonical metadata, Schema.org `@graph` JSON-LD (`src/lib/seo/structuredData.ts`), `robots.ts`, `sitemap.ts`, `manifest.ts`, `llms.txt` & `llms-full.txt`, OG/Twitter & PWA icon routes, brand lockup tagline `"Math ain't scary (not anymore)"`, homepage cleanup, expanded `Footer.tsx` (`Developed by` + socials/internal/external links), dynamic code-splitting (`HeroIntegral3DViewport.tsx`, `DynamicLabRenderer.tsx`, `LabLoadingSkeleton.tsx`), demand-driven Three.js render loop (`demandRenderLoop.ts`) & `core2d.ts` split, adaptive WCAG AA ink tokens (`--math-ink-*`, `src/lib/accentInk.ts`, `KaTeXMath.tsx` `role="math"` + color token remapping), ARIA/label/SVG `role="img"` compliance across 111 TSX/JSX files, and font-swap CLS hardening in `TopicPageShell.tsx` & `globals.css`. Verified `0` TypeScript errors, `113/113` static pages built, `0` AST input/ARIA/SVG issues, and `100/100/100/100` post-fix Desktop Lighthouse audits on `/`, `/single-variable-calculus/limits-continuity/epsilon-delta-limits`, and `/multivariable-calculus/integral-calculus/double-integrals` (Light & Dark). |
 | **Statistics Volume — Phase 0 (Planning)** | `5cac493` | **PLANNED** | Authored 6-phase master plan [`STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md) & [`README.md`](./volumes/vol_07_statistics/README.md) (`S.1`–`S.6`, 18 chapters & interactive labs) with dedicated **`Statistics TOC`** navbar drawer beside the untouched **`6-Volume TOC`**. |
 | **Statistics Volume — Phase 1 (`S.1`)** | `edb88f0` | **PUBLISHED** | Added `StatisticsSidebar.tsx` (`Statistics TOC`) beside `6-Volume TOC` in `Navbar.tsx`, scaffolded `vol-statistics.ts` & scoped `getTextbookVolumes()`/`getAdjacentChapters()`, and published **Module S.1 (`descriptive-statistics`)**: `S.1.1` (`HistogramBinningShapeLab`), `S.1.2` (`MeanMedianSeesawLab`), `S.1.3` (`SpreadBoxplotBesselLab`). |
-| **Statistics Volume — Phase 2 (`S.2`)** | *Current* | **PUBLISHED** | Published **Module S.2 (`probability-foundations-discrete`)**: `S.2.1` (`VennProbabilityAreaLab`), `S.2.2` (`BayesMosaicTreeLab`), and `S.2.3` (`GaltonBoardDiscreteLab`) (`6/18` Statistics chapters, `88` live labs textbook-wide). |
+| **Statistics Volume — Phase 2 (`S.2`)** | `5595b0d` | **PUBLISHED** | Published **Module S.2 (`probability-foundations-discrete`)**: `S.2.1` (`VennProbabilityAreaLab`), `S.2.2` (`BayesMosaicTreeLab`), and `S.2.3` (`GaltonBoardDiscreteLab`) (`6/18` Statistics chapters, `88` live labs textbook-wide). |
+| **Statistics Volume — Phase 3 (`S.3`)** | *Current* | **PUBLISHED** | Published **Module S.3 (`sampling-central-limit-theorem`)**: `S.3.1` (`NormalZScoreQQPlotLab`), `S.3.2` (`CentralLimitTheoremAnimatorLab`), and `S.3.3` (`SamplingDistributionsTChi2FLab`) (`9/18` Statistics chapters, `91` live labs textbook-wide). |
 
 ---
 
@@ -62,6 +63,6 @@
 
 ## 3. Active Expansion — Statistics Volume (`Volume S`, `/statistics`)
 - **6-Volume Textbook (`I`–`VI`):** **100% published** (`65/65` chapters, `82` live interactive labs) and remains **untouched** in the **`6-Volume TOC`** drawer.
-- **Statistics Volume (`Volume S`):** `6/18` chapters published (`88` live interactive labs textbook-wide). **Phases 1–2 (`S.1`–`S.2`) are live.**
-- **Immediate Next Step (Phase 3 — Hydrogen):** Publish **Module S.3 (`sampling-central-limit-theorem`)** in `src/registry/vol-statistics.ts`, `src/components/visualizations/statistics/`, `DynamicLabRenderer.tsx`, and `[chapter]/page.tsx`: Chapters `S.3.1` (`NormalZScoreQQPlotLab`), `S.3.2` (`CentralLimitTheoremAnimatorLab`), and `S.3.3` (`SamplingDistributionsTChi2FLab`).
+- **Statistics Volume (`Volume S`):** `9/18` chapters published (`91` live interactive labs textbook-wide). **Phases 1–3 (`S.1`–`S.3`) are live.**
+- **Immediate Next Step (Phase 4 — Hydrogen):** Publish **Module S.4 (`statistical-inference`)** in `src/registry/vol-statistics.ts`, `src/components/visualizations/statistics/`, `DynamicLabRenderer.tsx`, and `[chapter]/page.tsx`: Chapters `S.4.1` (`MaximumLikelihoodBiasVarianceLab`), `S.4.2` (`ConfidenceIntervalCoverageLab`), and `S.4.3` (`HypothesisPowerOverlapLab`).
 - **Blueprint & Workflow:** [`archive/volumes/vol_07_statistics/STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md) (`S.1`–`S.6`, 6 phases, 18 chapters & interactive labs).
