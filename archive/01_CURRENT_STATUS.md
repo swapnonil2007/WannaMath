@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-14 — **All 6 Engineering Math Volumes 100% PUBLISHED (`65` Chapters, `82` Labs) + Statistics Volume (`Volume S`, `/statistics`) Phase 4 PUBLISHED (`12/18` Chapters, `94` Labs Textbook-Wide)**
+> **Last Updated:** 2026-11-14 — **All 6 Engineering Math Volumes 100% PUBLISHED (`65` Chapters, `82` Labs) + Statistics Volume (`Volume S`, `/statistics`) Phase 5 PUBLISHED (`15/18` Chapters, `97` Labs Textbook-Wide)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Statistics Volume Master Plan:** [`archive/volumes/vol_07_statistics/STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
@@ -49,7 +49,8 @@
 | **Statistics Volume — Phase 1 (`S.1`)** | `edb88f0` | **PUBLISHED** | Added `StatisticsSidebar.tsx` (`Statistics TOC`) beside `6-Volume TOC` in `Navbar.tsx`, scaffolded `vol-statistics.ts` & scoped `getTextbookVolumes()`/`getAdjacentChapters()`, and published **Module S.1 (`descriptive-statistics`)**: `S.1.1` (`HistogramBinningShapeLab`), `S.1.2` (`MeanMedianSeesawLab`), `S.1.3` (`SpreadBoxplotBesselLab`). |
 | **Statistics Volume — Phase 2 (`S.2`)** | `5595b0d` | **PUBLISHED** | Published **Module S.2 (`probability-foundations-discrete`)**: `S.2.1` (`VennProbabilityAreaLab`), `S.2.2` (`BayesMosaicTreeLab`), and `S.2.3` (`GaltonBoardDiscreteLab`) (`6/18` Statistics chapters, `88` live labs textbook-wide). |
 | **Statistics Volume — Phase 3 (`S.3`)** | `7467cbe` | **PUBLISHED** | Published **Module S.3 (`sampling-central-limit-theorem`)**: `S.3.1` (`NormalZScoreQQPlotLab`), `S.3.2` (`CentralLimitTheoremAnimatorLab`), and `S.3.3` (`SamplingDistributionsTChi2FLab`) (`9/18` Statistics chapters, `91` live labs textbook-wide). |
-| **Statistics Volume — Phase 4 (`S.4`)** | *Current* | **PUBLISHED** | Published **Module S.4 (`statistical-inference`)**: `S.4.1` (`MaximumLikelihoodBiasVarianceLab`), `S.4.2` (`ConfidenceIntervalCoverageLab`), and `S.4.3` (`HypothesisPowerOverlapLab`) (`12/18` Statistics chapters, `94` live labs textbook-wide). |
+| **Statistics Volume — Phase 4 (`S.4`)** | `1d5a886` | **PUBLISHED** | Published **Module S.4 (`statistical-inference`)**: `S.4.1` (`MaximumLikelihoodBiasVarianceLab`), `S.4.2` (`ConfidenceIntervalCoverageLab`), and `S.4.3` (`HypothesisPowerOverlapLab`) (`12/18` Statistics chapters, `94` live labs textbook-wide). |
+| **Statistics Volume — Phase 5 (`S.5`)** | *Current* | **PUBLISHED** | Published **Module S.5 (`group-comparisons-anova`)**: `S.5.1` (`TwoSamplePairedWelchLab`), `S.5.2` (`ChiSquareContingencySimpsonLab`), and `S.5.3` (`AnovaBetweenWithinLab`) (`15/18` Statistics chapters, `97` live labs textbook-wide). |
 
 ---
 
@@ -64,6 +65,6 @@
 
 ## 3. Active Expansion — Statistics Volume (`Volume S`, `/statistics`)
 - **6-Volume Textbook (`I`–`VI`):** **100% published** (`65/65` chapters, `82` live interactive labs) and remains **untouched** in the **`6-Volume TOC`** drawer.
-- **Statistics Volume (`Volume S`):** `12/18` chapters published (`94` live interactive labs textbook-wide). **Phases 1–4 (`S.1`–`S.4`) are live.**
-- **Immediate Next Step (Phase 5 — Hydrogen):** Publish **Module S.5 (`group-comparisons-anova`)** in `src/registry/vol-statistics.ts`, `src/components/visualizations/statistics/`, `DynamicLabRenderer.tsx`, and `[chapter]/page.tsx`: Chapters `S.5.1` (`TwoSamplePairedWelchLab`), `S.5.2` (`ChiSquareContingencySimpsonLab`), and `S.5.3` (`AnovaBetweenWithinLab`).
+- **Statistics Volume (`Volume S`):** `15/18` chapters published (`97` live interactive labs textbook-wide). **Phases 1–5 (`S.1`–`S.5`) are live.**
+- **Immediate Next Step (Phase 6 — Hydrogen):** Publish **Module S.6 (`regression-bayesian-advanced`)** in `src/registry/vol-statistics.ts`, `src/components/visualizations/statistics/`, `DynamicLabRenderer.tsx`, and `[chapter]/page.tsx`: Chapters `S.6.1` (`OLSRegressionAnscombeLab`), `S.6.2` (`MultipleRegression3DRegularizationLab`), and `S.6.3` (`BayesianUpdatingAndBootstrapLab`).
 - **Blueprint & Workflow:** [`archive/volumes/vol_07_statistics/STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md) (`S.1`–`S.6`, 6 phases, 18 chapters & interactive labs).

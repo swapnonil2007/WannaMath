@@ -4609,6 +4609,342 @@ export default async function ChapterPage({
         </div>
       )}
 
+      {chapter.slug === "two-sample-tests-paired-welch" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
+              FIRST-TIMER GUIDE • TWO-GROUP COMPARISONS &amp; EFFECT SIZES
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Why Pairing Cancels Human Noise—And Why Welch&apos;s Test Outsmarts Student&apos;s Equal-Variance t-Test
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Suppose you test whether a sleep workshop lowers resting heart rate. You measure 12 people{" "}
+              <strong>before</strong> and <strong>after</strong>. One runner starts at 48 bpm, while a stressed
+              coder starts at 82 bpm—that giant 34-bpm gap between people has nothing to do with your workshop!
+              When you <strong>pair</strong> each person with their own baseline (<KaTeXMath math="d_i = \text{After}_i - \text{Before}_i" />),
+              every person&apos;s natural baseline subtracts cleanly to zero. On the flip side, if Group A and
+              Group B are <em>two completely separate sets of people</em>,{" "}
+              <strong>Welch&apos;s independent t-test</strong> safely handles unequal spreads without forcing
+              artificial variance pooling.
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="TwoSamplePairedWelchLab" />
+
+          {/* Symbol Breakdown, Why-It-Works Intuition & Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Paired Noise Cancellation, Welch&apos;s Formula &amp; Measuring Practical Impact (Cohen&apos;s d)
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. PAIRED VS. UNPAIRED STANDARD ERROR
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="t_{\text{paired}} = \frac{\bar{d}}{s_d / \sqrt{n}}, \quad \text{df} = n - 1"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Because <KaTeXMath math="\text{Var}(X - Y) = \text{Var}(X) + \text{Var}(Y) - 2\,\text{Cov}(X,Y)" />,
+                  positive correlation between Before &amp; After shrinks the difference variance dramatically!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  2. WELCH&apos;S UNEQUAL-VARIANCE T-TEST
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="t_{\text{Welch}} = \frac{\bar{x}_2 - \bar{x}_1}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Welch&apos;s denominator weights each sample&apos;s own variance by its own sample size, and uses
+                  the <strong>Welch–Satterthwaite fractional <KaTeXMath math="\nu" /></strong> so noisy small groups
+                  never inflate false positives.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  3. TINY WORKED COHEN&apos;S d EXAMPLE
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  If Group 2 averages <KaTeXMath math="\bar{x}_2 = 54" />, Group 1 averages{" "}
+                  <KaTeXMath math="\bar{x}_1 = 50" />, and pooled spread is <KaTeXMath math="s_p = 5" />:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="d = \frac{54 - 50}{5} = 0.80 \;\text{(Large effect!)}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Unlike <KaTeXMath math="p" />-values, <strong>Cohen&apos;s <KaTeXMath math="d" /></strong> does NOT
+                  shrink just by recruiting 10,000 people—it measures how many standard deviations apart the two clouds sit.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP • NEVER POOL UNEQUAL VARIANCES BLINDLY
+                </span>
+                <p>
+                  In <strong>Independent Welch</strong> mode above, set <KaTeXMath math="n_1 = 8, s_1 = 2" /> and{" "}
+                  <KaTeXMath math="n_2 = 40, s_2 = 9" />. Student&apos;s equal-variance test over-trusts the big sample
+                  and understates uncertainty, whereas Welch adjusts <KaTeXMath math="\nu" /> down safely—make Welch
+                  your modern default!
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  BRIDGE TO S.5.2 • WHAT ABOUT YES/NO COUNTS &amp; CATEGORIES?
+                </span>
+                <p>
+                  Both <KaTeXMath math="t" />-tests compare numerical group averages. When your outcomes are{" "}
+                  <strong>counts across categories</strong> (&ldquo;recovered vs. didn&apos;t recover&rdquo;, or die rolls),
+                  we switch to <strong>Chi-Square (<KaTeXMath math="\chi^2" />)</strong> in <strong>S.5.2</strong>!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "chi-square-goodness-of-fit-independence" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-lower)] block">
+              FIRST-TIMER GUIDE • CATEGORICAL COUNTS &amp; CONFOUNDING
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Comparing Real Counts Against a Fair Baseline—And Catching Simpson&apos;s Paradox Red-Handed
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Imagine rolling a board-game die 120 times and getting thirty 6s instead of the expected twenty. Is the die
+              rigged, or just lucky? Karl Pearson&apos;s <strong>Chi-Square (<KaTeXMath math="\chi^2" />)</strong> test
+              scores every category by how far <strong>Observed (<KaTeXMath math="O" />)</strong> counts drift from{" "}
+              <strong>Expected (<KaTeXMath math="E" />)</strong> counts—measured relative to <KaTeXMath math="E" />.
+              Even more eye-opening: in real hospitals or admissions offices, pooling two unequal sub-groups into one{" "}
+              <KaTeXMath math="2 \times 2" /> table can completely reverse which option wins—that optical illusion is{" "}
+              <strong>Simpson&apos;s Paradox</strong>!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="ChiSquareContingencySimpsonLab" />
+
+          {/* Symbol Breakdown, Why-It-Works Intuition & Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              The Chi-Square Formula, Expected Independence Counts &amp; Confounding Traps
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  1. PEARSON&apos;S CHI-SQUARE STATISTIC
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\chi^2 = \sum \frac{(O - E)^2}{E}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Why divide by <KaTeXMath math="E" />? Being off by 5 counts out of{" "}
+                  <KaTeXMath math="E = 10" /> is huge, whereas being off by 5 counts out of{" "}
+                  <KaTeXMath math="E = 1{,}000" /> is tiny! Degrees of freedom are{" "}
+                  <KaTeXMath math="(r - 1)(c - 1)" /> for a table or <KaTeXMath math="k - 1" /> for goodness-of-fit.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  2. EXPECTED COUNTS UNDER INDEPENDENCE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="E_{ij} = \frac{\text{Row Total}_i \times \text{Col Total}_j}{N}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  From <strong>S.2.1</strong>, two events are independent when <KaTeXMath math="P(A \cap B) = P(A)P(B)" />.
+                  Multiplying by <KaTeXMath math="N" /> gives the exact counts we expect if row &amp; column are unrelated!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  3. TINY WORKED GOODNESS-OF-FIT CHECK
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Toss a coin 100 times (<KaTeXMath math="E = 50" /> Heads, <KaTeXMath math="E = 50" /> Tails) and observe
+                  60 Heads, 40 Tails:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\chi^2 = \frac{(60 - 50)^2}{50} + \frac{(40 - 50)^2}{50} = 2 + 2 = 4.00"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  With <KaTeXMath math="\text{df} = 1" />, <KaTeXMath math="\chi^2 = 4.00 > 3.84" />, giving{" "}
+                  <KaTeXMath math="p \approx 0.0455" />!
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP 1 &amp; 2 • PERCENTAGES LIE &amp; SIMPSON&apos;S PARADOX
+                </span>
+                <p>
+                  Never feed percentages into <KaTeXMath math="\chi^2" />—always feed <strong>raw counts</strong> (and
+                  switch to Fisher&apos;s Exact Test whenever any <KaTeXMath math="E_{ij} &lt; 5" />). Second, always
+                  inspect sub-group strata: Treatment A can lose overall only because doctors gave it to harder cases!
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  BRIDGE TO S.5.3 • COMPARING 3+ NUMERICAL GROUPS AT ONCE
+                </span>
+                <p>
+                  Chi-Square compares counts across multiple categories. What if you want to compare{" "}
+                  <strong>numerical averages across 3 or 4 treatments simultaneously</strong> without triggering false
+                  alarms? Welcome to <strong>One-Way ANOVA</strong> in <strong>S.5.3</strong>!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "one-way-anova-f-test-variance-decomposition" && (
+        <div className="space-y-8">
+          {/* Plain-English Story */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
+              FIRST-TIMER GUIDE • SIGNAL-TO-NOISE ACROSS 3+ GROUPS
+            </span>
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              One-Way ANOVA: Testing Many Group Means by Splitting Total Variation into Signal vs. Noise
+            </h2>
+            <p className="font-math-serif text-base text-[var(--text-secondary)] leading-relaxed">
+              Wait—why is a test for <strong>means</strong> called <strong>Analysis of Variance (ANOVA)</strong>?
+              Imagine 3 study groups taking the same exam. Even if every group learns identically, dots bounce up and down
+              inside each group (that&apos;s background <strong>Within-Group Noise</strong>). If the study methods actually
+              differ, the group centers pull far apart from the overall average (that&apos;s{" "}
+              <strong>Between-Group Signal</strong>). Ronald Fisher realized you can compare all groups in{" "}
+              <em>one single shot</em> by taking the ratio <KaTeXMath math="F = \text{Signal Variance} / \text{Noise Variance}" />—dodging
+              the false-alarm explosion you&apos;d get from running lots of separate <KaTeXMath math="t" />-tests!
+            </p>
+          </section>
+
+          <DynamicLabRenderer name="AnovaBetweenWithinLab" />
+
+          {/* Symbol Breakdown, Why-It-Works Intuition & Worked Example */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              The Variance Identity, Mean Squares &amp; Multiple-Comparison Protection
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  1. PYTHAGOREAN VARIANCE SPLIT
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\text{SST} = \text{SSB} + \text{SSW}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Every point&apos;s total distance from the grand mean splits cleanly:{" "}
+                  <KaTeXMath math="(y_{gi} - \bar{y}) = (\bar{y}_g - \bar{y}) + (y_{gi} - \bar{y}_g)" />. Squaring and
+                  summing cancels the cross-term cleanly to zero!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  2. FISHER&apos;S F-RATIO &amp; η² EFFECT SIZE
+                </span>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="F = \frac{\text{SSB} / (k - 1)}{\text{SSW} / (N - k)} = \frac{\text{MSB}}{\text{MSW}}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Under <KaTeXMath math="H_0" />, both <KaTeXMath math="\text{MSB}" /> and{" "}
+                  <KaTeXMath math="\text{MSW}" /> estimate the exact same <KaTeXMath math="\sigma^2" />, so{" "}
+                  <KaTeXMath math="F \approx 1" />. Meanwhile, <KaTeXMath math="\eta^2 = \text{SSB}/\text{SST}" /> tells
+                  you what fraction of total score variance the groups explain!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  3. TINY WORKED ANOVA CHECK
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Suppose <KaTeXMath math="k = 3" /> groups (<KaTeXMath math="N = 30" />) give{" "}
+                  <KaTeXMath math="\text{SSB} = 180" /> and <KaTeXMath math="\text{SSW} = 540" />:
+                </p>
+                <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="F = \frac{180 / 2}{540 / 27} = \frac{90}{20} = 4.50 \;\;(p \approx 0.020)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  And <KaTeXMath math="\eta^2 = 180 / (180 + 540) = 25\%" /> of total score variation comes from group choice!
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP • ANOVA ONLY SAYS &ldquo;AT LEAST ONE DIFFERS&rdquo;
+                </span>
+                <p>
+                  A tiny ANOVA <KaTeXMath math="p" />-value does NOT tell you <em>which</em> pair differs (A vs. B, or C vs.
+                  the rest)! Once <KaTeXMath math="F" /> rejects <KaTeXMath math="H_0" />, run <strong>Tukey HSD</strong>{" "}
+                  or <strong>Bonferroni (<KaTeXMath math="\alpha/m" />)</strong> post-hoc comparisons to pinpoint the culprit
+                  without false alarms.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  BRIDGE TO MODULE S.6 • LINEAR REGRESSION IS CONTINUOUS ANOVA!
+                </span>
+                <p>
+                  Notice <KaTeXMath math="\eta^2 = \text{SSB}/\text{SST}" />? In <strong>Module S.6 (S.6.1)</strong>, when
+                  group categories turn into a continuous predictor <KaTeXMath math="x" />,{" "}
+                  <KaTeXMath math="\text{SST} = \text{SSR} + \text{SSE}" /> turns straight into{" "}
+                  <strong>Ordinary Least Squares Regression &amp; <KaTeXMath math="R^2" /></strong>!
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
       {chapter.status !== "published" && (
         <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">

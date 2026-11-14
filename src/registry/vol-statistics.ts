@@ -548,7 +548,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Comparing Two Groups: Paired vs. Independent Welch's t-Tests & Cohen's d",
           subtitle:
             "See how pairing before-and-after measurements cancels subject-to-subject noise—and why Welch's test outperforms equal-variance pooling.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["S.4.3"],
           dimensionBadge: "2D",
@@ -587,7 +587,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "Chi-Square Goodness-of-Fit, Contingency Tables & Simpson's Paradox",
           subtitle:
             "Compare observed counts against expected independence—and witness how combining two departments can completely reverse a winning rate.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["S.2.2", "S.4.3"],
           dimensionBadge: "2D",
@@ -626,7 +626,7 @@ export const VOL_STATISTICS: VolumeMetadata = {
           title: "One-Way ANOVA: Between vs. Within Variance & Multiple Comparisons",
           subtitle:
             "Test whether 3+ group means differ by comparing signal variance between groups against background noise variance within groups.",
-          status: "planned",
+          status: "published",
           estimatedMinutes: 30,
           prerequisites: ["S.3.3", "S.5.1"],
           dimensionBadge: "2D",

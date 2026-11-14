@@ -694,6 +694,27 @@ const LAB_COMPONENTS = {
       ).then((m) => m.HypothesisPowerOverlapLab),
     { loading: renderLabLoading }
   ),
+  TwoSamplePairedWelchLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/TwoSamplePairedWelchLab"
+      ).then((m) => m.TwoSamplePairedWelchLab),
+    { loading: renderLabLoading }
+  ),
+  ChiSquareContingencySimpsonLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/ChiSquareContingencySimpsonLab"
+      ).then((m) => m.ChiSquareContingencySimpsonLab),
+    { loading: renderLabLoading }
+  ),
+  AnovaBetweenWithinLab: dynamic(
+    () =>
+      import(
+        "@/components/visualizations/statistics/AnovaBetweenWithinLab"
+      ).then((m) => m.AnovaBetweenWithinLab),
+    { loading: renderLabLoading }
+  ),
 } satisfies Record<string, ComponentType>;
 
 export type LabComponentName = keyof typeof LAB_COMPONENTS;

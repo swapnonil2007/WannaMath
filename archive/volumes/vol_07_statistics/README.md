@@ -1,6 +1,6 @@
 # Statistics Volume — Interactive Statistics: Foundations to Advanced Inference (`statistics`)
 
-> **Status:** `in-progress` (`12/18` Chapters Published — Phases 1–4 Complete; **Phase 5 Ready for Hydrogen**) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
+> **Status:** `in-progress` (`15/18` Chapters Published — Phases 1–5 Complete; **Phase 6 Ready for Hydrogen**) — Full 6-Phase Plan in [`STATISTICS_PLAN.md`](./STATISTICS_PLAN.md)
 > **Canonical Route Base:** `/statistics/[module]/[chapter]`
 > **Navbar Placement:** Dedicated **`Statistics TOC`** drawer placed beside the untouched **`6-Volume TOC`** drawer in `src/components/layout/Navbar.tsx`.
 
@@ -26,10 +26,10 @@
    - `S.4.2`: Confidence Intervals: $Z$ vs. $t$ Intervals, Margin of Error & Coverage Meaning (`confidence-intervals-coverage` → `ConfidenceIntervalCoverageLab`) *(Published)*
    - `S.4.3`: Hypothesis Testing, $p$-Values, Type I/II Errors & Statistical Power (`hypothesis-testing-p-values-power` → `HypothesisPowerOverlapLab`) *(Published)*
 
-5. **Module S.5 (`group-comparisons-anova`) — Comparing Groups, Categorical Tests, Simpson's Paradox & ANOVA** *(Phase 5)*
-   - `S.5.1`: Comparing Two Groups: Paired vs. Independent Welch's $t$-Tests & Cohen's $d$ (`two-sample-tests-paired-welch` → `TwoSamplePairedWelchLab`) *(Planned)*
-   - `S.5.2`: Chi-Square Goodness-of-Fit, Contingency Tables & Simpson's Paradox (`chi-square-goodness-of-fit-independence` → `ChiSquareContingencySimpsonLab`) *(Planned)*
-   - `S.5.3`: One-Way ANOVA: Between vs. Within Variance ($F$-Test) & Multiple Comparisons (`one-way-anova-f-test-variance-decomposition` → `AnovaBetweenWithinLab`) *(Planned)*
+5. **Module S.5 (`group-comparisons-anova`) — Comparing Groups, Categorical Tests, Simpson's Paradox & ANOVA** *(Phase 5 — Published)*
+   - `S.5.1`: Comparing Two Groups: Paired vs. Independent Welch's $t$-Tests & Cohen's $d$ (`two-sample-tests-paired-welch` → `TwoSamplePairedWelchLab`) *(Published)*
+   - `S.5.2`: Chi-Square Goodness-of-Fit, Contingency Tables & Simpson's Paradox (`chi-square-goodness-of-fit-independence` → `ChiSquareContingencySimpsonLab`) *(Published)*
+   - `S.5.3`: One-Way ANOVA: Between vs. Within Variance ($F$-Test) & Multiple Comparisons (`one-way-anova-f-test-variance-decomposition` → `AnovaBetweenWithinLab`) *(Published)*
 
 6. **Module S.6 (`regression-bayesian-advanced`) — Regression, Regularization, Bayesian Updating & Resampling** *(Phase 6)*
    - `S.6.1`: Correlation ($r$), OLS Linear Regression, $R^2$ & Anscombe's Quartet (`correlation-ols-linear-regression` → `OLSRegressionAnscombeLab`) *(Planned)*

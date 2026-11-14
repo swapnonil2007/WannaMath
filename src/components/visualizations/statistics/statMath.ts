@@ -655,3 +655,56 @@ export function studentTInvCdf(p: number, nu: number): number {
   }
   return sign * 0.5 * (lo + hi);
 }
+
+/**
+ * Upper-tail p-value P(F_{d1, d2} >= f) using regularized incomplete beta.
+ */
+export function fisherFPValue(f: number, d1: number, d2: number): number {
+  if (f <= 0) return 1;
+  const x = d2 / (d2 + d1 * f);
+  return Math.max(0, Math.min(1, regularizedIncompleteBeta(x, d2 / 2, d1 / 2)));
+}
+
+/**
+ * Upper-tail regularized incomplete gamma Q(a, x) -> P(Chi2_k >= chi2).
+ */
+export function regularizedGammaQ(a: number, x: number): number {
+  if (x <= 0) return 1;
+  const gln = logGamma(a);
+  if (x < a + 1) {
+    let ap = a;
+    let sum = 1 / a;
+    let del = sum;
+    for (let n = 1; n <= 200; n++) {
+      ap += 1;
+      del *= x / ap;
+      sum += del;
+      if (Math.abs(del) < Math.abs(sum) * 3e-12) break;
+    }
+    const pVal = sum * Math.exp(-x + a * Math.log(x) - gln);
+    return Math.max(0, Math.min(1, 1 - pVal));
+  }
+  const FPMIN = 1e-30;
+  let b = x + 1 - a;
+  let c = 1 / FPMIN;
+  let d = 1 / b;
+  let h = d;
+  for (let i = 1; i <= 200; i++) {
+    const an = -i * (i - a);
+    b += 2;
+    d = an * d + b;
+    if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = b + an / c;
+    if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
+    if (Math.abs(del - 1) < 3e-12) break;
+  }
+  return Math.max(0, Math.min(1, Math.exp(-x + a * Math.log(x) - gln) * h));
+}
+
+export function chiSquarePValue(chi2: number, df: number): number {
+  if (chi2 <= 0) return 1;
+  return regularizedGammaQ(Math.max(0.5, df / 2), chi2 / 2);
+}

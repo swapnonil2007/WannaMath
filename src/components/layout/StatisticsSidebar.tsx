@@ -21,12 +21,13 @@ export function StatisticsSidebar({ volume }: { volume: TocVolumeItem }) {
   const sheetRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Default expand published Modules S.1–S.4
+  // Default expand published Modules S.1–S.5
   const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>({
     "descriptive-statistics": true,
     "probability-foundations-discrete": true,
     "sampling-central-limit-theorem": true,
     "statistical-inference": true,
+    "group-comparisons-anova": true,
   });
 
   const openDrawer = () => {
