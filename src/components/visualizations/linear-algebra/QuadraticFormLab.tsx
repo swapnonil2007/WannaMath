@@ -137,7 +137,7 @@ export function QuadraticFormLab() {
       <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
               Spectral Principal-Axis Diagonalizer
             </p>
             <p className="mt-1 font-serif text-sm text-[#D6DAE2]">
@@ -185,7 +185,7 @@ export function QuadraticFormLab() {
           </label>
 
           <label className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <div className="flex justify-between font-mono text-xs text-[#D35323]">
+            <div className="flex justify-between font-mono text-xs text-[#EF7547]">
               <span>b (xy coupling)</span>
               <span>{fmt(b, 1)}</span>
             </div>
@@ -445,7 +445,7 @@ export function QuadraticFormLab() {
         </div>
 
         <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4 font-mono text-xs tabular-nums text-[#D6DAE2]">
-          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
             Live Eigen-Coordinate Equivalence Check
           </p>
           <div className="mt-2.5 space-y-1.5">
@@ -458,7 +458,7 @@ export function QuadraticFormLab() {
             </div>
             <div>
               Spectral λ₁y₁² + λ₂y₂² ={" "}
-              <span className="text-[#029091]">
+              <span className="text-[#28B7B8]">
                 {fmt(spectral.l1 * spectral.y1 * spectral.y1 + spectral.l2 * spectral.y2 * spectral.y2, 4)}
               </span>
             </div>

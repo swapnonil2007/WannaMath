@@ -471,7 +471,7 @@ export function DirectionalDerivativeCalculatorLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#8D9FCE] text-[#8D9FCE] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-x)] text-[var(--math-ink-x)] bg-[var(--bg-canvas)]">
               LAB 3.3.2 • DIRECTIONAL DERIVATIVE CALCULATOR &amp; SLICER
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -509,7 +509,7 @@ export function DirectionalDerivativeCalculatorLab() {
             onClick={() => setDimMode("3d")}
             className={`px-3 py-1.5 text-xs font-tabular-mono border-l border-[var(--border-subtle)] transition-colors ${
               dimMode === "3d"
-                ? "bg-[#029091] text-[#1E1F22] font-semibold"
+                ? "bg-[#016869] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -532,7 +532,7 @@ export function DirectionalDerivativeCalculatorLab() {
                       onClick={() => selectPreset2d(p)}
                       className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                         active
-                          ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)] font-semibold"
+                          ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)] font-semibold"
                           : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                       }`}
                     >
@@ -549,7 +549,7 @@ export function DirectionalDerivativeCalculatorLab() {
                       onClick={() => selectPreset3d(p)}
                       className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                         active
-                          ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
+                          ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
                           : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                       }`}
                     >
@@ -563,21 +563,21 @@ export function DirectionalDerivativeCalculatorLab() {
             <button
               type="button"
               onClick={() => setDirectionAlignGrad(1)}
-              className="px-2 py-1 text-[11px] font-tabular-mono border border-[#D35323]/60 text-[#D35323] bg-[var(--bg-panel)] hover:bg-[#D35323]/10"
+              className="px-2 py-1 text-[11px] font-tabular-mono border border-[var(--math-ink-sweep)]/60 text-[var(--math-ink-sweep)] bg-[var(--bg-panel)] hover:bg-[#D35323]/10"
             >
               Max Ascent (+∇f)
             </button>
             <button
               type="button"
               onClick={() => setDirectionAlignGrad(-1)}
-              className="px-2 py-1 text-[11px] font-tabular-mono border border-[#B95869]/60 text-[#B95869] bg-[var(--bg-panel)] hover:bg-[#B95869]/10"
+              className="px-2 py-1 text-[11px] font-tabular-mono border border-[var(--math-ink-upper)]/60 text-[var(--math-ink-upper)] bg-[var(--bg-panel)] hover:bg-[#B95869]/10"
             >
               Max Descent (−∇f)
             </button>
             <button
               type="button"
               onClick={setDirectionOrthogonal}
-              className="px-2 py-1 text-[11px] font-tabular-mono border border-[#FBEAA4]/60 text-[#FBEAA4] bg-[var(--bg-panel)] hover:bg-[#FBEAA4]/10"
+              className="px-2 py-1 text-[11px] font-tabular-mono border border-[var(--math-ink-diff)]/60 text-[var(--math-ink-diff)] bg-[var(--bg-panel)] hover:bg-[#FBEAA4]/10"
             >
               Orthogonal (D_u f = 0)
             </button>
@@ -613,12 +613,12 @@ export function DirectionalDerivativeCalculatorLab() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
           {/* Point P box */}
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
-            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#FBEAA4] block">
+            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-diff)] block">
               Evaluation Point P{dimMode === "2d" ? "(x₀, y₀)" : "(x₀, y₀, z₀)"}
             </span>
             <div className={`grid gap-2 ${dimMode === "2d" ? "grid-cols-2" : "grid-cols-3"}`}>
               <label className="block space-y-1">
-                <span className="text-[10px] font-tabular-mono text-[#8D9FCE] block">x₀</span>
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-x)] block">x₀</span>
                 <input
                   type="number"
                   step="0.1"
@@ -630,7 +630,7 @@ export function DirectionalDerivativeCalculatorLab() {
                 />
               </label>
               <label className="block space-y-1">
-                <span className="text-[10px] font-tabular-mono text-[#96B898] block">y₀</span>
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-y)] block">y₀</span>
                 <input
                   type="number"
                   step="0.1"
@@ -643,7 +643,7 @@ export function DirectionalDerivativeCalculatorLab() {
               </label>
               {dimMode === "3d" && (
                 <label className="block space-y-1">
-                  <span className="text-[10px] font-tabular-mono text-[#029091] block">z₀</span>
+                  <span className="text-[10px] font-tabular-mono text-[var(--math-ink-z)] block">z₀</span>
                   <input
                     type="number"
                     step="0.1"
@@ -659,18 +659,18 @@ export function DirectionalDerivativeCalculatorLab() {
           {/* Direction Vector v box */}
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#8D9FCE]">
+              <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)]">
                 Direction Vector v (auto-normalized to û)
               </span>
               {activeZeroDir && (
-                <span className="text-[10px] font-tabular-mono text-[#B95869] font-semibold">
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-upper)] font-semibold">
                   ‖v‖ = 0 (non-zero needed)
                 </span>
               )}
             </div>
             <div className={`grid gap-2 ${dimMode === "2d" ? "grid-cols-2" : "grid-cols-3"}`}>
               <label className="block space-y-1">
-                <span className="text-[10px] font-tabular-mono text-[#8D9FCE] block">v_x</span>
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-x)] block">v_x</span>
                 <input
                   type="number"
                   step="0.2"
@@ -682,7 +682,7 @@ export function DirectionalDerivativeCalculatorLab() {
                 />
               </label>
               <label className="block space-y-1">
-                <span className="text-[10px] font-tabular-mono text-[#96B898] block">v_y</span>
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-y)] block">v_y</span>
                 <input
                   type="number"
                   step="0.2"
@@ -695,7 +695,7 @@ export function DirectionalDerivativeCalculatorLab() {
               </label>
               {dimMode === "3d" && (
                 <label className="block space-y-1">
-                  <span className="text-[10px] font-tabular-mono text-[#029091] block">v_z</span>
+                  <span className="text-[10px] font-tabular-mono text-[var(--math-ink-z)] block">v_z</span>
                   <input
                     type="number"
                     step="0.2"
@@ -755,14 +755,14 @@ export function DirectionalDerivativeCalculatorLab() {
             }
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#D35323]">
+                <span className="text-[var(--math-ink-sweep)]">
                   ‖∇f‖ ={" "}
                   {dimMode === "2d" ? fmt(stats2d.gradMagnitude) : fmt(stats3d.gradMagnitude)}
                 </span>
-                <span className="text-[#8D9FCE]">
+                <span className="text-[var(--math-ink-x)]">
                   Angle θ = {dimMode === "2d" ? stats2d.thetaDeg.toFixed(1) : stats3d.thetaDeg.toFixed(1)}°
                 </span>
-                <span className="text-[#96B898] font-semibold">
+                <span className="text-[var(--math-ink-y)] font-semibold">
                   D_û f = {fmt(activeDuf)}
                 </span>
               </div>
@@ -955,20 +955,20 @@ export function DirectionalDerivativeCalculatorLab() {
           {/* Step-by-Step Directional Derivative Derivation */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] font-semibold">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] font-semibold">
                 Worked Calculation: Gradient → Normalization → Dot Product
               </span>
               <span className="text-xs font-tabular-mono flex items-center gap-1">
                 {activeDuf > 1e-4 ? (
-                  <span className="text-[#96B898] flex items-center gap-1">
+                  <span className="text-[var(--math-ink-y)] flex items-center gap-1">
                     <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" /> Rising along û
                   </span>
                 ) : activeDuf < -1e-4 ? (
-                  <span className="text-[#B95869] flex items-center gap-1">
+                  <span className="text-[var(--math-ink-upper)] flex items-center gap-1">
                     <ArrowDownRight className="w-3.5 h-3.5" aria-hidden="true" /> Falling along û
                   </span>
                 ) : (
-                  <span className="text-[#FBEAA4] flex items-center gap-1">
+                  <span className="text-[var(--math-ink-diff)] flex items-center gap-1">
                     <Minus className="w-3.5 h-3.5" aria-hidden="true" /> Level Tangent (0)
                   </span>
                 )}
@@ -1008,12 +1008,12 @@ export function DirectionalDerivativeCalculatorLab() {
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
                 {dimMode === "2d" && plot2dTab === "contours" ? (
                   <>
-                    <Compass className="w-3.5 h-3.5 text-[#8D9FCE]" aria-hidden="true" />
+                    <Compass className="w-3.5 h-3.5 text-[var(--math-ink-x)]" aria-hidden="true" />
                     2D Contours &amp; Projection ∇f · û
                   </>
                 ) : (
                   <>
-                    <Crosshair className="w-3.5 h-3.5 text-[#96B898]" aria-hidden="true" />
+                    <Crosshair className="w-3.5 h-3.5 text-[var(--math-ink-y)]" aria-hidden="true" />
                     1D Ray Slice Profile &amp; Tangent Slope
                   </>
                 )}
@@ -1270,7 +1270,7 @@ export function DirectionalDerivativeCalculatorLab() {
             {/* Extremal Rate Bounds Card */}
             <div className="grid grid-cols-3 gap-2 font-tabular-mono">
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                <span className="text-[10px] text-[#B95869] block">Min (−‖∇f‖)</span>
+                <span className="text-[10px] text-[var(--math-ink-upper)] block">Min (−‖∇f‖)</span>
                 <span className="text-sm font-semibold text-[var(--text-primary)]">
                   −
                   {dimMode === "2d"
@@ -1278,14 +1278,14 @@ export function DirectionalDerivativeCalculatorLab() {
                     : fmt(stats3d.gradMagnitude)}
                 </span>
               </div>
-              <div className="p-2.5 border border-[#96B898]/60 bg-[var(--bg-canvas)]">
-                <span className="text-[10px] text-[#96B898] block">D_û f(P)</span>
-                <span className="text-sm font-semibold text-[#96B898]">
+              <div className="p-2.5 border border-[var(--math-ink-y)]/60 bg-[var(--bg-canvas)]">
+                <span className="text-[10px] text-[var(--math-ink-y)] block">D_û f(P)</span>
+                <span className="text-sm font-semibold text-[var(--math-ink-y)]">
                   {fmt(activeDuf)}
                 </span>
               </div>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                <span className="text-[10px] text-[#D35323] block">Max (+‖∇f‖)</span>
+                <span className="text-[10px] text-[var(--math-ink-sweep)] block">Max (+‖∇f‖)</span>
                 <span className="text-sm font-semibold text-[var(--text-primary)]">
                   +
                   {dimMode === "2d"
@@ -1298,7 +1298,7 @@ export function DirectionalDerivativeCalculatorLab() {
 
           {/* Pedagogical Note */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
               Vector Calculus Rule
             </span>
             <p className="font-math-serif text-xs text-[var(--text-secondary)] leading-relaxed">

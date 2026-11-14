@@ -116,7 +116,7 @@ export function EulerHelixPhasorLab() {
       <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#D5658B]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#E37CA0]">
               Complex Exponential Helix & Argand Phasor Engine
             </p>
             <p className="mt-1 font-serif text-sm text-[#D6DAE2]">
@@ -211,7 +211,7 @@ export function EulerHelixPhasorLab() {
           </label>
 
           <label className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <div className="flex justify-between font-mono text-xs text-[#D5658B]">
+            <div className="flex justify-between font-mono text-xs text-[#E37CA0]">
               <span>Amplitude A</span>
               <span>{fmt(amp, 2)}</span>
             </div>

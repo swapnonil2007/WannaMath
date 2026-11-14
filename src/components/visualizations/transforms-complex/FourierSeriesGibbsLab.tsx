@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface WavePreset {
   id: string;
@@ -239,7 +239,7 @@ export function FourierSeriesGibbsLab() {
           </label>
 
           <div className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <div className="flex items-center justify-between font-mono text-xs text-[#029091]">
+            <div className="flex items-center justify-between font-mono text-xs text-[#28B7B8]">
               <span>Epicycle Phase t = {fmt(wrapPi(phaseT), 2)}</span>
               <button
                 type="button"
@@ -260,6 +260,7 @@ export function FourierSeriesGibbsLab() {
                 setPhaseT(parseFloat(e.target.value));
               }}
               className="mt-2 w-full accent-[#029091]"
+              aria-label="Epicycle phase t (radians)"
             />
           </div>
 
@@ -270,7 +271,7 @@ export function FourierSeriesGibbsLab() {
             </div>
             <div className="mt-1 flex justify-between">
               <span className="text-[#A2AAB8]">Gibbs Overshoot:</span>
-              <span className={preset.hasJump ? "text-[#D35323]" : "text-[#029091]"}>
+              <span className={preset.hasJump ? "text-[#EF7547]" : "text-[#28B7B8]"}>
                 {fmt(synth.peakOvershootPct, 2)}%
               </span>
             </div>
@@ -357,7 +358,7 @@ export function FourierSeriesGibbsLab() {
         {/* Right: Epicycle Vector Chain + Harmonic Spectrum */}
         <div className="space-y-4">
           <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
-            <h3 className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+            <h3 className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
               Rotating Epicycles (Top 14 Modes)
             </h3>
             <SvgCoordinatePlane2D
@@ -416,7 +417,12 @@ export function FourierSeriesGibbsLab() {
             <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#8D9FCE]">
               Harmonic Amplitude Spectrum |c_n|
             </p>
-            <svg viewBox="0 0 300 120" className="mt-2 w-full rounded border border-[#35383F] bg-[#1E1F22]">
+            <svg
+              role="img"
+              aria-label="Bar chart of Fourier harmonic amplitude spectrum |c_n| highlighting active modes up to N"
+              viewBox="0 0 300 120"
+              className="mt-2 w-full rounded border border-[#35383F] bg-[#1E1F22]"
+            >
               {(() => {
                 const maxAmp = Math.max(0.5, ...synth.spectrumBars.map((b) => b.amp));
                 return synth.spectrumBars.map((bar, i) => {

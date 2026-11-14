@@ -13,6 +13,10 @@ import {
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
+import {
+  createDemandDrivenRenderLoop,
+  type DemandDrivenRenderLoopHandle,
+} from "@/components/visualizations/primitives";
 
 export type TripleOrder =
   | "dzdydx"
@@ -422,6 +426,7 @@ function mapOrderCoordsToXYZ(
 
 export function TripleIntegralOrderLab() {
   const mountRef = useRef<HTMLDivElement | null>(null);
+  const renderLoopRef = useRef<DemandDrivenRenderLoopHandle | null>(null);
   const groupsRef = useRef<{
     solidGroup: THREE.Group;
     shadowGroup: THREE.Group;
@@ -663,13 +668,15 @@ export function TripleIntegralOrderLab() {
       rayGroup,
     };
 
-    let frameId: number;
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
+    const renderLoop = createDemandDrivenRenderLoop({
+      container,
+      renderer,
+      scene,
+      camera,
+      controls,
+    });
+    renderLoopRef.current = renderLoop;
+    renderLoop.requestRender(3);
 
     const handleResize = () => {
       if (!container) return;
@@ -678,12 +685,15 @@ export function TripleIntegralOrderLab() {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      renderLoop.requestRender(2);
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(frameId);
+      renderLoop.dispose();
+      renderLoopRef.current = null;
+      controls.dispose();
       renderer.dispose();
     };
   }, []);
@@ -783,6 +793,7 @@ export function TripleIntegralOrderLab() {
         )
       );
     }
+    renderLoopRef.current?.requestRender(2);
   }, [
     outerRange,
     order,
@@ -940,6 +951,7 @@ export function TripleIntegralOrderLab() {
     );
     exitSphere.position.copy(vEnd);
     rayGroup.add(exitSphere);
+    renderLoopRef.current?.requestRender(2);
   }, [spec, outerRange, order, coords, evalMidBounds, evalInnerBounds]);
 
   // Build 2D SVG for the Orthographic Shadow Projection D
@@ -997,7 +1009,7 @@ export function TripleIntegralOrderLab() {
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#029091]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)]">
             <Box className="w-4 h-4" aria-hidden="true" />
             <span>
               Interactive Laboratory 02.1 – 02.3 • 3-Stage Collapse &amp; All 6
@@ -1020,7 +1032,7 @@ export function TripleIntegralOrderLab() {
           <span className="text-[10px] uppercase text-[var(--text-muted)] block">
             Evaluated Triple Integral ∭ f dV
           </span>
-          <span className="text-sm font-semibold text-[#FBEAA4]">
+          <span className="text-sm font-semibold text-[var(--math-ink-diff)]">
             {evaluatedTripleIntegral.toFixed(4)}
           </span>
         </div>
@@ -1052,7 +1064,7 @@ export function TripleIntegralOrderLab() {
                 }`}
               >
                 <span className="text-xs font-math-serif">{s.name}</span>
-                <span className="text-[10px] font-tabular-mono text-[#029091] shrink-0 ml-2">
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-z)] shrink-0 ml-2">
                   {s.badge}
                 </span>
               </button>
@@ -1065,7 +1077,7 @@ export function TripleIntegralOrderLab() {
             <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
               2. Select Any of the 6 Permutations of dV:
             </span>
-            <span className="text-xs font-tabular-mono text-[#FBEAA4]">
+            <span className="text-xs font-tabular-mono text-[var(--math-ink-diff)]">
               Inner ({spec.innerVar}) → Middle ({spec.midVar}) → Outer (
               {spec.outerVar})
             </span>
@@ -1087,7 +1099,7 @@ export function TripleIntegralOrderLab() {
                 >
                   <div
                     className={`text-sm ${
-                      active ? "text-[#FBEAA4] font-semibold" : ""
+                      active ? "text-[var(--math-ink-diff)] font-semibold" : ""
                     }`}
                   >
                     <KaTeXMath math={item.tex} />
@@ -1102,7 +1114,7 @@ export function TripleIntegralOrderLab() {
 
           <div className="text-xs font-tabular-mono text-[var(--text-secondary)] pt-1 flex flex-wrap items-center justify-between gap-2">
             <span>Shadow Wall: {spec.shadowPlaneLabel}</span>
-            <span className="text-[#D5658B]">{spec.rayEntryExitLabel}</span>
+            <span className="text-[var(--math-ink-lower)]">{spec.rayEntryExitLabel}</span>
           </div>
         </div>
       </div>
@@ -1195,7 +1207,7 @@ export function TripleIntegralOrderLab() {
             <span>3D Solid E, 2D Curtain &amp; 1D Ray</span>
             <span className="text-[#8D9FCE]">x</span>
             <span className="text-[#96B898]">y</span>
-            <span className="text-[#029091]">z</span>
+            <span className="text-[#28B7B8]">z</span>
           </div>
 
           <div ref={mountRef} className="w-full h-[410px] cursor-grab" />
@@ -1227,7 +1239,7 @@ export function TripleIntegralOrderLab() {
         <div className="lg:col-span-5 flex flex-col justify-between gap-4">
           <figure className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 flex flex-col items-center">
             <div className="w-full flex items-center justify-between text-xs font-tabular-mono mb-2">
-              <span className="text-[#96B898] font-semibold">
+              <span className="text-[var(--math-ink-y)] font-semibold">
                 2D Projected Shadow ({spec.shadowPlane}-plane)
               </span>
               <span className="text-[var(--text-muted)]">
@@ -1286,7 +1298,7 @@ export function TripleIntegralOrderLab() {
               <text
                 x={201}
                 y={178}
-                fill="#8D9FCE"
+                fill="var(--math-ink-x)"
                 fontSize="11"
                 fontFamily="monospace"
               >
@@ -1295,7 +1307,7 @@ export function TripleIntegralOrderLab() {
               <text
                 x={27}
                 y={12}
-                fill="#96B898"
+                fill="var(--math-ink-y)"
                 fontSize="11"
                 fontFamily="monospace"
               >
@@ -1305,7 +1317,7 @@ export function TripleIntegralOrderLab() {
 
             <figcaption className="w-full text-xs font-tabular-mono text-[var(--text-secondary)] pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between">
               <span>Yellow dot = 1D {spec.innerVar}-ray piercing E</span>
-              <span className="text-[#D35323]">
+              <span className="text-[var(--math-ink-sweep)]">
                 Orange strip = 2D d{spec.midVar} curtain
               </span>
             </figcaption>
@@ -1325,27 +1337,28 @@ export function TripleIntegralOrderLab() {
                 >
                   {isPlaying ? (
                     <>
-                      <Pause className="w-3 h-3 text-[#FBEAA4]" />
+                      <Pause className="w-3 h-3 text-[var(--math-ink-diff)]" />
                       <span>Pause</span>
                     </>
                   ) : (
                     <>
-                      <Play className="w-3 h-3 text-[#96B898]" />
+                      <Play className="w-3 h-3 text-[var(--math-ink-y)]" />
                       <span>Auto-Sweep</span>
                     </>
                   )}
                 </button>
                 <button
                   type="button"
+                  aria-label="Reset slice positions"
                   onClick={() => {
                     setIsPlaying(false);
                     setOuterNorm(0.38);
                     setMidNorm(0.45);
                   }}
-                  className="text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer"
+                  className="min-w-[24px] min-h-[24px] inline-flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer"
                   title="Reset"
                 >
-                  <RotateCcw className="w-3.5 h-3.5" />
+                  <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -1353,7 +1366,7 @@ export function TripleIntegralOrderLab() {
             <div className="space-y-1">
               <label
                 htmlFor="triple-outer-slider"
-                className="text-xs font-tabular-mono text-[#8D9FCE] block"
+                className="text-xs font-tabular-mono text-[var(--math-ink-x)] block"
               >
                 Outer Slice Position ({spec.outerVar} ={" "}
                 {coords.outerVal.toFixed(2)}) — Sweeps 2D Curtain
@@ -1376,7 +1389,7 @@ export function TripleIntegralOrderLab() {
             <div className="space-y-1">
               <label
                 htmlFor="triple-mid-slider"
-                className="text-xs font-tabular-mono text-[#96B898] block"
+                className="text-xs font-tabular-mono text-[var(--math-ink-y)] block"
               >
                 Middle Ray Position ({spec.midVar} = {coords.midVal.toFixed(2)})
                 — Sweeps 1D {spec.innerVar}-Ray
@@ -1414,7 +1427,7 @@ export function TripleIntegralOrderLab() {
           <span className="uppercase text-[var(--text-muted)]">
             Active Iterated Triple Integral ({spec.label})
           </span>
-          <span className="text-[#96B898]">{spec.shadowBoundsLabel}</span>
+          <span className="text-[var(--math-ink-y)]">{spec.shadowBoundsLabel}</span>
         </div>
         <KaTeXMath math={dynamicTripleLatex} block />
       </div>
@@ -1427,7 +1440,7 @@ export function TripleIntegralOrderLab() {
         >
           <summary className="px-4 py-3 text-sm font-math-serif font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]">
             <ChevronDown
-              className="w-4 h-4 text-[#029091] shrink-0"
+              className="w-4 h-4 text-[var(--math-ink-z)] shrink-0"
               aria-hidden="true"
             />
             <span>
@@ -1441,10 +1454,10 @@ export function TripleIntegralOrderLab() {
               <KaTeXMath math={solid.equationsLatex} block />
             </div>
             <ul className="space-y-1 text-xs font-tabular-mono pt-1">
-              <li className="text-[#FBEAA4]">
+              <li className="text-[var(--math-ink-diff)]">
                 • Step 1 (Innermost d{spec.innerVar}): {spec.rayEntryExitLabel}
               </li>
-              <li className="text-[#96B898]">
+              <li className="text-[var(--math-ink-y)]">
                 • Step 2 &amp; 3 (2D Shadow in {spec.shadowPlane}-plane):{" "}
                 {spec.shadowBoundsLabel}
               </li>

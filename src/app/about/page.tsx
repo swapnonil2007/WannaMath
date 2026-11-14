@@ -12,16 +12,21 @@ import {
   Clock,
   Users,
 } from "lucide-react";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildAboutJsonLd } from "@/lib/seo/structuredData";
+import { buildPageMetadata } from "@/lib/seo/siteConfig";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "About",
   description:
     "About wanna math — an open-source interactive 6-volume engineering mathematics resource created by Swapnonil Nath (IIT Kharagpur) to make math intuitive and time-efficient.",
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+      <JsonLd data={buildAboutJsonLd()} />
       {/* Breadcrumb */}
       <nav
         aria-label="Breadcrumb"
@@ -37,7 +42,7 @@ export default function AboutPage() {
       {/* Hero / Project Mission */}
       <section className="space-y-6">
         <div className="max-w-3xl space-y-3">
-          <span className="px-2.5 py-1 border border-[var(--border-strong)] bg-[var(--bg-panel)] text-xs font-tabular-mono text-[#AAA36D] inline-block">
+          <span className="px-2.5 py-1 border border-[var(--border-strong)] bg-[var(--bg-panel)] text-xs font-tabular-mono text-[var(--math-ink-grid)] inline-block">
             OPEN-SOURCE PROJECT • VOLUMES I–VI
           </span>
           <h1 className="font-math-serif text-4xl sm:text-5xl font-semibold text-[var(--text-primary)]">
@@ -56,7 +61,7 @@ export default function AboutPage() {
         {/* Mission & Open Source Goal */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <article className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-5 space-y-2.5">
-            <div className="flex items-center gap-2 text-xs font-tabular-mono text-[#8D9FCE]">
+            <div className="flex items-center gap-2 text-xs font-tabular-mono text-[var(--math-ink-x)]">
               <Compass className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>01. INTUITIVE GEOMETRY</span>
             </div>
@@ -71,7 +76,7 @@ export default function AboutPage() {
           </article>
 
           <article className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-5 space-y-2.5">
-            <div className="flex items-center gap-2 text-xs font-tabular-mono text-[#96B898]">
+            <div className="flex items-center gap-2 text-xs font-tabular-mono text-[var(--math-ink-y)]">
               <Clock className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>02. PRACTICAL EFFICIENCY</span>
             </div>
@@ -86,7 +91,7 @@ export default function AboutPage() {
           </article>
 
           <article className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-5 space-y-2.5">
-            <div className="flex items-center gap-2 text-xs font-tabular-mono text-[#029091]">
+            <div className="flex items-center gap-2 text-xs font-tabular-mono text-[var(--math-ink-z)]">
               <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
               <span>03. OPEN COLLABORATION</span>
             </div>
@@ -119,7 +124,7 @@ export default function AboutPage() {
               rel="noopener noreferrer"
               className="min-h-[38px] px-4 py-2 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono font-medium text-[var(--text-primary)] flex items-center gap-2 transition-colors"
             >
-              <GitBranch className="w-3.5 h-3.5 text-[#029091]" aria-hidden="true" />
+              <GitBranch className="w-3.5 h-3.5 text-[var(--math-ink-z)]" aria-hidden="true" />
               <span>GitHub Repository</span>
               <ExternalLink className="w-3 h-3 text-[var(--text-muted)]" aria-hidden="true" />
             </a>
@@ -127,7 +132,7 @@ export default function AboutPage() {
               href="/roadmap"
               className="min-h-[38px] px-4 py-2 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono font-medium text-[var(--text-primary)] flex items-center gap-2 transition-colors"
             >
-              <Map className="w-3.5 h-3.5 text-[#AAA36D]" aria-hidden="true" />
+              <Map className="w-3.5 h-3.5 text-[var(--math-ink-grid)]" aria-hidden="true" />
               <span>Open Syllabus Matrix</span>
             </Link>
           </div>
@@ -137,7 +142,7 @@ export default function AboutPage() {
       {/* Creator & Developer Section */}
       <section className="space-y-4">
         <div className="border-b border-[var(--border-subtle)] pb-3">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
             Creator &amp; Developer
           </span>
           <h2 className="font-math-serif text-2xl sm:text-3xl font-semibold text-[var(--text-primary)] mt-1">
@@ -155,6 +160,7 @@ export default function AboutPage() {
                   alt="Swapnonil Nath"
                   width={338}
                   height={448}
+                  sizes="(max-width: 768px) 230px, 230px"
                   priority
                   className="w-full h-auto aspect-[338/448] object-cover object-top block"
                 />
@@ -197,7 +203,7 @@ export default function AboutPage() {
                     href="https://spotmybusiness.in"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[var(--text-primary)] underline underline-offset-4 hover:text-[#8D9FCE]"
+                    className="text-[var(--text-primary)] underline underline-offset-4 hover:text-[var(--math-ink-x)]"
                   >
                     Spot My Business
                   </a>
@@ -214,7 +220,7 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="min-h-[36px] px-3.5 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--text-primary)] flex items-center gap-2 transition-colors"
                 >
-                  <GitBranch className="w-3.5 h-3.5 text-[#8D9FCE]" aria-hidden="true" />
+                  <GitBranch className="w-3.5 h-3.5 text-[var(--math-ink-x)]" aria-hidden="true" />
                   <span>GitHub (@swapnonil2007)</span>
                   <ExternalLink className="w-3 h-3 text-[var(--text-muted)]" aria-hidden="true" />
                 </a>
@@ -225,7 +231,7 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="min-h-[36px] px-3.5 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--text-primary)] flex items-center gap-2 transition-colors"
                 >
-                  <ExternalLink className="w-3.5 h-3.5 text-[#96B898]" aria-hidden="true" />
+                  <ExternalLink className="w-3.5 h-3.5 text-[var(--math-ink-y)]" aria-hidden="true" />
                   <span>LinkedIn</span>
                 </a>
 
@@ -235,7 +241,7 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="min-h-[36px] px-3.5 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--text-primary)] flex items-center gap-2 transition-colors"
                 >
-                  <Globe className="w-3.5 h-3.5 text-[#AAA36D]" aria-hidden="true" />
+                  <Globe className="w-3.5 h-3.5 text-[var(--math-ink-grid)]" aria-hidden="true" />
                   <span>spotmybusiness.in</span>
                   <ExternalLink className="w-3 h-3 text-[var(--text-muted)]" aria-hidden="true" />
                 </a>

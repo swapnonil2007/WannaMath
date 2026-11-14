@@ -69,3 +69,29 @@ export interface ResolvedChapterContext {
   chapter: ChapterMetadata;
   route: string;
 }
+
+export interface TocChapterItem {
+  id: string;
+  slug: string;
+  title: string;
+  status: ContentStatus;
+  accentHex?: string;
+  subParent?: Pick<ChapterSubParent, "slug" | "title">;
+}
+
+export interface TocModuleItem {
+  id: string;
+  slug: string;
+  numberLabel: string;
+  title: string;
+  chapters: TocChapterItem[];
+}
+
+export interface TocVolumeItem {
+  id: string;
+  volumeNumber: string;
+  slug: string;
+  title: string;
+  accentHex: string;
+  modules: TocModuleItem[];
+}

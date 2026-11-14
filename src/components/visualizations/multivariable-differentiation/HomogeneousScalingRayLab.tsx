@@ -227,10 +227,10 @@ export function HomogeneousScalingRayLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#029091] text-[#029091] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-z)] text-[var(--math-ink-z)] bg-[var(--bg-canvas)]">
               LAB 3.1.7A • HOMOGENEOUS SCALING &amp; 1ST-ORDER EULER THEOREM
             </span>
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[#96B898] text-[#96B898] bg-[#96B898]/10">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/10">
               Degree {preset.degreeLabel}
             </span>
           </div>
@@ -259,7 +259,7 @@ export function HomogeneousScalingRayLab() {
               onClick={() => selectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 p.id === presetId
-                  ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
               }`}
             >
@@ -272,9 +272,9 @@ export function HomogeneousScalingRayLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Ray Scale Factor <strong className="text-[#D35323] font-mono">t</strong>
+                Ray Scale Factor <strong className="text-[var(--math-ink-sweep)] font-mono">t</strong>
               </span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 t = {scaleT.toFixed(2)} (tⁿ = {Math.pow(scaleT, preset.degreeN).toFixed(3)})
               </span>
             </div>
@@ -293,7 +293,7 @@ export function HomogeneousScalingRayLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Base x₀</span>
-              <span className="font-tabular-mono text-[#8D9FCE]">
+              <span className="font-tabular-mono text-[var(--math-ink-x)]">
                 x₀ = {x0.toFixed(2)}
               </span>
             </div>
@@ -312,7 +312,7 @@ export function HomogeneousScalingRayLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Base y₀</span>
-              <span className="font-tabular-mono text-[#96B898]">
+              <span className="font-tabular-mono text-[var(--math-ink-y)]">
                 y₀ = {y0.toFixed(2)}
               </span>
             </div>
@@ -409,7 +409,7 @@ export function HomogeneousScalingRayLab() {
             <div className="text-[11px] font-sans text-[var(--text-muted)]">
               Direct Evaluation f(t x₀, t y₀)
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#D35323]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-sweep)]">
               {metrics.fScaled.toFixed(5)}
             </div>
           </div>
@@ -418,7 +418,7 @@ export function HomogeneousScalingRayLab() {
             <div className="text-[11px] font-sans text-[var(--text-muted)]">
               Power Scaling Prediction tⁿ · f(x₀, y₀)
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#96B898]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-y)]">
               {metrics.fPredicted.toFixed(5)}
             </div>
           </div>
@@ -427,15 +427,15 @@ export function HomogeneousScalingRayLab() {
             <div className="text-[11px] font-sans text-[var(--text-muted)]">
               Euler 1st Order: x₀fₓ + y₀f_y vs n·f
             </div>
-            <div className="mt-1 text-sm font-tabular-mono text-[#FBEAA4]">
+            <div className="mt-1 text-sm font-tabular-mono text-[var(--math-ink-diff)]">
               {metrics.eulerLhs.toFixed(4)} = {metrics.eulerRhs.toFixed(4)}
             </div>
           </div>
         </div>
 
-        <div className="p-3 border border-[#029091]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="p-3 border border-[var(--math-ink-z)]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-1">
-            <div className="text-xs font-sans font-semibold text-[#029091] inline-flex items-center gap-1.5">
+            <div className="text-xs font-sans font-semibold text-[var(--math-ink-z)] inline-flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5" />
               {preset.label}
             </div>

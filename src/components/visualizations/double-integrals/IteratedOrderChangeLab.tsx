@@ -15,6 +15,10 @@ import {
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
+import {
+  createDemandDrivenRenderLoop,
+  type DemandDrivenRenderLoopHandle,
+} from "@/components/visualizations/primitives/demandRenderLoop";
 
 type OrderMode = "dydx" | "dxdy";
 type PresetId =
@@ -193,6 +197,7 @@ const PRESETS: DomainPreset[] = [
 
 export function IteratedOrderChangeLab() {
   const mountRef = useRef<HTMLDivElement | null>(null);
+  const renderLoopRef = useRef<DemandDrivenRenderLoopHandle | null>(null);
   const sceneObjectsRef = useRef<{
     surfaceGroup: THREE.Group;
     sliceGroup: THREE.Group;
@@ -470,13 +475,18 @@ export function IteratedOrderChangeLab() {
       controls,
     };
 
-    let frameId: number;
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
+    const renderLoop = createDemandDrivenRenderLoop({
+      container,
+      renderer,
+      scene,
+      camera,
+      controls: controls as unknown as {
+        update: () => boolean;
+        addEventListener: (event: string, listener: () => void) => void;
+        removeEventListener: (event: string, listener: () => void) => void;
+      },
+    });
+    renderLoopRef.current = renderLoop;
 
     const handleResize = () => {
       if (!container) return;
@@ -485,12 +495,15 @@ export function IteratedOrderChangeLab() {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      renderLoop.requestRender(2);
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(frameId);
+      renderLoop.dispose();
+      renderLoopRef.current = null;
+      controls.dispose();
       renderer.dispose();
     };
   }, []);
@@ -600,6 +613,7 @@ export function IteratedOrderChangeLab() {
         })
       )
     );
+    renderLoopRef.current?.requestRender(2);
   }, [preset, order, typeIXRange, typeIIYRange, evalVisualZ, evalYBounds, evalXBounds]);
 
   // Update Active Cross-Sectional Curtain & Partial Accumulated Volume
@@ -733,6 +747,7 @@ export function IteratedOrderChangeLab() {
         )
       );
     }
+    renderLoopRef.current?.requestRender(2);
   }, [
     outerCoord,
     activeInnerBounds,
@@ -864,7 +879,7 @@ export function IteratedOrderChangeLab() {
       {/* Header & Order Reversal Toggle */}
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#D35323]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)]">
             <Layers className="w-4 h-4" aria-hidden="true" />
             <span>
               Interactive Laboratory 01.2 – 01.4 • Slicing, Limits &amp; Order
@@ -890,7 +905,7 @@ export function IteratedOrderChangeLab() {
             onClick={() =>
               setOrder((prev) => (prev === "dydx" ? "dxdy" : "dydx"))
             }
-            className="px-4 py-2.5 border border-[var(--border-strong)] bg-[#D35323] text-[#FFFBE4] text-xs font-tabular-mono font-semibold flex items-center gap-2 cursor-pointer hover:opacity-95 transition-opacity"
+            className="px-4 py-2.5 border border-[var(--border-strong)] bg-[#9E360E] text-[#FFFBE4] text-xs font-tabular-mono font-semibold flex items-center gap-2 cursor-pointer hover:opacity-95 transition-opacity"
           >
             <ArrowLeftRight className="w-4 h-4" aria-hidden="true" />
             <span>
@@ -920,7 +935,7 @@ export function IteratedOrderChangeLab() {
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
-                <span className="text-[10px] font-tabular-mono uppercase px-1.5 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[#FBEAA4] w-fit">
+                <span className="text-[10px] font-tabular-mono uppercase px-1.5 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--math-ink-diff)] w-fit">
                   {item.badge}
                 </span>
                 <span className="font-math-serif text-sm font-semibold leading-snug">
@@ -1027,13 +1042,13 @@ export function IteratedOrderChangeLab() {
 
       {/* Split-Boundary Alert Banner when Preset 5 is in dy dx mode */}
       {preset.typeI.requiresSplit && order === "dydx" && (
-        <div className="border border-[#AAA36D] bg-[var(--bg-canvas)] p-3.5 flex items-start gap-3">
+        <div className="border border-[var(--math-ink-grid)] bg-[var(--bg-canvas)] p-3.5 flex items-start gap-3">
           <Split
-            className="w-5 h-5 text-[#AAA36D] shrink-0 mt-0.5"
+            className="w-5 h-5 text-[var(--math-ink-grid)] shrink-0 mt-0.5"
             aria-hidden="true"
           />
           <div className="text-xs sm:text-sm font-math-serif text-[var(--text-primary)]">
-            <strong className="font-semibold text-[#FBEAA4]">
+            <strong className="font-semibold text-[var(--math-ink-diff)]">
               Piecewise Upper Boundary Detected at x = 1:
             </strong>{" "}
             In <code>dy dx</code> order, vertical strips hit{" "}
@@ -1053,7 +1068,7 @@ export function IteratedOrderChangeLab() {
             <span>3D Cross-Sectional Curtain &amp; Volume</span>
             <span className="text-[#8D9FCE]">x</span>
             <span className="text-[#96B898]">y</span>
-            <span className="text-[#029091]">z</span>
+            <span className="text-[#28B7B8]">z</span>
           </div>
 
           <div ref={mountRef} className="w-full h-[400px] cursor-grab" />
@@ -1069,7 +1084,7 @@ export function IteratedOrderChangeLab() {
             </span>
             <span>
               Slice Area A ={" "}
-              <strong className="text-[#D35323]">
+              <strong className="text-[#EF7547]">
                 {sliceArea.toFixed(4)}
               </strong>
             </span>
@@ -1090,7 +1105,7 @@ export function IteratedOrderChangeLab() {
               <span className="text-[var(--text-muted)]">
                 2D Domain R &amp; Entry/Exit Bounds
               </span>
-              <span className="text-[#D35323] font-semibold">
+              <span className="text-[var(--math-ink-sweep)] font-semibold">
                 {order === "dydx"
                   ? "↑ Inner Ray (dy)"
                   : "→ Inner Ray (dx)"}
@@ -1123,7 +1138,7 @@ export function IteratedOrderChangeLab() {
                   <text
                     x={svgPaths.splitLineSvgX - 14}
                     y={19}
-                    fill="#AAA36D"
+                    fill="var(--math-ink-grid)"
                     fontSize="9"
                     fontFamily="monospace"
                   >
@@ -1191,7 +1206,7 @@ export function IteratedOrderChangeLab() {
               <text
                 x={202}
                 y={178}
-                fill="#8D9FCE"
+                fill="var(--math-ink-x)"
                 fontSize="11"
                 fontFamily="monospace"
               >
@@ -1200,7 +1215,7 @@ export function IteratedOrderChangeLab() {
               <text
                 x={26}
                 y={12}
-                fill="#96B898"
+                fill="var(--math-ink-y)"
                 fontSize="11"
                 fontFamily="monospace"
               >
@@ -1251,25 +1266,27 @@ export function IteratedOrderChangeLab() {
                 >
                   {isPlaying ? (
                     <>
-                      <Pause className="w-3 h-3 text-[#FBEAA4]" />
+                      <Pause className="w-3 h-3 text-[var(--math-ink-diff)]" />
                       <span>Pause</span>
                     </>
                   ) : (
                     <>
-                      <Play className="w-3 h-3 text-[#96B898]" />
+                      <Play className="w-3 h-3 text-[var(--math-ink-y)]" />
                       <span>Sweep</span>
                     </>
                   )}
                 </button>
                 <button
                   type="button"
+                  aria-label="Reset slice position"
+                  title="Reset slice position"
                   onClick={() => {
                     setIsPlaying(false);
                     setSliceNorm(0.55);
                   }}
-                  className="text-[var(--text-muted)] hover:text-[var(--text-primary)] inline-flex items-center gap-1 cursor-pointer"
+                  className="min-w-[24px] min-h-[24px] text-[var(--text-muted)] hover:text-[var(--text-primary)] inline-flex items-center justify-center gap-1 cursor-pointer"
                 >
-                  <RotateCcw className="w-3 h-3" />
+                  <RotateCcw className="w-3 h-3" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -1312,11 +1329,11 @@ export function IteratedOrderChangeLab() {
           className={`p-4 border transition-colors ${
             order === "dydx"
               ? "border-[var(--border-strong)] bg-[var(--bg-canvas)]"
-              : "border-[var(--border-subtle)] bg-[var(--bg-panel)] opacity-80"
+              : "border-[var(--border-subtle)] bg-[var(--bg-panel)]"
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-tabular-mono uppercase text-[#8D9FCE] font-semibold">
+            <span className="text-xs font-tabular-mono uppercase text-[var(--math-ink-x)] font-semibold">
               Type I • Vertical Strips (dy dx)
             </span>
             {order === "dydx" && (
@@ -1332,11 +1349,11 @@ export function IteratedOrderChangeLab() {
           className={`p-4 border transition-colors ${
             order === "dxdy"
               ? "border-[var(--border-strong)] bg-[var(--bg-canvas)]"
-              : "border-[var(--border-subtle)] bg-[var(--bg-panel)] opacity-80"
+              : "border-[var(--border-subtle)] bg-[var(--bg-panel)]"
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-tabular-mono uppercase text-[#96B898] font-semibold">
+            <span className="text-xs font-tabular-mono uppercase text-[var(--math-ink-y)] font-semibold">
               Type II • Horizontal Strips (dx dy)
             </span>
             {order === "dxdy" && (
@@ -1351,6 +1368,7 @@ export function IteratedOrderChangeLab() {
 
       {/* Step-by-Step Pedagogical Accordion */}
       <div
+        role="region"
         aria-label="Step-by-step derivation of limits and order reversal"
         className="space-y-2.5"
       >
@@ -1360,7 +1378,7 @@ export function IteratedOrderChangeLab() {
         >
           <summary className="px-4 py-3 text-sm font-math-serif font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]">
             <ChevronDown
-              className="w-4 h-4 text-[#8D9FCE] shrink-0"
+              className="w-4 h-4 text-[var(--math-ink-x)] shrink-0"
               aria-hidden="true"
             />
             <span>
@@ -1385,7 +1403,7 @@ export function IteratedOrderChangeLab() {
         >
           <summary className="px-4 py-3 text-sm font-math-serif font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]">
             <ChevronDown
-              className="w-4 h-4 text-[#D35323] shrink-0"
+              className="w-4 h-4 text-[var(--math-ink-sweep)] shrink-0"
               aria-hidden="true"
             />
             <span>

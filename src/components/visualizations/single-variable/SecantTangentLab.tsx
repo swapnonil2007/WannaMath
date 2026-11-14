@@ -5,7 +5,7 @@ import { Play, Pause, RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface SecantPreset {
   id: string;
@@ -194,7 +194,7 @@ export function SecantTangentLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#D35323]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)]">
             <span>Lab 1.2.1A</span>
             <span>•</span>
             <span>Secant-to-Tangent Homotopy</span>
@@ -216,7 +216,7 @@ export function SecantTangentLab() {
               if (Math.abs(stepH) < 0.03) setStepH(0.9);
               setIsAnimating((p) => !p);
             }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[#D35323] bg-[var(--bg-canvas)] text-[#D35323]"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)] text-[var(--math-ink-sweep)]"
           >
             {isAnimating ? (
               <>
@@ -249,7 +249,7 @@ export function SecantTangentLab() {
               onClick={() => handleSelectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 active
-                  ? "border-[#D35323] bg-[var(--bg-canvas)] text-[#D35323] font-medium"
+                  ? "border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)] text-[var(--math-ink-sweep)] font-medium"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -275,7 +275,7 @@ export function SecantTangentLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Anchor x₀</span>
-            <span className="font-tabular-mono text-[#8D9FCE]">
+            <span className="font-tabular-mono text-[var(--math-ink-x)]">
               x₀ = {x0.toFixed(2)}
             </span>
           </div>
@@ -294,7 +294,7 @@ export function SecantTangentLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Step h (x₁ - x₀)</span>
-            <span className="font-tabular-mono text-[#D35323]">
+            <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
               h = {stepH.toFixed(3)}
             </span>
           </div>
@@ -316,7 +316,7 @@ export function SecantTangentLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Micro-Zoom Level</span>
-            <span className="font-tabular-mono text-[#029091]">
+            <span className="font-tabular-mono text-[var(--math-ink-z)]">
               {zoomFactor.toFixed(1)}×
             </span>
           </div>
@@ -538,7 +538,7 @@ export function SecantTangentLab() {
           <span className="text-[var(--text-secondary)] block font-sans">
             Secant Slope m_sec
           </span>
-          <span className="text-[#D35323] text-sm font-semibold">
+          <span className="text-[var(--math-ink-sweep)] text-sm font-semibold">
             {Number.isFinite(metrics.mSec) ? metrics.mSec.toFixed(4) : "NaN"}
           </span>
         </div>
@@ -546,7 +546,7 @@ export function SecantTangentLab() {
           <span className="text-[var(--text-secondary)] block font-sans">
             True Derivative f&apos;(x₀)
           </span>
-          <span className="text-[#029091] text-sm font-semibold">
+          <span className="text-[var(--math-ink-z)] text-sm font-semibold">
             {Number.isFinite(metrics.tangentSlope)
               ? metrics.tangentSlope.toFixed(4)
               : "DNE (Corner/Cusp)"}
@@ -556,7 +556,7 @@ export function SecantTangentLab() {
           <span className="text-[var(--text-secondary)] block font-sans">
             Left Slope f&apos;_-(x₀)
           </span>
-          <span className="text-[#8D9FCE] text-sm">
+          <span className="text-[var(--math-ink-x)] text-sm">
             {Number.isFinite(metrics.leftSlope)
               ? metrics.leftSlope.toFixed(3)
               : "∞"}
@@ -566,7 +566,7 @@ export function SecantTangentLab() {
           <span className="text-[var(--text-secondary)] block font-sans">
             Right Slope f&apos;_+(x₀)
           </span>
-          <span className="text-[#96B898] text-sm">
+          <span className="text-[var(--math-ink-y)] text-sm">
             {Number.isFinite(metrics.rightSlope)
               ? metrics.rightSlope.toFixed(3)
               : "∞"}

@@ -5,6 +5,9 @@ import {
   ResolvedChapterContext,
   LabMetadata,
   ContentStatus,
+  TocChapterItem,
+  TocModuleItem,
+  TocVolumeItem,
 } from "./types";
 import { VOL1_SINGLE_VARIABLE } from "./vol1-single-variable";
 import { VOL2_LINEAR_ALGEBRA } from "./vol2-linear-algebra";
@@ -20,6 +23,9 @@ export type {
   ResolvedChapterContext,
   LabMetadata,
   ContentStatus,
+  TocChapterItem,
+  TocModuleItem,
+  TocVolumeItem,
 };
 
 export const TEXTBOOK_VOLUMES: VolumeMetadata[] = [
@@ -33,6 +39,37 @@ export const TEXTBOOK_VOLUMES: VolumeMetadata[] = [
 
 export function getAllVolumes(): VolumeMetadata[] {
   return TEXTBOOK_VOLUMES;
+}
+
+export function getTocVolumes(): TocVolumeItem[] {
+  return TEXTBOOK_VOLUMES.map((vol) => ({
+    id: vol.id,
+    volumeNumber: vol.volumeNumber,
+    slug: vol.slug,
+    title: vol.title,
+    accentHex: vol.accentHex,
+    modules: vol.modules.map((mod) => ({
+      id: mod.id,
+      slug: mod.slug,
+      numberLabel: mod.numberLabel,
+      title: mod.title,
+      chapters: mod.chapters.map((ch) => ({
+        id: ch.id,
+        slug: ch.slug,
+        title: ch.title,
+        status: ch.status,
+        ...(ch.accentHex ? { accentHex: ch.accentHex } : {}),
+        ...(ch.subParent
+          ? {
+              subParent: {
+                slug: ch.subParent.slug,
+                title: ch.subParent.title,
+              },
+            }
+          : {}),
+      })),
+    })),
+  }));
 }
 
 export function getVolumeBySlug(volumeSlug: string): VolumeMetadata | undefined {

@@ -3,6 +3,7 @@
 import React, { useId, useMemo, useRef, useState, useEffect } from "react";
 import { AlertCircle, Check, Sparkles } from "lucide-react";
 import { compileMathExpression } from "@/lib/mathParser";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 
 interface MathExpressionInputProps {
@@ -137,7 +138,7 @@ export function MathExpressionInput({
         >
           <Sparkles
             className="w-3.5 h-3.5 shrink-0"
-            style={{ color: accentHex }}
+            style={{ color: getAdaptiveAccentInk(accentHex) }}
             aria-hidden="true"
           />
           <span>{label}</span>
@@ -154,6 +155,7 @@ export function MathExpressionInput({
       {/* Quick-Insert Math Symbol Keypad */}
       {!compact && (
         <div
+          role="group"
           className="flex flex-wrap items-center gap-1"
           aria-label="Quick insert math symbols"
         >
@@ -194,8 +196,8 @@ export function MathExpressionInput({
           aria-describedby={showError ? `${hintId} ${errorId}` : hintId}
           className={`w-full px-3 py-1.5 text-sm font-tabular-mono bg-[var(--bg-panel)] text-[var(--text-primary)] border focus:outline-none transition-colors ${
             showError
-              ? "border-[#B95869]"
-              : "border-[var(--border-strong)] focus:border-[#FBEAA4]"
+              ? "border-[var(--math-ink-upper)]"
+              : "border-[var(--border-strong)] focus:border-[var(--accent-color)]"
           }`}
         />
 
@@ -207,7 +209,11 @@ export function MathExpressionInput({
         >
           <Check
             className="w-3.5 h-3.5"
-            style={{ color: compiled.valid ? "#96B898" : "#B95869" }}
+            style={{
+              color: compiled.valid
+                ? "var(--math-ink-y)"
+                : "var(--math-ink-upper)",
+            }}
             aria-hidden="true"
           />
           <span>Plot</span>
@@ -234,7 +240,7 @@ export function MathExpressionInput({
       {showError && (
         <div
           id={errorId}
-          className="flex items-start gap-1.5 text-xs text-[#D5658B] font-tabular-mono pt-0.5"
+          className="flex items-start gap-1.5 text-xs text-[var(--math-ink-lower)] font-tabular-mono pt-0.5"
         >
           <AlertCircle
             className="w-3.5 h-3.5 shrink-0 mt-0.5"

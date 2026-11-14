@@ -231,7 +231,7 @@ export function SolidOfRevolutionLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#029091]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)]">
             <span>Lab 1.3.4A</span>
             <span>•</span>
             <span>3D Solids of Revolution</span>
@@ -268,7 +268,7 @@ export function SolidOfRevolutionLab() {
             onClick={() => handleSelectPreset(p)}
             className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
               p.id === preset.id
-                ? "border-[#029091] bg-[var(--bg-canvas)] text-[#029091] font-medium"
+                ? "border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-[var(--math-ink-z)] font-medium"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -282,7 +282,7 @@ export function SolidOfRevolutionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Revolution Sweep φ</span>
-            <span className="font-tabular-mono text-[#029091]">
+            <span className="font-tabular-mono text-[var(--math-ink-z)]">
               {sweepDeg}°
             </span>
           </div>
@@ -301,7 +301,7 @@ export function SolidOfRevolutionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Active Slice Position</span>
-            <span className="font-tabular-mono text-[#D35323]">
+            <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
               x₀ = {activeX.toFixed(2)}
             </span>
           </div>
@@ -324,7 +324,7 @@ export function SolidOfRevolutionLab() {
             disabled={preset.axis === "y"}
             className={`px-3 py-1.5 text-xs font-sans border ${
               sliceMethod === "washer"
-                ? "border-[#D35323] bg-[#D35323] text-[#FFFBE4]"
+                ? "border-[#9E360E] bg-[#9E360E] text-[#FFFBE4]"
                 : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] disabled:opacity-40"
             }`}
           >
@@ -335,7 +335,7 @@ export function SolidOfRevolutionLab() {
             onClick={() => setSliceMethod("shell")}
             className={`px-3 py-1.5 text-xs font-sans border ${
               sliceMethod === "shell"
-                ? "border-[#D35323] bg-[#D35323] text-[#FFFBE4]"
+                ? "border-[#9E360E] bg-[#9E360E] text-[#FFFBE4]"
                 : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)]"
             }`}
           >
@@ -404,10 +404,10 @@ export function SolidOfRevolutionLab() {
             sceneDeps={[preset, sweepDeg, sliceMethod, activeX, elemPos]}
             footerSlot={
               <div className="flex flex-wrap justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#FBEAA4]">
+                <span className="text-[var(--math-ink-diff)]">
                   Exact Volume V = {metrics.vol.toFixed(4)}
                 </span>
-                <span className="text-[#D35323]">
+                <span className="text-[var(--math-ink-sweep)]">
                   Slice x₀ = {activeX.toFixed(2)} • R = {metrics.rOut.toFixed(2)}
                 </span>
               </div>

@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 type Mat2 = [number, number, number, number]; // [a11, a12, a21, a22]
 
@@ -193,7 +193,7 @@ export function SVDThreeStageLab() {
       <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
               Three-Stage SVD Factorization Stepper
             </p>
             <p className="mt-1 font-serif text-sm text-[#D6DAE2]">
@@ -296,6 +296,7 @@ export function SVDThreeStageLab() {
               value={stage}
               onChange={(e) => setStage(parseFloat(e.target.value))}
               className="mt-2.5 w-full accent-[#029091]"
+              aria-label="SVD three-stage scrubber s"
             />
           </div>
         </div>
@@ -387,7 +388,7 @@ export function SVDThreeStageLab() {
         {/* Right: Exact U Σ Vᵀ Factors & Low-Rank Energy Readout */}
         <div className="space-y-4">
           <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
               Exact SVD Matrix Factors
             </p>
             <div className="mt-3 overflow-x-auto text-xs text-[#F6F0D0]">
@@ -413,7 +414,7 @@ export function SVDThreeStageLab() {
               </div>
               <div>
                 <span className="text-[#A2AAB8] block">Condition κ(A) = σ₁/σ₂</span>
-                <span className="text-sm text-[#D35323]">
+                <span className="text-sm text-[#EF7547]">
                   {svd.sigma2 > 1e-4 ? fmt(svd.sigma1 / svd.sigma2, 2) : "∞ (Singular)"}
                 </span>
               </div>

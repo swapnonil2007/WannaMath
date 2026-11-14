@@ -6,7 +6,7 @@ import { KaTeXMath } from "@/components/math/KaTeXMath";
 import {
   SvgCoordinatePlane2D,
   integrate1DGaussLegendre,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 type SeriesFamily = "geometric" | "pseries" | "alternating" | "telescoping";
 
@@ -147,7 +147,7 @@ export function PartialSumSeriesLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#D5658B]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-lower)]">
             <span>Lab 1.4.1A</span>
             <span>•</span>
             <span>Partial Sums &amp; Integral Test</span>
@@ -185,7 +185,7 @@ export function PartialSumSeriesLab() {
             onClick={() => setFamily(p.family)}
             className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
               p.family === family
-                ? "border-[#D5658B] bg-[var(--bg-canvas)] text-[#D5658B] font-medium"
+                ? "border-[var(--math-ink-lower)] bg-[var(--bg-canvas)] text-[var(--math-ink-lower)] font-medium"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -199,7 +199,7 @@ export function PartialSumSeriesLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Horizon Terms N</span>
-            <span className="font-tabular-mono font-semibold text-[#D35323]">
+            <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)]">
               N = {numTerms}
             </span>
           </div>
@@ -219,7 +219,7 @@ export function PartialSumSeriesLab() {
           <div className="space-y-1">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Common Ratio r</span>
-              <span className="font-tabular-mono text-[#8D9FCE]">
+              <span className="font-tabular-mono text-[var(--math-ink-x)]">
                 r = {ratioR.toFixed(2)}
               </span>
             </div>
@@ -240,7 +240,7 @@ export function PartialSumSeriesLab() {
           <div className="space-y-1">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Exponent p</span>
-              <span className="font-tabular-mono text-[#029091]">
+              <span className="font-tabular-mono text-[var(--math-ink-z)]">
                 p = {exponentP.toFixed(2)}
               </span>
             </div>
@@ -259,7 +259,7 @@ export function PartialSumSeriesLab() {
 
         <div className="flex flex-col justify-center text-xs font-tabular-mono">
           <span
-            className={model.converges ? "text-[#029091]" : "text-[#B95869]"}
+            className={model.converges ? "text-[var(--math-ink-z)]" : "text-[var(--math-ink-upper)]"}
           >
             {model.verdictText}
           </span>
@@ -401,12 +401,12 @@ export function PartialSumSeriesLab() {
       {model.integralBound !== null && (
         <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-secondary)]">
           Integral Test Inequality on [1, {numTerms}]:{" "}
-          <span className="text-[#029091]">
+          <span className="text-[var(--math-ink-z)]">
             ∫₁^{numTerms} x^(-p)dx = {model.integralBound.toFixed(4)}
           </span>{" "}
           ≤ S_{numTerms} ={" "}
-          <span className="text-[#D5658B]">{model.lastSn.toFixed(4)}</span> ≤ 1 + ∫ ={" "}
-          <span className="text-[#FBEAA4]">
+          <span className="text-[var(--math-ink-lower)]">{model.lastSn.toFixed(4)}</span> ≤ 1 + ∫ ={" "}
+          <span className="text-[var(--math-ink-diff)]">
             {(1 + model.integralBound).toFixed(4)}
           </span>
         </div>

@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface MappingDef {
   id: string;
@@ -176,7 +176,7 @@ export function ConformalMappingLab() {
       <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#D5658B]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#E37CA0]">
               Cauchy–Riemann & Conformal Mapping Lab
             </p>
             <p className="mt-1 font-serif text-sm text-[#D6DAE2]">{activeMap.description}</p>
@@ -206,7 +206,7 @@ export function ConformalMappingLab() {
             <KaTeXMath math={activeMap.formulaLatex} />
           </div>
           <div className="flex flex-wrap items-center gap-3 font-mono text-xs tabular-nums">
-            <span className="text-[#D35323]">
+            <span className="text-[#EF7547]">
               z₀ = {fmt(probe[0])} {probe[1] >= 0 ? "+" : "-"} {fmt(Math.abs(probe[1]))}i
             </span>
             <span className="text-[#FBEAA4]">
@@ -215,8 +215,8 @@ export function ConformalMappingLab() {
             <span
               className={`rounded border px-2 py-0.5 font-sans font-semibold ${
                 analysis.crResidual < 0.02
-                  ? "border-[#029091] text-[#029091]"
-                  : "border-[#B95869] text-[#B95869]"
+                  ? "border-[#029091] text-[#28B7B8]"
+                  : "border-[#B95869] text-[#DF7E90]"
               }`}
             >
               {analysis.crResidual < 0.02 ? `Conformal ∠ = ${fmt(analysis.angleDeg, 1)}°` : `Sheared ∠ = ${fmt(analysis.angleDeg, 1)}°`}
@@ -398,7 +398,7 @@ export function ConformalMappingLab() {
         </div>
 
         <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4 font-mono text-xs tabular-nums text-[#D6DAE2]">
-          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
             Cauchy–Riemann Test
           </p>
           <div className="mt-2.5 space-y-1.5">
@@ -410,7 +410,7 @@ export function ConformalMappingLab() {
             </div>
             <div>
               Intersection ∠(∂w/∂x, ∂w/∂y) ={" "}
-              <span className={analysis.crResidual < 0.02 ? "text-[#029091]" : "text-[#B95869]"}>
+              <span className={analysis.crResidual < 0.02 ? "text-[#28B7B8]" : "text-[#DF7E90]"}>
                 {fmt(analysis.angleDeg, 2)}°
               </span>
             </div>
@@ -418,7 +418,7 @@ export function ConformalMappingLab() {
         </div>
 
         <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4 font-mono text-xs tabular-nums text-[#D6DAE2]">
-          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#D5658B]">
+          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#E37CA0]">
             Local Ampliﬁcation |f&apos;(z₀)|
           </p>
           <div className="mt-2.5 space-y-1.5">

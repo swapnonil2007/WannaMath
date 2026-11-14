@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { Radio, Waves, Gauge } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface ForcedPreset {
   id: string;
@@ -176,7 +176,7 @@ export function ForcedResonanceLab() {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#B95869] block">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-upper)] block">
             Laboratory 4.2.2.1 • Sinusoidal Forcing, Beats &amp; Bode Amplitude-Phase Response
           </span>
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -190,7 +190,7 @@ export function ForcedResonanceLab() {
           </p>
         </div>
 
-        <span className="px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#FBEAA4] shrink-0">
+        <span className="px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--math-ink-diff)] shrink-0">
           {sim.isPureResonance
             ? "PURE RESONANCE (t·sin Growth)"
             : sim.isNearBeats
@@ -210,11 +210,11 @@ export function ForcedResonanceLab() {
               onClick={() => handleSelectPreset(p)}
               className={`p-3 border text-left transition-colors ${
                 selected
-                  ? "border-[#B95869] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-upper)] bg-[var(--bg-canvas)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
               }`}
             >
-              <span className="text-[11px] font-tabular-mono text-[#B95869] font-semibold block mb-1">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-upper)] font-semibold block mb-1">
                 {p.badge}
               </span>
               <div className="text-xs font-math-serif text-[var(--text-primary)] leading-snug">
@@ -229,7 +229,7 @@ export function ForcedResonanceLab() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         <div className="lg:col-span-7 p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#D35323]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
               <span>Driving Frequency ω (rad/s)</span>
               <span>
                 {omega.toFixed(2)} (r = {sim.rCurrent.toFixed(2)})
@@ -246,11 +246,12 @@ export function ForcedResonanceLab() {
                 setPresetId("custom");
               }}
               className="w-full accent-[#D35323]"
+              aria-label="Driving frequency ω (rad/s)"
             />
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#8D9FCE]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-x)]">
               <span>Natural Frequency ω_n (rad/s)</span>
               <span>{wn.toFixed(2)}</span>
             </div>
@@ -265,11 +266,12 @@ export function ForcedResonanceLab() {
                 setPresetId("custom");
               }}
               className="w-full accent-[#8D9FCE]"
+              aria-label="Natural frequency ω_n (rad/s)"
             />
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#96B898]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-y)]">
               <span>Damping Ratio ζ</span>
               <span>{zeta.toFixed(2)}</span>
             </div>
@@ -284,11 +286,12 @@ export function ForcedResonanceLab() {
                 setPresetId("custom");
               }}
               className="w-full accent-[#96B898]"
+              aria-label="Damping ratio ζ"
             />
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#FBEAA4]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-diff)]">
               <span>Forcing Amplitude f₀ = F₀/m</span>
               <span>{f0.toFixed(2)}</span>
             </div>
@@ -303,6 +306,7 @@ export function ForcedResonanceLab() {
                 setPresetId("custom");
               }}
               className="w-full accent-[#FBEAA4]"
+              aria-label="Forcing amplitude f₀"
             />
           </div>
         </div>
@@ -331,7 +335,7 @@ export function ForcedResonanceLab() {
         {/* Time-Domain Response */}
         <div className="lg:col-span-6 space-y-2.5">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-            <span className="flex items-center gap-1.5 text-[#8D9FCE]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-x)]">
               <Waves className="w-3.5 h-3.5" />
               <span>Total Response x(t) vs. Steady-State x_p(t)</span>
             </span>
@@ -397,7 +401,7 @@ export function ForcedResonanceLab() {
           {/* Gain Magnitude Curve */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-              <span className="flex items-center gap-1.5 text-[#D35323]">
+              <span className="flex items-center gap-1.5 text-[var(--math-ink-sweep)]">
                 <Gauge className="w-3.5 h-3.5" />
                 <span>Normalized Gain |H(iω)| / H(0) vs. r = ω/ω_n (Click to tune)</span>
               </span>
@@ -456,7 +460,7 @@ export function ForcedResonanceLab() {
           {/* Phase Lag Curve */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-              <span className="flex items-center gap-1.5 text-[#029091]">
+              <span className="flex items-center gap-1.5 text-[var(--math-ink-z)]">
                 <Radio className="w-3.5 h-3.5" />
                 <span>Phase Lag φ(ω) (Crosses 90° at ω = ω_n)</span>
               </span>

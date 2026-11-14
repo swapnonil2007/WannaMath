@@ -5,7 +5,7 @@ import { RotateCcw, Sparkles, CheckCircle2, XCircle } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface LimitPreset {
   id: string;
@@ -392,7 +392,7 @@ export function EpsilonDeltaCorridorLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)]">
             <span>Lab 1.1.1A</span>
             <span>•</span>
             <span>Formal Limit Definition</span>
@@ -414,7 +414,7 @@ export function EpsilonDeltaCorridorLab() {
           <button
             type="button"
             onClick={autoSolveDelta}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[#029091] bg-[var(--bg-canvas)] text-[#029091] hover:bg-[#029091]/10"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-[var(--math-ink-z)] hover:bg-[#029091]/10"
           >
             <Sparkles className="w-3.5 h-3.5" /> Auto-Find Valid δ
           </button>
@@ -439,7 +439,7 @@ export function EpsilonDeltaCorridorLab() {
               onClick={() => handleSelectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 active
-                  ? "border-[#8D9FCE] bg-[var(--bg-canvas)] text-[#8D9FCE] font-medium"
+                  ? "border-[var(--math-ink-x)] bg-[var(--bg-canvas)] text-[var(--math-ink-x)] font-medium"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -470,7 +470,7 @@ export function EpsilonDeltaCorridorLab() {
               <span className="text-[var(--text-secondary)]">
                 Output Tolerance <KaTeXMath math="\varepsilon" />
               </span>
-              <span className="font-tabular-mono font-semibold text-[#96B898]">
+              <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)]">
                 ε = {epsilon.toFixed(2)}
               </span>
             </div>
@@ -491,7 +491,7 @@ export function EpsilonDeltaCorridorLab() {
               <span className="text-[var(--text-secondary)]">
                 Input Corridor <KaTeXMath math="\delta" />
               </span>
-              <span className="font-tabular-mono font-semibold text-[#8D9FCE]">
+              <span className="font-tabular-mono font-semibold text-[var(--math-ink-x)]">
                 δ = {delta.toFixed(2)}
               </span>
             </div>
@@ -512,7 +512,7 @@ export function EpsilonDeltaCorridorLab() {
           <div className="space-y-1">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Target Point a</span>
-              <span className="font-tabular-mono text-[#FBEAA4]">
+              <span className="font-tabular-mono text-[var(--math-ink-diff)]">
                 a = {targetA.toFixed(2)}
               </span>
             </div>
@@ -531,7 +531,7 @@ export function EpsilonDeltaCorridorLab() {
           <div className="space-y-1">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Candidate L</span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 L = {candidateL.toFixed(2)}
               </span>
             </div>
@@ -553,15 +553,15 @@ export function EpsilonDeltaCorridorLab() {
       <div
         className={`p-3.5 border flex flex-wrap items-center justify-between gap-3 ${
           analysis.passed
-            ? "border-[#029091] bg-[#029091]/10"
-            : "border-[#D35323] bg-[#D35323]/10"
+            ? "border-[var(--math-ink-z)] bg-[#029091]/10"
+            : "border-[var(--math-ink-sweep)] bg-[#D35323]/10"
         }`}
       >
         <div className="flex items-center gap-2 text-xs font-sans">
           {analysis.passed ? (
-            <CheckCircle2 className="w-4 h-4 text-[#029091]" />
+            <CheckCircle2 className="w-4 h-4 text-[var(--math-ink-z)]" />
           ) : (
-            <XCircle className="w-4 h-4 text-[#D35323]" />
+            <XCircle className="w-4 h-4 text-[var(--math-ink-sweep)]" />
           )}
           <span className="font-semibold text-[var(--text-primary)]">
             {analysis.passed

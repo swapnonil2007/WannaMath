@@ -243,14 +243,14 @@ export function DifferentiabilityErrorConeLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]">
               LAB 3.1.5B • TOTAL DIFFERENTIABILITY &amp; TANGENT GAP
             </span>
             <span
               className={`px-2 py-0.5 text-[11px] font-tabular-mono border inline-flex items-center gap-1 ${
                 preset.differentiable
-                  ? "border-[#96B898] text-[#96B898] bg-[#96B898]/10"
-                  : "border-[#B95869] text-[#B95869] bg-[#B95869]/10"
+                  ? "border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/10"
+                  : "border-[var(--math-ink-upper)] text-[var(--math-ink-upper)] bg-[#B95869]/10"
               }`}
             >
               {preset.differentiable ? (
@@ -290,7 +290,7 @@ export function DifferentiabilityErrorConeLab() {
               onClick={() => setPresetId(p.id)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 p.id === presetId
-                  ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
               }`}
             >
@@ -303,9 +303,9 @@ export function DifferentiabilityErrorConeLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Step Radius <strong className="text-[#FBEAA4] font-mono">r = √(h² + k²)</strong>
+                Step Radius <strong className="text-[var(--math-ink-diff)] font-mono">r = √(h² + k²)</strong>
               </span>
-              <span className="font-tabular-mono text-[#FBEAA4]">
+              <span className="font-tabular-mono text-[var(--math-ink-diff)]">
                 r = {radiusR.toFixed(2)}
               </span>
             </div>
@@ -324,9 +324,9 @@ export function DifferentiabilityErrorConeLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Approach Heading <strong className="text-[#D35323] font-mono">θ</strong> (try 0° vs 45°)
+                Approach Heading <strong className="text-[var(--math-ink-sweep)] font-mono">θ</strong> (try 0° vs 45°)
               </span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 θ = {angleDeg}°
               </span>
             </div>
@@ -352,7 +352,7 @@ export function DifferentiabilityErrorConeLab() {
               1. 3D Surface <KaTeXMath math="f(h,k)" /> vs. Candidate Tangent Plane{" "}
               <KaTeXMath math="L(h,k)" />
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#D35323]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)]">
               |E(h,k)| = {stats.absErr.toFixed(4)}
             </span>
           </div>
@@ -371,10 +371,10 @@ export function DifferentiabilityErrorConeLab() {
             sceneDeps={[buildScene]}
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#8D9FCE]">
+                <span className="text-[var(--math-ink-x)]">
                   L(h,k) = {stats.lVal.toFixed(4)}
                 </span>
-                <span className="text-[#D35323]">
+                <span className="text-[var(--math-ink-sweep)]">
                   f(h,k) = {stats.fVal.toFixed(4)}
                 </span>
               </div>
@@ -388,7 +388,7 @@ export function DifferentiabilityErrorConeLab() {
               2. Normalized Error Ratio{" "}
               <KaTeXMath math="Q(r,\theta) = \frac{|f - L|}{r}" />
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#D35323]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)]">
               Q = {stats.normErr.toFixed(4)}
             </span>
           </div>
@@ -460,7 +460,7 @@ export function DifferentiabilityErrorConeLab() {
             <div className="text-[11px] font-sans text-[var(--text-muted)]">
               Normalized Error at θ = {angleDeg}°
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#D35323]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-sweep)]">
               |E| / r = {stats.normErr.toFixed(4)}
             </div>
           </div>
@@ -470,7 +470,7 @@ export function DifferentiabilityErrorConeLab() {
             </div>
             <div
               className={`mt-1 text-base font-tabular-mono ${
-                preset.differentiable ? "text-[#96B898]" : "text-[#B95869]"
+                preset.differentiable ? "text-[var(--math-ink-y)]" : "text-[var(--math-ink-upper)]"
               }`}
             >
               {stats.angularMax.toFixed(4)}{" "}
@@ -479,7 +479,7 @@ export function DifferentiabilityErrorConeLab() {
           </div>
         </div>
 
-        <div className="p-3 border border-[#D35323]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="p-3 border border-[var(--math-ink-sweep)]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-xs font-serif text-[var(--text-secondary)]">
             {preset.explanation}
           </p>

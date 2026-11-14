@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface ConvPreset {
   id: string;
@@ -195,11 +195,12 @@ export function ConvolutionFlipSlideLab() {
                 setTVal(parseFloat(e.target.value));
               }}
               className="mt-2.5 w-full accent-[#D35323]"
+              aria-label="Evaluation time shift t (seconds)"
             />
           </div>
 
           <div className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3 font-mono text-xs tabular-nums">
-            <span className="font-sans font-semibold text-[#D35323] block">Overlap Area = Output y(t)</span>
+            <span className="font-sans font-semibold text-[#EF7547] block">Overlap Area = Output y(t)</span>
             <span className="mt-1.5 block text-lg font-semibold text-[#FBEAA4]">
               y({fmt(tVal, 2)}) = {fmt(sim.currentY, 4)}
             </span>
@@ -224,7 +225,7 @@ export function ConvolutionFlipSlideLab() {
               <span className="rounded border border-[#96B898]/50 bg-[#1E1F22] px-2 py-0.5 text-[#96B898]">
                 h(t−τ)
               </span>
-              <span className="rounded border border-[#D35323]/50 bg-[#1E1F22] px-2 py-0.5 text-[#D35323]">
+              <span className="rounded border border-[#D35323]/50 bg-[#1E1F22] px-2 py-0.5 text-[#EF7547]">
                 Product
               </span>
             </div>
@@ -351,7 +352,7 @@ export function ConvolutionFlipSlideLab() {
           </div>
         </div>
         <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
-          <span className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091] block">
+          <span className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8] block">
             Laplace Convolution Theorem
           </span>
           <div className="mt-2 overflow-x-auto text-xs text-[#F6F0D0]">

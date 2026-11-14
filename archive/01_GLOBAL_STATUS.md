@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** All 6 Volumes 100% Published — **Vol I (`12/12`) | Vol II (`9/9`) | Vol III (`24/24`) | Vol IV (`8/8`) | Vol V (`8/8`) | Vol VI (`4/4`) — `65` Chapters & `82` Labs Live**
+> **Last Updated:** 2026-11-14 — All 6 Volumes 100% Published — **Vol I (`12/12`) | Vol II (`9/9`) | Vol III (`24/24`) | Vol IV (`8/8`) | Vol V (`8/8`) | Vol VI (`4/4`) — `65` Chapters & `82` Labs Live + SEO/GEO/CWV/A11y Phases 1–5 Complete**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 

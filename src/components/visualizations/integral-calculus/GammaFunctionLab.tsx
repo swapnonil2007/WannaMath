@@ -7,7 +7,7 @@ import {
   SvgCoordinatePlane2D,
   gammaReal,
   integrate1DGaussLegendre,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 interface GammaPreset {
   id: string;
@@ -193,16 +193,16 @@ export function GammaFunctionLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]">
               LAB 3.2.6A • THE GAMMA FUNCTION Γ(z)
             </span>
             <span
               className={`px-2 py-0.5 text-[11px] font-tabular-mono border ${
                 computed.isNearPole
-                  ? "border-[#B95869] text-[#B95869] bg-[#B95869]/10"
+                  ? "border-[var(--math-ink-upper)] text-[var(--math-ink-upper)] bg-[#B95869]/10"
                   : computed.integralConverges
-                  ? "border-[#96B898] text-[#96B898] bg-[#96B898]/10"
-                  : "border-[#FBEAA4] text-[#FBEAA4] bg-[#FBEAA4]/10"
+                  ? "border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/10"
+                  : "border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[#FBEAA4]/10"
               }`}
             >
               {computed.isNearPole
@@ -239,7 +239,7 @@ export function GammaFunctionLab() {
                 onClick={() => selectPreset(preset)}
                 className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                   selected
-                    ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)]"
+                    ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -253,9 +253,9 @@ export function GammaFunctionLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Argument <strong className="text-[#D35323] font-mono">z</strong>
+                Argument <strong className="text-[var(--math-ink-sweep)] font-mono">z</strong>
               </span>
-              <span className="font-tabular-mono text-[#D35323] font-medium">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)] font-medium">
                 z = {zParam.toFixed(2)}
               </span>
             </div>
@@ -282,9 +282,9 @@ export function GammaFunctionLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Upper Integration Cutoff <strong className="text-[#8D9FCE] font-mono">T</strong>
+                Upper Integration Cutoff <strong className="text-[var(--math-ink-x)] font-mono">T</strong>
               </span>
-              <span className="font-tabular-mono text-[#8D9FCE] font-medium">
+              <span className="font-tabular-mono text-[var(--math-ink-x)] font-medium">
                 T = {cutoffT.toFixed(1)}
               </span>
             </div>
@@ -321,7 +321,7 @@ export function GammaFunctionLab() {
               1. Euler Integrand{" "}
               <KaTeXMath math={`k(t) = t^{z-1}e^{-t}`} />
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#029091]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-z)]">
               {zParam > 1
                 ? `Peak at t = z − 1 = ${(zParam - 1).toFixed(2)}`
                 : zParam > 0
@@ -396,7 +396,7 @@ export function GammaFunctionLab() {
                         x={toSvgX(cutoffT) - 6}
                         y={toSvgY(computed.integrandYMax * 0.85)}
                         textAnchor="end"
-                        fill="#D35323"
+                        fill="var(--math-ink-sweep)"
                         fontSize={11}
                         fontFamily="JetBrains Mono, monospace"
                       >
@@ -425,7 +425,7 @@ export function GammaFunctionLab() {
                       <text
                         x={toSvgX(computed.tPeak) + 6}
                         y={toSvgY(computed.yPeak) - 4}
-                        fill="#96B898"
+                        fill="var(--math-ink-y)"
                         fontSize={10}
                         fontFamily="JetBrains Mono, monospace"
                       >
@@ -453,7 +453,7 @@ export function GammaFunctionLab() {
             <span className="text-xs font-sans font-semibold text-[var(--text-primary)]">
               2. Full Real Graph <KaTeXMath math="y = \Gamma(x)" /> &amp; Factorial Points
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#B95869]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-upper)]">
               Poles at x = 0, -1, -2, -3
             </span>
           </div>
@@ -517,7 +517,7 @@ export function GammaFunctionLab() {
                     <text
                       x={toSvgX(pt.n) + 5}
                       y={toSvgY(pt.val) - 5}
-                      fill="#96B898"
+                      fill="var(--math-ink-y)"
                       fontSize={10}
                       fontFamily="JetBrains Mono, monospace"
                     >
@@ -568,7 +568,7 @@ export function GammaFunctionLab() {
             <div className="text-[11px] font-sans uppercase tracking-wider text-[var(--text-muted)]">
               Partial Integral I(T)
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#029091]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-z)]">
               {computed.integralConverges && Number.isFinite(computed.partialIntegral)
                 ? computed.partialIntegral.toFixed(5)
                 : "Diverges at t = 0⁺"}
@@ -579,7 +579,7 @@ export function GammaFunctionLab() {
             <div className="text-[11px] font-sans uppercase tracking-wider text-[var(--text-muted)]">
               Exact / Continued Γ(z)
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#D35323]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-sweep)]">
               {computed.isNearPole || !Number.isFinite(computed.gammaZ)
                 ? "±∞ (Pole)"
                 : computed.gammaZ.toFixed(5)}
@@ -589,10 +589,10 @@ export function GammaFunctionLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
             <div className="text-[11px] font-sans uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1">
               <span>Recurrence</span>
-              <ArrowRight className="w-3 h-3 text-[#FBEAA4]" />
+              <ArrowRight className="w-3 h-3 text-[var(--math-ink-diff)]" />
               <span>Γ(z + 1) = z·Γ(z)</span>
             </div>
-            <div className="mt-1 text-sm font-tabular-mono text-[#FBEAA4]">
+            <div className="mt-1 text-sm font-tabular-mono text-[var(--math-ink-diff)]">
               {computed.isNearPole || !Number.isFinite(computed.gammaZPlus1)
                 ? "Undefined at pole"
                 : `${zParam.toFixed(2)} × (${computed.gammaZ.toFixed(3)}) = ${computed.gammaZPlus1.toFixed(4)}`}
@@ -601,9 +601,9 @@ export function GammaFunctionLab() {
         </div>
 
         {activePreset && (
-          <div className="p-3 border border-[#FBEAA4]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="p-3 border border-[var(--math-ink-diff)]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="space-y-1">
-              <div className="text-xs font-sans font-semibold text-[#FBEAA4] inline-flex items-center gap-1.5">
+              <div className="text-xs font-sans font-semibold text-[var(--math-ink-diff)] inline-flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
                 {activePreset.label}
               </div>

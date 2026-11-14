@@ -150,7 +150,7 @@ export function ResidueTheoremLab() {
       <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#B95869]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#DF7E90]">
               3D Pole Landscape |f(z)| & Residue Summing Lab
             </p>
             <p className="mt-1 font-serif text-sm text-[#D6DAE2]">{preset.note}</p>
@@ -175,7 +175,7 @@ export function ResidueTheoremLab() {
 
         <div className="mt-4 grid gap-3 md:grid-cols-3">
           <div className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <span className="font-sans text-xs font-semibold text-[#029091]">Contour Mode</span>
+            <span className="font-sans text-xs font-semibold text-[#28B7B8]">Contour Mode</span>
             <div className="mt-2 grid grid-cols-2 gap-2 font-sans text-xs">
               <button
                 type="button"
@@ -220,7 +220,7 @@ export function ResidueTheoremLab() {
           </label>
 
           <div className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3 font-mono text-xs">
-            <span className="font-sans font-semibold text-[#D5658B] block">Active Equation</span>
+            <span className="font-sans font-semibold text-[#E37CA0] block">Active Equation</span>
             <div className="mt-1 text-[#F6F0D0]">
               <KaTeXMath math={preset.formulaLatex} />
             </div>
@@ -300,7 +300,7 @@ export function ResidueTheoremLab() {
             }}
             footerSlot={
               <div className="flex justify-between font-mono text-xs text-[#A2AAB8]">
-                <span className="text-[#D35323]">Hovering Ring: Contour C</span>
+                <span className="text-[#EF7547]">Hovering Ring: Contour C</span>
                 <span className="text-[#FBEAA4]">Height clamped at 2.8 for clarity</span>
               </div>
             }
@@ -384,7 +384,7 @@ export function ResidueTheoremLab() {
       {/* Residue Sum & Real Improper Integral Cards */}
       <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4 font-mono text-xs tabular-nums">
-          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#B95869]">
+          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#DF7E90]">
             Per-Pole Laurent Residues
           </p>
           <div className="mt-2 space-y-1.5">
@@ -403,7 +403,7 @@ export function ResidueTheoremLab() {
         </div>
 
         <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4 font-mono text-xs tabular-nums text-[#D6DAE2]">
-          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
             Residue Theorem Total
           </p>
           <div className="mt-2.5 space-y-1.5">

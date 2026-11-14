@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { ShieldCheck, ArrowRight } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { computePartialDerivatives2D } from "@/components/visualizations/primitives";
+import { computePartialDerivatives2D } from "@/components/visualizations/primitives/core2d";
 
 type EulerLabMode = "direct-second-order" | "composite-deduction";
 
@@ -187,7 +187,7 @@ export function EulersTheoremSecondOrderLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#FBEAA4] text-[#FBEAA4] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[var(--bg-canvas)]">
               LAB 3.1.7B • 2ND-ORDER EULER IDENTITY &amp; DISGUISED HOMOGENEITY
             </span>
           </div>
@@ -206,7 +206,7 @@ export function EulersTheoremSecondOrderLab() {
             }}
             className={`px-3 py-1.5 text-xs font-sans border ${
               mode === "direct-second-order"
-                ? "border-[#FBEAA4] bg-[#FBEAA4]/15 text-[var(--text-primary)]"
+                ? "border-[var(--math-ink-diff)] bg-[#FBEAA4]/15 text-[var(--text-primary)]"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
             }`}
           >
@@ -221,7 +221,7 @@ export function EulersTheoremSecondOrderLab() {
             }}
             className={`px-3 py-1.5 text-xs font-sans border ${
               mode === "composite-deduction"
-                ? "border-[#FBEAA4] bg-[#FBEAA4]/15 text-[var(--text-primary)]"
+                ? "border-[var(--math-ink-diff)] bg-[#FBEAA4]/15 text-[var(--text-primary)]"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
             }`}
           >
@@ -239,7 +239,7 @@ export function EulersTheoremSecondOrderLab() {
                 <span className="text-[var(--text-secondary)]">
                   Homogeneity Degree n
                 </span>
-                <span className="font-tabular-mono text-[#FBEAA4]">
+                <span className="font-tabular-mono text-[var(--math-ink-diff)]">
                   n = {degN.toFixed(1)}
                 </span>
               </div>
@@ -258,7 +258,7 @@ export function EulersTheoremSecondOrderLab() {
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">Point x₀</span>
-                <span className="font-tabular-mono text-[#8D9FCE]">
+                <span className="font-tabular-mono text-[var(--math-ink-x)]">
                   {px.toFixed(2)}
                 </span>
               </div>
@@ -277,7 +277,7 @@ export function EulersTheoremSecondOrderLab() {
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">Point y₀</span>
-                <span className="font-tabular-mono text-[#96B898]">
+                <span className="font-tabular-mono text-[var(--math-ink-y)]">
                   {py.toFixed(2)}
                 </span>
               </div>
@@ -304,25 +304,25 @@ export function EulersTheoremSecondOrderLab() {
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs font-tabular-mono">
               <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
                 <div className="text-[var(--text-muted)]">x² f_xx</div>
-                <div className="mt-1 text-[#8D9FCE] text-sm">
+                <div className="mt-1 text-[var(--math-ink-x)] text-sm">
                   {directStats.termXX.toFixed(4)}
                 </div>
               </div>
               <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
                 <div className="text-[var(--text-muted)]">2xy f_xy</div>
-                <div className="mt-1 text-[#96B898] text-sm">
+                <div className="mt-1 text-[var(--math-ink-y)] text-sm">
                   {directStats.termXY.toFixed(4)}
                 </div>
               </div>
               <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
                 <div className="text-[var(--text-muted)]">y² f_yy</div>
-                <div className="mt-1 text-[#D35323] text-sm">
+                <div className="mt-1 text-[var(--math-ink-sweep)] text-sm">
                   {directStats.termYY.toFixed(4)}
                 </div>
               </div>
-              <div className="p-3 border border-[#FBEAA4]/50 bg-[var(--bg-panel)]">
+              <div className="p-3 border border-[var(--math-ink-diff)]/50 bg-[var(--bg-panel)]">
                 <div className="text-[var(--text-muted)]">Sum = n(n − 1)f</div>
-                <div className="mt-1 text-[#FBEAA4] text-sm font-semibold">
+                <div className="mt-1 text-[var(--math-ink-diff)] text-sm font-semibold">
                   {directStats.lhs2.toFixed(4)} = {directStats.rhs2.toFixed(4)}
                 </div>
               </div>
@@ -346,7 +346,7 @@ export function EulersTheoremSecondOrderLab() {
                 }}
                 className={`px-3 py-1.5 text-xs font-sans border ${
                   compId === c.id
-                    ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)]"
+                    ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
                 }`}
               >
@@ -359,7 +359,7 @@ export function EulersTheoremSecondOrderLab() {
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">Probe x₀</span>
-                <span className="font-tabular-mono text-[#8D9FCE]">
+                <span className="font-tabular-mono text-[var(--math-ink-x)]">
                   {px.toFixed(2)}
                 </span>
               </div>
@@ -378,7 +378,7 @@ export function EulersTheoremSecondOrderLab() {
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">Probe y₀</span>
-                <span className="font-tabular-mono text-[#96B898]">
+                <span className="font-tabular-mono text-[var(--math-ink-y)]">
                   {py.toFixed(2)}
                 </span>
               </div>
@@ -397,7 +397,7 @@ export function EulersTheoremSecondOrderLab() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
             <div className="lg:col-span-6 p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
-              <div className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091]">
+              <div className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)]">
                 Step-by-Step Symbolic Deduction
               </div>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] overflow-x-auto text-xs">
@@ -414,7 +414,7 @@ export function EulersTheoremSecondOrderLab() {
 
             <div className="lg:col-span-6 space-y-3">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <div className="text-xs font-sans font-semibold text-[#96B898] flex items-center gap-1.5">
+                <div className="text-xs font-sans font-semibold text-[var(--math-ink-y)] flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   Live 1st-Order Verification
                 </div>
@@ -423,14 +423,14 @@ export function EulersTheoremSecondOrderLab() {
                   <span className="text-[var(--text-muted)]">
                     Numeric x uₓ + y u_y:
                   </span>
-                  <span className="text-[#96B898]">
+                  <span className="text-[var(--math-ink-y)]">
                     {compStats.lhs1.toFixed(5)} ≈ {compStats.phi1.toFixed(5)}
                   </span>
                 </div>
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <div className="text-xs font-sans font-semibold text-[#D35323] flex items-center gap-1.5">
+                <div className="text-xs font-sans font-semibold text-[var(--math-ink-sweep)] flex items-center gap-1.5">
                   <ArrowRight className="w-3.5 h-3.5" />
                   Live 2nd-Order Verification
                 </div>
@@ -439,7 +439,7 @@ export function EulersTheoremSecondOrderLab() {
                   <span className="text-[var(--text-muted)]">
                     x²u_xx + 2xy u_xy + y²u_yy:
                   </span>
-                  <span className="text-[#D35323]">
+                  <span className="text-[var(--math-ink-sweep)]">
                     {compStats.lhs2.toFixed(4)} ≈ {compStats.phi2.toFixed(4)}
                   </span>
                 </div>

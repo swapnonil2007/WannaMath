@@ -409,7 +409,7 @@ export function VectorFieldStreamlineExplorerLab() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
             Laboratory 3.3.3.2 • Vector Fields, Streamlines &amp; Velocity-Gradient Matrix
           </span>
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -427,7 +427,7 @@ export function VectorFieldStreamlineExplorerLab() {
             onClick={() => setUnitArrows((v) => !v)}
             className={`px-3 py-1.5 text-xs font-tabular-mono border transition-colors flex items-center gap-1.5 ${
               unitArrows
-                ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
+                ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-muted)]"
             }`}
           >
@@ -439,7 +439,7 @@ export function VectorFieldStreamlineExplorerLab() {
             onClick={() => setShowContours((v) => !v)}
             className={`px-3 py-1.5 text-xs font-tabular-mono border transition-colors flex items-center gap-1.5 ${
               showContours
-                ? "border-[#FBEAA4] bg-[#FBEAA4]/15 text-[#FBEAA4]"
+                ? "border-[var(--math-ink-diff)] bg-[#FBEAA4]/15 text-[var(--math-ink-diff)]"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-muted)]"
             }`}
           >
@@ -460,11 +460,11 @@ export function VectorFieldStreamlineExplorerLab() {
               onClick={() => handleSelectPreset(p)}
               className={`p-3 border text-left transition-colors ${
                 selected
-                  ? "border-[#8D9FCE] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-x)] bg-[var(--bg-canvas)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
               }`}
             >
-              <span className="text-[11px] font-tabular-mono text-[#8D9FCE] font-semibold block mb-1">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-x)] font-semibold block mb-1">
                 {p.categoryBadge}
               </span>
               <div className="text-xs font-math-serif text-[var(--text-primary)] leading-snug">
@@ -515,7 +515,7 @@ export function VectorFieldStreamlineExplorerLab() {
         <div className="lg:col-span-6 space-y-3">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
             <span className="flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#D35323]" />
+              <Sparkles className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
               <span>Click to relocate tracer seed ({activeProbe[0].toFixed(2)}, {activeProbe[1].toFixed(2)})</span>
             </span>
             <span>z-slice = {zSlice.toFixed(1)}</span>
@@ -636,7 +636,7 @@ export function VectorFieldStreamlineExplorerLab() {
 
           {/* z-slice slider */}
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#029091]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-z)]">
               <span>2D Plane Height Slice z₀ (for 3D fields)</span>
               <span>z₀ = {zSlice.toFixed(2)}</span>
             </div>
@@ -648,6 +648,7 @@ export function VectorFieldStreamlineExplorerLab() {
               value={zSlice}
               onChange={(e) => setZSlice(parseFloat(e.target.value))}
               className="w-full accent-[#029091]"
+              aria-label="2D plane height slice z₀"
             />
           </div>
         </div>
@@ -665,7 +666,7 @@ export function VectorFieldStreamlineExplorerLab() {
           {/* Explanation & Velocity Gradient Matrix DF */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
-              <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] flex items-center gap-1.5">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] flex items-center gap-1.5">
                 <Compass className="w-3.5 h-3.5" />
                 <span>VELOCITY-GRADIENT TENSOR DF(p) AT SEED</span>
               </span>
@@ -681,25 +682,25 @@ export function VectorFieldStreamlineExplorerLab() {
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-center pt-1">
                   <div className="p-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                    <span className="text-[10px] text-[#8D9FCE] block">∂P/∂x</span>
+                    <span className="text-[10px] text-[var(--math-ink-x)] block">∂P/∂x</span>
                     <span className="text-[var(--text-primary)] font-semibold">
                       {fieldData.dP.fx.toFixed(3)}
                     </span>
                   </div>
                   <div className="p-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                    <span className="text-[10px] text-[#D5658B] block">∂P/∂y</span>
+                    <span className="text-[10px] text-[var(--math-ink-lower)] block">∂P/∂y</span>
                     <span className="text-[var(--text-primary)] font-semibold">
                       {fieldData.dP.fy.toFixed(3)}
                     </span>
                   </div>
                   <div className="p-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                    <span className="text-[10px] text-[#D5658B] block">∂Q/∂x</span>
+                    <span className="text-[10px] text-[var(--math-ink-lower)] block">∂Q/∂x</span>
                     <span className="text-[var(--text-primary)] font-semibold">
                       {fieldData.dQ.fx.toFixed(3)}
                     </span>
                   </div>
                   <div className="p-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                    <span className="text-[10px] text-[#96B898] block">∂Q/∂y</span>
+                    <span className="text-[10px] text-[var(--math-ink-y)] block">∂Q/∂y</span>
                     <span className="text-[var(--text-primary)] font-semibold">
                       {fieldData.dQ.fy.toFixed(3)}
                     </span>
@@ -709,19 +710,19 @@ export function VectorFieldStreamlineExplorerLab() {
 
               <div className="space-y-2 text-xs font-tabular-mono">
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] flex justify-between items-center">
-                  <span className="text-[#D35323]">Expansion (tr = ∇·F)</span>
+                  <span className="text-[var(--math-ink-sweep)]">Expansion (tr = ∇·F)</span>
                   <span className="font-semibold text-[var(--text-primary)]">
                     {fieldData.div3d.toFixed(3)}
                   </span>
                 </div>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] flex justify-between items-center">
-                  <span className="text-[#FBEAA4]">Spin ½(∂Q/∂x - ∂P/∂y)</span>
+                  <span className="text-[var(--math-ink-diff)]">Spin ½(∂Q/∂x - ∂P/∂y)</span>
                   <span className="font-semibold text-[var(--text-primary)]">
                     {fieldData.spinRate.toFixed(3)} rad/s
                   </span>
                 </div>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] flex justify-between items-center">
-                  <span className="text-[#029091]">Shear ½(∂Q/∂x + ∂P/∂y)</span>
+                  <span className="text-[var(--math-ink-z)]">Shear ½(∂Q/∂x + ∂P/∂y)</span>
                   <span className="font-semibold text-[var(--text-primary)]">
                     {fieldData.shearRate.toFixed(3)}
                   </span>

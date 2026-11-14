@@ -8,7 +8,7 @@ import { compileMathExpression } from "@/lib/mathParser";
 import {
   SvgCoordinatePlane2D,
   integrate1DGaussLegendre,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 type LabMode = "variation" | "cauchy-euler";
 
@@ -276,7 +276,7 @@ export function VariationOfParametersCauchyEulerLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#029091]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)]">
             <span>Lab 3.1.11B</span>
             <span>•</span>
             <span>General Forcing &amp; Equidimensional Pullback</span>
@@ -310,7 +310,7 @@ export function VariationOfParametersCauchyEulerLab() {
             onClick={() => setMode("cauchy-euler")}
             className={`px-3 py-1.5 text-xs font-sans transition-colors ${
               mode === "cauchy-euler"
-                ? "bg-[#029091] text-[#FFFBE4] font-semibold"
+                ? "bg-[#016869] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -330,7 +330,7 @@ export function VariationOfParametersCauchyEulerLab() {
                   onClick={() => selectVariationPreset(p)}
                   className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                     p.id === vPreset.id
-                      ? "border-[#D5658B] bg-[var(--bg-canvas)] text-[#D5658B] font-medium"
+                      ? "border-[var(--math-ink-lower)] bg-[var(--bg-canvas)] text-[var(--math-ink-lower)] font-medium"
                       : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 >
@@ -410,7 +410,7 @@ export function VariationOfParametersCauchyEulerLab() {
                   <span className="w-3 h-0.5 bg-[#8D9FCE] inline-block" /> u₁(x)
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <span className="w-3 h-0.5 border-t-2 border-dashed border-[#96B898] inline-block" />{" "}
+                  <span className="w-3 h-0.5 border-t-2 border-dashed border-[var(--math-ink-y)] inline-block" />{" "}
                   u₂(x)
                 </span>
               </div>
@@ -483,7 +483,7 @@ export function VariationOfParametersCauchyEulerLab() {
                   <span className="w-3 h-0.5 bg-[#8D9FCE] inline-block" /> g(x)
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <span className="w-3 h-0.5 border-t-2 border-dashed border-[#FBEAA4] inline-block" />{" "}
+                  <span className="w-3 h-0.5 border-t-2 border-dashed border-[var(--math-ink-diff)] inline-block" />{" "}
                   y_p&apos;&apos; + py_p&apos; + qy_p (matches g)
                 </span>
               </div>
@@ -505,7 +505,7 @@ export function VariationOfParametersCauchyEulerLab() {
                 key={cp.id}
                 type="button"
                 onClick={() => selectCauchyPreset(cp)}
-                className="px-3 py-1.5 text-xs font-sans border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[#029091] hover:text-[var(--text-primary)] transition-colors"
+                className="px-3 py-1.5 text-xs font-sans border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--math-ink-z)] hover:text-[var(--text-primary)] transition-colors"
               >
                 {cp.label}
               </button>
@@ -517,7 +517,7 @@ export function VariationOfParametersCauchyEulerLab() {
             <div className="space-y-1">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">a (x²y&apos;&apos;)</span>
-                <span className="font-tabular-mono text-[#8D9FCE]">
+                <span className="font-tabular-mono text-[var(--math-ink-x)]">
                   {ceA.toFixed(1)}
                 </span>
               </div>
@@ -536,7 +536,7 @@ export function VariationOfParametersCauchyEulerLab() {
             <div className="space-y-1">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">b (xy&apos;)</span>
-                <span className="font-tabular-mono text-[#96B898]">
+                <span className="font-tabular-mono text-[var(--math-ink-y)]">
                   {ceB.toFixed(1)}
                 </span>
               </div>
@@ -555,7 +555,7 @@ export function VariationOfParametersCauchyEulerLab() {
             <div className="space-y-1">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">c (y)</span>
-                <span className="font-tabular-mono text-[#029091]">
+                <span className="font-tabular-mono text-[var(--math-ink-z)]">
                   {ceC.toFixed(1)}
                 </span>
               </div>
@@ -576,7 +576,7 @@ export function VariationOfParametersCauchyEulerLab() {
                 <span className="text-[var(--text-secondary)]">
                   Synced Probe <KaTeXMath math="x_0 = e^{t_0}" />
                 </span>
-                <span className="font-tabular-mono text-[#D35323]">
+                <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                   x₀={xProbe.toFixed(2)} | t₀={cauchyModel.tProbe.toFixed(2)}
                 </span>
               </div>
@@ -612,7 +612,7 @@ export function VariationOfParametersCauchyEulerLab() {
                 }`}
               />
             </div>
-            <span className="inline-flex items-center gap-1.5 text-xs font-tabular-mono text-[#029091]">
+            <span className="inline-flex items-center gap-1.5 text-xs font-tabular-mono text-[var(--math-ink-z)]">
               <ArrowRightLeft className="w-3.5 h-3.5" /> Log Pullback t = ln(x)
             </span>
           </div>

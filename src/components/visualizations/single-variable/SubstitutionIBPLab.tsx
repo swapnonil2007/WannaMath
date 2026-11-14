@@ -6,7 +6,7 @@ import { KaTeXMath } from "@/components/math/KaTeXMath";
 import {
   SvgCoordinatePlane2D,
   integrate1DGaussLegendre,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 type SubIbpMode = "usub" | "ibp";
 
@@ -248,7 +248,7 @@ export function SubstitutionIBPLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#96B898]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)]">
             <span>Lab 1.3.3A</span>
             <span>•</span>
             <span>Integration Techniques Geometry</span>
@@ -280,7 +280,7 @@ export function SubstitutionIBPLab() {
             onClick={() => setMode("usub")}
             className={`px-3 py-1.5 text-xs font-sans transition-colors ${
               mode === "usub"
-                ? "bg-[#029091] text-[#FFFBE4] font-semibold"
+                ? "bg-[#016869] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -300,7 +300,7 @@ export function SubstitutionIBPLab() {
                   onClick={() => selectIbpPreset(p)}
                   className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                     p.id === ibpPreset.id
-                      ? "border-[#96B898] bg-[var(--bg-canvas)] text-[#96B898] font-medium"
+                      ? "border-[var(--math-ink-y)] bg-[var(--bg-canvas)] text-[var(--math-ink-y)] font-medium"
                       : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 >
@@ -323,7 +323,7 @@ export function SubstitutionIBPLab() {
                 Upper Parameter <KaTeXMath math="t_1" /> ({ibpPreset.uLabel},{" "}
                 {ibpPreset.vLabel})
               </span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 t₁ = {tUpper.toFixed(2)}
               </span>
             </div>
@@ -426,16 +426,16 @@ export function SubstitutionIBPLab() {
                 <span className="font-sans uppercase tracking-wider text-[var(--text-secondary)] block">
                   Rectangular Area Balance
                 </span>
-                <div className="text-[#029091]">
+                <div className="text-[var(--math-ink-z)]">
                   ∫ u dv (Teal) = {ibpModel.intUdv.toFixed(5)}
                 </div>
-                <div className="text-[#8D9FCE]">
+                <div className="text-[var(--math-ink-x)]">
                   ∫ v du (Periwinkle) = {ibpModel.intVdu.toFixed(5)}
                 </div>
-                <div className="border-t border-[var(--border-subtle)] pt-2 text-[#FBEAA4] font-semibold">
+                <div className="border-t border-[var(--border-subtle)] pt-2 text-[var(--math-ink-diff)] font-semibold">
                   Sum = {(ibpModel.intUdv + ibpModel.intVdu).toFixed(5)}
                 </div>
-                <div className="text-[#D35323] font-semibold">
+                <div className="text-[var(--math-ink-sweep)] font-semibold">
                   u₁v₁ - u₀v₀ = {ibpModel.cornerDiff.toFixed(5)}
                 </div>
               </div>
@@ -456,7 +456,7 @@ export function SubstitutionIBPLab() {
                 onClick={() => selectUSubPreset(p)}
                 className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                   p.id === uSubPreset.id
-                    ? "border-[#029091] bg-[var(--bg-canvas)] text-[#029091] font-medium"
+                    ? "border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-[var(--math-ink-z)] font-medium"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
@@ -471,7 +471,7 @@ export function SubstitutionIBPLab() {
                 Strip Cursor <KaTeXMath math="x_0 \in [a, b]" /> → Mapped{" "}
                 <KaTeXMath math="u_0 = g(x_0)" />
               </span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 dx = {uSubModel.dx.toFixed(2)} → du = g&apos;(x₀)dx ={" "}
                 {uSubModel.du.toFixed(3)}
               </span>
@@ -494,7 +494,7 @@ export function SubstitutionIBPLab() {
                 <span className="font-medium text-[var(--text-primary)]">
                   1. Original Domain <KaTeXMath math="[a, b]" />
                 </span>
-                <span className="font-tabular-mono text-[#8D9FCE]">
+                <span className="font-tabular-mono text-[var(--math-ink-x)]">
                   Area = {uSubModel.xArea.toFixed(5)}
                 </span>
               </div>
@@ -540,7 +540,7 @@ export function SubstitutionIBPLab() {
                 <span className="font-medium text-[var(--text-primary)]">
                   2. Substituted Domain <KaTeXMath math="[g(a), g(b)]" />
                 </span>
-                <span className="font-tabular-mono text-[#029091]">
+                <span className="font-tabular-mono text-[var(--math-ink-z)]">
                   Area = {uSubModel.uArea.toFixed(5)}
                 </span>
               </div>

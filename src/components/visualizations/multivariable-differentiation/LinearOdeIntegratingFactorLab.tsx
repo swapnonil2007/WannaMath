@@ -5,7 +5,7 @@ import { RotateCcw, Sparkles, Compass } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface LdePreset {
   id: string;
@@ -262,10 +262,10 @@ export function LinearOdeIntegratingFactorLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]">
               LAB 3.1.9A • LINEAR ODE y&apos; + P(x)y = Q(x) &amp; INTEGRATING FACTOR μ(x)
             </span>
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[#96B898] text-[#96B898] bg-[#96B898]/10">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/10">
               IVP: y({x0.toFixed(2)}) = {y0.toFixed(2)}
             </span>
           </div>
@@ -294,7 +294,7 @@ export function LinearOdeIntegratingFactorLab() {
               onClick={() => selectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 p.id === presetId
-                  ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
               }`}
             >
@@ -332,9 +332,9 @@ export function LinearOdeIntegratingFactorLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Initial <strong className="text-[#8D9FCE] font-mono">x₀</strong> (or click graph)
+                Initial <strong className="text-[var(--math-ink-x)] font-mono">x₀</strong> (or click graph)
               </span>
-              <span className="font-tabular-mono text-[#8D9FCE]">
+              <span className="font-tabular-mono text-[var(--math-ink-x)]">
                 x₀ = {x0.toFixed(2)}
               </span>
             </div>
@@ -353,9 +353,9 @@ export function LinearOdeIntegratingFactorLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Initial <strong className="text-[#D35323] font-mono">y₀</strong>
+                Initial <strong className="text-[var(--math-ink-sweep)] font-mono">y₀</strong>
               </span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 y₀ = {y0.toFixed(2)}
               </span>
             </div>
@@ -373,7 +373,7 @@ export function LinearOdeIntegratingFactorLab() {
 
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] flex items-center justify-between">
             <span className="text-xs font-sans text-[var(--text-secondary)] flex items-center gap-1.5">
-              <Compass className="w-3.5 h-3.5 text-[#029091]" />
+              <Compass className="w-3.5 h-3.5 text-[var(--math-ink-z)]" />
               Show Family Curves (varying C)
             </span>
             <input
@@ -393,7 +393,7 @@ export function LinearOdeIntegratingFactorLab() {
             <span className="text-xs font-sans font-semibold text-[var(--text-primary)]">
               1. Slope Field y&apos; = Q(x) − P(x)y &amp; Integral Curves (Click to Place IVP)
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#D35323]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)]">
               y&apos;(x₀) = {sim.slopeAtInit.toFixed(3)}
             </span>
           </div>
@@ -526,9 +526,9 @@ export function LinearOdeIntegratingFactorLab() {
       {/* Solution & Note Footer */}
       {preset && (
         <div className="border-t border-[var(--border-subtle)] px-6 py-4 bg-[var(--bg-elevated)]">
-          <div className="p-3 border border-[#D35323]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="p-3 border border-[var(--math-ink-sweep)]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="space-y-1">
-              <div className="text-xs font-sans font-semibold text-[#D35323] inline-flex items-center gap-1.5">
+              <div className="text-xs font-sans font-semibold text-[var(--math-ink-sweep)] inline-flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
                 <KaTeXMath math={preset.muLatex} />
               </div>

@@ -14,6 +14,7 @@ import {
   createVectorArrow3D,
   computePartialDerivatives2D,
 } from "@/components/visualizations/primitives";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 interface TangentPreset {
   id: string;
@@ -222,7 +223,7 @@ export function PartialDerivativeTangentPlaneLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#96B898] text-[#96B898] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[var(--bg-canvas)]">
               LAB 3.1.2 • PARTIAL DERIVATIVES &amp; 3D TANGENT PLANE
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -244,7 +245,7 @@ export function PartialDerivativeTangentPlaneLab() {
                 onClick={() => handleSelectPreset(p)}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#96B898] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-y)] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -278,7 +279,7 @@ export function PartialDerivativeTangentPlaneLab() {
             <label key={item.label} className="block space-y-1">
               <span
                 className="text-[11px] font-tabular-mono uppercase tracking-wider block"
-                style={{ color: item.color }}
+                style={{ color: getAdaptiveAccentInk(item.color) }}
               >
                 Bound <KaTeXMath math={item.label} />
               </span>
@@ -289,7 +290,7 @@ export function PartialDerivativeTangentPlaneLab() {
                   item.set(e.target.value);
                   setIsCustom(true);
                 }}
-                className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[#96B898]"
+                className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--math-ink-y)]"
               />
             </label>
           ))}
@@ -307,13 +308,13 @@ export function PartialDerivativeTangentPlaneLab() {
             titleBadge="3D Surface, Coordinate Slice Curves & Spanned Tangent Plane"
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#8D9FCE]">
+                <span className="text-[var(--math-ink-x)]">
                   ∂f/∂x = {partials.fx.toFixed(3)}
                 </span>
-                <span className="text-[#96B898]">
+                <span className="text-[var(--math-ink-y)]">
                   ∂f/∂y = {partials.fy.toFixed(3)}
                 </span>
-                <span className="text-[#FBEAA4]">
+                <span className="text-[var(--math-ink-diff)]">
                   z₀ = f({safeX0.toFixed(2)}, {safeY0.toFixed(2)}) = {partials.f0.toFixed(3)}
                 </span>
               </div>
@@ -504,7 +505,7 @@ export function PartialDerivativeTangentPlaneLab() {
               <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
                 FIRST-ORDER TAYLOR TANGENT PLANE AT (x₀, y₀) = ({safeX0.toFixed(2)}, {safeY0.toFixed(2)})
               </span>
-              <span className="text-xs font-tabular-mono text-[#D35323]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
                 n = ⟨{(-partials.fx).toFixed(2)}, {(-partials.fy).toFixed(2)}, 1⟩
               </span>
             </div>
@@ -527,10 +528,10 @@ export function PartialDerivativeTangentPlaneLab() {
           {/* 1D Slice Plot 1: z = f(x, y0) */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs font-tabular-mono">
-              <span className="text-[#8D9FCE] font-semibold">
+              <span className="text-[var(--math-ink-x)] font-semibold">
                 1D Slice in x (Fix y₀ = {safeY0.toFixed(2)})
               </span>
-              <span className="text-[#8D9FCE]">
+              <span className="text-[var(--math-ink-x)]">
                 Slope ∂f/∂x = {partials.fx.toFixed(3)}
               </span>
             </div>
@@ -592,10 +593,10 @@ export function PartialDerivativeTangentPlaneLab() {
           {/* 1D Slice Plot 2: z = f(x0, y) */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs font-tabular-mono">
-              <span className="text-[#96B898] font-semibold">
+              <span className="text-[var(--math-ink-y)] font-semibold">
                 1D Slice in y (Fix x₀ = {safeX0.toFixed(2)})
               </span>
-              <span className="text-[#96B898]">
+              <span className="text-[var(--math-ink-y)]">
                 Slope ∂f/∂y = {partials.fy.toFixed(3)}
               </span>
             </div>
@@ -658,7 +659,7 @@ export function PartialDerivativeTangentPlaneLab() {
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">
-                <div className="flex justify-between text-xs font-tabular-mono text-[#8D9FCE]">
+                <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-x)]">
                   <span>Slice Point x₀</span>
                   <span>{safeX0.toFixed(2)}</span>
                 </div>
@@ -670,11 +671,12 @@ export function PartialDerivativeTangentPlaneLab() {
                   value={safeX0}
                   onChange={(e) => setX0(parseFloat(e.target.value))}
                   className="w-full accent-[#8D9FCE]"
+                  aria-label="Slice point x₀"
                 />
               </div>
 
               <div className="space-y-1">
-                <div className="flex justify-between text-xs font-tabular-mono text-[#96B898]">
+                <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-y)]">
                   <span>Slice Point y₀</span>
                   <span>{safeY0.toFixed(2)}</span>
                 </div>
@@ -686,12 +688,13 @@ export function PartialDerivativeTangentPlaneLab() {
                   value={safeY0}
                   onChange={(e) => setY0(parseFloat(e.target.value))}
                   className="w-full accent-[#96B898]"
+                  aria-label="Slice point y₀"
                 />
               </div>
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[var(--border-subtle)]">
-              <div className="flex items-center gap-2 text-xs font-tabular-mono text-[#FBEAA4]">
+              <div className="flex items-center gap-2 text-xs font-tabular-mono text-[var(--math-ink-diff)]">
                 <Sliders className="w-3.5 h-3.5" />
                 <span>Patch Radius: {patchRadius.toFixed(2)}</span>
                 <input
@@ -702,13 +705,14 @@ export function PartialDerivativeTangentPlaneLab() {
                   value={patchRadius}
                   onChange={(e) => setPatchRadius(parseFloat(e.target.value))}
                   className="w-24 accent-[#FBEAA4]"
+                  aria-label="Tangent plane patch radius"
                 />
               </div>
 
               <button
                 type="button"
                 onClick={() => setShowNormal((v) => !v)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-tabular-mono border border-[#D35323] text-[#D35323] bg-[var(--bg-panel)]"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-tabular-mono border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-panel)]"
               >
                 <Compass className="w-3.5 h-3.5" />
                 {showNormal ? "Normal n Visible" : "Show Normal n"}
@@ -731,18 +735,18 @@ export function PartialDerivativeTangentPlaneLab() {
                 </span>
               </div>
               <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-                <span className="text-[#FBEAA4] block text-[10px]">
+                <span className="text-[var(--math-ink-diff)] block text-[10px]">
                   Linear dz
                 </span>
-                <span className="text-[#FBEAA4] font-semibold">
+                <span className="text-[var(--math-ink-diff)] font-semibold">
                   {diffCheck.dz.toFixed(4)}
                 </span>
               </div>
               <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-                <span className="text-[#D35323] block text-[10px]">
+                <span className="text-[var(--math-ink-sweep)] block text-[10px]">
                   Error |Δz - dz|
                 </span>
-                <span className="text-[#D35323] font-semibold">
+                <span className="text-[var(--math-ink-sweep)] font-semibold">
                   {diffCheck.absErr.toFixed(4)}
                 </span>
               </div>

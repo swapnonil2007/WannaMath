@@ -6,7 +6,7 @@ import { KaTeXMath } from "@/components/math/KaTeXMath";
 import {
   SvgCoordinatePlane2D,
   integrate1DGaussLegendre,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 interface FTCPreset {
   id: string;
@@ -136,7 +136,7 @@ export function FTCAccumulationLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#029091]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)]">
             <span>Lab 1.3.2A</span>
             <span>•</span>
             <span>Fundamental Theorem of Calculus</span>
@@ -156,7 +156,7 @@ export function FTCAccumulationLab() {
           <button
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[#029091] bg-[var(--bg-canvas)] text-[#029091]"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-[var(--math-ink-z)]"
           >
             {isPlaying ? (
               <>
@@ -187,7 +187,7 @@ export function FTCAccumulationLab() {
             onClick={() => handleSelectPreset(p)}
             className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
               p.id === preset.id
-                ? "border-[#029091] bg-[var(--bg-canvas)] text-[#029091] font-medium"
+                ? "border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-[var(--math-ink-z)] font-medium"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -202,7 +202,7 @@ export function FTCAccumulationLab() {
           <span className="text-[var(--text-secondary)]">
             Upper Limit Sweep Cursor (<KaTeXMath math={`a = ${preset.anchorA.toFixed(1)}`} />)
           </span>
-          <span className="font-tabular-mono text-[#D35323] font-semibold">
+          <span className="font-tabular-mono text-[var(--math-ink-sweep)] font-semibold">
             x = {upperX.toFixed(2)} • f(x) = {model.currentF.toFixed(3)} • A(x) ={" "}
             {model.currentA.toFixed(4)}
           </span>

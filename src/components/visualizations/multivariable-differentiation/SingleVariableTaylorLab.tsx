@@ -5,7 +5,7 @@ import { Layers, RotateCcw, Sparkles } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface Taylor1DPreset {
   id: string;
@@ -242,10 +242,10 @@ export function SingleVariableTaylorLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#FBEAA4] text-[#FBEAA4] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[var(--bg-canvas)]">
               LAB 3.1.6A • 1D TAYLOR POLYNOMIAL Tₙ(x) &amp; REMAINDER
             </span>
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[#8D9FCE] text-[#8D9FCE] bg-[#8D9FCE]/10">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[var(--math-ink-x)] text-[var(--math-ink-x)] bg-[#8D9FCE]/10">
               Degree n = {effDegree} around x₀ = {centerX0.toFixed(2)}
             </span>
           </div>
@@ -274,7 +274,7 @@ export function SingleVariableTaylorLab() {
               onClick={() => selectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 presetId === p.id
-                  ? "border-[#FBEAA4] bg-[#FBEAA4]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-diff)] bg-[#FBEAA4]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
               }`}
             >
@@ -299,10 +299,10 @@ export function SingleVariableTaylorLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)] flex items-center gap-1">
-                <Layers className="w-3.5 h-3.5 text-[#D35323]" />
+                <Layers className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
                 Polynomial Degree n
               </span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 n = {effDegree}
               </span>
             </div>
@@ -321,9 +321,9 @@ export function SingleVariableTaylorLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Expansion Center <strong className="text-[#8D9FCE] font-mono">x₀</strong>
+                Expansion Center <strong className="text-[var(--math-ink-x)] font-mono">x₀</strong>
               </span>
-              <span className="font-tabular-mono text-[#8D9FCE]">
+              <span className="font-tabular-mono text-[var(--math-ink-x)]">
                 x₀ = {centerX0.toFixed(2)}
               </span>
             </div>
@@ -342,9 +342,9 @@ export function SingleVariableTaylorLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Evaluation Probe <strong className="text-[#96B898] font-mono">x</strong>
+                Evaluation Probe <strong className="text-[var(--math-ink-y)] font-mono">x</strong>
               </span>
-              <span className="font-tabular-mono text-[#96B898]">
+              <span className="font-tabular-mono text-[var(--math-ink-y)]">
                 x = {probeX.toFixed(2)}
               </span>
             </div>
@@ -370,7 +370,7 @@ export function SingleVariableTaylorLab() {
               1. Exact Curve <KaTeXMath math="f(x)" /> (Teal) vs.{" "}
               <KaTeXMath math={`T_{${effDegree}}(x)`} /> (Persimmon)
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#FBEAA4]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)]">
               x₀ = {centerX0.toFixed(2)}
             </span>
           </div>
@@ -459,7 +459,7 @@ export function SingleVariableTaylorLab() {
               2. Lagrange Remainder Error{" "}
               <KaTeXMath math={`|R_{${effDegree}}(x)| = |f(x) - T_{${effDegree}}(x)|`} />
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#B95869]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-upper)]">
               |R({probeX.toFixed(1)})| ={" "}
               {Number.isFinite(data.remAtProbe)
                 ? data.remAtProbe.toFixed(4)
@@ -523,7 +523,7 @@ export function SingleVariableTaylorLab() {
             <div className="text-[11px] font-sans text-[var(--text-muted)]">
               Exact f({probeX.toFixed(2)})
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#029091]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-z)]">
               {Number.isFinite(data.fAtProbe) ? data.fAtProbe.toFixed(5) : "NaN"}
             </div>
           </div>
@@ -531,7 +531,7 @@ export function SingleVariableTaylorLab() {
             <div className="text-[11px] font-sans text-[var(--text-muted)]">
               Taylor T_{effDegree}({probeX.toFixed(2)})
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#D35323]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-sweep)]">
               {Number.isFinite(data.tAtProbe) ? data.tAtProbe.toFixed(5) : "NaN"}
             </div>
           </div>
@@ -539,7 +539,7 @@ export function SingleVariableTaylorLab() {
             <div className="text-[11px] font-sans text-[var(--text-muted)]">
               Remainder |R_{effDegree}|
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#B95869]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-upper)]">
               {Number.isFinite(data.remAtProbe)
                 ? data.remAtProbe.toExponential(2)
                 : "NaN"}
@@ -549,16 +549,16 @@ export function SingleVariableTaylorLab() {
             <div className="text-[11px] font-sans text-[var(--text-muted)]">
               Term Coefficients c_k
             </div>
-            <div className="mt-1 text-[11px] font-tabular-mono text-[#FBEAA4] truncate">
+            <div className="mt-1 text-[11px] font-tabular-mono text-[var(--math-ink-diff)] truncate">
               {data.polyTerms.map((t) => t.coeff.toFixed(2)).join(", ")}
             </div>
           </div>
         </div>
 
         {preset && (
-          <div className="p-3 border border-[#FBEAA4]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="p-3 border border-[var(--math-ink-diff)]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="space-y-1">
-              <div className="text-xs font-sans font-semibold text-[#FBEAA4] inline-flex items-center gap-1.5">
+              <div className="text-xs font-sans font-semibold text-[var(--math-ink-diff)] inline-flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
                 {preset.label}
               </div>

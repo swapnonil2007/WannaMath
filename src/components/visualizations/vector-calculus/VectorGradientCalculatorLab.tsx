@@ -422,7 +422,7 @@ export function VectorGradientCalculatorLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]">
               LAB 3.3.1 • GRADIENT CALCULATOR &amp; NORMAL VISUALIZER
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -447,7 +447,7 @@ export function VectorGradientCalculatorLab() {
             onClick={() => setDimMode("2d")}
             className={`px-3 py-1.5 text-xs font-tabular-mono transition-colors ${
               dimMode === "2d"
-                ? "bg-[#D35323] text-[#1E1F22] font-semibold"
+                ? "bg-[#9E360E] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -458,7 +458,7 @@ export function VectorGradientCalculatorLab() {
             onClick={() => setDimMode("3d")}
             className={`px-3 py-1.5 text-xs font-tabular-mono border-l border-[var(--border-subtle)] transition-colors ${
               dimMode === "3d"
-                ? "bg-[#029091] text-[#1E1F22] font-semibold"
+                ? "bg-[#016869] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -481,7 +481,7 @@ export function VectorGradientCalculatorLab() {
                       onClick={() => selectPreset2d(p)}
                       className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                         active
-                          ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
+                          ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
                           : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                       }`}
                     >
@@ -498,7 +498,7 @@ export function VectorGradientCalculatorLab() {
                       onClick={() => selectPreset3d(p)}
                       className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                         active
-                          ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
+                          ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
                           : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                       }`}
                     >
@@ -550,7 +550,7 @@ export function VectorGradientCalculatorLab() {
         {/* Evaluation Point Input Bar */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
           <label className="block space-y-1">
-            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
+            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
               Point <KaTeXMath math="x_0" />
             </span>
             <input
@@ -562,12 +562,12 @@ export function VectorGradientCalculatorLab() {
                   ? setX0_2d(e.target.value)
                   : setX0_3d(e.target.value)
               }
-              className="w-full px-2.5 py-1.5 text-sm font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[#8D9FCE]"
+              className="w-full px-2.5 py-1.5 text-sm font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--math-ink-x)]"
             />
           </label>
 
           <label className="block space-y-1">
-            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
               Point <KaTeXMath math="y_0" />
             </span>
             <input
@@ -579,13 +579,13 @@ export function VectorGradientCalculatorLab() {
                   ? setY0_2d(e.target.value)
                   : setY0_3d(e.target.value)
               }
-              className="w-full px-2.5 py-1.5 text-sm font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[#96B898]"
+              className="w-full px-2.5 py-1.5 text-sm font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--math-ink-y)]"
             />
           </label>
 
           {dimMode === "3d" && (
             <label className="block space-y-1">
-              <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#029091] block">
+              <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
                 Point <KaTeXMath math="z_0" />
               </span>
               <input
@@ -593,13 +593,13 @@ export function VectorGradientCalculatorLab() {
                 step="0.1"
                 value={z0_3d}
                 onChange={(e) => setZ0_3d(e.target.value)}
-                className="w-full px-2.5 py-1.5 text-sm font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[#029091]"
+                className="w-full px-2.5 py-1.5 text-sm font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--math-ink-z)]"
               />
             </label>
           )}
 
           <label className="block space-y-1">
-            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#AAA36D] block">
+            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-grid)] block">
               View Radius (±R)
             </span>
             <select
@@ -609,7 +609,7 @@ export function VectorGradientCalculatorLab() {
                   ? setRadius2d(Number(e.target.value))
                   : setRadius3d(Number(e.target.value))
               }
-              className="w-full px-2.5 py-1.5 text-sm font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[#AAA36D]"
+              className="w-full px-2.5 py-1.5 text-sm font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--math-ink-grid)]"
             >
               <option value={1.6}>±1.6</option>
               <option value={2.2}>±2.2</option>
@@ -646,26 +646,26 @@ export function VectorGradientCalculatorLab() {
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
                 {dimMode === "2d" ? (
                   <>
-                    <span className="text-[#FBEAA4]">
+                    <span className="text-[var(--math-ink-diff)]">
                       f(P) = {fmtSigned(gradStats2d.f0)}
                     </span>
-                    <span className="text-[#D35323] font-semibold">
+                    <span className="text-[var(--math-ink-sweep)] font-semibold">
                       ∇f(P) = ⟨{fmtSigned(gradStats2d.fx)}, {fmtSigned(gradStats2d.fy)}⟩
                     </span>
-                    <span className="text-[#96B898]">
+                    <span className="text-[var(--math-ink-y)]">
                       ‖∇f‖ = {fmtSigned(gradStats2d.gradMagnitude)}
                     </span>
                   </>
                 ) : (
                   <>
-                    <span className="text-[#FBEAA4]">
+                    <span className="text-[var(--math-ink-diff)]">
                       φ(P) = {fmtSigned(gradStats3d.f0)}
                     </span>
-                    <span className="text-[#D35323] font-semibold">
+                    <span className="text-[var(--math-ink-sweep)] font-semibold">
                       ∇φ(P) = ⟨{fmtSigned(gradStats3d.fx)}, {fmtSigned(gradStats3d.fy)},{" "}
                       {fmtSigned(gradStats3d.fz)}⟩
                     </span>
-                    <span className="text-[#96B898]">
+                    <span className="text-[var(--math-ink-y)]">
                       ‖∇φ‖ = {fmtSigned(gradStats3d.gradMagnitude)}
                     </span>
                   </>
@@ -911,7 +911,7 @@ export function VectorGradientCalculatorLab() {
           {/* Worked Gradient Breakdown Box */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-3">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] font-semibold flex items-center gap-1.5">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] font-semibold flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
                 Step-by-Step Gradient Evaluation at P
               </span>
@@ -933,7 +933,7 @@ export function VectorGradientCalculatorLab() {
                     <span className="text-[10px] text-[var(--text-muted)] block">
                       Max Ascent Rate ‖∇f‖
                     </span>
-                    <span className="text-[#D35323] font-semibold">
+                    <span className="text-[var(--math-ink-sweep)] font-semibold">
                       {fmtSigned(gradStats2d.gradMagnitude)}
                     </span>
                   </div>
@@ -941,7 +941,7 @@ export function VectorGradientCalculatorLab() {
                     <span className="text-[10px] text-[var(--text-muted)] block">
                       Unit Normal n̂ = ∇f/‖∇f‖
                     </span>
-                    <span className="text-[#8D9FCE]">
+                    <span className="text-[var(--math-ink-x)]">
                       ⟨{fmtSigned(gradStats2d.ux)}, {fmtSigned(gradStats2d.uy)}⟩
                     </span>
                   </div>
@@ -949,7 +949,7 @@ export function VectorGradientCalculatorLab() {
                     <span className="text-[10px] text-[var(--text-muted)] block">
                       Tangent Plane z = L(x,y)
                     </span>
-                    <span className="text-[#FBEAA4]">
+                    <span className="text-[var(--math-ink-diff)]">
                       {fmtSigned(gradStats2d.f0)} + ({fmtSigned(gradStats2d.fx)})Δx + (
                       {fmtSigned(gradStats2d.fy)})Δy
                     </span>
@@ -971,7 +971,7 @@ export function VectorGradientCalculatorLab() {
                     <span className="text-[10px] text-[var(--text-muted)] block">
                       Normal Magnitude ‖∇φ‖
                     </span>
-                    <span className="text-[#D35323] font-semibold">
+                    <span className="text-[var(--math-ink-sweep)] font-semibold">
                       {fmtSigned(gradStats3d.gradMagnitude)}
                     </span>
                   </div>
@@ -979,7 +979,7 @@ export function VectorGradientCalculatorLab() {
                     <span className="text-[10px] text-[var(--text-muted)] block">
                       Unit Surface Normal n̂
                     </span>
-                    <span className="text-[#8D9FCE]">
+                    <span className="text-[var(--math-ink-x)]">
                       ⟨{fmtSigned(gradStats3d.ux)}, {fmtSigned(gradStats3d.uy)},{" "}
                       {fmtSigned(gradStats3d.uz)}⟩
                     </span>
@@ -988,14 +988,14 @@ export function VectorGradientCalculatorLab() {
                     <span className="text-[10px] text-[var(--text-muted)] block">
                       Level Surface Constant
                     </span>
-                    <span className="text-[#FBEAA4]">
+                    <span className="text-[var(--math-ink-diff)]">
                       φ(P) = {fmtSigned(gradStats3d.f0)}
                     </span>
                   </div>
                 </div>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] font-tabular-mono text-[11px] text-[var(--text-secondary)]">
                   Tangent Plane to φ = {fmtSigned(gradStats3d.f0)} at P:{" "}
-                  <span className="text-[#FBEAA4]">
+                  <span className="text-[var(--math-ink-diff)]">
                     ({fmtSigned(gradStats3d.fx)})(x − {fmtSigned(parsedP3.x)}) + (
                     {fmtSigned(gradStats3d.fy)})(y − {fmtSigned(parsedP3.y)}) + (
                     {fmtSigned(gradStats3d.fz)})(z − {fmtSigned(parsedP3.z)}) = 0
@@ -1011,7 +1011,7 @@ export function VectorGradientCalculatorLab() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Compass className="w-3.5 h-3.5 text-[#D35323]" aria-hidden="true" />
+                <Compass className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" aria-hidden="true" />
                 {dimMode === "2d"
                   ? "2D Level Contours & Gradient Vector Field"
                   : `Horizontal Cross-Section Contour z = ${fmtSigned(parsedP3.z)}`}
@@ -1162,7 +1162,7 @@ export function VectorGradientCalculatorLab() {
                         <text
                           x={toSvgX(gxEnd) + 6}
                           y={toSvgY(gyEnd) - 6}
-                          fill="#D35323"
+                          fill="var(--math-ink-sweep)"
                           fontSize="11"
                           fontFamily="monospace"
                           fontWeight="700"
@@ -1189,7 +1189,7 @@ export function VectorGradientCalculatorLab() {
             {/* Component Cards */}
             <div className="grid grid-cols-3 gap-2">
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                <span className="text-[10px] font-tabular-mono text-[#8D9FCE] block">
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-x)] block">
                   ∂/∂x at P
                 </span>
                 <span className="text-sm font-tabular-mono font-semibold text-[var(--text-primary)]">
@@ -1197,7 +1197,7 @@ export function VectorGradientCalculatorLab() {
                 </span>
               </div>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                <span className="text-[10px] font-tabular-mono text-[#96B898] block">
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-y)] block">
                   ∂/∂y at P
                 </span>
                 <span className="text-sm font-tabular-mono font-semibold text-[var(--text-primary)]">
@@ -1205,7 +1205,7 @@ export function VectorGradientCalculatorLab() {
                 </span>
               </div>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                <span className="text-[10px] font-tabular-mono text-[#029091] block">
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-z)] block">
                   {dimMode === "2d" ? "Compass Angle" : "∂φ/∂z at P"}
                 </span>
                 <span className="text-sm font-tabular-mono font-semibold text-[var(--text-primary)]">
@@ -1219,7 +1219,7 @@ export function VectorGradientCalculatorLab() {
 
           {/* Preset Analytical Formula & Pedagogical Note */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-            <div className="flex items-center gap-1.5 text-xs font-tabular-mono text-[#029091] uppercase tracking-wider">
+            <div className="flex items-center gap-1.5 text-xs font-tabular-mono text-[var(--math-ink-z)] uppercase tracking-wider">
               <Layers className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Geometric Interpretation</span>
             </div>

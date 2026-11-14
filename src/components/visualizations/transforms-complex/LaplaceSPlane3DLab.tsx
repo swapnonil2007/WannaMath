@@ -137,7 +137,7 @@ export function LaplaceSPlane3DLab() {
       <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
               Laplace s-Plane Pole–Zero Architect
             </p>
             <p className="mt-1 font-serif text-sm text-[#D6DAE2]">
@@ -165,7 +165,7 @@ export function LaplaceSPlane3DLab() {
 
         <div className="mt-4 grid gap-3 md:grid-cols-4">
           <label className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <div className="flex justify-between font-mono text-xs text-[#D35323]">
+            <div className="flex justify-between font-mono text-xs text-[#EF7547]">
               <span>Pole Real σ_p</span>
               <span>{fmt(sigmaP, 2)}</span>
             </div>
@@ -232,6 +232,7 @@ export function LaplaceSPlane3DLab() {
                 setZeroSigma(parseFloat(e.target.value));
               }}
               className="mt-2 w-full accent-[#8D9FCE] disabled:opacity-40"
+              aria-label="Real zero location σ₀"
             />
           </div>
 
@@ -239,7 +240,7 @@ export function LaplaceSPlane3DLab() {
             <span className="font-sans text-xs font-semibold text-[#F6F0D0]">ROC & BIBO Stability</span>
             <span
               className={`mt-1 font-mono text-xs font-semibold ${
-                transfer.biboStable ? "text-[#96B898]" : transfer.marginal ? "text-[#FBEAA4]" : "text-[#B95869]"
+                transfer.biboStable ? "text-[#96B898]" : transfer.marginal ? "text-[#FBEAA4]" : "text-[#DF7E90]"
               }`}
             >
               {transfer.biboStable
@@ -305,7 +306,7 @@ export function LaplaceSPlane3DLab() {
             footerSlot={
               <div className="flex justify-between font-mono text-xs text-[#A2AAB8]">
                 <span className="text-[#FBEAA4]">Gold Curve: jω Slice (σ = 0)</span>
-                <span className="text-[#D35323]">Poles at {fmt(sigmaP)} ± {fmt(omegaP)}i</span>
+                <span className="text-[#EF7547]">Poles at {fmt(sigmaP)} ± {fmt(omegaP)}i</span>
               </div>
             }
           />
@@ -412,7 +413,12 @@ export function LaplaceSPlane3DLab() {
           <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#FBEAA4]">
             Bode Frequency Response Slice |H(iω)| (ω ≥ 0)
           </p>
-          <svg viewBox="0 0 460 190" className="mt-2 w-full rounded-lg border border-[#35383F] bg-[#1E1F22]">
+          <svg
+            role="img"
+            aria-label="Bode magnitude frequency response curve |H(i omega)| along the imaginary axis for omega >= 0"
+            viewBox="0 0 460 190"
+            className="mt-2 w-full rounded-lg border border-[#35383F] bg-[#1E1F22]"
+          >
             {(() => {
               const pad = 28;
               const sx = (w: number) => pad + (w / 3.6) * (460 - 2 * pad);
@@ -449,7 +455,12 @@ export function LaplaceSPlane3DLab() {
           <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#96B898]">
             Time-Domain Impulse Response h(t) = ℒ⁻¹{"{H(s)}"}
           </p>
-          <svg viewBox="0 0 460 190" className="mt-2 w-full rounded-lg border border-[#35383F] bg-[#1E1F22]">
+          <svg
+            role="img"
+            aria-label="Time-domain impulse response curve h(t) = L^{-1}{H(s)} showing BIBO decay or exponential growth"
+            viewBox="0 0 460 190"
+            className="mt-2 w-full rounded-lg border border-[#35383F] bg-[#1E1F22]"
+          >
             {(() => {
               const pad = 28;
               const maxH = Math.max(1.2, ...transfer.impulsePts.map((p) => Math.abs(p.h)));

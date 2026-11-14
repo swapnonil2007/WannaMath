@@ -5,7 +5,7 @@ import { RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface ChainPreset {
   id: string;
@@ -149,7 +149,7 @@ export function ChainRulePropagatorLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#96B898]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)]">
             <span>Lab 1.2.3A</span>
             <span>•</span>
             <span>Chain Rule &amp; Composite Gearboxes</span>
@@ -186,7 +186,7 @@ export function ChainRulePropagatorLab() {
               onClick={() => handleSelectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 active
-                  ? "border-[#96B898] bg-[var(--bg-canvas)] text-[#96B898] font-medium"
+                  ? "border-[var(--math-ink-y)] bg-[var(--bg-canvas)] text-[var(--math-ink-y)] font-medium"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -221,7 +221,7 @@ export function ChainRulePropagatorLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Input Probe x₀</span>
-            <span className="font-tabular-mono text-[#8D9FCE]">
+            <span className="font-tabular-mono text-[var(--math-ink-x)]">
               x₀ = {x0.toFixed(2)}
             </span>
           </div>
@@ -239,7 +239,7 @@ export function ChainRulePropagatorLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Input Pulse Δx</span>
-            <span className="font-tabular-mono text-[#D35323]">
+            <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
               Δx = {dxStep.toFixed(2)}
             </span>
           </div>
@@ -269,15 +269,15 @@ export function ChainRulePropagatorLab() {
         </div>
         <div className="flex flex-wrap gap-4 text-xs font-tabular-mono">
           <span>
-            Δx = <strong className="text-[#8D9FCE]">{dxStep.toFixed(3)}</strong>
+            Δx = <strong className="text-[var(--math-ink-x)]">{dxStep.toFixed(3)}</strong>
           </span>
           <span>→</span>
           <span>
-            du = <strong className="text-[#96B898]">{model.duLin.toFixed(3)}</strong>
+            du = <strong className="text-[var(--math-ink-y)]">{model.duLin.toFixed(3)}</strong>
           </span>
           <span>→</span>
           <span>
-            dy = <strong className="text-[#D35323]">{model.dyLin.toFixed(3)}</strong>
+            dy = <strong className="text-[var(--math-ink-sweep)]">{model.dyLin.toFixed(3)}</strong>
           </span>
         </div>
       </div>

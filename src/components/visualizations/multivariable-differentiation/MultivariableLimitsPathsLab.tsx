@@ -12,6 +12,7 @@ import {
   createParametricSurfaceMesh,
   mathToThreeVec3,
 } from "@/components/visualizations/primitives";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 type PathFamily = "linear" | "parabolic" | "polar";
 
@@ -314,14 +315,14 @@ export function MultivariableLimitsPathsLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#8D9FCE] text-[#8D9FCE] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-x)] text-[var(--math-ink-x)] bg-[var(--bg-canvas)]">
               LAB 3.1.5A • MULTIVARIABLE PATHS &amp; POLAR LIMITS
             </span>
             <span
               className={`px-2 py-0.5 text-[11px] font-tabular-mono border inline-flex items-center gap-1 ${
                 telemetry.pathsAgree
-                  ? "border-[#96B898] text-[#96B898] bg-[#96B898]/10"
-                  : "border-[#D35323] text-[#D35323] bg-[#D35323]/10"
+                  ? "border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/10"
+                  : "border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[#D35323]/10"
               }`}
             >
               {telemetry.pathsAgree ? (
@@ -368,7 +369,7 @@ export function MultivariableLimitsPathsLab() {
                 onClick={() => applyPreset(preset)}
                 className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                   selected
-                    ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
+                    ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -394,7 +395,7 @@ export function MultivariableLimitsPathsLab() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
             <span className="text-xs font-sans text-[var(--text-secondary)] flex items-center gap-1.5">
-              <Compass className="w-3.5 h-3.5 text-[#D35323]" />
+              <Compass className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
               Approach Curve Family
             </span>
             <div className="grid grid-cols-3 gap-1.5">
@@ -411,7 +412,7 @@ export function MultivariableLimitsPathsLab() {
                   onClick={() => setPathFamily(fam.id)}
                   className={`py-1.5 px-2 text-xs font-tabular-mono border ${
                     pathFamily === fam.id
-                      ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)]"
+                      ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)]"
                       : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
                   }`}
                 >
@@ -430,7 +431,7 @@ export function MultivariableLimitsPathsLab() {
                   ? "Parabola Curvature k"
                   : "Polar Angle θ / (π/2)"}
               </span>
-              <span className="font-tabular-mono text-[#8D9FCE]">
+              <span className="font-tabular-mono text-[var(--math-ink-x)]">
                 {pathFamily === "polar"
                   ? `${((pathParam * 90) % 360).toFixed(0)}°`
                   : pathParam.toFixed(2)}
@@ -453,7 +454,7 @@ export function MultivariableLimitsPathsLab() {
               <span className="text-[var(--text-secondary)]">
                 Approach Coordinate t → 0
               </span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 t = {telemetry.tSafe.toFixed(2)} (r = {telemetry.radius.toFixed(2)})
               </span>
             </div>
@@ -480,7 +481,7 @@ export function MultivariableLimitsPathsLab() {
               1. 2D Domain Plane &amp; δ-Disk Radius{" "}
               <KaTeXMath math={`r = ${telemetry.radius.toFixed(2)}`} />
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#FBEAA4]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)]">
               ({telemetry.px.toFixed(2)}, {telemetry.py.toFixed(2)})
             </span>
           </div>
@@ -556,7 +557,7 @@ export function MultivariableLimitsPathsLab() {
             <span className="text-xs font-sans font-semibold text-[var(--text-primary)]">
               2. 3D Surface &amp; Lifted Approach Trajectory z = f(x(t), y(t))
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#D35323]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)]">
               z ={" "}
               {Number.isFinite(telemetry.pz)
                 ? telemetry.pz.toFixed(4)
@@ -578,10 +579,10 @@ export function MultivariableLimitsPathsLab() {
             sceneDeps={[buildScene]}
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#FBEAA4]">
+                <span className="text-[var(--math-ink-diff)]">
                   Domain path: (x(t), y(t)) → (0, 0)
                 </span>
-                <span className="text-[#D35323]">
+                <span className="text-[var(--math-ink-sweep)]">
                   Probe height f ={" "}
                   {Number.isFinite(telemetry.pz)
                     ? telemetry.pz.toFixed(4)
@@ -611,7 +612,7 @@ export function MultivariableLimitsPathsLab() {
               </div>
               <div
                 className="mt-1 text-base font-tabular-mono"
-                style={{ color: probe.hex }}
+                style={{ color: getAdaptiveAccentInk(probe.hex) }}
               >
                 {Number.isFinite(probe.val) ? probe.val.toFixed(4) : "NaN"}
               </div>
@@ -620,9 +621,9 @@ export function MultivariableLimitsPathsLab() {
         </div>
 
         {activePreset && (
-          <div className="p-3 border border-[#8D9FCE]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="p-3 border border-[var(--math-ink-x)]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="space-y-1">
-              <div className="text-xs font-sans font-semibold text-[#8D9FCE]">
+              <div className="text-xs font-sans font-semibold text-[var(--math-ink-x)]">
                 {activePreset.badge}
               </div>
               <p className="text-xs font-serif text-[var(--text-secondary)]">

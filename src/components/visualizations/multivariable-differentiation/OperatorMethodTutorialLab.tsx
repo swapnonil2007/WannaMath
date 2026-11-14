@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { RotateCcw, CheckCircle2, AlertTriangle } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 type OperatorRuleKind =
   | "exponential"
@@ -341,7 +341,7 @@ export function OperatorMethodTutorialLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#D5658B]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-lower)]">
             <span>Lab 3.1.11A</span>
             <span>•</span>
             <span>Inverse Differential Operators</span>
@@ -378,7 +378,7 @@ export function OperatorMethodTutorialLab() {
               onClick={() => handleSelectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 active
-                  ? "border-[#D5658B] bg-[var(--bg-canvas)] text-[#D5658B] font-medium"
+                  ? "border-[var(--math-ink-lower)] bg-[var(--bg-canvas)] text-[var(--math-ink-lower)] font-medium"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -393,7 +393,7 @@ export function OperatorMethodTutorialLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">D-coeff b</span>
-            <span className="font-tabular-mono text-[#8D9FCE]">{b.toFixed(2)}</span>
+            <span className="font-tabular-mono text-[var(--math-ink-x)]">{b.toFixed(2)}</span>
           </div>
           <input
             type="range"
@@ -411,7 +411,7 @@ export function OperatorMethodTutorialLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Constant c</span>
-            <span className="font-tabular-mono text-[#96B898]">{c.toFixed(2)}</span>
+            <span className="font-tabular-mono text-[var(--math-ink-y)]">{c.toFixed(2)}</span>
           </div>
           <input
             type="range"
@@ -435,7 +435,7 @@ export function OperatorMethodTutorialLab() {
                   ? "Degree 2 Fixed"
                   : "Exponent a"}
             </span>
-            <span className="font-tabular-mono text-[#D35323]">
+            <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
               {paramA.toFixed(2)}
             </span>
           </div>
@@ -459,14 +459,14 @@ export function OperatorMethodTutorialLab() {
           <button
             type="button"
             onClick={triggerExponentialResonance}
-            className="px-2.5 py-1 text-[11px] font-sans border border-[#D35323] bg-[var(--bg-panel)] text-[#D35323] hover:bg-[var(--bg-canvas)]"
+            className="px-2.5 py-1 text-[11px] font-sans border border-[var(--math-ink-sweep)] bg-[var(--bg-panel)] text-[var(--math-ink-sweep)] hover:bg-[var(--bg-canvas)]"
           >
             Trigger Exp Resonance (f(1)=0)
           </button>
           <button
             type="button"
             onClick={triggerSinusoidResonance}
-            className="px-2.5 py-1 text-[11px] font-sans border border-[#029091] bg-[var(--bg-panel)] text-[#029091] hover:bg-[var(--bg-canvas)]"
+            className="px-2.5 py-1 text-[11px] font-sans border border-[var(--math-ink-z)] bg-[var(--bg-panel)] text-[var(--math-ink-z)] hover:bg-[var(--bg-canvas)]"
           >
             Trigger Sinusoid Resonance (c=ω²)
           </button>
@@ -476,14 +476,14 @@ export function OperatorMethodTutorialLab() {
       {/* Step-by-Step Symbolic Derivation Panel */}
       <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-xs font-tabular-mono uppercase text-[#D5658B]">
+          <span className="text-xs font-tabular-mono uppercase text-[var(--math-ink-lower)]">
             {preset.ruleBadge}
           </span>
           <span
             className={`inline-flex items-center gap-1.5 text-xs font-tabular-mono px-2.5 py-0.5 border ${
               computed.sampleMeta.resonant
-                ? "border-[#D35323] text-[#D35323]"
-                : "border-[#96B898] text-[#96B898]"
+                ? "border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)]"
+                : "border-[var(--math-ink-y)] text-[var(--math-ink-y)]"
             }`}
           >
             {computed.sampleMeta.resonant && (
@@ -504,7 +504,7 @@ export function OperatorMethodTutorialLab() {
           ))}
         </div>
 
-        <div className="p-2.5 border border-[#D5658B]/60 bg-[var(--bg-panel)] text-xs overflow-x-auto">
+        <div className="p-2.5 border border-[var(--math-ink-lower)]/60 bg-[var(--bg-panel)] text-xs overflow-x-auto">
           <KaTeXMath math={computed.sampleMeta.formulaLatex} block />
         </div>
       </div>
@@ -550,7 +550,7 @@ export function OperatorMethodTutorialLab() {
               2. Verification: <KaTeXMath math="f(D)[y_p](x)" /> vs. Forcing{" "}
               <KaTeXMath math="g(x)" />
             </span>
-            <span className="inline-flex items-center gap-1 font-tabular-mono text-xs text-[#96B898]">
+            <span className="inline-flex items-center gap-1 font-tabular-mono text-xs text-[var(--math-ink-y)]">
               <CheckCircle2 className="w-3.5 h-3.5" /> max|err| ={" "}
               {computed.maxError.toExponential(2)}
             </span>
@@ -602,7 +602,7 @@ export function OperatorMethodTutorialLab() {
               <KaTeXMath math="g(x)" />
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <span className="w-3 h-0.5 border-t-2 border-dashed border-[#96B898] inline-block" />{" "}
+              <span className="w-3 h-0.5 border-t-2 border-dashed border-[var(--math-ink-y)] inline-block" />{" "}
               Applied <KaTeXMath math="(D^2 + bD + c)y_p" />
             </span>
           </div>

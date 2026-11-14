@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface Cplx {
   re: number;
@@ -202,7 +202,7 @@ export function CauchyContourLab() {
       <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#B95869]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#DF7E90]">
               Cauchy Contour Winding & Homotopy Lab
             </p>
             <p className="mt-1 font-serif text-sm text-[#D6DAE2]">{preset.description}</p>
@@ -227,7 +227,7 @@ export function CauchyContourLab() {
 
         <div className="mt-4 grid gap-3 md:grid-cols-4">
           <label className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <div className="flex justify-between font-mono text-xs text-[#029091]">
+            <div className="flex justify-between font-mono text-xs text-[#28B7B8]">
               <span>Radius R</span>
               <span>{fmt(radius, 2)}</span>
             </div>
@@ -283,7 +283,7 @@ export function CauchyContourLab() {
           </div>
 
           <div className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <span className="font-sans text-xs font-semibold text-[#D35323]">
+            <span className="font-sans text-xs font-semibold text-[#EF7547]">
               {preset.useMovableZ0 ? "Pole z₀ Coordinates" : "Fixed Poles"}
             </span>
             {preset.useMovableZ0 ? (
@@ -296,6 +296,7 @@ export function CauchyContourLab() {
                   value={z0.re}
                   onChange={(e) => setZ0((p) => ({ ...p, re: parseFloat(e.target.value) || 0 }))}
                   className="rounded border border-[#35383F] bg-[#26282C] px-2 py-1 text-[#F6F0D0]"
+                  aria-label="Pole z₀ real part"
                 />
                 <input
                   type="number"
@@ -305,6 +306,7 @@ export function CauchyContourLab() {
                   value={z0.im}
                   onChange={(e) => setZ0((p) => ({ ...p, im: parseFloat(e.target.value) || 0 }))}
                   className="rounded border border-[#35383F] bg-[#26282C] px-2 py-1 text-[#F6F0D0]"
+                  aria-label="Pole z₀ imaginary part"
                 />
               </div>
             ) : (
@@ -330,7 +332,7 @@ export function CauchyContourLab() {
                 Click anywhere on the <KaTeXMath math="z" />-plane to move the contour center across poles.
               </p>
             </div>
-            <span className="rounded border border-[#029091]/50 bg-[#1E1F22] px-2 py-0.5 font-mono text-xs text-[#029091]">
+            <span className="rounded border border-[#029091]/50 bg-[#1E1F22] px-2 py-0.5 font-mono text-xs text-[#28B7B8]">
               Center ({fmt(center[0], 1)}, {fmt(center[1], 1)})
             </span>
           </div>
@@ -400,7 +402,7 @@ export function CauchyContourLab() {
         {/* Right: Integral Verification Cards */}
         <div className="space-y-4">
           <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#B95869]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#DF7E90]">
               Active Integrand
             </p>
             <div className="mt-2 text-sm text-[#F6F0D0]">
@@ -409,7 +411,7 @@ export function CauchyContourLab() {
           </div>
 
           <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4 font-mono text-xs tabular-nums text-[#D6DAE2]">
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
               Numerical Loop Quadrature vs. Exact Cauchy Theorem
             </p>
             <div className="mt-3 space-y-2">
@@ -421,7 +423,7 @@ export function CauchyContourLab() {
               </div>
               <div className="rounded border border-[#35383F] bg-[#1E1F22] p-2.5">
                 <span className="text-[#A2AAB8] block">Exact Cauchy Prediction (2πi · Σ W · Res):</span>
-                <span className="text-base font-semibold text-[#029091]">
+                <span className="text-base font-semibold text-[#28B7B8]">
                   {fmt(sim.exactTotal.re, 3)} {sim.exactTotal.im >= 0 ? "+" : "−"} {fmt(Math.abs(sim.exactTotal.im), 3)}i
                 </span>
               </div>
@@ -443,7 +445,7 @@ export function CauchyContourLab() {
                     key={idx}
                     className="flex items-center justify-between rounded border border-[#35383F] bg-[#1E1F22] px-3 py-1.5"
                   >
-                    <span className={p.inside ? "text-[#D35323]" : "text-[#A2AAB8]"}>
+                    <span className={p.inside ? "text-[#EF7547]" : "text-[#A2AAB8]"}>
                       Pole {p.label} ({fmt(p.z.re, 1)} {p.z.im >= 0 ? "+" : "−"} {fmt(Math.abs(p.z.im), 1)}i)
                     </span>
                     <span className={p.inside ? "text-[#FBEAA4]" : "text-[#A2AAB8]"}>

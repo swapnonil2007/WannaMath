@@ -13,6 +13,7 @@ import {
   createParametricSurfaceMesh,
   extractLevelCurveSegments,
 } from "@/components/visualizations/primitives";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 interface SurfacePreset {
   id: string;
@@ -230,7 +231,7 @@ export function SurfaceContourSlicerLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#8D9FCE] text-[#8D9FCE] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-x)] text-[var(--math-ink-x)] bg-[var(--bg-canvas)]">
               LAB 3.1.1 • 3D SURFACE &amp; 2D CONTOUR SYNCHRONIZER
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -253,7 +254,7 @@ export function SurfaceContourSlicerLab() {
                 onClick={() => handleSelectPreset(p)}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -287,7 +288,7 @@ export function SurfaceContourSlicerLab() {
             <label key={item.label} className="block space-y-1">
               <span
                 className="text-[11px] font-tabular-mono uppercase tracking-wider block"
-                style={{ color: item.color }}
+                style={{ color: getAdaptiveAccentInk(item.color) }}
               >
                 Bound <KaTeXMath math={item.label} />
               </span>
@@ -298,7 +299,7 @@ export function SurfaceContourSlicerLab() {
                   item.set(e.target.value);
                   setIsCustom(true);
                 }}
-                className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[#8D9FCE]"
+                className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--math-ink-x)]"
               />
             </label>
           ))}
@@ -316,13 +317,13 @@ export function SurfaceContourSlicerLab() {
             titleBadge="3D Surface z = f(x,y) & Slicing Plane z = k"
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#D35323]">
+                <span className="text-[var(--math-ink-sweep)]">
                   Active Level Plane: z = k = {safeK.toFixed(3)}
                 </span>
-                <span className="text-[#8D9FCE]">
+                <span className="text-[var(--math-ink-x)]">
                   Probe (x₀, y₀) = ({safeProbeX.toFixed(2)}, {safeProbeY.toFixed(2)})
                 </span>
-                <span className="text-[#FBEAA4]">
+                <span className="text-[var(--math-ink-diff)]">
                   f(x₀, y₀) = {Number.isFinite(probeZ) ? probeZ.toFixed(3) : "undef"}
                 </span>
               </div>
@@ -523,7 +524,7 @@ export function SurfaceContourSlicerLab() {
               <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
                 ACTIVE LEVEL SET FORMULATION
               </span>
-              <span className="text-xs font-tabular-mono text-[#D35323]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
                 Altitude k = {safeK.toFixed(3)}
               </span>
             </div>
@@ -546,10 +547,10 @@ export function SurfaceContourSlicerLab() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-[#D35323]" />
+                <Layers className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
                 2D Topographic Contour Map (Click to Probe)
               </span>
-              <span className="text-xs font-tabular-mono text-[#D35323]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
                 f(x,y) = {safeK.toFixed(2)}
               </span>
             </div>
@@ -641,7 +642,7 @@ export function SurfaceContourSlicerLab() {
           {/* Altitude Slicer Slider z = k */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="flex items-center justify-between text-xs font-tabular-mono">
-              <span className="text-[#D35323] font-semibold">
+              <span className="text-[var(--math-ink-sweep)] font-semibold">
                 Horizontal Slicing Altitude z = k
               </span>
               <span className="text-[var(--text-primary)]">
@@ -656,12 +657,13 @@ export function SurfaceContourSlicerLab() {
               value={safeK}
               onChange={(e) => setLevelK(parseFloat(e.target.value))}
               className="w-full accent-[#D35323]"
+              aria-label="Horizontal slicing altitude z = k"
             />
 
             {/* Probe Coordinate Sliders */}
             <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[var(--border-subtle)]">
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#8D9FCE]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-x)]">
                   <span>Probe x₀</span>
                   <span>{safeProbeX.toFixed(2)}</span>
                 </div>
@@ -673,11 +675,12 @@ export function SurfaceContourSlicerLab() {
                   value={safeProbeX}
                   onChange={(e) => setProbeX(parseFloat(e.target.value))}
                   className="w-full accent-[#8D9FCE]"
+                  aria-label="Probe coordinate x₀"
                 />
               </div>
 
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#96B898]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-y)]">
                   <span>Probe y₀</span>
                   <span>{safeProbeY.toFixed(2)}</span>
                 </div>
@@ -689,6 +692,7 @@ export function SurfaceContourSlicerLab() {
                   value={safeProbeY}
                   onChange={(e) => setProbeY(parseFloat(e.target.value))}
                   className="w-full accent-[#96B898]"
+                  aria-label="Probe coordinate y₀"
                 />
               </div>
             </div>
@@ -700,7 +704,7 @@ export function SurfaceContourSlicerLab() {
                 onClick={() => setShowVerticalTrace((v) => !v)}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-tabular-mono border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-primary)]"
               >
-                <Eye className="w-3.5 h-3.5 text-[#8D9FCE]" />
+                <Eye className="w-3.5 h-3.5 text-[var(--math-ink-x)]" />
                 {showVerticalTrace ? "Hide Vertical Trace" : "Show Vertical Trace"}
               </button>
 
@@ -711,7 +715,7 @@ export function SurfaceContourSlicerLab() {
                     onClick={() => setTraceAxis("x")}
                     className={`px-2 py-1 text-xs font-tabular-mono border ${
                       traceAxis === "x"
-                        ? "border-[#8D9FCE] text-[#8D9FCE] bg-[#8D9FCE]/15"
+                        ? "border-[var(--math-ink-x)] text-[var(--math-ink-x)] bg-[#8D9FCE]/15"
                         : "border-[var(--border-subtle)] text-[var(--text-muted)]"
                     }`}
                   >
@@ -722,7 +726,7 @@ export function SurfaceContourSlicerLab() {
                     onClick={() => setTraceAxis("y")}
                     className={`px-2 py-1 text-xs font-tabular-mono border ${
                       traceAxis === "y"
-                        ? "border-[#96B898] text-[#96B898] bg-[#96B898]/15"
+                        ? "border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/15"
                         : "border-[var(--border-subtle)] text-[var(--text-muted)]"
                     }`}
                   >
@@ -745,7 +749,7 @@ export function SurfaceContourSlicerLab() {
                   ? `Vertical Trace z = f(${safeProbeX.toFixed(2)}, y)`
                   : `Vertical Trace z = f(x, ${safeProbeY.toFixed(2)})`}
               </span>
-              <span className="text-[#FBEAA4]">
+              <span className="text-[var(--math-ink-diff)]">
                 z(x₀, y₀) = {Number.isFinite(probeZ) ? probeZ.toFixed(3) : "—"}
               </span>
             </div>

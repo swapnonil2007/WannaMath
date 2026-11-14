@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { RotateCcw, Sliders } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface RootPreset {
   id: string;
@@ -311,7 +311,7 @@ export function CharacteristicRootsSolutionLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)]">
             <span>Lab 3.1.10B</span>
             <span>•</span>
             <span>Characteristic Equation Explorer</span>
@@ -345,7 +345,7 @@ export function CharacteristicRootsSolutionLab() {
             key={p.id}
             type="button"
             onClick={() => applyPreset(p)}
-            className="px-3 py-1.5 text-xs font-sans border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[#8D9FCE] hover:text-[var(--text-primary)] transition-colors"
+            className="px-3 py-1.5 text-xs font-sans border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--math-ink-x)] hover:text-[var(--text-primary)] transition-colors"
           >
             {p.label}
           </button>
@@ -357,7 +357,7 @@ export function CharacteristicRootsSolutionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Inertia a</span>
-            <span className="font-tabular-mono text-[#8D9FCE]">
+            <span className="font-tabular-mono text-[var(--math-ink-x)]">
               {a.toFixed(2)}
             </span>
           </div>
@@ -376,7 +376,7 @@ export function CharacteristicRootsSolutionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Damping b</span>
-            <span className="font-tabular-mono text-[#96B898]">
+            <span className="font-tabular-mono text-[var(--math-ink-y)]">
               {b.toFixed(2)}
             </span>
           </div>
@@ -395,7 +395,7 @@ export function CharacteristicRootsSolutionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Stiffness c</span>
-            <span className="font-tabular-mono text-[#029091]">
+            <span className="font-tabular-mono text-[var(--math-ink-z)]">
               {c.toFixed(2)}
             </span>
           </div>
@@ -414,7 +414,7 @@ export function CharacteristicRootsSolutionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Initial y(0)</span>
-            <span className="font-tabular-mono text-[#D35323]">
+            <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
               {y0.toFixed(2)}
             </span>
           </div>
@@ -433,7 +433,7 @@ export function CharacteristicRootsSolutionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Initial y&apos;(0)</span>
-            <span className="font-tabular-mono text-[#FBEAA4]">
+            <span className="font-tabular-mono text-[var(--math-ink-diff)]">
               {dy0.toFixed(2)}
             </span>
           </div>
@@ -466,7 +466,7 @@ export function CharacteristicRootsSolutionLab() {
 
           {showLimitMorph && (
             <div className="flex items-center gap-2 text-xs font-tabular-mono">
-              <span className="text-[#D35323]">ε = {morphEps.toFixed(3)}</span>
+              <span className="text-[var(--math-ink-sweep)]">ε = {morphEps.toFixed(3)}</span>
               <input
                 type="range"
                 min={0.01}
@@ -575,7 +575,7 @@ export function CharacteristicRootsSolutionLab() {
                   <text
                     x={40}
                     y={48}
-                    fill="#029091"
+                    fill="var(--math-ink-z)"
                     fontSize="10"
                     fontFamily="IBM Plex Sans, sans-serif"
                   >
@@ -715,11 +715,11 @@ export function CharacteristicRootsSolutionLab() {
             {enableForcing && (
               <>
                 <span className="inline-flex items-center gap-1">
-                  <span className="w-3 h-0.5 border-t border-dashed border-[#8D9FCE] inline-block" />{" "}
+                  <span className="w-3 h-0.5 border-t border-dashed border-[var(--math-ink-x)] inline-block" />{" "}
                   y_c(x)
                 </span>
                 <span className="inline-flex items-center gap-1">
-                  <span className="w-3 h-0.5 border-t border-dotted border-[#029091] inline-block" />{" "}
+                  <span className="w-3 h-0.5 border-t border-dotted border-[var(--math-ink-z)] inline-block" />{" "}
                   y_p(x)
                 </span>
               </>
@@ -731,7 +731,7 @@ export function CharacteristicRootsSolutionLab() {
                   Difference Quotient (ε={morphEps.toFixed(2)})
                 </span>
                 <span className="inline-flex items-center gap-1">
-                  <span className="w-3 h-0.5 border-t border-dashed border-[#FBEAA4] inline-block" />{" "}
+                  <span className="w-3 h-0.5 border-t border-dashed border-[var(--math-ink-diff)] inline-block" />{" "}
                   Limit x·e^(rx)
                 </span>
               </>
@@ -786,7 +786,7 @@ export function CharacteristicRootsSolutionLab() {
       {/* Closed-Form Solution & Root Readout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-          <div className="flex items-center gap-1.5 text-xs font-tabular-mono uppercase text-[#8D9FCE]">
+          <div className="flex items-center gap-1.5 text-xs font-tabular-mono uppercase text-[var(--math-ink-x)]">
             <Sliders className="w-3.5 h-3.5" /> Active Complementary Solution
           </div>
           <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -795,7 +795,7 @@ export function CharacteristicRootsSolutionLab() {
         </div>
 
         <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-          <span className="text-xs font-tabular-mono uppercase text-[#D35323] block">
+          <span className="text-xs font-tabular-mono uppercase text-[var(--math-ink-sweep)] block">
             Discriminant &amp; Characteristic Roots Readout
           </span>
           <div className="grid grid-cols-2 gap-2 text-xs font-tabular-mono text-[var(--text-secondary)]">
@@ -813,14 +813,14 @@ export function CharacteristicRootsSolutionLab() {
                   : `r₁ = ${solutionModel.r1.toFixed(2)}, r₂ = ${solutionModel.r2.toFixed(2)}`}
             </div>
             <div>
-              C₁ = <span className="text-[#8D9FCE]">{solutionModel.c1.toFixed(3)}</span>
+              C₁ = <span className="text-[var(--math-ink-x)]">{solutionModel.c1.toFixed(3)}</span>
             </div>
             <div>
-              C₂ = <span className="text-[#96B898]">{solutionModel.c2.toFixed(3)}</span>
+              C₂ = <span className="text-[var(--math-ink-y)]">{solutionModel.c2.toFixed(3)}</span>
             </div>
           </div>
           {enableForcing && (
-            <p className="text-xs font-tabular-mono text-[#029091]">
+            <p className="text-xs font-tabular-mono text-[var(--math-ink-z)]">
               {solutionModel.isResonance
                 ? "Undamped Resonance Active! Amplitude grows linearly in x."
                 : `Steady-State y_p(x) = ${solutionModel.pCos.toFixed(

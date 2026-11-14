@@ -181,10 +181,10 @@ export function GeneralMethodDegenerateExtremaLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#FBEAA4] text-[#FBEAA4] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[var(--bg-canvas)]">
               LAB 3.1.8B • GENERAL METHOD WHEN D = rt − s² = 0
             </span>
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[#D35323] text-[#D35323] bg-[#D35323]/10 inline-flex items-center gap-1">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[#D35323]/10 inline-flex items-center gap-1">
               <AlertTriangle className="w-3 h-3" />
               True Nature: {preset.trueNature}
             </span>
@@ -214,7 +214,7 @@ export function GeneralMethodDegenerateExtremaLab() {
               onClick={() => selectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 p.id === presetId
-                  ? "border-[#FBEAA4] bg-[#FBEAA4]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-diff)] bg-[#FBEAA4]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
               }`}
             >
@@ -227,9 +227,9 @@ export function GeneralMethodDegenerateExtremaLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Parabolic Test Curve <strong className="text-[#D35323] font-mono">y = k·x²</strong>
+                Parabolic Test Curve <strong className="text-[var(--math-ink-sweep)] font-mono">y = k·x²</strong>
               </span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 k = {parabolaK.toFixed(2)}
               </span>
             </div>
@@ -248,9 +248,9 @@ export function GeneralMethodDegenerateExtremaLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Straight Line Angle <strong className="text-[#96B898] font-mono">θ</strong>
+                Straight Line Angle <strong className="text-[var(--math-ink-y)] font-mono">θ</strong>
               </span>
-              <span className="font-tabular-mono text-[#96B898]">
+              <span className="font-tabular-mono text-[var(--math-ink-y)]">
                 θ = {angleDeg}°
               </span>
             </div>
@@ -344,7 +344,7 @@ export function GeneralMethodDegenerateExtremaLab() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-tabular-mono">
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
             <div className="text-[var(--text-muted)]">Min Δf along Straight Ray θ={angleDeg}°</div>
-            <div className="mt-1 text-sm text-[#96B898]">
+            <div className="mt-1 text-sm text-[var(--math-ink-y)]">
               {curves.lineMin.toFixed(4)}
             </div>
           </div>
@@ -352,7 +352,7 @@ export function GeneralMethodDegenerateExtremaLab() {
             <div className="text-[var(--text-muted)]">Min Δf along y = {parabolaK.toFixed(1)}x²</div>
             <div
               className={`mt-1 text-sm font-semibold ${
-                curves.parabMin < -1e-4 ? "text-[#B95869]" : "text-[#96B898]"
+                curves.parabMin < -1e-4 ? "text-[var(--math-ink-upper)]" : "text-[var(--math-ink-y)]"
               }`}
             >
               {curves.parabMin.toFixed(4)}
@@ -360,13 +360,13 @@ export function GeneralMethodDegenerateExtremaLab() {
           </div>
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
             <div className="text-[var(--text-muted)]">Max Δf along y = {parabolaK.toFixed(1)}x²</div>
-            <div className="mt-1 text-sm text-[#FBEAA4]">
+            <div className="mt-1 text-sm text-[var(--math-ink-diff)]">
               {curves.parabMax.toFixed(4)}
             </div>
           </div>
         </div>
 
-        <div className="p-3 border border-[#FBEAA4]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="p-3 border border-[var(--math-ink-diff)]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-xs font-serif text-[var(--text-secondary)]">
             {preset.explanation}
           </p>

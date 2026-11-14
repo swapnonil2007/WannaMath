@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { ArrowRight, Split, Layers } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface SubspacePreset {
   id: string;
@@ -149,7 +149,7 @@ export function FourSubspacesLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#96B898] text-[#96B898] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[var(--bg-canvas)]">
               LAB 2.1.3 • STRANG&apos;S FOUR FUNDAMENTAL SUBSPACES
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -178,7 +178,7 @@ export function FourSubspacesLab() {
               }}
               className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                 presetId === p.id
-                  ? "border-[#96B898] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
+                  ? "border-[var(--math-ink-y)] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
               }`}
             >
@@ -211,6 +211,7 @@ export function FourSubspacesLab() {
                   value={item.val}
                   onChange={(e) => item.set(Number(e.target.value) || 0)}
                   className="w-full px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-canvas)] border border-[var(--border-subtle)]"
+                  aria-label={`Matrix entry ${item.lbl}`}
                 />
               </label>
             ))}
@@ -219,7 +220,7 @@ export function FourSubspacesLab() {
 
         <div className="md:col-span-7 p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-            <span className="text-[#B95869] flex items-center gap-1.5">
+            <span className="text-[var(--math-ink-upper)] flex items-center gap-1.5">
               <Split className="w-3.5 h-3.5" aria-hidden="true" />
               Slide Nullspace Component α along N(A) (Notice Ax never moves!)
             </span>
@@ -236,6 +237,7 @@ export function FourSubspacesLab() {
             disabled={analysis.rank !== 1}
             onChange={(e) => setNullOffset(Number(e.target.value))}
             className="w-full accent-[#B95869] disabled:opacity-40"
+            aria-label="Nullspace component α along N(A)"
           />
           {analysis.rank !== 1 && (
             <span className="text-[11px] font-tabular-mono text-[var(--text-muted)] block">
@@ -252,7 +254,7 @@ export function FourSubspacesLab() {
         {/* Domain Plane R^2 */}
         <div className="lg:col-span-6 border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] p-5 space-y-3 bg-[var(--bg-canvas)]">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE]">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)]">
               Domain ℝ²: Row Space ℛ(Aᵀ) ⊥ Nullspace 𝒩(A)
             </span>
             <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -362,10 +364,10 @@ export function FourSubspacesLab() {
           </SvgCoordinatePlane2D>
 
           <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs font-tabular-mono flex flex-wrap justify-between gap-2">
-            <span className="text-[#8D9FCE]">
+            <span className="text-[var(--math-ink-x)]">
               x_r = ⟨{analysis.xRow[0].toFixed(2)}, {analysis.xRow[1].toFixed(2)}⟩
             </span>
-            <span className="text-[#B95869]">
+            <span className="text-[var(--math-ink-upper)]">
               x_n = ⟨{analysis.xNull[0].toFixed(2)}, {analysis.xNull[1].toFixed(2)}⟩
             </span>
           </div>
@@ -374,7 +376,7 @@ export function FourSubspacesLab() {
         {/* Codomain Plane R^2 */}
         <div className="lg:col-span-6 p-5 space-y-3 bg-[var(--bg-panel)]">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] flex items-center gap-1.5">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] flex items-center gap-1.5">
               <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
               Codomain ℝ²: Column Space 𝒞(A) ⊥ Left Nullspace 𝒩(Aᵀ)
             </span>
@@ -438,10 +440,10 @@ export function FourSubspacesLab() {
           </SvgCoordinatePlane2D>
 
           <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono flex flex-wrap justify-between gap-2">
-            <span className="text-[#D35323] font-semibold">
+            <span className="text-[var(--math-ink-sweep)] font-semibold">
               Ax = Ax_r = ⟨{analysis.ax[0].toFixed(2)}, {analysis.ax[1].toFixed(2)}⟩
             </span>
-            <span className="text-[#96B898]">
+            <span className="text-[var(--math-ink-y)]">
               dim 𝒞(A) = {analysis.rank} • dim 𝒩(Aᵀ) = {analysis.nullity}
             </span>
           </div>
@@ -450,7 +452,7 @@ export function FourSubspacesLab() {
 
       {/* Footer Note */}
       <div className="border-t border-[var(--border-subtle)] px-6 py-3.5 bg-[var(--bg-canvas)] flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-1.5 font-tabular-mono text-[#029091]">
+        <div className="flex items-center gap-1.5 font-tabular-mono text-[var(--math-ink-z)]">
           <Layers className="w-3.5 h-3.5" aria-hidden="true" />
           <span>Fundamental Theorem:</span>
         </div>

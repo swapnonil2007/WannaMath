@@ -9,7 +9,7 @@ import {
   SvgCoordinatePlane2D,
   integrate1DGaussLegendre,
   integrate2DIterated,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 interface GreenPreset {
   id: string;
@@ -191,7 +191,7 @@ export function GreensTheoremLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#96B898] text-[#96B898] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[var(--bg-canvas)]">
               LAB 3.3.5 • GREEN&apos;S THEOREM &amp; CURL CANCELLATION GRID
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -213,7 +213,7 @@ export function GreensTheoremLab() {
                 onClick={() => handleSelectPreset(p)}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#96B898] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-y)] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -255,11 +255,11 @@ export function GreensTheoremLab() {
         {/* Left: Interactive Cancellation Grid SVG */}
         <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] p-5 space-y-4 bg-[var(--bg-canvas)]">
           <div className="flex items-center justify-between text-xs font-tabular-mono">
-            <span className="text-[#96B898] flex items-center gap-1.5">
+            <span className="text-[var(--math-ink-y)] flex items-center gap-1.5">
               <Grid className="w-3.5 h-3.5" />
               {subN} × {subN} Microscopic Circulation Loops (Interior Edges Cancel!)
             </span>
-            <span className="text-[#D35323] font-semibold">
+            <span className="text-[var(--math-ink-sweep)] font-semibold">
               Outer Loop ∂D (CCW)
             </span>
           </div>
@@ -350,7 +350,7 @@ export function GreensTheoremLab() {
         <div className="lg:col-span-5 p-5 space-y-4 bg-[var(--bg-panel)]">
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-4">
             <div className="space-y-1">
-              <div className="flex justify-between text-xs font-tabular-mono text-[#FBEAA4]">
+              <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-diff)]">
                 <span>Subdivision Resolution N × N</span>
                 <span>
                   {subN} × {subN} ({subN * subN} loops)
@@ -364,11 +364,12 @@ export function GreensTheoremLab() {
                 value={subN}
                 onChange={(e) => setSubN(parseInt(e.target.value, 10))}
                 className="w-full accent-[#FBEAA4]"
+                aria-label="Subdivision resolution N"
               />
             </div>
 
             <div className="space-y-1 pt-2 border-t border-[var(--border-subtle)]">
-              <div className="flex justify-between text-xs font-tabular-mono text-[#8D9FCE]">
+              <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-x)]">
                 <span>Domain Width x_max (y_max = x_max)</span>
                 <span>[{xMin.toFixed(1)}, {xMax.toFixed(1)}]</span>
               </div>
@@ -384,13 +385,14 @@ export function GreensTheoremLab() {
                   setYMax(v);
                 }}
                 className="w-full accent-[#8D9FCE]"
+                aria-label="Domain width x_max"
               />
             </div>
           </div>
 
           {/* 4-Edge Boundary Line Integral Breakdown */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-            <div className="flex items-center gap-1.5 text-xs font-tabular-mono text-[#D35323]">
+            <div className="flex items-center gap-1.5 text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
               <Repeat className="w-3.5 h-3.5" />
               <span>BOUNDARY EDGE-BY-EDGE CONTRIBUTION (CCW)</span>
             </div>
@@ -432,16 +434,16 @@ export function GreensTheoremLab() {
 
           {/* Equivalence Comparison */}
           <div className="grid grid-cols-2 gap-3 text-xs font-tabular-mono">
-            <div className="p-3 border border-[#D35323]/60 bg-[var(--bg-canvas)]">
-              <span className="text-[#D35323] block text-[10px]">
+            <div className="p-3 border border-[var(--math-ink-sweep)]/60 bg-[var(--bg-canvas)]">
+              <span className="text-[var(--math-ink-sweep)] block text-[10px]">
                 ∮_∂D F · dr (1D)
               </span>
               <span className="text-lg font-semibold text-[var(--text-primary)]">
                 {greenStats.boundaryCirculation.toFixed(4)}
               </span>
             </div>
-            <div className="p-3 border border-[#029091]/60 bg-[var(--bg-canvas)]">
-              <span className="text-[#029091] block text-[10px]">
+            <div className="p-3 border border-[var(--math-ink-z)]/60 bg-[var(--bg-canvas)]">
+              <span className="text-[var(--math-ink-z)] block text-[10px]">
                 ∬_D (Q_x - P_y) dA (2D)
               </span>
               <span className="text-lg font-semibold text-[var(--text-primary)]">

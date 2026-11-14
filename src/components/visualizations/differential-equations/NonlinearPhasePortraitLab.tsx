@@ -9,7 +9,7 @@ import {
   SvgCoordinatePlane2D,
   extractLevelCurveSegments,
   computePartialDerivatives2D,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 interface NonlinearPreset {
   id: string;
@@ -308,7 +308,7 @@ export function NonlinearPhasePortraitLab() {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
             Laboratory 4.3.2.1 • Nullcline Intersections, Limit Cycles &amp; Hartman–Grobman Linearization
           </span>
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -327,7 +327,7 @@ export function NonlinearPhasePortraitLab() {
           onClick={() => setShowNullclines((v) => !v)}
           className={`px-3 py-1.5 text-xs font-tabular-mono border transition-colors flex items-center gap-1.5 shrink-0 ${
             showNullclines
-              ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
+              ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
               : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-muted)]"
           }`}
         >
@@ -347,11 +347,11 @@ export function NonlinearPhasePortraitLab() {
               onClick={() => handleSelectPreset(p)}
               className={`p-3 border text-left transition-colors ${
                 selected
-                  ? "border-[#D35323] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
               }`}
             >
-              <span className="text-[11px] font-tabular-mono text-[#D35323] font-semibold block mb-1">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)] font-semibold block mb-1">
                 {p.badge}
               </span>
               <div className="text-xs font-math-serif text-[var(--text-primary)] leading-snug">
@@ -391,7 +391,7 @@ export function NonlinearPhasePortraitLab() {
         {/* Left: Nonlinear Phase Portrait + Nullclines */}
         <div className="lg:col-span-6 space-y-3">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-            <span className="flex items-center gap-1.5 text-[#D35323]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-sweep)]">
               <Crosshair className="w-3.5 h-3.5" />
               <span>
                 Click plane to seed ({seed[0].toFixed(2)}, {seed[1].toFixed(2)})
@@ -547,7 +547,7 @@ export function NonlinearPhasePortraitLab() {
           {/* Coupled Time Waveform */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-              <span className="flex items-center gap-1.5 text-[#8D9FCE]">
+              <span className="flex items-center gap-1.5 text-[var(--math-ink-x)]">
                 <Activity className="w-3.5 h-3.5" />
                 <span>Coupled Time Waveforms x(t) &amp; y(t) from Active Seed</span>
               </span>
@@ -597,12 +597,12 @@ export function NonlinearPhasePortraitLab() {
           {/* Local Jacobian & Hartman–Grobman Panel */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2">
-              <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4]">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)]">
                 {analysis.eqPt
                   ? `NEAREST EQUILIBRIUM (${analysis.eqPt[0].toFixed(2)}, ${analysis.eqPt[1].toFixed(2)})`
                   : `LOCAL JACOBIAN AT SEED (${seed[0].toFixed(2)}, ${seed[1].toFixed(2)})`}
               </span>
-              <span className="text-xs font-tabular-mono font-semibold text-[#029091]">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)]">
                 {analysis.hartmanVerdict}
               </span>
             </div>
@@ -630,13 +630,13 @@ export function NonlinearPhasePortraitLab() {
 
               <div className="space-y-2">
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] flex justify-between">
-                  <span className="text-[#8D9FCE]">Trace τ = tr(J):</span>
+                  <span className="text-[var(--math-ink-x)]">Trace τ = tr(J):</span>
                   <span className="font-semibold text-[var(--text-primary)]">
                     {analysis.tau.toFixed(3)}
                   </span>
                 </div>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] flex justify-between">
-                  <span className="text-[#96B898]">Det Δ = det(J):</span>
+                  <span className="text-[var(--math-ink-y)]">Det Δ = det(J):</span>
                   <span className="font-semibold text-[var(--text-primary)]">
                     {analysis.delta.toFixed(3)}
                   </span>
@@ -645,7 +645,7 @@ export function NonlinearPhasePortraitLab() {
             </div>
 
             {analysis.nonHyperbolic && (
-              <div className="p-2.5 border border-[#FBEAA4] bg-[#FBEAA4]/10 text-xs font-math-serif text-[#FBEAA4] flex items-start gap-2">
+              <div className="p-2.5 border border-[var(--math-ink-diff)] bg-[#FBEAA4]/10 text-xs font-math-serif text-[var(--math-ink-diff)] flex items-start gap-2">
                 <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>
                   Non-hyperbolic warning: Re(λ) = 0 means Hartman–Grobman does not guarantee closed

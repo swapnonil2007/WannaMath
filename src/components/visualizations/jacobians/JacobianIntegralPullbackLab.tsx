@@ -5,7 +5,7 @@ import { Calculator, Layers } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { computeJacobian2D } from "@/components/visualizations/primitives";
+import { computeJacobian2D } from "@/components/visualizations/primitives/core2d";
 
 interface PullbackPreset {
   id: string;
@@ -428,7 +428,7 @@ export function JacobianIntegralPullbackLab() {
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-xs font-tabular-mono bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[#96B898]">
+            <span className="px-2 py-0.5 text-xs font-tabular-mono bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--math-ink-y)]">
               LAB 04.3 • INTEGRAL DOMAIN PULLBACK &amp; 2D/3D JACOBIAN SOLVER
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -457,11 +457,11 @@ export function JacobianIntegralPullbackLab() {
               aria-pressed={active}
               className={`p-3 border text-left transition-colors flex flex-col justify-between gap-1.5 ${
                 active
-                  ? "border-[#96B898] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-y)] bg-[var(--bg-canvas)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] opacity-80 hover:opacity-100"
               }`}
             >
-              <span className="text-[11px] font-tabular-mono font-semibold text-[#96B898]">
+              <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-y)]">
                 {p.badge}
               </span>
               <span className="text-xs font-medium text-[var(--text-primary)] leading-snug">
@@ -527,7 +527,7 @@ export function JacobianIntegralPullbackLab() {
 
         <div className="border-t border-[var(--border-subtle)] pt-3 space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#96B898]">
+            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)]">
               Define Pulled-Back Integration Limits in (u, v) Space:
             </span>
             <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -595,7 +595,7 @@ export function JacobianIntegralPullbackLab() {
             {/* Pulled-Back Region R_uv */}
             <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898]">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)]">
                   PULLED-BACK DOMAIN R_uv
                 </span>
                 <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -624,7 +624,7 @@ export function JacobianIntegralPullbackLab() {
                 <text
                   x={svgW - 22}
                   y={svgH - 8}
-                  fill="#8D9FCE"
+                  fill="var(--math-ink-x)"
                   fontSize="11"
                   fontFamily="var(--font-mono)"
                 >
@@ -633,7 +633,7 @@ export function JacobianIntegralPullbackLab() {
                 <text
                   x={10}
                   y={18}
-                  fill="#96B898"
+                  fill="var(--math-ink-y)"
                   fontSize="11"
                   fontFamily="var(--font-mono)"
                 >
@@ -645,10 +645,10 @@ export function JacobianIntegralPullbackLab() {
             {/* Physical Region R_xy = T(R_uv) */}
             <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323]">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)]">
                   PHYSICAL DOMAIN R_xy = T(R_uv)
                 </span>
-                <span className="text-[11px] font-tabular-mono text-[#FBEAA4]">
+                <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)]">
                   Area(R_xy) = {pullbackEvaluation.physicalArea.toFixed(3)}
                 </span>
               </div>
@@ -674,7 +674,7 @@ export function JacobianIntegralPullbackLab() {
                 <text
                   x={svgW - 22}
                   y={svgH - 8}
-                  fill="#8D9FCE"
+                  fill="var(--math-ink-x)"
                   fontSize="11"
                   fontFamily="var(--font-mono)"
                 >
@@ -683,7 +683,7 @@ export function JacobianIntegralPullbackLab() {
                 <text
                   x={10}
                   y={18}
-                  fill="#96B898"
+                  fill="var(--math-ink-y)"
                   fontSize="11"
                   fontFamily="var(--font-mono)"
                 >
@@ -701,13 +701,13 @@ export function JacobianIntegralPullbackLab() {
               {pullbackEvaluation.maxAbsJ.toFixed(2)}]):
             </span>
             <div className="flex flex-wrap items-center gap-4">
-              <span className="text-[#8D9FCE]">
+              <span className="text-[var(--math-ink-x)]">
                 ■ |det J| &lt; 0.85 (Compressed)
               </span>
-              <span className="text-[#FBEAA4]">
+              <span className="text-[var(--math-ink-diff)]">
                 ■ |det J| ≈ 1.0 (Preserved)
               </span>
-              <span className="text-[#D35323]">
+              <span className="text-[var(--math-ink-sweep)]">
                 ■ |det J| &gt; 1.15 (Expanded)
               </span>
             </div>
@@ -718,8 +718,8 @@ export function JacobianIntegralPullbackLab() {
         <div className="lg:col-span-5 space-y-3">
           <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-4 space-y-3">
             <div className="flex items-center gap-2">
-              <Calculator className="w-4 h-4 text-[#96B898]" />
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898]">
+              <Calculator className="w-4 h-4 text-[var(--math-ink-y)]" />
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)]">
                 Transformed Double Integral Evaluation
               </span>
             </div>
@@ -732,8 +732,8 @@ export function JacobianIntegralPullbackLab() {
             </div>
 
             <div className="grid grid-cols-2 gap-2.5 text-xs font-tabular-mono">
-              <div className="p-2.5 border border-[#96B898] bg-[var(--bg-panel)] space-y-1">
-                <span className="text-[10px] text-[#96B898] block">
+              <div className="p-2.5 border border-[var(--math-ink-y)] bg-[var(--bg-panel)] space-y-1">
+                <span className="text-[10px] text-[var(--math-ink-y)] block">
                   TRUE INTEGRAL (WITH |det J|)
                 </span>
                 <span className="text-base font-semibold text-[var(--text-primary)]">
@@ -741,10 +741,10 @@ export function JacobianIntegralPullbackLab() {
                 </span>
               </div>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1">
-                <span className="text-[10px] text-[#B95869] block">
+                <span className="text-[10px] text-[var(--math-ink-upper)] block">
                   UNWEIGHTED (OMITTING |det J|)
                 </span>
-                <span className="text-base font-semibold text-[#B95869]">
+                <span className="text-base font-semibold text-[var(--math-ink-upper)]">
                   {pullbackEvaluation.integralWithoutJacobian.toFixed(4)}
                 </span>
               </div>
@@ -752,7 +752,7 @@ export function JacobianIntegralPullbackLab() {
 
             {!isCustom && (
               <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5 overflow-x-auto">
-                <span className="text-[11px] font-tabular-mono text-[#AAA36D] block">
+                <span className="text-[11px] font-tabular-mono text-[var(--math-ink-grid)] block">
                   PRESET FORMULATION:
                 </span>
                 <KaTeXMath math={activePreset.pullbackLatex} block />
@@ -769,7 +769,7 @@ export function JacobianIntegralPullbackLab() {
       <div className="border-t border-[var(--border-subtle)] pt-5 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-[#029091]" />
+            <Layers className="w-4 h-4 text-[var(--math-ink-z)]" />
             <h3 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
               3D Change of Variables &amp; <KaTeXMath math="3 \times 3" /> Jacobian Determinant Explorer
             </h3>
@@ -786,7 +786,7 @@ export function JacobianIntegralPullbackLab() {
                   aria-pressed={active}
                   className={`px-3 py-1.5 text-xs font-tabular-mono border ${
                     active
-                      ? "border-[#029091] bg-[var(--bg-canvas)] text-[#029091]"
+                      ? "border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-[var(--math-ink-z)]"
                       : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
                   }`}
                 >

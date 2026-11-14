@@ -7,6 +7,10 @@ import { Cpu, Grid, RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
+import {
+  createDemandDrivenRenderLoop,
+  type DemandDrivenRenderLoopHandle,
+} from "@/components/visualizations/primitives/demandRenderLoop";
 
 type VoxelSolidId = "tetrahedron" | "quarter-sphere" | "parabolic-tunnel" | "custom";
 type DensityId = "uniform" | "stratified" | "radial-core" | "outer-heavy" | "custom";
@@ -94,6 +98,7 @@ const SOLID_REGION_PRESETS: {
 export function TripleVoxelDensityLab() {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const voxelGroupRef = useRef<THREE.Group | null>(null);
+  const renderLoopRef = useRef<DemandDrivenRenderLoopHandle | null>(null);
 
   const [solidId, setSolidId] = useState<VoxelSolidId>("quarter-sphere");
   const [xMinExpr, setXMinExpr] = useState<string>(
@@ -304,13 +309,18 @@ export function TripleVoxelDensityLab() {
     scene.add(voxelGroup);
     voxelGroupRef.current = voxelGroup;
 
-    let frameId: number;
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
+    const renderLoop = createDemandDrivenRenderLoop({
+      container,
+      renderer,
+      scene,
+      camera,
+      controls: controls as unknown as {
+        update: () => boolean;
+        addEventListener: (event: string, listener: () => void) => void;
+        removeEventListener: (event: string, listener: () => void) => void;
+      },
+    });
+    renderLoopRef.current = renderLoop;
 
     const handleResize = () => {
       if (!container) return;
@@ -319,12 +329,15 @@ export function TripleVoxelDensityLab() {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      renderLoop.requestRender(2);
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(frameId);
+      renderLoop.dispose();
+      renderLoopRef.current = null;
+      controls.dispose();
       renderer.dispose();
     };
   }, []);
@@ -406,6 +419,7 @@ export function TripleVoxelDensityLab() {
     addCrossLine([com[0], 0, com[1]], [com[0], com[2], com[1]]);
     addCrossLine([0, com[2], com[1]], [com[0], com[2], com[1]]);
     addCrossLine([com[0], com[2], 0], [com[0], com[2], com[1]]);
+    renderLoopRef.current?.requestRender(2);
   }, [voxelData]);
 
   return (
@@ -413,7 +427,7 @@ export function TripleVoxelDensityLab() {
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#96B898]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)]">
             <Grid className="w-4 h-4" aria-hidden="true" />
             <span>
               Interactive Laboratory 02.4 • 3D Voxels, Scalar Density &amp;
@@ -439,7 +453,7 @@ export function TripleVoxelDensityLab() {
             <span className="text-[10px] uppercase text-[var(--text-muted)] block">
               Volume ∑ΔV
             </span>
-            <span className="text-sm font-semibold text-[#029091]">
+            <span className="text-sm font-semibold text-[var(--math-ink-z)]">
               {voxelData.totalVolume.toFixed(4)}
             </span>
           </div>
@@ -447,7 +461,7 @@ export function TripleVoxelDensityLab() {
             <span className="text-[10px] uppercase text-[var(--text-muted)] block">
               Total Mass M
             </span>
-            <span className="text-sm font-semibold text-[#D5658B]">
+            <span className="text-sm font-semibold text-[var(--math-ink-lower)]">
               {voxelData.totalMass.toFixed(4)}
             </span>
           </div>
@@ -455,7 +469,7 @@ export function TripleVoxelDensityLab() {
             <span className="text-[10px] uppercase text-[var(--text-muted)] block">
               Center (x̄, ȳ, z̄)
             </span>
-            <span className="text-xs font-semibold text-[#FBEAA4]">
+            <span className="text-xs font-semibold text-[var(--math-ink-diff)]">
               ({voxelData.com[0].toFixed(2)}, {voxelData.com[1].toFixed(2)},{" "}
               {voxelData.com[2].toFixed(2)})
             </span>
@@ -583,8 +597,8 @@ export function TripleVoxelDensityLab() {
             <span>Active Voxels: {voxelData.activeCount}</span>
             <span className="flex items-center gap-3">
               <span className="text-[#8D9FCE]">■ Low ρ</span>
-              <span className="text-[#029091]">■ Med ρ</span>
-              <span className="text-[#D5658B]">■ High ρ</span>
+              <span className="text-[#28B7B8]">■ Med ρ</span>
+              <span className="text-[#E37CA0]">■ High ρ</span>
             </span>
           </figcaption>
         </figure>
@@ -671,7 +685,7 @@ export function TripleVoxelDensityLab() {
             <div className="space-y-1">
               <label
                 htmlFor="voxel-res-slider"
-                className="text-xs font-tabular-mono text-[#029091] block"
+                className="text-xs font-tabular-mono text-[var(--math-ink-z)] block"
               >
                 Voxel Grid Subdivision (N = {resolution} per axis, ΔV ={" "}
                 {voxelData.dV.toFixed(4)})
@@ -691,7 +705,7 @@ export function TripleVoxelDensityLab() {
             <div className="space-y-1">
               <label
                 htmlFor="voxel-cutaway-slider"
-                className="text-xs font-tabular-mono text-[#FBEAA4] block"
+                className="text-xs font-tabular-mono text-[var(--math-ink-diff)] block"
               >
                 Horizontal Cutaway Plane (z ≤ {(sliceZFilter * 100).toFixed(0)}%
                 — Peel Layers to See Center of Mass)
@@ -711,7 +725,7 @@ export function TripleVoxelDensityLab() {
 
           {/* Engineering Context & Formula */}
           <div className="border border-[var(--border-strong)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
-            <div className="flex items-center gap-1.5 text-xs font-tabular-mono text-[#96B898]">
+            <div className="flex items-center gap-1.5 text-xs font-tabular-mono text-[var(--math-ink-y)]">
               <Cpu className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Physical Meaning of the Triple Integral</span>
             </div>

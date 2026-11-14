@@ -5,7 +5,7 @@ import { StepForward, FastForward, RotateCcw, AlertTriangle, CheckCircle2 } from
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface IVTPreset {
   id: string;
@@ -235,7 +235,7 @@ export function IVTBisectionLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)]">
             <span>Lab 1.1.2A</span>
             <span>•</span>
             <span>Continuity, IVT &amp; Bisection</span>
@@ -257,7 +257,7 @@ export function IVTBisectionLab() {
             type="button"
             onClick={() => setBisectionSteps((s) => Math.min(12, s + 1))}
             disabled={!bisection.hasSignFlip || bisectionSteps >= 12}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[#029091] bg-[var(--bg-canvas)] text-[#029091] disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-[var(--math-ink-z)] disabled:opacity-40"
           >
             <StepForward className="w-3.5 h-3.5" /> Step (+1)
           </button>
@@ -267,7 +267,7 @@ export function IVTBisectionLab() {
             disabled={!bisection.hasSignFlip}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[var(--border-strong)] bg-[var(--bg-canvas)] text-[var(--text-primary)] disabled:opacity-40"
           >
-            <FastForward className="w-3.5 h-3.5 text-[#D35323]" /> Run 9 Steps
+            <FastForward className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" /> Run 9 Steps
           </button>
           <button
             type="button"
@@ -290,7 +290,7 @@ export function IVTBisectionLab() {
               onClick={() => handleSelectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 active
-                  ? "border-[#8D9FCE] bg-[var(--bg-canvas)] text-[#8D9FCE] font-medium"
+                  ? "border-[var(--math-ink-x)] bg-[var(--bg-canvas)] text-[var(--math-ink-x)] font-medium"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -318,7 +318,7 @@ export function IVTBisectionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Left Bracket a</span>
-            <span className="font-tabular-mono text-[#8D9FCE]">
+            <span className="font-tabular-mono text-[var(--math-ink-x)]">
               a = {leftA.toFixed(2)}
             </span>
           </div>
@@ -340,7 +340,7 @@ export function IVTBisectionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Right Bracket b</span>
-            <span className="font-tabular-mono text-[#96B898]">
+            <span className="font-tabular-mono text-[var(--math-ink-y)]">
               b = {rightB.toFixed(2)}
             </span>
           </div>
@@ -362,7 +362,7 @@ export function IVTBisectionLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Target Level N</span>
-            <span className="font-tabular-mono text-[#D35323]">
+            <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
               N = {targetN.toFixed(2)}
             </span>
           </div>
@@ -386,19 +386,19 @@ export function IVTBisectionLab() {
       <div
         className={`p-3.5 border flex flex-wrap items-center justify-between gap-3 ${
           !bisection.hasSignFlip
-            ? "border-[#AAA36D] bg-[var(--bg-canvas)]"
+            ? "border-[var(--math-ink-grid)] bg-[var(--bg-canvas)]"
             : !isCustom && !preset.isContinuous
-              ? "border-[#B95869] bg-[#B95869]/10"
-              : "border-[#029091] bg-[#029091]/10"
+              ? "border-[var(--math-ink-upper)] bg-[#B95869]/10"
+              : "border-[var(--math-ink-z)] bg-[#029091]/10"
         }`}
       >
         <div className="flex items-center gap-2 text-xs font-sans">
           {!bisection.hasSignFlip ? (
-            <AlertTriangle className="w-4 h-4 text-[#AAA36D]" />
+            <AlertTriangle className="w-4 h-4 text-[var(--math-ink-grid)]" />
           ) : !isCustom && !preset.isContinuous ? (
-            <AlertTriangle className="w-4 h-4 text-[#B95869]" />
+            <AlertTriangle className="w-4 h-4 text-[var(--math-ink-upper)]" />
           ) : (
-            <CheckCircle2 className="w-4 h-4 text-[#029091]" />
+            <CheckCircle2 className="w-4 h-4 text-[var(--math-ink-z)]" />
           )}
           <span className="font-semibold text-[var(--text-primary)]">
             {!bisection.hasSignFlip
@@ -565,7 +565,7 @@ export function IVTBisectionLab() {
                   <th className="p-2">k</th>
                   <th className="p-2">a_k</th>
                   <th className="p-2">b_k</th>
-                  <th className="p-2 text-[#D35323]">m_k</th>
+                  <th className="p-2 text-[var(--math-ink-sweep)]">m_k</th>
                   <th className="p-2">f(m_k)-N</th>
                 </tr>
               </thead>
@@ -587,9 +587,9 @@ export function IVTBisectionLab() {
                       className="border-b border-[var(--border-subtle)] last:border-b-0"
                     >
                       <td className="p-2 text-[var(--text-secondary)]">{row.iter}</td>
-                      <td className="p-2 text-[#8D9FCE]">{row.a.toFixed(4)}</td>
-                      <td className="p-2 text-[#96B898]">{row.b.toFixed(4)}</td>
-                      <td className="p-2 text-[#D35323] font-semibold">
+                      <td className="p-2 text-[var(--math-ink-x)]">{row.a.toFixed(4)}</td>
+                      <td className="p-2 text-[var(--math-ink-y)]">{row.b.toFixed(4)}</td>
+                      <td className="p-2 text-[var(--math-ink-sweep)] font-semibold">
                         {row.m.toFixed(4)}
                       </td>
                       <td className="p-2 text-[var(--text-primary)]">

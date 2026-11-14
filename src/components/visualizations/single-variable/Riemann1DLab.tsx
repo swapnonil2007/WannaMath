@@ -8,7 +8,7 @@ import { compileMathExpression } from "@/lib/mathParser";
 import {
   SvgCoordinatePlane2D,
   integrate1DGaussLegendre,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 type RiemannMethod = "left" | "right" | "midpoint" | "trapezoid" | "darboux";
 
@@ -184,7 +184,7 @@ export function Riemann1DLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#029091]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)]">
             <span>Lab 1.3.1A</span>
             <span>•</span>
             <span>Riemann &amp; Darboux Integration</span>
@@ -220,7 +220,7 @@ export function Riemann1DLab() {
               onClick={() => handleSelectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 active
-                  ? "border-[#029091] bg-[var(--bg-canvas)] text-[#029091] font-medium"
+                  ? "border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-[var(--math-ink-z)] font-medium"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -247,7 +247,7 @@ export function Riemann1DLab() {
             onClick={() => setMethod(mKey)}
             className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
               method === mKey
-                ? "border-[#D35323] bg-[#D35323] text-[#FFFBE4] font-medium"
+                ? "border-[#9E360E] bg-[#9E360E] text-[#FFFBE4] font-medium"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -272,7 +272,7 @@ export function Riemann1DLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Partitions N</span>
-            <span className="font-tabular-mono font-semibold text-[#D35323]">
+            <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)]">
               N = {numPartitions} (Δx = {analysis.dx.toFixed(3)})
             </span>
           </div>
@@ -291,7 +291,7 @@ export function Riemann1DLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Lower Bound a</span>
-            <span className="font-tabular-mono text-[#8D9FCE]">
+            <span className="font-tabular-mono text-[var(--math-ink-x)]">
               a = {boundA.toFixed(2)}
             </span>
           </div>
@@ -310,7 +310,7 @@ export function Riemann1DLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Upper Bound b</span>
-            <span className="font-tabular-mono text-[#96B898]">
+            <span className="font-tabular-mono text-[var(--math-ink-y)]">
               b = {boundB.toFixed(2)}
             </span>
           </div>
@@ -441,7 +441,7 @@ export function Riemann1DLab() {
             <span className="text-xs font-sans text-[var(--text-secondary)] block">
               Exact Signed Integral <KaTeXMath math="\int_a^b f(x)\,dx" />
             </span>
-            <span className="text-lg font-tabular-mono font-semibold text-[#FBEAA4] block">
+            <span className="text-lg font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
               {analysis.exactSigned.toFixed(5)}
             </span>
             <span className="text-[11px] font-tabular-mono text-[var(--text-secondary)] block">
@@ -457,10 +457,10 @@ export function Riemann1DLab() {
             </span>
             {method === "darboux" ? (
               <>
-                <div className="text-xs font-tabular-mono text-[#029091]">
+                <div className="text-xs font-tabular-mono text-[var(--math-ink-z)]">
                   L(f, P) = {analysis.darbouxLower.toFixed(5)}
                 </div>
-                <div className="text-xs font-tabular-mono text-[#D35323]">
+                <div className="text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
                   U(f, P) = {analysis.darbouxUpper.toFixed(5)}
                 </div>
                 <div className="text-xs font-tabular-mono text-[var(--text-primary)] pt-1">
@@ -470,10 +470,10 @@ export function Riemann1DLab() {
               </>
             ) : (
               <>
-                <span className="text-lg font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-lg font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   {analysis.approxSum.toFixed(5)}
                 </span>
-                <span className="text-[11px] font-tabular-mono text-[#D35323] block">
+                <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)] block">
                   |Error| ={" "}
                   {Math.abs(analysis.approxSum - analysis.exactSigned).toExponential(2)}
                 </span>

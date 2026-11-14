@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface TaylorCurvPreset {
   id: string;
@@ -200,7 +200,7 @@ export function TaylorCurvatureLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#B95869]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-upper)]">
             <span>Lab 1.2.4A</span>
             <span>•</span>
             <span>Osculating Polynomials &amp; Curvature</span>
@@ -241,7 +241,7 @@ export function TaylorCurvatureLab() {
               onClick={() => handleSelectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 active
-                  ? "border-[#B95869] bg-[var(--bg-canvas)] text-[#B95869] font-medium"
+                  ? "border-[var(--math-ink-upper)] bg-[var(--bg-canvas)] text-[var(--math-ink-upper)] font-medium"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -256,7 +256,7 @@ export function TaylorCurvatureLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Polynomial Degree n</span>
-            <span className="font-tabular-mono font-semibold text-[#D35323]">
+            <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)]">
               n = {degreeN}
             </span>
           </div>
@@ -275,7 +275,7 @@ export function TaylorCurvatureLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Expansion Center a</span>
-            <span className="font-tabular-mono text-[#8D9FCE]">
+            <span className="font-tabular-mono text-[var(--math-ink-x)]">
               a = {centerA.toFixed(2)}
             </span>
           </div>
@@ -433,7 +433,7 @@ export function TaylorCurvatureLab() {
           <span className="text-[var(--text-secondary)] block font-sans">
             Slope f&apos;(a)
           </span>
-          <span className="text-[#8D9FCE] text-sm font-semibold">
+          <span className="text-[var(--math-ink-x)] text-sm font-semibold">
             {model.yp.toFixed(4)}
           </span>
         </div>
@@ -441,7 +441,7 @@ export function TaylorCurvatureLab() {
           <span className="text-[var(--text-secondary)] block font-sans">
             Concavity f&apos;&apos;(a)
           </span>
-          <span className="text-[#D35323] text-sm font-semibold">
+          <span className="text-[var(--math-ink-sweep)] text-sm font-semibold">
             {model.ypp.toFixed(4)}
           </span>
         </div>
@@ -449,7 +449,7 @@ export function TaylorCurvatureLab() {
           <span className="text-[var(--text-secondary)] block font-sans">
             Curvature κ(a)
           </span>
-          <span className="text-[#029091] text-sm font-semibold">
+          <span className="text-[var(--math-ink-z)] text-sm font-semibold">
             {model.kappa.toFixed(4)}
           </span>
         </div>
@@ -457,7 +457,7 @@ export function TaylorCurvatureLab() {
           <span className="text-[var(--text-secondary)] block font-sans">
             Osculating Radius R
           </span>
-          <span className="text-[#FBEAA4] text-sm font-semibold">
+          <span className="text-[var(--math-ink-diff)] text-sm font-semibold">
             {Number.isFinite(model.radius) ? model.radius.toFixed(3) : "∞ (Flat)"}
           </span>
         </div>

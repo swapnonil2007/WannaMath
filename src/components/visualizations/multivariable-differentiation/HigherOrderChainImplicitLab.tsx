@@ -195,7 +195,7 @@ export function HigherOrderChainImplicitLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#96B898] text-[#96B898] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[var(--bg-canvas)]">
               LAB 3.1.2B • HIGHER-ORDER PARTIALS, CHAIN RULE &amp; IMPLICIT SURFACES
             </span>
           </div>
@@ -220,7 +220,7 @@ export function HigherOrderChainImplicitLab() {
                 onClick={() => setMode(tab.id as LabMode)}
                 className={`px-3 py-1.5 text-xs font-sans border inline-flex items-center gap-1.5 ${
                   active
-                    ? "border-[#96B898] bg-[#96B898]/15 text-[var(--text-primary)]"
+                    ? "border-[var(--math-ink-y)] bg-[#96B898]/15 text-[var(--text-primary)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
                 }`}
               >
@@ -259,7 +259,7 @@ export function HigherOrderChainImplicitLab() {
                 onClick={() => setUseCounterexample(false)}
                 className={`px-3 py-1.5 text-xs font-sans border ${
                   !useCounterexample
-                    ? "border-[#96B898] bg-[#96B898]/15 text-[var(--text-primary)]"
+                    ? "border-[var(--math-ink-y)] bg-[#96B898]/15 text-[var(--text-primary)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)]"
                 }`}
               >
@@ -274,7 +274,7 @@ export function HigherOrderChainImplicitLab() {
                 }}
                 className={`px-3 py-1.5 text-xs font-sans border ${
                   useCounterexample
-                    ? "border-[#B95869] bg-[#B95869]/15 text-[var(--text-primary)]"
+                    ? "border-[var(--math-ink-upper)] bg-[#B95869]/15 text-[var(--text-primary)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)]"
                 }`}
               >
@@ -287,7 +287,7 @@ export function HigherOrderChainImplicitLab() {
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">Probe x₀</span>
-                <span className="font-tabular-mono text-[#8D9FCE]">
+                <span className="font-tabular-mono text-[var(--math-ink-x)]">
                   {px.toFixed(2)}
                 </span>
               </div>
@@ -306,7 +306,7 @@ export function HigherOrderChainImplicitLab() {
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">Probe y₀</span>
-                <span className="font-tabular-mono text-[#96B898]">
+                <span className="font-tabular-mono text-[var(--math-ink-y)]">
                   {py.toFixed(2)}
                 </span>
               </div>
@@ -326,13 +326,13 @@ export function HigherOrderChainImplicitLab() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
               <div className="text-[11px] text-[var(--text-muted)]">f_xx</div>
-              <div className="mt-1 text-base font-tabular-mono text-[#8D9FCE]">
+              <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-x)]">
                 {mixedStats.fxx.toFixed(4)}
               </div>
             </div>
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
               <div className="text-[11px] text-[var(--text-muted)]">f_yy</div>
-              <div className="mt-1 text-base font-tabular-mono text-[#96B898]">
+              <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-y)]">
                 {mixedStats.fyy.toFixed(4)}
               </div>
             </div>
@@ -340,7 +340,7 @@ export function HigherOrderChainImplicitLab() {
               <div className="text-[11px] text-[var(--text-muted)]">
                 Mixed f_xy = ∂/∂y(f_x)
               </div>
-              <div className="mt-1 text-base font-tabular-mono text-[#D35323]">
+              <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-sweep)]">
                 {mixedStats.fxy.toFixed(4)}
               </div>
             </div>
@@ -348,7 +348,7 @@ export function HigherOrderChainImplicitLab() {
               <div className="text-[11px] text-[var(--text-muted)]">
                 Mixed f_yx = ∂/∂x(f_y)
               </div>
-              <div className="mt-1 text-base font-tabular-mono text-[#FBEAA4]">
+              <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-diff)]">
                 {mixedStats.fyx.toFixed(4)}
               </div>
             </div>
@@ -370,7 +370,7 @@ export function HigherOrderChainImplicitLab() {
                   onClick={() => setChainPreset("circle")}
                   className={`px-2.5 py-1 text-xs font-sans border ${
                     chainPreset === "circle"
-                      ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
+                      ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
                       : "border-[var(--border-subtle)] text-[var(--text-secondary)]"
                   }`}
                 >
@@ -381,7 +381,7 @@ export function HigherOrderChainImplicitLab() {
                   onClick={() => setChainPreset("spiral")}
                   className={`px-2.5 py-1 text-xs font-sans border ${
                     chainPreset === "spiral"
-                      ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
+                      ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
                       : "border-[var(--border-subtle)] text-[var(--text-secondary)]"
                   }`}
                 >
@@ -439,7 +439,7 @@ export function HigherOrderChainImplicitLab() {
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
               <div className="flex justify-between text-xs font-sans">
                 <span className="text-[var(--text-secondary)]">Parameter t</span>
-                <span className="font-tabular-mono text-[#D35323]">
+                <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                   t = {chainT.toFixed(2)} rad
                 </span>
               </div>
@@ -468,34 +468,34 @@ export function HigherOrderChainImplicitLab() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-tabular-mono">
-                <div className="p-3 border border-[#8D9FCE]/50 bg-[var(--bg-panel)] space-y-1">
-                  <div className="text-[#8D9FCE] font-semibold">
+                <div className="p-3 border border-[var(--math-ink-x)]/50 bg-[var(--bg-panel)] space-y-1">
+                  <div className="text-[var(--math-ink-x)] font-semibold">
                     x-Channel Contribution
                   </div>
                   <div>∂z/∂x = {chainStats.fx.toFixed(3)}</div>
                   <div>dx/dt = {chainStats.dxdt.toFixed(3)}</div>
-                  <div className="pt-1 border-t border-[var(--border-subtle)] text-[#8D9FCE]">
+                  <div className="pt-1 border-t border-[var(--border-subtle)] text-[var(--math-ink-x)]">
                     Product = {chainStats.xTerm.toFixed(4)}
                   </div>
                 </div>
 
-                <div className="p-3 border border-[#96B898]/50 bg-[var(--bg-panel)] space-y-1">
-                  <div className="text-[#96B898] font-semibold">
+                <div className="p-3 border border-[var(--math-ink-y)]/50 bg-[var(--bg-panel)] space-y-1">
+                  <div className="text-[var(--math-ink-y)] font-semibold">
                     y-Channel Contribution
                   </div>
                   <div>∂z/∂y = {chainStats.fy.toFixed(3)}</div>
                   <div>dy/dt = {chainStats.dydt.toFixed(3)}</div>
-                  <div className="pt-1 border-t border-[var(--border-subtle)] text-[#96B898]">
+                  <div className="pt-1 border-t border-[var(--border-subtle)] text-[var(--math-ink-y)]">
                     Product = {chainStats.yTerm.toFixed(4)}
                   </div>
                 </div>
               </div>
 
-              <div className="p-3 border border-[#D35323]/60 bg-[var(--bg-panel)] flex items-center justify-between font-tabular-mono text-sm">
+              <div className="p-3 border border-[var(--math-ink-sweep)]/60 bg-[var(--bg-panel)] flex items-center justify-between font-tabular-mono text-sm">
                 <span className="text-[var(--text-secondary)]">
                   Total Rate dz/dt =
                 </span>
-                <span className="text-[#D35323] font-semibold">
+                <span className="text-[var(--math-ink-sweep)] font-semibold">
                   {chainStats.dzdtChain.toFixed(4)}
                 </span>
               </div>
@@ -535,7 +535,7 @@ export function HigherOrderChainImplicitLab() {
               <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
                 <div className="flex justify-between text-xs font-sans">
                   <span className="text-[var(--text-secondary)]">x coordinate</span>
-                  <span className="font-tabular-mono text-[#8D9FCE]">
+                  <span className="font-tabular-mono text-[var(--math-ink-x)]">
                     {impX.toFixed(2)}
                   </span>
                 </div>
@@ -554,7 +554,7 @@ export function HigherOrderChainImplicitLab() {
               <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
                 <div className="flex justify-between text-xs font-sans">
                   <span className="text-[var(--text-secondary)]">y coordinate</span>
-                  <span className="font-tabular-mono text-[#96B898]">
+                  <span className="font-tabular-mono text-[var(--math-ink-y)]">
                     {impY.toFixed(2)}
                   </span>
                 </div>
@@ -584,13 +584,13 @@ export function HigherOrderChainImplicitLab() {
                 <>
                   <div className="flex justify-between">
                     <span className="text-[var(--text-muted)]">Solved z(x, y):</span>
-                    <span className="text-[#029091]">
+                    <span className="text-[var(--math-ink-z)]">
                       {implicitStats.z.toFixed(4)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[var(--text-muted)]">∂z/∂x = −Fₓ/F_z:</span>
-                    <span className="text-[#8D9FCE]">
+                    <span className="text-[var(--math-ink-x)]">
                       {Number.isFinite(implicitStats.dzdx)
                         ? implicitStats.dzdx.toFixed(4)
                         : "Vertical (F_z = 0)"}
@@ -598,7 +598,7 @@ export function HigherOrderChainImplicitLab() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[var(--text-muted)]">∂z/∂y = −F_y/F_z:</span>
-                    <span className="text-[#96B898]">
+                    <span className="text-[var(--math-ink-y)]">
                       {Number.isFinite(implicitStats.dzdy)
                         ? implicitStats.dzdy.toFixed(4)
                         : "Vertical (F_z = 0)"}
@@ -606,7 +606,7 @@ export function HigherOrderChainImplicitLab() {
                   </div>
                 </>
               ) : (
-                <div className="text-[#B95869]">
+                <div className="text-[var(--math-ink-upper)]">
                   (x, y) outside ellipsoid domain (F_z = 0 equator crossed).
                 </div>
               )}

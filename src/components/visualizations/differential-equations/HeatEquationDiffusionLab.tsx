@@ -207,7 +207,7 @@ export function HeatEquationDiffusionLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#B95869] text-[#B95869] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-upper)] text-[var(--math-ink-upper)] bg-[var(--bg-canvas)]">
               LAB 4.4.1 • HEAT EQUATION &amp; FOURIER DIFFUSION
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -227,7 +227,7 @@ export function HeatEquationDiffusionLab() {
             onClick={() => setBoundary("dirichlet")}
             className={`px-3 py-1.5 text-xs font-tabular-mono transition-colors ${
               boundary === "dirichlet"
-                ? "bg-[#B95869] text-[#FFFBE4] font-semibold"
+                ? "bg-[#8A3242] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -238,7 +238,7 @@ export function HeatEquationDiffusionLab() {
             onClick={() => setBoundary("neumann")}
             className={`px-3 py-1.5 text-xs font-tabular-mono border-l border-[var(--border-subtle)] transition-colors ${
               boundary === "neumann"
-                ? "bg-[#D35323] text-[#1E1F22] font-semibold"
+                ? "bg-[#9E360E] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -265,7 +265,7 @@ export function HeatEquationDiffusionLab() {
                   }}
                   className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                     active
-                      ? "border-[#B95869] bg-[#B95869]/15 text-[var(--text-primary)] font-semibold"
+                      ? "border-[var(--math-ink-upper)] bg-[#B95869]/15 text-[var(--text-primary)] font-semibold"
                       : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                   }`}
                 >
@@ -282,7 +282,7 @@ export function HeatEquationDiffusionLab() {
               }}
               className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                 isCustom
-                  ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
+                  ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
                   : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
               }`}
             >
@@ -297,7 +297,7 @@ export function HeatEquationDiffusionLab() {
                 if (timeT >= 1.18) setTimeT(0);
                 setIsPlaying((p) => !p);
               }}
-              className="px-3 py-1 text-xs font-tabular-mono border border-[#029091] bg-[#029091]/15 text-[#029091] font-semibold flex items-center gap-1.5"
+              className="px-3 py-1 text-xs font-tabular-mono border border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--math-ink-z)] font-semibold flex items-center gap-1.5"
             >
               {isPlaying ? (
                 <>
@@ -336,7 +336,7 @@ export function HeatEquationDiffusionLab() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           <label className="block space-y-1.5">
             <div className="flex justify-between text-xs font-tabular-mono">
-              <span className="text-[#D35323]">Evolution Time t</span>
+              <span className="text-[var(--math-ink-sweep)]">Evolution Time t</span>
               <span className="text-[var(--text-primary)] font-semibold">
                 {timeT.toFixed(3)} s
               </span>
@@ -357,7 +357,7 @@ export function HeatEquationDiffusionLab() {
 
           <label className="block space-y-1.5">
             <div className="flex justify-between text-xs font-tabular-mono">
-              <span className="text-[#B95869]">Thermal Diffusivity α</span>
+              <span className="text-[var(--math-ink-upper)]">Thermal Diffusivity α</span>
               <span className="text-[var(--text-primary)] font-semibold">
                 {alpha.toFixed(2)}
               </span>
@@ -375,7 +375,7 @@ export function HeatEquationDiffusionLab() {
 
           <label className="block space-y-1.5">
             <div className="flex justify-between text-xs font-tabular-mono">
-              <span className="text-[#8D9FCE]">Fourier Harmonics N</span>
+              <span className="text-[var(--math-ink-x)]">Fourier Harmonics N</span>
               <span className="text-[var(--text-primary)] font-semibold">{numModes}</span>
             </div>
             <input
@@ -402,9 +402,9 @@ export function HeatEquationDiffusionLab() {
             titleBadge="3D Space–Time Diffusion Sheet u(x, t) Over Rod x ∈ [0,1] & Time t"
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#8D9FCE]">Rod x ∈ [0, 1]</span>
-                <span className="text-[#029091]">Time t ∈ [0, 1.2]</span>
-                <span className="text-[#FBEAA4] font-semibold">
+                <span className="text-[var(--math-ink-x)]">Rod x ∈ [0, 1]</span>
+                <span className="text-[var(--math-ink-z)]">Time t ∈ [0, 1.2]</span>
+                <span className="text-[var(--math-ink-diff)] font-semibold">
                   Active Iso-Slice: t = {timeT.toFixed(3)} s
                 </span>
               </div>
@@ -463,7 +463,7 @@ export function HeatEquationDiffusionLab() {
 
           {/* Formula Banner */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2 overflow-x-auto">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#B95869] block">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-upper)] block">
               {boundary === "dirichlet"
                 ? "Dirichlet Fixed-Zero Solution (Fourier Sine Series)"
                 : "Insulated Neumann Solution (Conserves Total Thermal Energy / Mean Temp)"}
@@ -486,10 +486,10 @@ export function HeatEquationDiffusionLab() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Flame className="w-3.5 h-3.5 text-[#D35323]" aria-hidden="true" />
+                <Flame className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" aria-hidden="true" />
                 Live Rod Profile u(x, t) vs Initial u(x, 0)
               </span>
-              <span className="text-[11px] font-tabular-mono text-[#FBEAA4]">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)]">
                 L² Energy: {((profileData.energyT / Math.max(1e-6, profileData.energy0)) * 100).toFixed(1)}%
               </span>
             </div>
@@ -555,7 +555,7 @@ export function HeatEquationDiffusionLab() {
             {/* Exponential Mode Damping Spectrum */}
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
               <div className="flex items-center justify-between text-xs font-tabular-mono">
-                <span className="text-[#8D9FCE] flex items-center gap-1.5">
+                <span className="text-[var(--math-ink-x)] flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5" aria-hidden="true" />
                   Fourier Harmonic Spectrum (n = 1..12)
                 </span>

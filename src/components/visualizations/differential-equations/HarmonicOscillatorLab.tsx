@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { Activity, Compass, Waves } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface OscillatorPreset {
   id: string;
@@ -183,7 +183,7 @@ export function HarmonicOscillatorLab() {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
             Laboratory 4.2.1.1 • Mass-Spring-Damper Physics &amp; Complex s-Plane Root Locus
           </span>
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -225,11 +225,11 @@ export function HarmonicOscillatorLab() {
               onClick={() => handleSelectPreset(p)}
               className={`p-3 border text-left transition-colors ${
                 selected
-                  ? "border-[#8D9FCE] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-x)] bg-[var(--bg-canvas)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
               }`}
             >
-              <span className="text-[11px] font-tabular-mono text-[#8D9FCE] font-semibold block mb-1">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-x)] font-semibold block mb-1">
                 {p.badge}
               </span>
               <div className="text-xs font-math-serif text-[var(--text-primary)] leading-snug">
@@ -244,7 +244,7 @@ export function HarmonicOscillatorLab() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         <div className="lg:col-span-7 p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#8D9FCE]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-x)]">
               <span>Mass m (kg)</span>
               <span>{mass.toFixed(2)}</span>
             </div>
@@ -259,11 +259,12 @@ export function HarmonicOscillatorLab() {
                 setPresetId("custom");
               }}
               className="w-full accent-[#8D9FCE]"
+              aria-label="Mass m (kg)"
             />
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#D35323]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
               <span>Damping c (N·s/m)</span>
               <span>{dampingC.toFixed(2)}</span>
             </div>
@@ -278,11 +279,12 @@ export function HarmonicOscillatorLab() {
                 setPresetId("custom");
               }}
               className="w-full accent-[#D35323]"
+              aria-label="Damping c (N·s/m)"
             />
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#96B898]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-y)]">
               <span>Stiffness k (N/m)</span>
               <span>{stiffnessK.toFixed(2)}</span>
             </div>
@@ -297,11 +299,12 @@ export function HarmonicOscillatorLab() {
                 setPresetId("custom");
               }}
               className="w-full accent-[#96B898]"
+              aria-label="Stiffness k (N/m)"
             />
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#FBEAA4]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-diff)]">
               <span>Initial x(0)</span>
               <span>{x0.toFixed(2)}</span>
             </div>
@@ -313,11 +316,12 @@ export function HarmonicOscillatorLab() {
               value={x0}
               onChange={(e) => setX0(parseFloat(e.target.value))}
               className="w-full accent-[#FBEAA4]"
+              aria-label="Initial position x(0)"
             />
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#D5658B]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-lower)]">
               <span>Initial v(0)</span>
               <span>{v0.toFixed(2)}</span>
             </div>
@@ -329,11 +333,12 @@ export function HarmonicOscillatorLab() {
               value={v0}
               onChange={(e) => setV0(parseFloat(e.target.value))}
               className="w-full accent-[#D5658B]"
+              aria-label="Initial velocity v(0)"
             />
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#029091]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-z)]">
               <span>Time Probe t*</span>
               <span>{probeT.toFixed(2)} s</span>
             </div>
@@ -345,6 +350,7 @@ export function HarmonicOscillatorLab() {
               value={probeT}
               onChange={(e) => setProbeT(parseFloat(e.target.value))}
               className="w-full accent-[#029091]"
+              aria-label="Time probe t*"
             />
           </div>
         </div>
@@ -369,7 +375,7 @@ export function HarmonicOscillatorLab() {
         {/* Panel 1: Complex s-Plane Root Locus */}
         <div className="lg:col-span-4 space-y-2">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-            <span className="flex items-center gap-1.5 text-[#D35323]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-sweep)]">
               <Compass className="w-3.5 h-3.5" />
               <span>Complex s-Plane Roots</span>
             </span>
@@ -459,7 +465,7 @@ export function HarmonicOscillatorLab() {
         {/* Panel 2: Time Response x(t) & Envelope */}
         <div className="lg:col-span-5 space-y-2">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-            <span className="flex items-center gap-1.5 text-[#96B898]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-y)]">
               <Waves className="w-3.5 h-3.5" />
               <span>Displacement x(t) &amp; Decay Envelope</span>
             </span>
@@ -547,13 +553,13 @@ export function HarmonicOscillatorLab() {
           <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
             <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--text-muted)]">
               <span>Live Mass-Spring Cart Position (t* = {probeT.toFixed(1)} s)</span>
-              <span className="text-[#029091]">
+              <span className="text-[var(--math-ink-z)]">
                 v(t*) = {sim.probeState.v.toFixed(2)} m/s
               </span>
             </div>
             <div className="relative h-6 bg-[var(--bg-panel)] border border-[var(--border-subtle)] flex items-center px-3">
               <div
-                className="absolute top-1/2 -translate-y-1/2 w-5 h-4 bg-[#8D9FCE] border border-[#FBEAA4]"
+                className="absolute top-1/2 -translate-y-1/2 w-5 h-4 bg-[#8D9FCE] border border-[var(--math-ink-diff)]"
                 style={{
                   left: `calc(${Math.max(8, Math.min(92, 50 + sim.probeState.x * 16))}% - 10px)`,
                 }}
@@ -566,7 +572,7 @@ export function HarmonicOscillatorLab() {
         {/* Panel 3: Phase Portrait (x, v) */}
         <div className="lg:col-span-3 space-y-2">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-            <span className="flex items-center gap-1.5 text-[#FBEAA4]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-diff)]">
               <Activity className="w-3.5 h-3.5" />
               <span>(x, v) Phase Orbit</span>
             </span>

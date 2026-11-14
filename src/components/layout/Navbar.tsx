@@ -5,8 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sun, Moon, Map, Info, Menu, X } from "lucide-react";
 import { TextbookSidebar } from "@/components/layout/TextbookSidebar";
+import { BRAND_DISPLAY_NAME, BRAND_TAGLINE } from "@/lib/seo/siteConfig";
+import type { TocVolumeItem } from "@/registry/types";
 
-export function Navbar() {
+export function Navbar({ tocVolumes }: { tocVolumes: TocVolumeItem[] }) {
   const pathname = usePathname();
   const mobileMenuId = useId();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -116,39 +118,48 @@ export function Navbar() {
     {
       href: "/roadmap",
       label: "Syllabus Matrix",
-      icon: <Map className="w-3.5 h-3.5 text-[#AAA36D]" aria-hidden="true" />,
-      accentHex: "#AAA36D",
+      icon: (
+        <Map
+          className="w-3.5 h-3.5 text-[var(--math-ink-grid)]"
+          aria-hidden="true"
+        />
+      ),
+      accentHex: "var(--math-ink-grid)",
     },
     {
       href: "/about",
       label: "About",
-      icon: <Info className="w-3.5 h-3.5 text-[#8D9FCE]" aria-hidden="true" />,
-      accentHex: "#8D9FCE",
+      icon: (
+        <Info
+          className="w-3.5 h-3.5 text-[var(--math-ink-x)]"
+          aria-hidden="true"
+        />
+      ),
+      accentHex: "var(--math-ink-x)",
     },
   ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 min-h-16 py-2 sm:py-0 sm:h-16 flex items-center justify-between gap-2 sm:gap-3 lg:gap-4">
         {/* Left Cluster: 1. Brand Logo/Name/Tagline, 2. 6-Volume TOC, 3–4. Syllabus Matrix & About */}
-        <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
+        <div className="flex items-center gap-2 sm:gap-3.5 lg:gap-4 min-w-0">
           <Link
             href="/"
-            className="flex items-center gap-2.5 sm:gap-3 shrink-0 group"
+            className="flex items-center gap-2.5 sm:gap-3 min-w-0 shrink sm:shrink-0 group"
           >
             <div
-              className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center border border-[var(--border-strong)] bg-[var(--bg-canvas)] font-math-serif text-base sm:text-lg font-semibold tracking-tight"
-              style={{ color: "#8D9FCE" }}
+              className="w-8 h-8 sm:w-9 sm:h-9 shrink-0 flex items-center justify-center border border-[var(--border-strong)] bg-[var(--bg-canvas)] font-math-serif text-base sm:text-lg font-semibold tracking-tight text-[var(--math-ink-x)]"
               aria-hidden="true"
             >
               ∬
             </div>
-            <div>
-              <span className="font-math-serif text-lg sm:text-xl font-semibold tracking-tight text-[var(--text-primary)] block leading-none">
-                wanna math
+            <div className="min-w-0 flex flex-col justify-center">
+              <span className="font-math-serif text-base sm:text-xl font-semibold tracking-tight text-[var(--text-primary)] block leading-none">
+                {BRAND_DISPLAY_NAME}
               </span>
-              <span className="text-[10px] sm:text-[11px] font-tabular-mono uppercase tracking-widest text-[var(--text-muted)] block mt-0.5">
-                6-Volume Textbook
+              <span className="text-[10px] sm:text-[11px] font-sans font-medium tracking-normal text-[var(--text-muted)] block mt-0.5 leading-[1.2] sm:whitespace-nowrap">
+                {BRAND_TAGLINE}
               </span>
             </div>
           </Link>
@@ -159,12 +170,12 @@ export function Navbar() {
           />
 
           <div className="shrink-0">
-            <TextbookSidebar />
+            <TextbookSidebar volumes={tocVolumes} />
           </div>
 
           <nav
             aria-label="Primary"
-            className="hidden md:flex items-center gap-1.5 pl-3 border-l border-[var(--border-subtle)]"
+            className="hidden md:flex items-center gap-1.5 pl-2.5 lg:pl-3 border-l border-[var(--border-subtle)]"
           >
             <ul className="flex items-center gap-1.5">
               {navLinks.map((item) => {
@@ -198,8 +209,8 @@ export function Navbar() {
         {/* Right Cluster: 5. Version Name & 6. Dark/Light Mode Interchange */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           <div
-            className="hidden sm:flex items-center gap-2 min-h-[36px] px-2.5 py-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-secondary)] whitespace-nowrap"
-            aria-label="Current version v2.0, all 6 volumes live"
+            className="hidden sm:flex md:hidden lg:flex items-center gap-2 min-h-[36px] px-2.5 py-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-secondary)] whitespace-nowrap"
+            title="Current version v2.0, all 6 volumes live"
           >
             <span
               className="w-2 h-2 inline-block shrink-0"
@@ -218,12 +229,18 @@ export function Navbar() {
           >
             {renderedScheme === "dark" ? (
               <>
-                <Sun className="w-3.5 h-3.5 text-[#FBEAA4] shrink-0" aria-hidden="true" />
+                <Sun
+                  className="w-3.5 h-3.5 text-[var(--math-ink-diff)] shrink-0"
+                  aria-hidden="true"
+                />
                 <span className="sr-only sm:not-sr-only">Paper Light</span>
               </>
             ) : (
               <>
-                <Moon className="w-3.5 h-3.5 text-[#8D9FCE] shrink-0" aria-hidden="true" />
+                <Moon
+                  className="w-3.5 h-3.5 text-[var(--math-ink-x)] shrink-0"
+                  aria-hidden="true"
+                />
                 <span className="sr-only sm:not-sr-only">Drafting Dark</span>
               </>
             )}

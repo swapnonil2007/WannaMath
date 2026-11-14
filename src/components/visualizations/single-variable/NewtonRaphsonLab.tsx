@@ -5,7 +5,7 @@ import { StepForward, RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface NewtonPreset {
   id: string;
@@ -156,7 +156,7 @@ export function NewtonRaphsonLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#D35323]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)]">
             <span>Lab 1.2.2A</span>
             <span>•</span>
             <span>Local Linearity &amp; Root Shooting</span>
@@ -178,7 +178,7 @@ export function NewtonRaphsonLab() {
           <button
             type="button"
             onClick={() => setMaxIters((m) => Math.min(8, m + 1))}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[#029091] bg-[var(--bg-canvas)] text-[#029091]"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-[var(--math-ink-z)]"
           >
             <StepForward className="w-3.5 h-3.5" /> Add Newton Step
           </button>
@@ -203,7 +203,7 @@ export function NewtonRaphsonLab() {
               onClick={() => handleSelectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 active
-                  ? "border-[#D35323] bg-[var(--bg-canvas)] text-[#D35323] font-medium"
+                  ? "border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)] text-[var(--math-ink-sweep)] font-medium"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -229,7 +229,7 @@ export function NewtonRaphsonLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Linearization Anchor a</span>
-            <span className="font-tabular-mono text-[#8D9FCE]">
+            <span className="font-tabular-mono text-[var(--math-ink-x)]">
               a = {anchorA.toFixed(2)}
             </span>
           </div>
@@ -248,7 +248,7 @@ export function NewtonRaphsonLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Perturbation Δx</span>
-            <span className="font-tabular-mono text-[#96B898]">
+            <span className="font-tabular-mono text-[var(--math-ink-y)]">
               Δx = {deltaX.toFixed(2)}
             </span>
           </div>
@@ -267,7 +267,7 @@ export function NewtonRaphsonLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Newton Initial Seed x₀</span>
-            <span className="font-tabular-mono text-[#D35323]">
+            <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
               x₀ = {x0.toFixed(2)}
             </span>
           </div>
@@ -379,13 +379,13 @@ export function NewtonRaphsonLab() {
 
           <div className="grid grid-cols-3 gap-2 p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono">
             <div>
-              Δy = <span className="text-[#FBEAA4]">{model.trueDeltaY.toFixed(4)}</span>
+              Δy = <span className="text-[var(--math-ink-diff)]">{model.trueDeltaY.toFixed(4)}</span>
             </div>
             <div>
-              dy = <span className="text-[#029091]">{model.diffDy.toFixed(4)}</span>
+              dy = <span className="text-[var(--math-ink-z)]">{model.diffDy.toFixed(4)}</span>
             </div>
             <div>
-              err = <span className="text-[#B95869]">{model.linError.toFixed(4)}</span>
+              err = <span className="text-[var(--math-ink-upper)]">{model.linError.toFixed(4)}</span>
             </div>
           </div>
         </div>
@@ -478,16 +478,16 @@ export function NewtonRaphsonLab() {
                   <th className="p-1.5">n</th>
                   <th className="p-1.5">x_n</th>
                   <th className="p-1.5">f(x_n)</th>
-                  <th className="p-1.5 text-[#D35323]">x_{"{n+1}"}</th>
+                  <th className="p-1.5 text-[var(--math-ink-sweep)]">x_{"{n+1}"}</th>
                 </tr>
               </thead>
               <tbody>
                 {model.rows.map((r) => (
                   <tr key={r.n} className="border-b border-[var(--border-subtle)] last:border-b-0">
                     <td className="p-1.5">{r.n}</td>
-                    <td className="p-1.5 text-[#8D9FCE]">{r.xn.toFixed(6)}</td>
+                    <td className="p-1.5 text-[var(--math-ink-x)]">{r.xn.toFixed(6)}</td>
                     <td className="p-1.5">{r.fxn.toExponential(2)}</td>
-                    <td className="p-1.5 text-[#D35323] font-semibold">
+                    <td className="p-1.5 text-[var(--math-ink-sweep)] font-semibold">
                       {r.xNext.toFixed(6)}
                     </td>
                   </tr>

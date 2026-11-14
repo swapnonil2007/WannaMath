@@ -247,10 +247,10 @@ export function MultivariableTaylorHessianLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]">
               LAB 3.1.6B • 2D TAYLOR POLYNOMIALS T₁ &amp; T₂ (HESSIAN CURVATURE)
             </span>
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[#029091] text-[#029091] bg-[#029091]/10">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[var(--math-ink-z)] text-[var(--math-ink-z)] bg-[#029091]/10">
               Center ({x0.toFixed(2)}, {y0.toFixed(2)})
             </span>
           </div>
@@ -279,7 +279,7 @@ export function MultivariableTaylorHessianLab() {
               onClick={() => applyPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 presetId === p.id
-                  ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
               }`}
             >
@@ -304,9 +304,9 @@ export function MultivariableTaylorHessianLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Center <strong className="text-[#8D9FCE] font-mono">x₀</strong>
+                Center <strong className="text-[var(--math-ink-x)] font-mono">x₀</strong>
               </span>
-              <span className="font-tabular-mono text-[#8D9FCE]">
+              <span className="font-tabular-mono text-[var(--math-ink-x)]">
                 x₀ = {x0.toFixed(2)}
               </span>
             </div>
@@ -325,9 +325,9 @@ export function MultivariableTaylorHessianLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Center <strong className="text-[#96B898] font-mono">y₀</strong>
+                Center <strong className="text-[var(--math-ink-y)] font-mono">y₀</strong>
               </span>
-              <span className="font-tabular-mono text-[#96B898]">
+              <span className="font-tabular-mono text-[var(--math-ink-y)]">
                 y₀ = {y0.toFixed(2)}
               </span>
             </div>
@@ -345,11 +345,11 @@ export function MultivariableTaylorHessianLab() {
 
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
             <span className="text-xs font-sans text-[var(--text-secondary)] flex items-center gap-1.5">
-              <Eye className="w-3.5 h-3.5 text-[#FBEAA4]" />
+              <Eye className="w-3.5 h-3.5 text-[var(--math-ink-diff)]" />
               Surface Approximation Layers
             </span>
             <div className="flex items-center gap-3 text-xs font-sans">
-              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[#8D9FCE]">
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[var(--math-ink-x)]">
                 <input
                   type="checkbox"
                   checked={showT1}
@@ -357,7 +357,7 @@ export function MultivariableTaylorHessianLab() {
                 />
                 T₁ Plane
               </label>
-              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[#D35323]">
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[var(--math-ink-sweep)]">
                 <input
                   type="checkbox"
                   checked={showT2}
@@ -387,13 +387,13 @@ export function MultivariableTaylorHessianLab() {
             sceneDeps={[buildScene]}
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#8D9FCE]">
+                <span className="text-[var(--math-ink-x)]">
                   Patch RMS(f − T₁):{" "}
                   {Number.isFinite(taylorData.rmsT1)
                     ? taylorData.rmsT1.toFixed(4)
                     : "NaN"}
                 </span>
-                <span className="text-[#D35323]">
+                <span className="text-[var(--math-ink-sweep)]">
                   Patch RMS(f − T₂):{" "}
                   {Number.isFinite(taylorData.rmsT2)
                     ? taylorData.rmsT2.toFixed(4)
@@ -412,13 +412,13 @@ export function MultivariableTaylorHessianLab() {
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2 text-xs font-tabular-mono">
               <div className="flex justify-between">
                 <span className="text-[var(--text-muted)]">Value f(p₀):</span>
-                <span className="text-[#029091]">
+                <span className="text-[var(--math-ink-z)]">
                   {Number.isFinite(taylorData.f0) ? taylorData.f0.toFixed(4) : "NaN"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-[var(--text-muted)]">Gradient ∇f(p₀):</span>
-                <span className="text-[#8D9FCE]">
+                <span className="text-[var(--math-ink-x)]">
                   ⟨{taylorData.fx.toFixed(3)}, {taylorData.fy.toFixed(3)}⟩
                 </span>
               </div>
@@ -432,25 +432,25 @@ export function MultivariableTaylorHessianLab() {
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-2 gap-2 text-center font-tabular-mono text-xs">
               <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
                 <div className="text-[10px] text-[var(--text-muted)]">f_xx</div>
-                <div className="text-[#D35323] text-sm">
+                <div className="text-[var(--math-ink-sweep)] text-sm">
                   {taylorData.fxx.toFixed(3)}
                 </div>
               </div>
               <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
                 <div className="text-[10px] text-[var(--text-muted)]">f_xy</div>
-                <div className="text-[#FBEAA4] text-sm">
+                <div className="text-[var(--math-ink-diff)] text-sm">
                   {taylorData.fxy.toFixed(3)}
                 </div>
               </div>
               <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
                 <div className="text-[10px] text-[var(--text-muted)]">f_yx</div>
-                <div className="text-[#FBEAA4] text-sm">
+                <div className="text-[var(--math-ink-diff)] text-sm">
                   {taylorData.fxy.toFixed(3)}
                 </div>
               </div>
               <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
                 <div className="text-[10px] text-[var(--text-muted)]">f_yy</div>
-                <div className="text-[#96B898] text-sm">
+                <div className="text-[var(--math-ink-y)] text-sm">
                   {taylorData.fyy.toFixed(3)}
                 </div>
               </div>

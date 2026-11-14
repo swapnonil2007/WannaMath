@@ -11,9 +11,10 @@ import {
   Clock,
   X,
 } from "lucide-react";
-import { getAllVolumes } from "@/registry/index";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
+import type { TocVolumeItem } from "@/registry/types";
 
-export function TextbookSidebar() {
+export function TextbookSidebar({ volumes }: { volumes: TocVolumeItem[] }) {
   const pathname = usePathname();
   const dialogId = useId();
   const dialogRef = useRef<HTMLDialogElement | null>(null);
@@ -24,8 +25,6 @@ export function TextbookSidebar() {
   const [expandedVolumes, setExpandedVolumes] = useState<Record<string, boolean>>({
     "multivariable-calculus": true,
   });
-
-  const volumes = getAllVolumes();
 
   const openDrawer = () => {
     const dlg = dialogRef.current;
@@ -72,7 +71,7 @@ export function TextbookSidebar() {
         aria-controls={dialogId}
         className="min-h-[36px] px-2.5 sm:px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono font-medium text-[var(--text-primary)] flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-colors whitespace-nowrap"
       >
-        <BookOpen className="w-3.5 h-3.5 text-[#029091]" aria-hidden="true" />
+        <BookOpen className="w-3.5 h-3.5 text-[var(--math-ink-z)]" aria-hidden="true" />
         <span>6-Volume TOC</span>
       </button>
 
@@ -91,7 +90,7 @@ export function TextbookSidebar() {
           {/* Drawer Header */}
           <div className="p-4 border-b border-[var(--border-subtle)] bg-[var(--bg-canvas)] flex items-center justify-between gap-3">
             <div>
-              <span className="text-[10px] font-tabular-mono uppercase tracking-wider text-[#029091] block">
+              <span className="text-[10px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
                 4-Tier Textbook Index • Vol → Mod → Ch → Lab
               </span>
               <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -142,12 +141,12 @@ export function TextbookSidebar() {
                       <div className="flex items-center gap-2">
                         <span
                           className="text-[11px] font-tabular-mono font-semibold px-1.5 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)]"
-                          style={{ color: vol.accentHex }}
+                          style={{ color: getAdaptiveAccentInk(vol.accentHex) }}
                         >
                           VOL. {vol.volumeNumber}
                         </span>
                         {publishedCount > 0 ? (
-                          <span className="text-[10px] font-tabular-mono text-[#96B898] flex items-center gap-1">
+                          <span className="text-[10px] font-tabular-mono text-[var(--math-ink-y)] flex items-center gap-1">
                             <CheckCircle2
                               className="w-3 h-3"
                               aria-hidden="true"
@@ -224,7 +223,9 @@ export function TextbookSidebar() {
                                       <span
                                         className="font-tabular-mono mr-1.5"
                                         style={{
-                                          color: ch.accentHex ?? vol.accentHex,
+                                          color: getAdaptiveAccentInk(
+                                            ch.accentHex ?? vol.accentHex
+                                          ),
                                         }}
                                       >
                                         {ch.id}
@@ -233,7 +234,7 @@ export function TextbookSidebar() {
                                     </span>
 
                                     {isPub ? (
-                                      <span className="text-[10px] font-tabular-mono px-1.5 py-0.5 border border-[#96B898] text-[#96B898] shrink-0">
+                                      <span className="text-[10px] font-tabular-mono px-1.5 py-0.5 border border-[var(--math-ink-y)] text-[var(--math-ink-y)] shrink-0">
                                         LIVE
                                       </span>
                                     ) : (
@@ -264,7 +265,7 @@ export function TextbookSidebar() {
                                 {direct.map(renderChapterLink)}
                                 {groups.map((grp) => (
                                   <li key={grp.slug} className="pt-2 space-y-1">
-                                    <div className="px-2 py-1 text-[10px] font-tabular-mono uppercase tracking-wider text-[#D35323] border-b border-[var(--border-subtle)]">
+                                    <div className="px-2 py-1 text-[10px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] border-b border-[var(--border-subtle)]">
                                       ↳ {grp.title}
                                     </div>
                                     <ul className="space-y-1 pl-2 border-l border-[var(--border-subtle)]">
@@ -298,7 +299,7 @@ export function TextbookSidebar() {
             </span>
             <Link
               href="/roadmap"
-              className="text-[#FBEAA4] hover:underline"
+              className="text-[var(--math-ink-diff)] hover:underline"
             >
               Full Matrix →
             </Link>

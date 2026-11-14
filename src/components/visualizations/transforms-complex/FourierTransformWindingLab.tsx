@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface FTWindingPreset {
   id: string;
@@ -210,7 +210,7 @@ export function FourierTransformWindingLab() {
 
         <div className="mt-4 grid gap-3 md:grid-cols-3">
           <div className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <div className="flex items-center justify-between font-mono text-xs text-[#D35323]">
+            <div className="flex items-center justify-between font-mono text-xs text-[#EF7547]">
               <span>Winding Freq ω = {fmt(omega, 2)} rad/s</span>
               <button
                 type="button"
@@ -231,6 +231,7 @@ export function FourierTransformWindingLab() {
                 setOmega(parseFloat(e.target.value));
               }}
               className="mt-2 w-full accent-[#D35323]"
+              aria-label="Winding frequency ω (rad/s)"
             />
           </div>
 
@@ -256,7 +257,7 @@ export function FourierTransformWindingLab() {
               <span>{fmt(ft.deltaT, 3)} s</span>
             </div>
             <div className="mt-1 flex justify-between">
-              <span className="text-[#029091]">Bandwidth Δω:</span>
+              <span className="text-[#28B7B8]">Bandwidth Δω:</span>
               <span>{fmt(ft.deltaW, 3)} rad/s</span>
             </div>
             <div className="mt-1 flex justify-between text-[#FBEAA4]">

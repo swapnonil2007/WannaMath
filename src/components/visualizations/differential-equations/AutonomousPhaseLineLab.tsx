@@ -5,7 +5,7 @@ import { GitCommitHorizontal, Sliders, Activity } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 type EquilibriumType = "stable" | "unstable" | "semi-stable";
 
@@ -271,7 +271,7 @@ export function AutonomousPhaseLineLab() {
     >
       {/* Header */}
       <div className="border-b border-[var(--border-subtle)] pb-4 space-y-1">
-        <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+        <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
           Laboratory 4.1.2.1 • 1D Phase Lines, Equilibrium Stability &amp; Bifurcations
         </span>
         <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -294,11 +294,11 @@ export function AutonomousPhaseLineLab() {
               onClick={() => handleSelectPreset(p)}
               className={`p-3 border text-left transition-colors ${
                 selected
-                  ? "border-[#96B898] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-y)] bg-[var(--bg-canvas)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
               }`}
             >
-              <span className="text-[11px] font-tabular-mono text-[#96B898] font-semibold block mb-1">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-y)] font-semibold block mb-1">
                 {p.badge}
               </span>
               <div className="text-xs font-math-serif text-[var(--text-primary)] leading-snug">
@@ -325,7 +325,7 @@ export function AutonomousPhaseLineLab() {
         </div>
         <div className="lg:col-span-6 p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
           <div className="flex justify-between text-xs font-tabular-mono">
-            <span className="text-[#FBEAA4] font-semibold flex items-center gap-1.5">
+            <span className="text-[var(--math-ink-diff)] font-semibold flex items-center gap-1.5">
               <Sliders className="w-3.5 h-3.5" />
               <span>Bifurcation Parameter r</span>
             </span>
@@ -341,6 +341,7 @@ export function AutonomousPhaseLineLab() {
             value={safeR}
             onChange={(e) => setParamR(parseFloat(e.target.value))}
             className="w-full accent-[#FBEAA4]"
+            aria-label="Bifurcation parameter r"
           />
           <p className="text-xs font-math-serif text-[var(--text-secondary)]">
             {!isCustom ? activePreset.insight : "Adjust r to watch equilibrium points y* create, merge, or swap stability."}
@@ -353,7 +354,7 @@ export function AutonomousPhaseLineLab() {
         {/* Left: dy/dt vs y + Phase Line */}
         <div className="lg:col-span-6 space-y-2.5">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-            <span className="flex items-center gap-1.5 text-[#8D9FCE]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-x)]">
               <GitCommitHorizontal className="w-3.5 h-3.5" />
               <span>Phase Derivative f(y) &amp; 1D Phase Line (y-axis flow)</span>
             </span>
@@ -488,7 +489,7 @@ export function AutonomousPhaseLineLab() {
         {/* Right: Solution Trajectories y(t) */}
         <div className="lg:col-span-6 space-y-2.5">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-            <span className="flex items-center gap-1.5 text-[#D35323]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-sweep)]">
               <Activity className="w-3.5 h-3.5" />
               <span>Time Trajectories y(t) (Click/drag slider to set y₀ = {seedY0.toFixed(2)})</span>
             </span>
@@ -570,7 +571,7 @@ export function AutonomousPhaseLineLab() {
           </SvgCoordinatePlane2D>
 
           <div className="space-y-1">
-            <div className="flex justify-between text-xs font-tabular-mono text-[#FBEAA4]">
+            <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-diff)]">
               <span>Initial Condition y(0) = y₀</span>
               <span>y₀ = {seedY0.toFixed(2)}</span>
             </div>
@@ -582,6 +583,7 @@ export function AutonomousPhaseLineLab() {
               value={seedY0}
               onChange={(e) => setSeedY0(parseFloat(e.target.value))}
               className="w-full accent-[#FBEAA4]"
+              aria-label="Initial condition y(0) = y₀"
             />
           </div>
         </div>
@@ -590,7 +592,7 @@ export function AutonomousPhaseLineLab() {
       {/* Bottom: Bifurcation Diagram y* vs r */}
       <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-          <span className="text-[#96B898] font-semibold">
+          <span className="text-[var(--math-ink-y)] font-semibold">
             BIFURCATION DIAGRAM: EQUILIBRIA y* VS. CONTROL PARAMETER r (CLICK TO JUMP r)
           </span>
           <span className="text-[var(--text-muted)]">

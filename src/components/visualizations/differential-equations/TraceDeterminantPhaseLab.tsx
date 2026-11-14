@@ -3,7 +3,8 @@
 import React, { useState, useMemo } from "react";
 import { Compass, Crosshair, GitCommitHorizontal } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 interface MatrixPreset {
   id: string;
@@ -256,7 +257,7 @@ export function TraceDeterminantPhaseLab() {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] block">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
             Laboratory 4.3.1.1 • Dual Interactive Poincaré (τ, Δ) Diagram &amp; Linear Phase Portrait
           </span>
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -271,7 +272,7 @@ export function TraceDeterminantPhaseLab() {
 
         <span
           className="px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] text-xs font-tabular-mono font-semibold shrink-0"
-          style={{ color: analysis.regimeColor }}
+          style={{ color: getAdaptiveAccentInk(analysis.regimeColor) }}
         >
           {analysis.regimeLabel}
         </span>
@@ -288,11 +289,11 @@ export function TraceDeterminantPhaseLab() {
               onClick={() => handleSelectPreset(p)}
               className={`p-3 border text-left transition-colors ${
                 selected
-                  ? "border-[#029091] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-z)] bg-[var(--bg-canvas)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
               }`}
             >
-              <span className="text-[11px] font-tabular-mono text-[#029091] font-semibold block mb-1">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-z)] font-semibold block mb-1">
                 {p.badge}
               </span>
               <div className="text-xs font-math-serif text-[var(--text-primary)] leading-snug">
@@ -315,7 +316,7 @@ export function TraceDeterminantPhaseLab() {
             <div key={item.label} className="space-y-1">
               <div
                 className="flex justify-between text-[11px] font-tabular-mono"
-                style={{ color: item.color }}
+                style={{ color: getAdaptiveAccentInk(item.color) }}
               >
                 <span>{item.label}</span>
                 <span>{item.val.toFixed(2)}</span>
@@ -331,6 +332,7 @@ export function TraceDeterminantPhaseLab() {
                   setPresetId("custom");
                 }}
                 className="w-full accent-[#029091]"
+                aria-label={item.label}
               />
             </div>
           ))}
@@ -356,7 +358,7 @@ export function TraceDeterminantPhaseLab() {
         {/* Left: Poincaré (τ, Δ) Plane */}
         <div className="lg:col-span-6 space-y-2.5">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-            <span className="flex items-center gap-1.5 text-[#FBEAA4]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-diff)]">
               <Compass className="w-3.5 h-3.5" />
               <span>Poincaré (τ, Δ) Diagram (Click to set τ and Δ)</span>
             </span>
@@ -425,19 +427,19 @@ export function TraceDeterminantPhaseLab() {
                   />
 
                   {/* Region Labels */}
-                  <text x={toSvgX(-2.6)} y={toSvgY(2.8)} fill="#029091" fontSize="11" fontFamily="monospace">
+                  <text x={toSvgX(-2.6)} y={toSvgY(2.8)} fill="var(--math-ink-z)" fontSize="11" fontFamily="monospace">
                     STABLE SPIRALS
                   </text>
-                  <text x={toSvgX(0.95)} y={toSvgY(2.8)} fill="#D5658B" fontSize="11" fontFamily="monospace">
+                  <text x={toSvgX(0.95)} y={toSvgY(2.8)} fill="var(--math-ink-lower)" fontSize="11" fontFamily="monospace">
                     UNSTABLE SPIRALS
                   </text>
-                  <text x={toSvgX(-3.2)} y={toSvgY(0.55)} fill="#96B898" fontSize="11" fontFamily="monospace">
+                  <text x={toSvgX(-3.2)} y={toSvgY(0.55)} fill="var(--math-ink-y)" fontSize="11" fontFamily="monospace">
                     STABLE NODES
                   </text>
-                  <text x={toSvgX(1.55)} y={toSvgY(0.55)} fill="#D35323" fontSize="11" fontFamily="monospace">
+                  <text x={toSvgX(1.55)} y={toSvgY(0.55)} fill="var(--math-ink-sweep)" fontSize="11" fontFamily="monospace">
                     UNSTABLE NODES
                   </text>
-                  <text x={toSvgX(-0.95)} y={toSvgY(-1.45)} fill="#D35323" fontSize="11" fontFamily="monospace">
+                  <text x={toSvgX(-0.95)} y={toSvgY(-1.45)} fill="var(--math-ink-sweep)" fontSize="11" fontFamily="monospace">
                     SADDLES (Δ &lt; 0)
                   </text>
 
@@ -459,7 +461,7 @@ export function TraceDeterminantPhaseLab() {
         {/* Right: Live (x, y) Phase Portrait */}
         <div className="lg:col-span-6 space-y-2.5">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
-            <span className="flex items-center gap-1.5 text-[#D35323]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-sweep)]">
               <Crosshair className="w-3.5 h-3.5" />
               <span>(x, y) Phase Portrait (Click to seed trajectory)</span>
             </span>
@@ -584,7 +586,7 @@ export function TraceDeterminantPhaseLab() {
           {/* Real Eigenvector Badges */}
           <div className="flex flex-wrap items-center gap-3 text-[11px] font-tabular-mono text-[var(--text-secondary)]">
             <span className="flex items-center gap-1.5">
-              <GitCommitHorizontal className="w-3.5 h-3.5 text-[#8D9FCE]" />
+              <GitCommitHorizontal className="w-3.5 h-3.5 text-[var(--math-ink-x)]" />
               <span>
                 {analysis.realVecs.length > 0
                   ? `Real Eigenvectors (${analysis.realVecs.length}): Dashed Straight-Line Manifolds`

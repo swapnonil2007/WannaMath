@@ -1,119 +1,15 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllResolvedChapters, getChapterBySlugs } from "@/registry/index";
 import { TopicPageShell } from "@/components/layout/TopicPageShell";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-
-// Volume I — Module 1.1 Live Laboratories (Limits & Continuity)
-import { EpsilonDeltaCorridorLab } from "@/components/visualizations/single-variable/EpsilonDeltaCorridorLab";
-import { IVTBisectionLab } from "@/components/visualizations/single-variable/IVTBisectionLab";
-
-// Volume I — Module 1.2 Live Laboratories (Differential Calculus & Local Linearity)
-import { SecantTangentLab } from "@/components/visualizations/single-variable/SecantTangentLab";
-import { NewtonRaphsonLab } from "@/components/visualizations/single-variable/NewtonRaphsonLab";
-import { ChainRulePropagatorLab } from "@/components/visualizations/single-variable/ChainRulePropagatorLab";
-import { TaylorCurvatureLab } from "@/components/visualizations/single-variable/TaylorCurvatureLab";
-
-// Volume I — Module 1.3 Live Laboratories (Single-Variable Integration & Accumulation)
-import { Riemann1DLab } from "@/components/visualizations/single-variable/Riemann1DLab";
-import { FTCAccumulationLab } from "@/components/visualizations/single-variable/FTCAccumulationLab";
-import { SubstitutionIBPLab } from "@/components/visualizations/single-variable/SubstitutionIBPLab";
-import { SolidOfRevolutionLab } from "@/components/visualizations/single-variable/SolidOfRevolutionLab";
-
-// Volume I — Module 1.4 Live Laboratories (Infinite Series & Power Series Convergence)
-import { PartialSumSeriesLab } from "@/components/visualizations/single-variable/PartialSumSeriesLab";
-import { PowerSeriesConvergenceLab } from "@/components/visualizations/single-variable/PowerSeriesConvergenceLab";
-
-// Module 3.1 Live Laboratories (Differential Calculus)
-import { SurfaceContourSlicerLab } from "@/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab";
-import { PartialDerivativeTangentPlaneLab } from "@/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab";
-import { GradientDirectionalDerivativeLab } from "@/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab";
-import { GradientAscentAndLevelSurfaceLab } from "@/components/visualizations/multivariable-differentiation/GradientAscentAndLevelSurfaceLab";
-import { LagrangeMultipliersLab } from "@/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab";
-import { MultivariableLimitsPathsLab } from "@/components/visualizations/multivariable-differentiation/MultivariableLimitsPathsLab";
-import { DifferentiabilityErrorConeLab } from "@/components/visualizations/multivariable-differentiation/DifferentiabilityErrorConeLab";
-import { HigherOrderChainImplicitLab } from "@/components/visualizations/multivariable-differentiation/HigherOrderChainImplicitLab";
-import { SingleVariableTaylorLab } from "@/components/visualizations/multivariable-differentiation/SingleVariableTaylorLab";
-import { MultivariableTaylorHessianLab } from "@/components/visualizations/multivariable-differentiation/MultivariableTaylorHessianLab";
-import { HomogeneousScalingRayLab } from "@/components/visualizations/multivariable-differentiation/HomogeneousScalingRayLab";
-import { EulersTheoremSecondOrderLab } from "@/components/visualizations/multivariable-differentiation/EulersTheoremSecondOrderLab";
-import { HessianSecondDerivativeTestLab } from "@/components/visualizations/multivariable-differentiation/HessianSecondDerivativeTestLab";
-import { GeneralMethodDegenerateExtremaLab } from "@/components/visualizations/multivariable-differentiation/GeneralMethodDegenerateExtremaLab";
-import { LinearOdeIntegratingFactorLab } from "@/components/visualizations/multivariable-differentiation/LinearOdeIntegratingFactorLab";
-import { BernoulliReductionLab } from "@/components/visualizations/multivariable-differentiation/BernoulliReductionLab";
-import { WronskianPhaseAreaLab } from "@/components/visualizations/multivariable-differentiation/WronskianPhaseAreaLab";
-import { CharacteristicRootsSolutionLab } from "@/components/visualizations/multivariable-differentiation/CharacteristicRootsSolutionLab";
-import { OperatorMethodTutorialLab } from "@/components/visualizations/multivariable-differentiation/OperatorMethodTutorialLab";
-import { VariationOfParametersCauchyEulerLab } from "@/components/visualizations/multivariable-differentiation/VariationOfParametersCauchyEulerLab";
-
-// Module 3.2 Live Laboratories (Integral Calculus: Multiple Integrals, Convergence & Eulerian Functions)
-import { RiemannVolumeLab } from "@/components/visualizations/double-integrals/RiemannVolumeLab";
-import { IteratedOrderChangeLab } from "@/components/visualizations/double-integrals/IteratedOrderChangeLab";
-import { TripleIntegralOrderLab } from "@/components/visualizations/triple-integrals/TripleIntegralOrderLab";
-import { TripleVoxelDensityLab } from "@/components/visualizations/triple-integrals/TripleVoxelDensityLab";
-import { PolarCoordinateAreaLab } from "@/components/visualizations/coordinate-systems/PolarCoordinateAreaLab";
-import { Curvilinear3DSurfacesAndElementLab } from "@/components/visualizations/coordinate-systems/Curvilinear3DSurfacesAndElementLab";
-import { DualGridMorphingAndTangentLab } from "@/components/visualizations/jacobians/DualGridMorphingAndTangentLab";
-import { JacobianIntegralPullbackLab } from "@/components/visualizations/jacobians/JacobianIntegralPullbackLab";
-import { ImproperIntegralConvergenceLab } from "@/components/visualizations/integral-calculus/ImproperIntegralConvergenceLab";
-import { ConvergenceTestsTutorialLab } from "@/components/visualizations/integral-calculus/ConvergenceTestsTutorialLab";
-import { GammaFunctionLab } from "@/components/visualizations/integral-calculus/GammaFunctionLab";
-import { BetaFunctionLab } from "@/components/visualizations/integral-calculus/BetaFunctionLab";
-
-// Module 3.3 Live Laboratories (Vector Calculus & Integral Theorems)
-import { VectorGradientCalculatorLab } from "@/components/visualizations/vector-calculus/VectorGradientCalculatorLab";
-import { DirectionalDerivativeCalculatorLab } from "@/components/visualizations/vector-calculus/DirectionalDerivativeCalculatorLab";
-import { DivCurlProbeLab } from "@/components/visualizations/vector-calculus/DivCurlProbeLab";
-import { VectorFieldStreamlineExplorerLab } from "@/components/visualizations/vector-calculus/VectorFieldStreamlineExplorerLab";
-import { DivCurlDecompositionLab } from "@/components/visualizations/vector-calculus/DivCurlDecompositionLab";
-import { LineIntegralWorkLab } from "@/components/visualizations/vector-calculus/LineIntegralWorkLab";
-import { GreensTheoremLab } from "@/components/visualizations/vector-calculus/GreensTheoremLab";
-import { SurfaceFluxLab } from "@/components/visualizations/vector-calculus/SurfaceFluxLab";
-import { StokesDivergenceLab } from "@/components/visualizations/vector-calculus/StokesDivergenceLab";
-
-// Volume IV — Module 4.1 Live Laboratories (First-Order ODEs & Slope Fields)
-import { SlopeFieldTracerLab } from "@/components/visualizations/differential-equations/SlopeFieldTracerLab";
-import { AutonomousPhaseLineLab } from "@/components/visualizations/differential-equations/AutonomousPhaseLineLab";
-
-// Volume IV — Module 4.2 Live Laboratories (Second-Order Linear ODEs & Oscillations)
-import { HarmonicOscillatorLab } from "@/components/visualizations/differential-equations/HarmonicOscillatorLab";
-import { ForcedResonanceLab } from "@/components/visualizations/differential-equations/ForcedResonanceLab";
-
-// Volume IV — Module 4.3 Live Laboratories (Systems of ODEs & Phase Plane Portraits)
-import { TraceDeterminantPhaseLab } from "@/components/visualizations/differential-equations/TraceDeterminantPhaseLab";
-import { NonlinearPhasePortraitLab } from "@/components/visualizations/differential-equations/NonlinearPhasePortraitLab";
-
-// Volume IV — Module 4.4 Live Laboratories (Partial Differential Equations)
-import { HeatEquationDiffusionLab } from "@/components/visualizations/differential-equations/HeatEquationDiffusionLab";
-import { WaveEquationModesLab } from "@/components/visualizations/differential-equations/WaveEquationModesLab";
-
-// Volume II — Modules 2.1–2.3 Live Laboratories (Complete Linear Algebra & Space Geometry)
-import { VectorSpanExplorerLab } from "@/components/visualizations/linear-algebra/VectorSpanExplorerLab";
-import { ChangeOfBasisLab } from "@/components/visualizations/linear-algebra/ChangeOfBasisLab";
-import { FourSubspacesLab } from "@/components/visualizations/linear-algebra/FourSubspacesLab";
-import { MatrixTransformationLab } from "@/components/visualizations/linear-algebra/MatrixTransformationLab";
-import { DeterminantVolumeLab } from "@/components/visualizations/linear-algebra/DeterminantVolumeLab";
-import { LeastSquaresProjectionLab } from "@/components/visualizations/linear-algebra/LeastSquaresProjectionLab";
-import { EigenvectorCompassLab } from "@/components/visualizations/linear-algebra/EigenvectorCompassLab";
-import { QuadraticFormLab } from "@/components/visualizations/linear-algebra/QuadraticFormLab";
-import { SVDThreeStageLab } from "@/components/visualizations/linear-algebra/SVDThreeStageLab";
-
-// Volume V — Modules 5.1–5.4 Live Laboratories (Complete Transforms & Complex Analysis)
-import { EulerHelixPhasorLab } from "@/components/visualizations/transforms-complex/EulerHelixPhasorLab";
-import { ConformalMappingLab } from "@/components/visualizations/transforms-complex/ConformalMappingLab";
-import { CauchyContourLab } from "@/components/visualizations/transforms-complex/CauchyContourLab";
-import { ResidueTheoremLab } from "@/components/visualizations/transforms-complex/ResidueTheoremLab";
-import { LaplaceSPlane3DLab } from "@/components/visualizations/transforms-complex/LaplaceSPlane3DLab";
-import { ConvolutionFlipSlideLab } from "@/components/visualizations/transforms-complex/ConvolutionFlipSlideLab";
-import { FourierSeriesGibbsLab } from "@/components/visualizations/transforms-complex/FourierSeriesGibbsLab";
-import { FourierTransformWindingLab } from "@/components/visualizations/transforms-complex/FourierTransformWindingLab";
-
-// Volume VI — Modules 6.1–6.2 Live Laboratories (Complete Probability & Numerical Methods)
-import { PDFCDFMomentLab } from "@/components/visualizations/probability-numerical/PDFCDFMomentLab";
-import { BivariateGaussianLab } from "@/components/visualizations/probability-numerical/BivariateGaussianLab";
-import { NumericalQuadratureLab } from "@/components/visualizations/probability-numerical/NumericalQuadratureLab";
-import { RungeKuttaSlopeLab } from "@/components/visualizations/probability-numerical/RungeKuttaSlopeLab";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { DynamicLabRenderer } from "@/components/visualizations/DynamicLabRenderer";
+import { buildChapterJsonLd } from "@/lib/seo/structuredData";
+import { buildPageMetadata } from "@/lib/seo/siteConfig";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 export function generateStaticParams() {
   return getAllResolvedChapters().map((item) => ({
@@ -121,6 +17,47 @@ export function generateStaticParams() {
     module: item.module.slug,
     chapter: item.chapter.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ volume: string; module: string; chapter: string }>;
+}): Promise<Metadata> {
+  const {
+    volume: volumeSlug,
+    module: moduleSlug,
+    chapter: chapterSlug,
+  } = await params;
+
+  const resolved = getChapterBySlugs(volumeSlug, moduleSlug, chapterSlug);
+  if (!resolved) {
+    return {
+      title: "Chapter Not Found",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const { chapter, volume, module: mod } = resolved;
+  const labSummary =
+    chapter.labs.length > 0
+      ? `Includes ${chapter.labs.length} interactive 2D/3D visualization${chapter.labs.length > 1 ? "s" : ""}.`
+      : "";
+  const description = [
+    chapter.subtitle,
+    chapter.engineeringContext,
+    labSummary,
+    `From ${volume.title} (${mod.title}).`,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return buildPageMetadata({
+    title: `${chapter.title} (${chapter.id})`,
+    description,
+    path: `/${volume.slug}/${mod.slug}/${chapter.slug}`,
+    type: "article",
+  });
 }
 
 export default async function ChapterPage({
@@ -142,10 +79,12 @@ export default async function ChapterPage({
   const { chapter, volume, module: mod } = resolved;
 
   return (
-    <TopicPageShell chapterId={chapter.id}>
+    <>
+      <JsonLd data={buildChapterJsonLd(resolved)} />
+      <TopicPageShell chapterId={chapter.id}>
       {chapter.slug === "epsilon-delta-limits" && (
         <div className="space-y-10">
-          <EpsilonDeltaCorridorLab />
+          <DynamicLabRenderer name="EpsilonDeltaCorridorLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
@@ -153,7 +92,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. PUNCTURED NEIGHBORHOOD
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -166,7 +105,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   2. SQUEEZE ENVELOPE
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -182,7 +121,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. THREE FAILURE MODES
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -203,7 +142,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "continuity-ivt" && (
         <div className="space-y-10">
-          <IVTBisectionLab />
+          <DynamicLabRenderer name="IVTBisectionLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
@@ -211,7 +150,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   1. THREE-PART CONTINUITY TEST
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -223,7 +162,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   2. REMOVABLE VS. JUMP VS. INFINITE
                 </span>
                 <p className="text-xs text-[var(--text-secondary)] font-serif">
@@ -234,7 +173,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. BISECTION ERROR BOUND
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -248,86 +187,86 @@ export default async function ChapterPage({
 
       {chapter.slug === "secant-tangent-homotopy" && (
         <div className="space-y-10">
-          <SecantTangentLab />
+          <DynamicLabRenderer name="SecantTangentLab" />
         </div>
       )}
 
       {chapter.slug === "local-linearity-differentials" && (
         <div className="space-y-10">
-          <NewtonRaphsonLab />
+          <DynamicLabRenderer name="NewtonRaphsonLab" />
         </div>
       )}
 
       {chapter.slug === "chain-rule-kinematics" && (
         <div className="space-y-10">
-          <ChainRulePropagatorLab />
+          <DynamicLabRenderer name="ChainRulePropagatorLab" />
         </div>
       )}
 
       {chapter.slug === "taylor-polynomials-curvature" && (
         <div className="space-y-10">
-          <TaylorCurvatureLab />
+          <DynamicLabRenderer name="TaylorCurvatureLab" />
         </div>
       )}
 
       {chapter.slug === "riemann-sums-1d" && (
         <div className="space-y-10">
-          <Riemann1DLab />
+          <DynamicLabRenderer name="Riemann1DLab" />
         </div>
       )}
 
       {chapter.slug === "fundamental-theorem-calculus" && (
         <div className="space-y-10">
-          <FTCAccumulationLab />
+          <DynamicLabRenderer name="FTCAccumulationLab" />
         </div>
       )}
 
       {chapter.slug === "substitution-integration-by-parts" && (
         <div className="space-y-10">
-          <SubstitutionIBPLab />
+          <DynamicLabRenderer name="SubstitutionIBPLab" />
         </div>
       )}
 
       {chapter.slug === "solids-of-revolution" && (
         <div className="space-y-10">
-          <SolidOfRevolutionLab />
+          <DynamicLabRenderer name="SolidOfRevolutionLab" />
         </div>
       )}
 
       {chapter.slug === "sequences-partial-sums" && (
         <div className="space-y-10">
-          <PartialSumSeriesLab />
+          <DynamicLabRenderer name="PartialSumSeriesLab" />
         </div>
       )}
 
       {chapter.slug === "power-series-convergence" && (
         <div className="space-y-10">
-          <PowerSeriesConvergenceLab />
+          <DynamicLabRenderer name="PowerSeriesConvergenceLab" />
         </div>
       )}
 
       {chapter.slug === "surfaces-level-curves" && (
         <div className="space-y-10">
-          <SurfaceContourSlicerLab />
+          <DynamicLabRenderer name="SurfaceContourSlicerLab" />
         </div>
       )}
 
       {chapter.slug === "partial-derivatives-tangent-planes" && (
         <div className="space-y-10">
-          <PartialDerivativeTangentPlaneLab />
-          <HigherOrderChainImplicitLab />
+          <DynamicLabRenderer name="PartialDerivativeTangentPlaneLab" />
+          <DynamicLabRenderer name="HigherOrderChainImplicitLab" />
         </div>
       )}
 
       {chapter.slug === "gradient-directional-derivatives" && (
         <div className="space-y-10">
-          <GradientDirectionalDerivativeLab />
-          <GradientAscentAndLevelSurfaceLab />
+          <DynamicLabRenderer name="GradientDirectionalDerivativeLab" />
+          <DynamicLabRenderer name="GradientAscentAndLevelSurfaceLab" />
 
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
               <div>
-                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
                   First-Principles Proofs &amp; Geometric Intuition
                 </span>
                 <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -336,7 +275,7 @@ export default async function ChapterPage({
               </div>
               <Link
                 href="/multivariable-calculus/vector-calculus/vector-fields-divergence-curl"
-                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#029091] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#029091] transition-colors shrink-0"
+                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--math-ink-z)] transition-colors shrink-0"
               >
                 Continue to Vector Fields &amp; Del Quartet (3.3.3) →
               </Link>
@@ -344,7 +283,7 @@ export default async function ChapterPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. FROM TOTAL DIFFERENTIAL TO DOT PRODUCT
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -363,7 +302,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   2. CONTOUR &amp; LEVEL-SURFACE ORTHOGONALITY
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -382,7 +321,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. CRITICAL VECTOR VS. SCALAR DISTINCTION
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -402,7 +341,7 @@ export default async function ChapterPage({
 
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
               <div className="space-y-1.5">
-                <span className="font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   ENGINEERING BRIDGE • FOURIER HEAT &amp; GRADIENT DESCENT
                 </span>
                 <p>
@@ -415,7 +354,7 @@ export default async function ChapterPage({
                 </p>
               </div>
               <div className="space-y-1.5">
-                <span className="font-tabular-mono font-semibold text-[#D5658B] block">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
                   COMMON PITFALLS TO WATCH FOR IN COMPUTATIONS
                 </span>
                 <p>
@@ -433,14 +372,14 @@ export default async function ChapterPage({
 
       {chapter.slug === "lagrange-multipliers" && (
         <div className="space-y-10">
-          <LagrangeMultipliersLab />
+          <DynamicLabRenderer name="LagrangeMultipliersLab" />
         </div>
       )}
 
       {chapter.slug === "limits-and-differentiability" && (
         <div className="space-y-10">
-          <MultivariableLimitsPathsLab />
-          <DifferentiabilityErrorConeLab />
+          <DynamicLabRenderer name="MultivariableLimitsPathsLab" />
+          <DynamicLabRenderer name="DifferentiabilityErrorConeLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
@@ -448,7 +387,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. DISPROVING A LIMIT (TWO-PATH TEST)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -464,7 +403,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. PROVING A LIMIT (POLAR SQUEEZE)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -480,7 +419,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. SUFFICIENT C¹ CRITERION
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -502,8 +441,8 @@ export default async function ChapterPage({
 
       {chapter.slug === "taylor-expansions" && (
         <div className="space-y-10">
-          <SingleVariableTaylorLab />
-          <MultivariableTaylorHessianLab />
+          <DynamicLabRenderer name="SingleVariableTaylorLab" />
+          <DynamicLabRenderer name="MultivariableTaylorHessianLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
@@ -511,7 +450,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   1. LAGRANGE REMAINDER THEOREM
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -527,7 +466,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   2. MULTIVARIABLE 2ND-ORDER TAYLOR
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -543,7 +482,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   3. CONVERGENCE DISK BOUNDARY
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -564,22 +503,22 @@ export default async function ChapterPage({
 
       {chapter.slug === "homogeneous-functions-eulers-theorem" && (
         <div className="space-y-10">
-          <HomogeneousScalingRayLab />
-          <EulersTheoremSecondOrderLab />
+          <DynamicLabRenderer name="HomogeneousScalingRayLab" />
+          <DynamicLabRenderer name="EulersTheoremSecondOrderLab" />
         </div>
       )}
 
       {chapter.slug === "maxima-minima-extrema" && (
         <div className="space-y-10">
-          <HessianSecondDerivativeTestLab />
-          <GeneralMethodDegenerateExtremaLab />
+          <DynamicLabRenderer name="HessianSecondDerivativeTestLab" />
+          <DynamicLabRenderer name="GeneralMethodDegenerateExtremaLab" />
         </div>
       )}
 
       {chapter.slug === "first-order-lde-bernoulli" && (
         <div className="space-y-10">
-          <LinearOdeIntegratingFactorLab />
-          <BernoulliReductionLab />
+          <DynamicLabRenderer name="LinearOdeIntegratingFactorLab" />
+          <DynamicLabRenderer name="BernoulliReductionLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
@@ -587,7 +526,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   1. STANDARD LDE IN y
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -599,7 +538,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. REVERSED LDE IN x
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -611,7 +550,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   3. BERNOULLI REDUCTION
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -628,8 +567,8 @@ export default async function ChapterPage({
 
       {chapter.slug === "linear-odes-wronskian-roots" && (
         <div className="space-y-10">
-          <WronskianPhaseAreaLab />
-          <CharacteristicRootsSolutionLab />
+          <DynamicLabRenderer name="WronskianPhaseAreaLab" />
+          <DynamicLabRenderer name="CharacteristicRootsSolutionLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
@@ -637,7 +576,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. DISTINCT REAL ROOTS (Δ &gt; 0)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -653,7 +592,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   2. REPEATED ROOT (Δ = 0)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -669,7 +608,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   3. COMPLEX CONJUGATE ROOTS (Δ &lt; 0)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -691,8 +630,8 @@ export default async function ChapterPage({
 
       {chapter.slug === "operator-variation-cauchy-euler" && (
         <div className="space-y-10">
-          <OperatorMethodTutorialLab />
-          <VariationOfParametersCauchyEulerLab />
+          <DynamicLabRenderer name="OperatorMethodTutorialLab" />
+          <DynamicLabRenderer name="VariationOfParametersCauchyEulerLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
@@ -700,7 +639,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
                   1. INVERSE OPERATOR RULES 1/f(D)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -717,7 +656,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. VARIATION OF PARAMETERS
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -734,7 +673,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   3. CAUCHY-EULER LOG PULLBACK
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -755,27 +694,27 @@ export default async function ChapterPage({
 
       {chapter.slug === "double-integrals" && (
         <div className="space-y-10">
-          <RiemannVolumeLab />
-          <IteratedOrderChangeLab />
+          <DynamicLabRenderer name="RiemannVolumeLab" />
+          <DynamicLabRenderer name="IteratedOrderChangeLab" />
         </div>
       )}
 
       {chapter.slug === "triple-integrals" && (
         <div className="space-y-10">
-          <TripleIntegralOrderLab />
-          <TripleVoxelDensityLab />
+          <DynamicLabRenderer name="TripleIntegralOrderLab" />
+          <DynamicLabRenderer name="TripleVoxelDensityLab" />
         </div>
       )}
 
       {chapter.slug === "coordinate-systems" && (
         <div className="space-y-10">
-          <PolarCoordinateAreaLab />
-          <Curvilinear3DSurfacesAndElementLab />
+          <DynamicLabRenderer name="PolarCoordinateAreaLab" />
+          <DynamicLabRenderer name="Curvilinear3DSurfacesAndElementLab" />
 
           {/* Orthogonal Curvilinear Scale-Factor Reference Sheet */}
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-5">
             <div className="border-b border-[var(--border-subtle)] pb-3">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#AAA36D] block">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-grid)] block">
                 Orthogonal Curvilinear Reference Sheet
               </span>
               <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -786,7 +725,7 @@ export default async function ChapterPage({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE]">
+                  <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)]">
                     CARTESIAN (x, y, z)
                   </span>
                   <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -803,7 +742,7 @@ export default async function ChapterPage({
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-tabular-mono font-semibold text-[#96B898]">
+                  <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)]">
                     CYLINDRICAL (r, θ, z)
                   </span>
                   <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -820,7 +759,7 @@ export default async function ChapterPage({
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-tabular-mono font-semibold text-[#D5658B]">
+                  <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)]">
                     SPHERICAL (ρ, φ, θ)
                   </span>
                   <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -842,13 +781,13 @@ export default async function ChapterPage({
 
       {chapter.slug === "jacobians" && (
         <div className="space-y-10">
-          <DualGridMorphingAndTangentLab />
-          <JacobianIntegralPullbackLab />
+          <DynamicLabRenderer name="DualGridMorphingAndTangentLab" />
+          <DynamicLabRenderer name="JacobianIntegralPullbackLab" />
 
           {/* Geometric Summary: Why the Determinant Appears */}
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-5">
             <div className="border-b border-[var(--border-subtle)] pb-3">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
                 Unifying Principle Across Multivariable Integration
               </span>
               <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -858,7 +797,7 @@ export default async function ChapterPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. 1D U-SUBSTITUTION ANALOGUE
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -870,7 +809,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. 2D TANGENT CROSS PRODUCT
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -882,7 +821,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   3. 3D SCALAR TRIPLE PRODUCT
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -900,8 +839,8 @@ export default async function ChapterPage({
 
       {chapter.slug === "convergence-and-divergence" && (
         <div className="space-y-10">
-          <ImproperIntegralConvergenceLab />
-          <ConvergenceTestsTutorialLab />
+          <DynamicLabRenderer name="ImproperIntegralConvergenceLab" />
+          <DynamicLabRenderer name="ConvergenceTestsTutorialLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
@@ -914,7 +853,7 @@ export default async function ChapterPage({
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   1. DIVERGENCE SCREENING
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -930,7 +869,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. ALGEBRAIC POWERS &amp; RATIOS
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -947,7 +886,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   3. FACTORIALS &amp; n-TH POWERS
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -971,8 +910,8 @@ export default async function ChapterPage({
 
       {chapter.slug === "gamma-and-beta-functions" && (
         <div className="space-y-10">
-          <GammaFunctionLab />
-          <BetaFunctionLab />
+          <DynamicLabRenderer name="GammaFunctionLab" />
+          <DynamicLabRenderer name="BetaFunctionLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-serif font-semibold text-[var(--text-primary)]">
@@ -980,7 +919,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   1. EXPONENTIAL SUBSTITUTION
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -992,7 +931,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. WALLIS TRIGONOMETRIC FORM
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1004,7 +943,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   3. EULER REFLECTION &amp; INFINITE TAIL
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1022,12 +961,12 @@ export default async function ChapterPage({
 
       {chapter.slug === "gradient-of-scalar-fields" && (
         <div className="space-y-10">
-          <VectorGradientCalculatorLab />
+          <DynamicLabRenderer name="VectorGradientCalculatorLab" />
 
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
               <div>
-                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
                   Vector Differential Foundations • Module 3.3.1
                 </span>
                 <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -1036,7 +975,7 @@ export default async function ChapterPage({
               </div>
               <Link
                 href="/multivariable-calculus/vector-calculus/directional-derivatives"
-                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#8D9FCE] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#8D9FCE] transition-colors shrink-0"
+                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[var(--math-ink-x)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--math-ink-x)] transition-colors shrink-0"
               >
                 Continue to Directional Derivatives (3.3.2) →
               </Link>
@@ -1044,7 +983,7 @@ export default async function ChapterPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   1. SCALAR FIELD TO VECTOR FIELD (DEL ∇)
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1061,7 +1000,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   2. ORTHOGONALITY &amp; TANGENT PLANES
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1078,7 +1017,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   3. PHYSICAL GRADIENTS &amp; ANGLE BETWEEN SURFACES
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1100,12 +1039,12 @@ export default async function ChapterPage({
 
       {chapter.slug === "directional-derivatives" && (
         <div className="space-y-10">
-          <DirectionalDerivativeCalculatorLab />
+          <DynamicLabRenderer name="DirectionalDerivativeCalculatorLab" />
 
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
               <div>
-                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
                   Directional Rate of Change • Module 3.3.2
                 </span>
                 <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -1114,7 +1053,7 @@ export default async function ChapterPage({
               </div>
               <Link
                 href="/multivariable-calculus/vector-calculus/vector-fields-divergence-curl"
-                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#029091] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#029091] transition-colors shrink-0"
+                className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[var(--math-ink-z)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--math-ink-z)] transition-colors shrink-0"
               >
                 Continue to Vector Fields, Div &amp; Curl (3.3.3) →
               </Link>
@@ -1122,7 +1061,7 @@ export default async function ChapterPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. ALWAYS NORMALIZE v → û FIRST
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1140,7 +1079,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. SCALAR PROJECTION FORMULA
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1157,7 +1096,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. CAUCHY–SCHWARZ EXTREMES (±‖∇φ‖)
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1179,15 +1118,15 @@ export default async function ChapterPage({
 
       {chapter.slug === "vector-fields-divergence-curl" && (
         <div className="space-y-10">
-          <DivCurlProbeLab />
-          <VectorFieldStreamlineExplorerLab />
-          <DivCurlDecompositionLab />
+          <DynamicLabRenderer name="DivCurlProbeLab" />
+          <DynamicLabRenderer name="VectorFieldStreamlineExplorerLab" />
+          <DynamicLabRenderer name="DivCurlDecompositionLab" />
 
           {/* Comprehensive Vector Calculus Explanation Guide */}
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
               <div>
-                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] block">
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
                   The Del (∇) Operator Quartet &amp; Coordinate-Free Geometry
                 </span>
                 <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -1197,13 +1136,13 @@ export default async function ChapterPage({
               <div className="flex flex-wrap gap-2 shrink-0">
                 <Link
                   href="/multivariable-calculus/vector-calculus/gradient-of-scalar-fields"
-                  className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#D35323] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#D35323] transition-colors"
+                  className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--math-ink-sweep)] transition-colors"
                 >
                   ← Gradient ∇φ (3.3.1)
                 </Link>
                 <Link
                   href="/multivariable-calculus/vector-calculus/directional-derivatives"
-                  className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[#8D9FCE] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#8D9FCE] transition-colors"
+                  className="px-3 py-1.5 border border-[var(--border-subtle)] hover:border-[var(--math-ink-x)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--math-ink-x)] transition-colors"
                 >
                   ← Directional D_û f (3.3.2)
                 </Link>
@@ -1213,7 +1152,7 @@ export default async function ChapterPage({
             {/* 4-Card Del Operator Quartet */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   1. GRADIENT: ∇f (Scalar → Vector)
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1229,7 +1168,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. DIRECTIONAL DERIVATIVE: D_u f
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1246,7 +1185,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   3. DIVERGENCE: ∇·F (Vector → Scalar)
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1262,7 +1201,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   4. CURL: ∇×F (Vector → Vector)
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1282,7 +1221,7 @@ export default async function ChapterPage({
             {/* Vector Field Paradoxes & Tensor Decomposition */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
                   PARADOX 1 • STRAIGHT LINES WITH SPIN
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1299,7 +1238,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   PARADOX 2 • CURVED ORBITS WITH ZERO CURL
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1315,7 +1254,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   EXACT SECOND-ORDER DEL IDENTITIES
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1337,7 +1276,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "line-integrals-work" && (
         <div className="space-y-10">
-          <LineIntegralWorkLab />
+          <DynamicLabRenderer name="LineIntegralWorkLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1345,7 +1284,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. TANGENTIAL PROJECTION WORK
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1362,7 +1301,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. FUNDAMENTAL THEOREM FOR LINE INTEGRALS
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1378,7 +1317,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. CURL SCREEN FOR CONSERVATIVE FIELDS
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1399,7 +1338,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "greens-theorem" && (
         <div className="space-y-10">
-          <GreensTheoremLab />
+          <DynamicLabRenderer name="GreensTheoremLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1407,7 +1346,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   1. CIRCULATION–CURL FORM (TANGENTIAL)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1423,7 +1362,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   2. FLUX–DIVERGENCE FORM (OUTWARD NORMAL)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1445,7 +1384,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "surface-integrals-flux" && (
         <div className="space-y-10">
-          <SurfaceFluxLab />
+          <DynamicLabRenderer name="SurfaceFluxLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1453,7 +1392,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   1. PARAMETRIC VECTOR ELEMENT
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1469,7 +1408,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. EXPLICIT GRAPH z = g(x, y)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1486,7 +1425,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. ORIENTATION REVERSAL SIGN
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1507,7 +1446,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "stokes-divergence-theorems" && (
         <div className="space-y-10">
-          <StokesDivergenceLab />
+          <DynamicLabRenderer name="StokesDivergenceLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1515,7 +1454,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   1. STOKES&apos; SURFACE INVARIANCE
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1531,7 +1470,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   2. GAUSS&apos;S CONTROL-VOLUME LAW
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1547,7 +1486,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   3. GENERALIZED STOKES PRINCIPLE
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1570,7 +1509,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "direction-fields-integral-curves" && (
         <div className="space-y-10">
-          <SlopeFieldTracerLab />
+          <DynamicLabRenderer name="SlopeFieldTracerLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1578,7 +1517,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. TANGENT VECTOR FIELD INTERPRETATION
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1595,7 +1534,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
                   2. EULER VS. 4TH-ORDER RUNGE–KUTTA
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1612,7 +1551,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. PICARD–LINDELÖF UNIQUENESS RULE
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1634,7 +1573,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "separable-linear-odes" && (
         <div className="space-y-10">
-          <AutonomousPhaseLineLab />
+          <DynamicLabRenderer name="AutonomousPhaseLineLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1642,7 +1581,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   1. LINEARIZATION STABILITY CRITERION
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1659,7 +1598,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   2. THREE FUNDAMENTAL 1D BIFURCATIONS
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1676,7 +1615,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   3. SEPARABLE &amp; ANALYTICAL TOOLKIT
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1690,7 +1629,7 @@ export default async function ChapterPage({
                   quadrature away from equilibria; see Chapter{" "}
                   <Link
                     href="/multivariable-calculus/differential-calculus/first-order-lde-bernoulli"
-                    className="text-[#8D9FCE] underline"
+                    className="text-[var(--math-ink-x)] underline"
                   >
                     3.1.9 (Integrating Factors &amp; Bernoulli)
                   </Link>{" "}
@@ -1704,7 +1643,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "damped-harmonic-oscillators" && (
         <div className="space-y-10">
-          <HarmonicOscillatorLab />
+          <DynamicLabRenderer name="HarmonicOscillatorLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1712,7 +1651,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. DAMPING RATIO ζ &amp; COMPLEX S-PLANE CIRCLE
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1729,7 +1668,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. MECHANICAL ↔ SERIES RLC ANALOGY
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1747,7 +1686,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. CRITICAL VS. OVERDAMPED BOTTLENECK
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1769,7 +1708,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "forced-oscillations-resonance" && (
         <div className="space-y-10">
-          <ForcedResonanceLab />
+          <DynamicLabRenderer name="ForcedResonanceLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1777,7 +1716,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   1. ACOUSTIC BEATS IDENTITY (ζ = 0)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1794,7 +1733,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   2. COMPLEX PHASOR TRANSFER GAIN H(iω)
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1811,7 +1750,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-upper)] block">
                   3. WHY PEAK RESONANCE SITS BELOW ω_n
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1833,7 +1772,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "linear-phase-portraits" && (
         <div className="space-y-10">
-          <TraceDeterminantPhaseLab />
+          <DynamicLabRenderer name="TraceDeterminantPhaseLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1841,7 +1780,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. INVARIANT TRACE &amp; DETERMINANT
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1858,7 +1797,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. STRAIGHT-LINE EIGENVECTOR RAYS
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1875,7 +1814,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   3. MATRIX EXPONENTIAL &amp; STABILITY QUADRANT
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1896,7 +1835,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "nonlinear-nullclines-limit-cycles" && (
         <div className="space-y-10">
-          <NonlinearPhasePortraitLab />
+          <DynamicLabRenderer name="NonlinearPhasePortraitLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
@@ -1904,7 +1843,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. NULLCLINE SIGN QUADRANTS
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1921,7 +1860,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   2. HARTMAN–GROBMAN THEOREM
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1938,7 +1877,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   3. SELF-SUSTAINED LIMIT CYCLES
                 </span>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1960,11 +1899,11 @@ export default async function ChapterPage({
 
       {chapter.slug === "heat-equation-diffusion" && (
         <div className="space-y-10">
-          <HeatEquationDiffusionLab />
+          <DynamicLabRenderer name="HeatEquationDiffusionLab" />
 
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
             <div className="border-b border-[var(--border-subtle)] pb-3">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#B95869] block">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-upper)] block">
                 Parabolic PDE Theory • Module 4.4.1
               </span>
               <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -1974,7 +1913,7 @@ export default async function ChapterPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   1. CONCAVITY DRIVES TEMPERATURE RATE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -1989,7 +1928,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. n² EXPONENTIAL MODE FILTERING
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2004,7 +1943,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   3. DIRICHLET VS. NEUMANN STEADY STATE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2023,11 +1962,11 @@ export default async function ChapterPage({
 
       {chapter.slug === "wave-equation-normal-modes" && (
         <div className="space-y-10">
-          <WaveEquationModesLab />
+          <DynamicLabRenderer name="WaveEquationModesLab" />
 
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
             <div className="border-b border-[var(--border-subtle)] pb-3">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] block">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
                 Hyperbolic PDE Theory • Module 4.4.2
               </span>
               <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -2037,7 +1976,7 @@ export default async function ChapterPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   1. FACTORIZATION INTO LEFT/RIGHT WAVES
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2054,7 +1993,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   2. PHASE INVERSION AT PINNED ENDS
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2068,7 +2007,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   3. 2D CHLADNI NODAL LINES
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2090,11 +2029,11 @@ export default async function ChapterPage({
 
       {chapter.slug === "vectors-linear-combinations" && (
         <div className="space-y-10">
-          <VectorSpanExplorerLab />
+          <DynamicLabRenderer name="VectorSpanExplorerLab" />
 
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
             <div className="border-b border-[var(--border-subtle)] pb-3">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
                 Linear Space Foundations • Module 2.1.1
               </span>
               <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -2104,7 +2043,7 @@ export default async function ChapterPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. COLUMN PICTURE OF Ax = b
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2119,7 +2058,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. DIMENSION OF SPAN
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2133,7 +2072,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-upper)] block">
                   3. REDUNDANCY &amp; COLLAPSE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2151,11 +2090,11 @@ export default async function ChapterPage({
 
       {chapter.slug === "basis-change-of-basis" && (
         <div className="space-y-10">
-          <ChangeOfBasisLab />
+          <DynamicLabRenderer name="ChangeOfBasisLab" />
 
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
             <div className="border-b border-[var(--border-subtle)] pb-3">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
                 Coordinate Frames • Module 2.1.2
               </span>
               <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -2165,7 +2104,7 @@ export default async function ChapterPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. BASIS MATRIX P (ℬ → STANDARD)
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2179,7 +2118,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   2. INVERSE TRANSLATION (STANDARD → ℬ)
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2193,7 +2132,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   3. ORTHONORMAL ADVANTAGE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2211,11 +2150,11 @@ export default async function ChapterPage({
 
       {chapter.slug === "four-fundamental-subspaces" && (
         <div className="space-y-10">
-          <FourSubspacesLab />
+          <DynamicLabRenderer name="FourSubspacesLab" />
 
           <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
             <div className="border-b border-[var(--border-subtle)] pb-3">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
                 Fundamental Theorem of Linear Algebra • Module 2.1.3
               </span>
               <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -2225,7 +2164,7 @@ export default async function ChapterPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. ORTHOGONAL SPLITTING
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2240,7 +2179,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   2. RANK–NULLITY BALANCE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2254,7 +2193,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-upper)] block">
                   3. COMPLETE SOLUTION STRUCTURE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2273,7 +2212,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "matrix-transformations-2d-3d" && (
         <div className="space-y-8">
-          <MatrixTransformationLab />
+          <DynamicLabRenderer name="MatrixTransformationLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2281,7 +2220,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   1. COLUMNS TRACK BASIS VECTORS
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2295,7 +2234,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. LINEAR COMBINATION ACTION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2308,7 +2247,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   3. NON-COMMUTATIVE COMPOSITION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2326,7 +2265,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "determinants-volume-scaling" && (
         <div className="space-y-8">
-          <DeterminantVolumeLab />
+          <DynamicLabRenderer name="DeterminantVolumeLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2334,7 +2273,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   1. AREA & VOLUME SCALING FACTOR
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2347,7 +2286,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-upper)] block">
                   2. HANDEDNESS & ORIENTATION FLIP
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2360,7 +2299,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. SINGULAR COLLAPSE & PRODUCTS
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2378,7 +2317,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "orthogonality-least-squares" && (
         <div className="space-y-8">
-          <LeastSquaresProjectionLab />
+          <DynamicLabRenderer name="LeastSquaresProjectionLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2386,7 +2325,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   1. PERPENDICULAR RESIDUAL
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2399,7 +2338,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. THE NORMAL EQUATIONS
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2412,7 +2351,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. PROJECTION OPERATOR
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2430,7 +2369,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "eigenvalues-eigenvectors" && (
         <div className="space-y-8">
-          <EigenvectorCompassLab />
+          <DynamicLabRenderer name="EigenvectorCompassLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2438,7 +2377,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   1. INVARIANT EIGENRAYS
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2451,7 +2390,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. TRACE & DETERMINANT INVARIANTS
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2464,7 +2403,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-upper)] block">
                   3. ROTATION VS. DEFECTIVE SHEAR
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2482,7 +2421,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "quadratic-forms-spectral" && (
         <div className="space-y-8">
-          <QuadraticFormLab />
+          <DynamicLabRenderer name="QuadraticFormLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2490,7 +2429,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   1. REAL SYMMETRIC DECOMPOSITION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2503,7 +2442,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. ERASING CROSS-TERMS
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2516,7 +2455,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. DEFINITENESS SIGN TEST
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2534,7 +2473,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "singular-value-decomposition" && (
         <div className="space-y-8">
-          <SVDThreeStageLab />
+          <DynamicLabRenderer name="SVDThreeStageLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2542,7 +2481,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   1. ROTATE → STRETCH → ROTATE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2555,7 +2494,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. SYMMETRIC GRAM CONNECTION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2568,7 +2507,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   3. ECKART–YOUNG BEST RANK-1
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2586,7 +2525,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "euler-formula-complex-plane" && (
         <div className="space-y-8">
-          <EulerHelixPhasorLab />
+          <DynamicLabRenderer name="EulerHelixPhasorLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2594,7 +2533,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
                   1. TAYLOR SERIES BRIDGE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2607,7 +2546,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   2. ROTATION + SCALING MULTIPLICATION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2619,7 +2558,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   3. COMPLEX FREQUENCY SPIRAL
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2637,7 +2576,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "cauchy-riemann-conformal" && (
         <div className="space-y-8">
-          <ConformalMappingLab />
+          <DynamicLabRenderer name="ConformalMappingLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2645,7 +2584,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   1. CAUCHY–RIEMANN INVARIANCE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2658,7 +2597,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
                   2. SCALED ROTATION JACOBIAN
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2671,7 +2610,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   3. HARMONIC CONJUGATES
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2689,7 +2628,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "cauchy-integral-formula" && (
         <div className="space-y-8">
-          <CauchyContourLab />
+          <DynamicLabRenderer name="CauchyContourLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2697,7 +2636,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-upper)] block">
                   1. CAUCHY–GOURSAT INVARIANCE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2710,7 +2649,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   2. TOPOLOGICAL WINDING NUMBER
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2723,7 +2662,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   3. BOUNDARY RECONSTRUCTION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2741,7 +2680,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "poles-residue-theorem" && (
         <div className="space-y-8">
-          <ResidueTheoremLab />
+          <DynamicLabRenderer name="ResidueTheoremLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2749,7 +2688,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#B95869] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-upper)] block">
                   1. LAURENT SERIES RESIDUE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2762,7 +2701,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   2. RESIDUE SUMMATION LAW
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2775,7 +2714,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. UPPER-HALF-PLANE CLOSURE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2793,7 +2732,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "s-plane-poles-zeros" && (
         <div className="space-y-8">
-          <LaplaceSPlane3DLab />
+          <DynamicLabRenderer name="LaplaceSPlane3DLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2801,7 +2740,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   1. COMPLEX FREQUENCY FACTOR
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2814,7 +2753,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. REGION OF CONVERGENCE & STABILITY
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2827,7 +2766,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   3. BODE FREQUENCY SLICE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2845,7 +2784,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "impulse-response-convolution" && (
         <div className="space-y-8">
-          <ConvolutionFlipSlideLab />
+          <DynamicLabRenderer name="ConvolutionFlipSlideLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2853,7 +2792,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. LTI SUPERPOSITION SUM
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2866,7 +2805,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   2. WHY KERNELS FLIP BACKWARD
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2879,7 +2818,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   3. ALGEBRAIC s-DOMAIN PRODUCT
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2897,7 +2836,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "fourier-series-gibbs" && (
         <div className="space-y-8">
-          <FourierSeriesGibbsLab />
+          <DynamicLabRenderer name="FourierSeriesGibbsLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2905,7 +2844,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   1. INNER-PRODUCT PROJECTION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2918,7 +2857,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   2. PARSEVAL ENERGY CONSERVATION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2930,7 +2869,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. INVARIANT GIBBS OVERSHOOT
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2948,7 +2887,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "fourier-transform-spectra" && (
         <div className="space-y-8">
-          <FourierTransformWindingLab />
+          <DynamicLabRenderer name="FourierTransformWindingLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -2956,7 +2895,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. COMPLEX WINDING CENTROID
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2970,7 +2909,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. RECIPROCAL TIME–FREQUENCY SCALING
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -2983,7 +2922,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   3. UNCERTAINTY PRINCIPLE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3001,7 +2940,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "continuous-pdfs-cdfs" && (
         <div className="space-y-8">
-          <PDFCDFMomentLab />
+          <DynamicLabRenderer name="PDFCDFMomentLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -3009,7 +2948,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#AAA36D] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-grid)] block">
                   1. INTERVAL PROBABILITY MASS
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3022,7 +2961,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                   2. DERIVATIVE DUALITY
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3034,7 +2973,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   3. BALANCE FULCRUM & INERTIA
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3052,7 +2991,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "joint-bivariate-distributions" && (
         <div className="space-y-8">
-          <BivariateGaussianLab />
+          <DynamicLabRenderer name="BivariateGaussianLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -3060,7 +2999,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. MARGINAL PROJECTION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3073,7 +3012,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   2. CONDITIONAL SLICE & SHRINKAGE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3086,7 +3025,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                   3. MAHALANOBIS CONFIDENCE ELLIPSE
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3104,7 +3043,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "numerical-quadrature-error" && (
         <div className="space-y-8">
-          <NumericalQuadratureLab />
+          <DynamicLabRenderer name="NumericalQuadratureLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -3112,7 +3051,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. SECOND-ORDER NEWTON–COTES
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3125,7 +3064,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   2. SIMPSON&apos;S BONUS ORDER O(h⁴)
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3138,7 +3077,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. GAUSS–LEGENDRE DEGREE 2n−1
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3156,7 +3095,7 @@ export default async function ChapterPage({
 
       {chapter.slug === "runge-kutta-ode-solvers" && (
         <div className="space-y-8">
-          <RungeKuttaSlopeLab />
+          <DynamicLabRenderer name="RungeKuttaSlopeLab" />
 
           <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
             <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -3164,7 +3103,7 @@ export default async function ChapterPage({
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                   1. EULER VS. HEUN PREDICTOR
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3177,7 +3116,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                   2. BUTCHER WEIGHTS &amp; SIMPSON LINK
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3190,7 +3129,7 @@ export default async function ChapterPage({
               </div>
 
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323] block">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                   3. NUMERICAL STABILITY REGION
                 </span>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -3212,7 +3151,9 @@ export default async function ChapterPage({
             <div>
               <span
                 className="text-xs font-tabular-mono uppercase tracking-wider block"
-                style={{ color: chapter.accentHex ?? volume.accentHex }}
+                style={{
+                  color: getAdaptiveAccentInk(chapter.accentHex ?? volume.accentHex),
+                }}
               >
                 Volume {volume.volumeNumber} • Module {mod.numberLabel} •
                 Chapter {chapter.id} Architecture Ready
@@ -3221,7 +3162,7 @@ export default async function ChapterPage({
                 Interactive Laboratory Workspace Scheduled for Buildout
               </h2>
             </div>
-            <span className="px-2.5 py-1 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[#FBEAA4]">
+            <span className="px-2.5 py-1 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--math-ink-diff)]">
               Status: {chapter.status.toUpperCase()}
             </span>
           </div>
@@ -3236,5 +3177,6 @@ export default async function ChapterPage({
         </section>
       )}
     </TopicPageShell>
+    </>
   );
 }

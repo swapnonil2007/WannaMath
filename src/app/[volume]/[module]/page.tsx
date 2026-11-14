@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -11,6 +12,10 @@ import {
 } from "lucide-react";
 import { getAllVolumes, getModuleBySlugs } from "@/registry/index";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildModuleJsonLd } from "@/lib/seo/structuredData";
+import { buildPageMetadata } from "@/lib/seo/siteConfig";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 export function generateStaticParams() {
   const params: { volume: string; module: string }[] = [];
@@ -20,6 +25,27 @@ export function generateStaticParams() {
     }
   }
   return params;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ volume: string; module: string }>;
+}): Promise<Metadata> {
+  const { volume: volumeSlug, module: moduleSlug } = await params;
+  const resolved = getModuleBySlugs(volumeSlug, moduleSlug);
+  if (!resolved) {
+    return {
+      title: "Module Not Found",
+      robots: { index: false, follow: false },
+    };
+  }
+  const { volume, module: mod } = resolved;
+  return buildPageMetadata({
+    title: `${mod.title} (Module ${mod.numberLabel})`,
+    description: `${mod.description} Explore ${mod.chapters.length} interactive chapters in Volume ${volume.volumeNumber}: ${volume.title}.`,
+    path: `/${volume.slug}/${mod.slug}`,
+  });
 }
 
 export default async function ModulePage({
@@ -35,10 +61,11 @@ export default async function ModulePage({
   }
 
   const { volume, module: mod } = resolved;
-  const modAccent = mod.accentHex ?? volume.accentHex;
+  const modAccent = getAdaptiveAccentInk(mod.accentHex ?? volume.accentHex);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+      <JsonLd data={buildModuleJsonLd(volume, mod)} />
       {/* Breadcrumb */}
       <nav
         aria-label="Breadcrumb"
@@ -110,7 +137,9 @@ export default async function ModulePage({
 
         const renderChapterCard = (chapter: (typeof mod.chapters)[number]) => {
           const chRoute = `/${volume.slug}/${mod.slug}/${chapter.slug}`;
-          const chAccent = chapter.accentHex ?? modAccent;
+          const chAccent = chapter.accentHex
+            ? getAdaptiveAccentInk(chapter.accentHex)
+            : modAccent;
           const isPublished = chapter.status === "published";
 
           return (
@@ -131,17 +160,17 @@ export default async function ModulePage({
                     {isPublished ? (
                       <>
                         <CheckCircle2
-                          className="w-3.5 h-3.5 text-[#96B898]"
+                          className="w-3.5 h-3.5 text-[var(--math-ink-y)]"
                           aria-hidden="true"
                         />
-                        <span className="text-[#96B898]">
+                        <span className="text-[var(--math-ink-y)]">
                           Published ({chapter.labs.length} Labs)
                         </span>
                       </>
                     ) : (
                       <>
                         <Clock
-                          className="w-3.5 h-3.5 text-[#FBEAA4]"
+                          className="w-3.5 h-3.5 text-[var(--math-ink-diff)]"
                           aria-hidden="true"
                         />
                         <span>Planned Syllabus</span>
@@ -226,7 +255,7 @@ export default async function ModulePage({
               >
                 <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
                   <div className="flex items-center gap-2.5">
-                    <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-panel)]">
+                    <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-panel)]">
                       {group.badge ?? "SUB-PARENT SECTION"}
                     </span>
                     <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">

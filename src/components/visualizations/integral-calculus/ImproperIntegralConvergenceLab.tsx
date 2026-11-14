@@ -8,7 +8,7 @@ import { compileMathExpression } from "@/lib/mathParser";
 import {
   SvgCoordinatePlane2D,
   integrate1DGaussLegendre,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 type ImproperKind = "type-1" | "type-2";
 
@@ -313,14 +313,14 @@ export function ImproperIntegralConvergenceLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D5658B] text-[#D5658B] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-lower)] text-[var(--math-ink-lower)] bg-[var(--bg-canvas)]">
               LAB 3.2.5A • IMPROPER INTEGRALS &amp; DIRECT COMPARISON
             </span>
             <span
               className={`px-2 py-0.5 text-[11px] font-tabular-mono border inline-flex items-center gap-1 ${
                 analysis.likelyConverges
-                  ? "border-[#96B898] text-[#96B898] bg-[#96B898]/10"
-                  : "border-[#D35323] text-[#D35323] bg-[#D35323]/10"
+                  ? "border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/10"
+                  : "border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[#D35323]/10"
               }`}
             >
               {analysis.likelyConverges ? (
@@ -357,7 +357,7 @@ export function ImproperIntegralConvergenceLab() {
                 onClick={() => handleSelectPreset(p)}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#D5658B] bg-[#D5658B]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-lower)] bg-[#D5658B]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -407,7 +407,7 @@ export function ImproperIntegralConvergenceLab() {
               }}
               className={`px-3 py-1 text-xs font-tabular-mono border ${
                 usePFamily && kind === "type-1"
-                  ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] text-[var(--text-secondary)]"
               }`}
             >
@@ -421,7 +421,7 @@ export function ImproperIntegralConvergenceLab() {
               }}
               className={`px-3 py-1 text-xs font-tabular-mono border ${
                 usePFamily && kind === "type-2"
-                  ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] text-[var(--text-secondary)]"
               }`}
             >
@@ -433,7 +433,7 @@ export function ImproperIntegralConvergenceLab() {
               onClick={() => setShowComparison((v) => !v)}
               className={`px-3 py-1 text-xs font-tabular-mono border ${
                 showComparison
-                  ? "border-[#FBEAA4] text-[#FBEAA4] bg-[#FBEAA4]/10"
+                  ? "border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[#FBEAA4]/10"
                   : "border-[var(--border-subtle)] text-[var(--text-muted)]"
               }`}
             >
@@ -443,7 +443,7 @@ export function ImproperIntegralConvergenceLab() {
 
           {usePFamily && (
             <div className="flex items-center gap-3 text-xs font-tabular-mono">
-              <span className="text-[#FBEAA4]">
+              <span className="text-[var(--math-ink-diff)]">
                 Exponent p = {pExponent.toFixed(2)} (
                 {kind === "type-1"
                   ? pExponent > 1
@@ -462,6 +462,7 @@ export function ImproperIntegralConvergenceLab() {
                 value={pExponent}
                 onChange={(e) => setPExponent(parseFloat(e.target.value))}
                 className="w-36 accent-[#FBEAA4]"
+                aria-label="Exponent p"
               />
             </div>
           )}
@@ -473,11 +474,11 @@ export function ImproperIntegralConvergenceLab() {
         {/* Left: Area Under Curve + Envelope */}
         <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] p-5 space-y-4 bg-[var(--bg-canvas)]">
           <div className="flex items-center justify-between text-xs font-tabular-mono">
-            <span className="text-[#8D9FCE] flex items-center gap-1.5">
+            <span className="text-[var(--math-ink-x)] flex items-center gap-1.5">
               <InfinityIcon className="w-3.5 h-3.5" />
               Shaded Partial Integral I = {analysis.partialArea.toFixed(4)}
             </span>
-            <span className="text-[#D35323]">
+            <span className="text-[var(--math-ink-sweep)]">
               {kind === "type-1"
                 ? `Cutoff T = ${cutoffT.toFixed(2)}`
                 : `Singularity Gap ε = ${epsGap.toFixed(3)}`}
@@ -562,7 +563,7 @@ export function ImproperIntegralConvergenceLab() {
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
             {kind === "type-1" ? (
               <>
-                <div className="flex justify-between text-xs font-tabular-mono text-[#D35323]">
+                <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
                   <span>Sweep Upper Tail Limit T → ∞</span>
                   <span>T = {cutoffT.toFixed(2)}</span>
                 </div>
@@ -574,11 +575,12 @@ export function ImproperIntegralConvergenceLab() {
                   value={cutoffT}
                   onChange={(e) => setCutoffT(parseFloat(e.target.value))}
                   className="w-full accent-[#D35323]"
+                  aria-label="Upper tail limit T"
                 />
               </>
             ) : (
               <>
-                <div className="flex justify-between text-xs font-tabular-mono text-[#D35323]">
+                <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
                   <span>Shrink Singularity Gap ε → 0⁺</span>
                   <span>ε = {epsGap.toFixed(3)}</span>
                 </div>
@@ -590,6 +592,7 @@ export function ImproperIntegralConvergenceLab() {
                   value={epsGap}
                   onChange={(e) => setEpsGap(parseFloat(e.target.value))}
                   className="w-full accent-[#D35323]"
+                  aria-label="Singularity gap ε"
                 />
               </>
             )}
@@ -609,13 +612,13 @@ export function ImproperIntegralConvergenceLab() {
         {/* Right: Accumulation Trajectory I(T) or I(ε) */}
         <div className="lg:col-span-5 p-5 space-y-4 bg-[var(--bg-panel)]">
           <div className="flex items-center justify-between text-xs font-tabular-mono">
-            <span className="text-[#96B898] flex items-center gap-1.5">
+            <span className="text-[var(--math-ink-y)] flex items-center gap-1.5">
               <TrendingUp className="w-3.5 h-3.5" />
               {kind === "type-1"
                 ? "Partial Integral Trajectory I(T)"
                 : "Partial Integral I(ε) vs. ε"}
             </span>
-            <span className="text-[#FBEAA4]">
+            <span className="text-[var(--math-ink-diff)]">
               {analysis.likelyConverges
                 ? `Est. Limit ≈ ${analysis.estimatedTotal.toFixed(3)}`
                 : "No Finite Limit"}
@@ -684,20 +687,20 @@ export function ImproperIntegralConvergenceLab() {
           {/* Decision Rule Reference */}
           <div className="grid grid-cols-2 gap-2.5 text-xs font-tabular-mono">
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
-              <span className="text-[#8D9FCE] block text-[10px]">
+              <span className="text-[var(--math-ink-x)] block text-[10px]">
                 TYPE I TAIL (x → ∞)
               </span>
               <KaTeXMath math="\int_1^\infty x^{-p}dx" />
-              <div className="text-[11px] text-[#96B898]">
+              <div className="text-[11px] text-[var(--math-ink-y)]">
                 Converges ⇔ p &gt; 1
               </div>
             </div>
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
-              <span className="text-[#D35323] block text-[10px]">
+              <span className="text-[var(--math-ink-sweep)] block text-[10px]">
                 TYPE II SPIKE (x → 0⁺)
               </span>
               <KaTeXMath math="\int_0^b x^{-p}dx" />
-              <div className="text-[11px] text-[#96B898]">
+              <div className="text-[11px] text-[var(--math-ink-y)]">
                 Converges ⇔ p &lt; 1
               </div>
             </div>

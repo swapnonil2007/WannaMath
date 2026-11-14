@@ -7,8 +7,12 @@ import { RotateCcw } from "lucide-react";
 import {
   createCoordinateAxesAndGrid,
   disposeThreeObject,
-  CoordinateAxesOptions,
+  type CoordinateAxesOptions,
 } from "./threeScenePrimitives";
+import {
+  createDemandDrivenRenderLoop,
+  type DemandDrivenRenderLoopHandle,
+} from "./demandRenderLoop";
 
 export interface ThreeOrbitViewportProps {
   /** Height className, e.g., "h-[380px] sm:h-[430px]" */
@@ -51,6 +55,7 @@ export function ThreeOrbitViewport({
 }: ThreeOrbitViewportProps) {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const dynamicGroupRef = useRef<THREE.Group | null>(null);
+  const renderLoopRef = useRef<DemandDrivenRenderLoopHandle | null>(null);
   const sceneContextRef = useRef<{
     scene: THREE.Scene;
     camera: THREE.PerspectiveCamera;
@@ -102,13 +107,18 @@ export function ThreeOrbitViewport({
     dynamicGroupRef.current = dynamicGroup;
     sceneContextRef.current = { scene, camera, controls };
 
-    let frameId = 0;
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
+    const renderLoop = createDemandDrivenRenderLoop({
+      container,
+      renderer,
+      scene,
+      camera,
+      controls: controls as unknown as {
+        update: () => boolean;
+        addEventListener: (event: string, listener: () => void) => void;
+        removeEventListener: (event: string, listener: () => void) => void;
+      },
+    });
+    renderLoopRef.current = renderLoop;
 
     const handleResize = () => {
       if (!container) return;
@@ -117,11 +127,13 @@ export function ThreeOrbitViewport({
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      renderLoop.requestRender(2);
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
-      cancelAnimationFrame(frameId);
+      renderLoop.dispose();
+      renderLoopRef.current = null;
       window.removeEventListener("resize", handleResize);
       controls.dispose();
       disposeThreeObject(axesGroup);
@@ -145,6 +157,7 @@ export function ThreeOrbitViewport({
     }
 
     onBuildScene(dynamicGroup, ctx);
+    renderLoopRef.current?.requestRender(3);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, sceneDeps);
 
@@ -158,6 +171,7 @@ export function ThreeOrbitViewport({
     );
     ctx.controls.target.set(cameraTarget[0], cameraTarget[1], cameraTarget[2]);
     ctx.controls.update();
+    renderLoopRef.current?.requestRender(4);
   };
 
   return (
@@ -168,7 +182,7 @@ export function ThreeOrbitViewport({
           <span>{titleBadge}</span>
           <span className="text-[#8D9FCE]">x</span>
           <span className="text-[#96B898]">y</span>
-          <span className="text-[#029091]">z</span>
+          <span className="text-[#28B7B8]">z</span>
         </div>
 
         <div className="flex items-center gap-2 pointer-events-auto">

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 type Mat2 = [number, number, number, number]; // [a11, a12, a21, a22]
 
@@ -222,7 +222,7 @@ export function EigenvectorCompassLab() {
       <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+            <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
               Invariant Eigendirection Compass
             </p>
             <p className="mt-1 font-serif text-sm text-[#D6DAE2]">
@@ -307,10 +307,11 @@ export function EigenvectorCompassLab() {
                 setThetaDeg(parseFloat(e.target.value));
               }}
               className="mt-3 w-full accent-[#8D9FCE]"
+              aria-label="Input unit vector angle θ (degrees)"
             />
             <div className="mt-2 flex items-center justify-between font-mono text-[11px] text-[#A2AAB8]">
               <span>|v × Av| = {fmt(state.perpNorm, 3)}</span>
-              <span className={state.isCollinear ? "font-semibold text-[#029091]" : "text-[#D35323]"}>
+              <span className={state.isCollinear ? "font-semibold text-[#28B7B8]" : "text-[#EF7547]"}>
                 {state.isCollinear ? "COLLINEAR (EIGENVECTOR)" : "ROTATED"}
               </span>
             </div>
@@ -320,7 +321,7 @@ export function EigenvectorCompassLab() {
           <div className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
             <span className="font-sans text-xs font-semibold text-[#F6F0D0]">Eigenvalue Classification</span>
             {eigen.kind === "complex" ? (
-              <div className="mt-2 space-y-1 font-mono text-xs text-[#B95869]">
+              <div className="mt-2 space-y-1 font-mono text-xs text-[#DF7E90]">
                 <div>Complex Conjugate Pair (Δ = {fmt(eigen.disc)} &lt; 0):</div>
                 <div className="text-[#FBEAA4]">
                   λ = {fmt(eigen.trace / 2)} ± {fmt(eigen.complexPart)}i
@@ -338,7 +339,7 @@ export function EigenvectorCompassLab() {
                     onClick={() => snapToEigenvector(ev.angle)}
                     className="flex w-full items-center justify-between rounded border border-[#35383F] bg-[#26282C] px-2.5 py-1 text-left font-mono text-xs hover:border-[#029091]"
                   >
-                    <span className="text-[#029091]">Snap λ{i + 1} = {fmt(ev.lambda, 2)}</span>
+                    <span className="text-[#28B7B8]">Snap λ{i + 1} = {fmt(ev.lambda, 2)}</span>
                     <span className="text-[#A2AAB8]">
                       v = [{fmt(ev.vec[0], 2)}, {fmt(ev.vec[1], 2)}]ᵀ
                     </span>
@@ -365,8 +366,8 @@ export function EigenvectorCompassLab() {
             </div>
             <div className="flex gap-2 font-sans text-[11px]">
               <span className="rounded border border-[#8D9FCE]/50 bg-[#1E1F22] px-2 py-0.5 text-[#8D9FCE]">v</span>
-              <span className="rounded border border-[#D35323]/50 bg-[#1E1F22] px-2 py-0.5 text-[#D35323]">Av</span>
-              <span className="rounded border border-[#029091]/50 bg-[#1E1F22] px-2 py-0.5 text-[#029091]">
+              <span className="rounded border border-[#D35323]/50 bg-[#1E1F22] px-2 py-0.5 text-[#EF7547]">Av</span>
+              <span className="rounded border border-[#029091]/50 bg-[#1E1F22] px-2 py-0.5 text-[#28B7B8]">
                 Eigenrays
               </span>
             </div>
@@ -479,7 +480,12 @@ export function EigenvectorCompassLab() {
               />
             </div>
 
-            <svg viewBox="0 0 460 230" className="mt-3 w-full rounded-lg border border-[#35383F] bg-[#1E1F22]">
+            <svg
+              role="img"
+              aria-label="Characteristic polynomial p(lambda) parabola plot with real eigenvalue roots and interactive Rayleigh quotient marker"
+              viewBox="0 0 460 230"
+              className="mt-3 w-full rounded-lg border border-[#35383F] bg-[#1E1F22]"
+            >
               {(() => {
                 const pad = 34;
                 const w = 460 - 2 * pad;
@@ -529,7 +535,7 @@ export function EigenvectorCompassLab() {
                             x={sx(lam)}
                             y={zeroY - 11}
                             textAnchor="middle"
-                            fill="#029091"
+                            fill="#28B7B8"
                             fontSize="11"
                             fontFamily="monospace"
                           >
@@ -556,7 +562,7 @@ export function EigenvectorCompassLab() {
               </div>
               <div>
                 <span className="text-[#A2AAB8] block">Output Stretch ‖Av‖₂</span>
-                <span className="text-base font-semibold text-[#D35323]">{fmt(state.normAv, 3)}</span>
+                <span className="text-base font-semibold text-[#EF7547]">{fmt(state.normAv, 3)}</span>
               </div>
               <div>
                 <span className="text-[#A2AAB8] block">Trace = λ₁ + λ₂</span>

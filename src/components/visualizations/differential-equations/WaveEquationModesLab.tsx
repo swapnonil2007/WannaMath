@@ -268,7 +268,7 @@ export function WaveEquationModesLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#029091] text-[#029091] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-z)] text-[var(--math-ink-z)] bg-[var(--bg-canvas)]">
               LAB 4.4.2 • WAVE EQUATION, D&apos;ALEMBERT &amp; CHLADNI MODES
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -291,7 +291,7 @@ export function WaveEquationModesLab() {
             onClick={() => setTab("1d-string")}
             className={`px-3 py-1.5 text-xs font-tabular-mono transition-colors ${
               tab === "1d-string"
-                ? "bg-[#029091] text-[#1E1F22] font-semibold"
+                ? "bg-[#016869] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -302,7 +302,7 @@ export function WaveEquationModesLab() {
             onClick={() => setTab("2d-membrane")}
             className={`px-3 py-1.5 text-xs font-tabular-mono border-l border-[var(--border-subtle)] transition-colors ${
               tab === "2d-membrane"
-                ? "bg-[#D35323] text-[#1E1F22] font-semibold"
+                ? "bg-[#9E360E] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -330,7 +330,7 @@ export function WaveEquationModesLab() {
                       }}
                       className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                         active
-                          ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
+                          ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
                           : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                       }`}
                     >
@@ -346,7 +346,7 @@ export function WaveEquationModesLab() {
                   }}
                   className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                     isCustom
-                      ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
+                      ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
                       : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                   }`}
                 >
@@ -364,7 +364,7 @@ export function WaveEquationModesLab() {
                     onClick={() => selectMembranePreset(p)}
                     className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                       active
-                        ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
+                        ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
                         : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                     }`}
                   >
@@ -390,7 +390,7 @@ export function WaveEquationModesLab() {
             <button
               type="button"
               onClick={() => setIsPlaying((p) => !p)}
-              className="px-3 py-1 text-xs font-tabular-mono border border-[#029091] bg-[#029091]/15 text-[#029091] font-semibold flex items-center gap-1.5"
+              className="px-3 py-1 text-xs font-tabular-mono border border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--math-ink-z)] font-semibold flex items-center gap-1.5"
             >
               {isPlaying ? (
                 <>
@@ -430,7 +430,7 @@ export function WaveEquationModesLab() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
             <label className="block space-y-1.5">
               <div className="flex justify-between text-xs font-tabular-mono">
-                <span className="text-[#D35323]">Time t (Period = {(2 / waveSpeed).toFixed(2)}s)</span>
+                <span className="text-[var(--math-ink-sweep)]">Time t (Period = {(2 / waveSpeed).toFixed(2)}s)</span>
                 <span className="text-[var(--text-primary)] font-semibold">
                   {timeT.toFixed(3)} s
                 </span>
@@ -451,7 +451,7 @@ export function WaveEquationModesLab() {
 
             <label className="block space-y-1.5">
               <div className="flex justify-between text-xs font-tabular-mono">
-                <span className="text-[#029091]">Wave Propagation Speed c</span>
+                <span className="text-[var(--math-ink-z)]">Wave Propagation Speed c</span>
                 <span className="text-[var(--text-primary)] font-semibold">
                   {waveSpeed.toFixed(2)} m/s
                 </span>
@@ -470,7 +470,7 @@ export function WaveEquationModesLab() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-1">
             <label className="block space-y-1">
-              <span className="text-[11px] font-tabular-mono text-[#8D9FCE] block">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-x)] block">
                 Mode (m₁, n₁): m₁ = {m1}
               </span>
               <input
@@ -484,7 +484,7 @@ export function WaveEquationModesLab() {
               />
             </label>
             <label className="block space-y-1">
-              <span className="text-[11px] font-tabular-mono text-[#96B898] block">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-y)] block">
                 n₁ = {n1}
               </span>
               <input
@@ -498,7 +498,7 @@ export function WaveEquationModesLab() {
               />
             </label>
             <label className="block space-y-1">
-              <span className="text-[11px] font-tabular-mono text-[#D35323] block">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)] block">
                 Mix Weight β = {beta.toFixed(2)}
               </span>
               <input
@@ -512,7 +512,7 @@ export function WaveEquationModesLab() {
               />
             </label>
             <label className="block space-y-1">
-              <span className="text-[11px] font-tabular-mono text-[#FBEAA4] block">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)] block">
                 Mode 2 (m₂={m2}, n₂={n2})
               </span>
               <div className="flex gap-1">
@@ -535,7 +535,7 @@ export function WaveEquationModesLab() {
               </div>
             </label>
             <label className="block space-y-1">
-              <span className="text-[11px] font-tabular-mono text-[#029091] block">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-z)] block">
                 Time t = {timeT.toFixed(2)} s
               </span>
               <input
@@ -562,10 +562,10 @@ export function WaveEquationModesLab() {
           <div className="lg:col-span-6 border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] p-5 space-y-4 bg-[var(--bg-canvas)]">
             <div className="flex items-center justify-between">
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Waves className="w-3.5 h-3.5 text-[#029091]" aria-hidden="true" />
+                <Waves className="w-3.5 h-3.5 text-[var(--math-ink-z)]" aria-hidden="true" />
                 Live String Displacement &amp; Characteristic Pulses
               </span>
-              <span className="text-[11px] font-tabular-mono text-[#D35323]">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)]">
                 Pinned: u(0,t) = u(1,t) = 0
               </span>
             </div>
@@ -642,9 +642,9 @@ export function WaveEquationModesLab() {
               titleBadge="3D Space–Time Wave Sheet u(x, t) Showing Characteristic Diamonds"
               footerSlot={
                 <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                  <span className="text-[#8D9FCE]">Right Pulse: x − ct</span>
-                  <span className="text-[#96B898]">Left Pulse: x + ct</span>
-                  <span className="text-[#FBEAA4] font-semibold">t = {timeT.toFixed(3)} s</span>
+                  <span className="text-[var(--math-ink-x)]">Right Pulse: x − ct</span>
+                  <span className="text-[var(--math-ink-y)]">Left Pulse: x + ct</span>
+                  <span className="text-[var(--math-ink-diff)] font-semibold">t = {timeT.toFixed(3)} s</span>
                 </div>
               }
               sceneDeps={[baseFn, waveSpeed, timeT]}
@@ -704,13 +704,13 @@ export function WaveEquationModesLab() {
               titleBadge={`3D Rectangular Membrane u(x,y,t) • Modes (${m1},${n1}) + β(${m2},${n2})`}
               footerSlot={
                 <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                  <span className="text-[#8D9FCE]">
+                  <span className="text-[var(--math-ink-x)]">
                     ω₁ = {membraneData.omega1.toFixed(2)} rad/s
                   </span>
-                  <span className="text-[#FBEAA4]">
+                  <span className="text-[var(--math-ink-diff)]">
                     Chladni Nodal Curves (u = 0)
                   </span>
-                  <span className="text-[#D35323] font-semibold">
+                  <span className="text-[var(--math-ink-sweep)] font-semibold">
                     t = {timeT.toFixed(3)} s
                   </span>
                 </div>
@@ -787,7 +787,7 @@ export function WaveEquationModesLab() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                  <Grid className="w-3.5 h-3.5 text-[#FBEAA4]" aria-hidden="true" />
+                  <Grid className="w-3.5 h-3.5 text-[var(--math-ink-diff)]" aria-hidden="true" />
                   Top-Down Chladni Sand Pattern (u = 0 Nodes)
                 </span>
                 <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -841,7 +841,7 @@ export function WaveEquationModesLab() {
             </div>
 
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#FBEAA4] block">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-diff)] block">
                 Eigenfrequency Degeneracy &amp; Nodal Geometry
               </span>
               <p className="font-math-serif text-xs text-[var(--text-secondary)] leading-relaxed">

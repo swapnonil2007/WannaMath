@@ -1,4 +1,52 @@
-import { parse, EvalFunction } from "mathjs";
+import {
+  create,
+  parseDependencies,
+  addDependencies,
+  subtractDependencies,
+  multiplyDependencies,
+  divideDependencies,
+  powDependencies,
+  unaryMinusDependencies,
+  unaryPlusDependencies,
+  modDependencies,
+  smallerDependencies,
+  smallerEqDependencies,
+  largerDependencies,
+  largerEqDependencies,
+  equalDependencies,
+  unequalDependencies,
+  andDependencies,
+  orDependencies,
+  notDependencies,
+  xorDependencies,
+  factorialDependencies,
+  type EvalFunction,
+} from "mathjs/number";
+
+const math = create({
+  parseDependencies,
+  addDependencies,
+  subtractDependencies,
+  multiplyDependencies,
+  divideDependencies,
+  powDependencies,
+  unaryMinusDependencies,
+  unaryPlusDependencies,
+  modDependencies,
+  smallerDependencies,
+  smallerEqDependencies,
+  largerDependencies,
+  largerEqDependencies,
+  equalDependencies,
+  unequalDependencies,
+  andDependencies,
+  orDependencies,
+  notDependencies,
+  xorDependencies,
+  factorialDependencies,
+});
+
+const parse = math.parse;
 
 export interface CompiledMathExpression {
   raw: string;

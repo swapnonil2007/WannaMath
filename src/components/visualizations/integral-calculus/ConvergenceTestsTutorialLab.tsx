@@ -3,7 +3,8 @@
 import React, { useState, useMemo } from "react";
 import { BookOpen, CheckCircle2, AlertTriangle, HelpCircle } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 type TestId =
   | "nth-term"
@@ -279,7 +280,7 @@ export function ConvergenceTestsTutorialLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 space-y-3 bg-[var(--bg-elevated)]">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="space-y-1">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#FBEAA4] text-[#FBEAA4] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[var(--bg-canvas)]">
               LAB 3.2.5B • CONVERGENCE TEST TUTORIALS &amp; SEQUENCE VISUALIZER
             </span>
             <h2 className="font-math-serif text-xl sm:text-2xl font-semibold text-[var(--text-primary)]">
@@ -290,10 +291,10 @@ export function ConvergenceTestsTutorialLab() {
           <span
             className={`px-3 py-1 text-xs font-tabular-mono border inline-flex items-center gap-1.5 ${
               seriesData.verdict === "converges"
-                ? "border-[#96B898] text-[#96B898] bg-[#96B898]/15"
+                ? "border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/15"
                 : seriesData.verdict === "diverges"
-                ? "border-[#D35323] text-[#D35323] bg-[#D35323]/15"
-                : "border-[#FBEAA4] text-[#FBEAA4] bg-[#FBEAA4]/15"
+                ? "border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[#D35323]/15"
+                : "border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[#FBEAA4]/15"
             }`}
           >
             {seriesData.verdict === "converges" ? (
@@ -318,7 +319,11 @@ export function ConvergenceTestsTutorialLab() {
                     ? "bg-[var(--bg-canvas)] text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
-                style={active ? { borderColor: spec.accentHex } : undefined}
+                style={
+                  active
+                    ? { borderColor: getAdaptiveAccentInk(spec.accentHex) }
+                    : undefined
+                }
               >
                 {spec.shortName}
               </button>
@@ -332,7 +337,10 @@ export function ConvergenceTestsTutorialLab() {
         {/* Left: Detailed Tutorial & Worked Proof */}
         <div className="lg:col-span-6 border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] p-6 space-y-5 bg-[var(--bg-canvas)]">
           <div className="space-y-1.5">
-            <div className="flex items-center gap-2 text-xs font-tabular-mono" style={{ color: activeSpec.accentHex }}>
+            <div
+              className="flex items-center gap-2 text-xs font-tabular-mono"
+              style={{ color: getAdaptiveAccentInk(activeSpec.accentHex) }}
+            >
               <BookOpen className="w-3.5 h-3.5" />
               <span>STEP-BY-STEP TEST TUTORIAL</span>
             </div>
@@ -355,7 +363,7 @@ export function ConvergenceTestsTutorialLab() {
               </div>
             </div>
             <div className="pt-2 border-t border-[var(--border-subtle)]">
-              <span className="text-[10px] font-tabular-mono uppercase tracking-wider text-[#96B898] block mb-1">
+              <span className="text-[10px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block mb-1">
                 CONCLUSION RULE
               </span>
               <div className="overflow-x-auto">
@@ -366,7 +374,7 @@ export function ConvergenceTestsTutorialLab() {
 
           {/* Worked Example */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2.5">
-            <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] block">
+            <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
               {activeSpec.workedExampleTitle}
             </span>
             <div className="space-y-2 overflow-x-auto">
@@ -379,8 +387,8 @@ export function ConvergenceTestsTutorialLab() {
           </div>
 
           {/* Pitfall / Common Mistake Callout */}
-          <div className="p-3.5 border border-[#D35323]/60 bg-[#D35323]/10 flex items-start gap-2.5">
-            <HelpCircle className="w-4 h-4 text-[#D35323] shrink-0 mt-0.5" />
+          <div className="p-3.5 border border-[var(--math-ink-sweep)]/60 bg-[#D35323]/10 flex items-start gap-2.5">
+            <HelpCircle className="w-4 h-4 text-[var(--math-ink-sweep)] shrink-0 mt-0.5" />
             <p className="font-math-serif text-xs text-[var(--text-primary)] leading-relaxed">
               {activeSpec.pitfallWarning}
             </p>
@@ -390,10 +398,10 @@ export function ConvergenceTestsTutorialLab() {
         {/* Right: Interactive Sequence & Partial-Sum Visualizer */}
         <div className="lg:col-span-6 p-6 space-y-4 bg-[var(--bg-panel)]">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-            <span className="text-[#8D9FCE]">
+            <span className="text-[var(--math-ink-x)]">
               Bars = Terms <KaTeXMath math="a_n" /> • Step Curve = Partial Sums <KaTeXMath math="S_N" />
             </span>
-            <span className="text-[#FBEAA4] font-semibold">
+            <span className="text-[var(--math-ink-diff)] font-semibold">
               S_{maxN} = {seriesData.lastSum.toFixed(4)}
             </span>
           </div>
@@ -482,7 +490,7 @@ export function ConvergenceTestsTutorialLab() {
           {/* Parameter & Horizon Sliders */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="space-y-1">
-              <div className="flex justify-between text-xs font-tabular-mono text-[#FBEAA4]">
+              <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-diff)]">
                 <span>{activeSpec.paramLabel}</span>
                 <span>{paramVal.toFixed(2)}</span>
               </div>
@@ -494,11 +502,12 @@ export function ConvergenceTestsTutorialLab() {
                 value={paramVal}
                 onChange={(e) => setParamVal(parseFloat(e.target.value))}
                 className="w-full accent-[#FBEAA4]"
+                aria-label={activeSpec.paramLabel}
               />
             </div>
 
             <div className="space-y-1 pt-2 border-t border-[var(--border-subtle)]">
-              <div className="flex justify-between text-xs font-tabular-mono text-[#8D9FCE]">
+              <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-x)]">
                 <span>Number of Partial Sum Terms N</span>
                 <span>N = {maxN}</span>
               </div>
@@ -510,6 +519,7 @@ export function ConvergenceTestsTutorialLab() {
                 value={maxN}
                 onChange={(e) => setMaxN(parseInt(e.target.value, 10))}
                 className="w-full accent-[#8D9FCE]"
+                aria-label="Number of partial sum terms N"
               />
             </div>
           </div>
@@ -519,7 +529,7 @@ export function ConvergenceTestsTutorialLab() {
             <span className="text-[var(--text-secondary)]">
               {activeSpec.metricLabel(maxN, paramVal)}
             </span>
-            <span className="text-[#96B898]">
+            <span className="text-[var(--math-ink-y)]">
               Final Term a_{maxN} = {seriesData.terms[seriesData.terms.length - 1]?.a.toFixed(4)}
             </span>
           </div>

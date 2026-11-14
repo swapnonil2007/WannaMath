@@ -15,6 +15,10 @@ import {
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
+import {
+  createDemandDrivenRenderLoop,
+  type DemandDrivenRenderLoopHandle,
+} from "@/components/visualizations/primitives";
 
 type CoordSystem = "cartesian" | "cylindrical" | "spherical";
 
@@ -113,6 +117,7 @@ const REGION_PRESETS: CurvilinearRegionPreset[] = [
 
 export function Curvilinear3DSurfacesAndElementLab() {
   const mountRef = useRef<HTMLDivElement | null>(null);
+  const renderLoopRef = useRef<DemandDrivenRenderLoopHandle | null>(null);
   const sceneRefs = useRef<{
     surfacesGroup: THREE.Group;
     wedgeGroup: THREE.Group;
@@ -505,13 +510,15 @@ export function Curvilinear3DSurfacesAndElementLab() {
       controls,
     };
 
-    let frameId: number;
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
+    const renderLoop = createDemandDrivenRenderLoop({
+      container,
+      renderer,
+      scene,
+      camera,
+      controls,
+    });
+    renderLoopRef.current = renderLoop;
+    renderLoop.requestRender(3);
 
     const handleResize = () => {
       if (!container) return;
@@ -520,12 +527,15 @@ export function Curvilinear3DSurfacesAndElementLab() {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      renderLoop.requestRender(2);
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(frameId);
+      renderLoop.dispose();
+      renderLoopRef.current = null;
+      controls.dispose();
       renderer.dispose();
     };
   }, []);
@@ -547,6 +557,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
       camera.position.set(2.65, 2.15, 2.65);
     }
     controls.update();
+    renderLoopRef.current?.requestRender(6);
   }, [zoomToWedge, coords.x, coords.y, coords.z]);
 
   // Rebuild 3D Intersecting Coordinate Surfaces, dV Wedge, and Local Orthonormal Basis Triad
@@ -901,6 +912,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
       addBasisArrow(e2, 0xd5658b);
       addBasisArrow(e3, 0x96b898);
     }
+    renderLoopRef.current?.requestRender(2);
   }, [
     system,
     coords,
@@ -1010,6 +1022,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
         )
       );
     }
+    renderLoopRef.current?.requestRender(2);
   }, [
     showCustomSolid,
     outerRange,
@@ -1039,7 +1052,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
       {/* Header & 3-System Selector */}
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#029091]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)]">
             <Layers className="w-4 h-4" aria-hidden="true" />
             <span>
               Interactive Laboratory 03.2 – 03.3 • 3D Coordinate Surfaces, Basis
@@ -1097,7 +1110,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <span className="text-xs font-tabular-mono font-semibold block">
                   {sys.label}
                 </span>
-                <span className="text-[10px] font-tabular-mono text-[#FBEAA4] block">
+                <span className="text-[10px] font-tabular-mono text-[var(--math-ink-diff)] block">
                   {sys.sub}
                 </span>
               </button>
@@ -1111,11 +1124,11 @@ export function Curvilinear3DSurfacesAndElementLab() {
         <div
           className={`p-3 border font-tabular-mono text-xs ${
             system === "cartesian"
-              ? "border-[#8D9FCE] bg-[var(--bg-panel-elevated)]"
+              ? "border-[var(--math-ink-x)] bg-[var(--bg-panel-elevated)]"
               : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]"
           }`}
         >
-          <span className="text-[10px] uppercase text-[#8D9FCE] block">
+          <span className="text-[10px] uppercase text-[var(--math-ink-x)] block">
             Cartesian Coordinates (x, y, z)
           </span>
           <span className="text-sm font-semibold text-[var(--text-primary)]">
@@ -1126,11 +1139,11 @@ export function Curvilinear3DSurfacesAndElementLab() {
         <div
           className={`p-3 border font-tabular-mono text-xs ${
             system === "cylindrical"
-              ? "border-[#96B898] bg-[var(--bg-panel-elevated)]"
+              ? "border-[var(--math-ink-y)] bg-[var(--bg-panel-elevated)]"
               : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]"
           }`}
         >
-          <span className="text-[10px] uppercase text-[#96B898] block">
+          <span className="text-[10px] uppercase text-[var(--math-ink-y)] block">
             Cylindrical Coordinates (r, θ, z)
           </span>
           <span className="text-sm font-semibold text-[var(--text-primary)]">
@@ -1142,11 +1155,11 @@ export function Curvilinear3DSurfacesAndElementLab() {
         <div
           className={`p-3 border font-tabular-mono text-xs ${
             system === "spherical"
-              ? "border-[#D5658B] bg-[var(--bg-panel-elevated)]"
+              ? "border-[var(--math-ink-lower)] bg-[var(--bg-panel-elevated)]"
               : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]"
           }`}
         >
-          <span className="text-[10px] uppercase text-[#D5658B] block">
+          <span className="text-[10px] uppercase text-[var(--math-ink-lower)] block">
             Spherical Coordinates (ρ, φ, θ)
           </span>
           <span className="text-sm font-semibold text-[var(--text-primary)]">
@@ -1167,7 +1180,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
               onClick={() => setZoomToWedge((z) => !z)}
               className={`px-2.5 py-1 border text-[11px] flex items-center gap-1.5 cursor-pointer ${
                 zoomToWedge
-                  ? "border-[#FBEAA4] bg-[#D35323] text-[#FFFBE4]"
+                  ? "border-[#FBEAA4] bg-[#9E360E] text-[#FFFBE4]"
                   : "border-[#383B43] bg-[#1E1F22] text-[#FBEAA4]"
               }`}
             >
@@ -1197,7 +1210,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
               </span>
             </label>
 
-            <label className="flex items-center gap-1.5 cursor-pointer text-[#D5658B]">
+            <label className="flex items-center gap-1.5 cursor-pointer text-[#E37CA0]">
               <input
                 type="checkbox"
                 checked={showSurf2}
@@ -1212,7 +1225,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
               </span>
             </label>
 
-            <label className="flex items-center gap-1.5 cursor-pointer text-[#029091]">
+            <label className="flex items-center gap-1.5 cursor-pointer text-[#28B7B8]">
               <input
                 type="checkbox"
                 checked={showSurf3}
@@ -1282,7 +1295,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <div>
                   <label
                     htmlFor="coord-x"
-                    className="text-xs font-tabular-mono text-[#8D9FCE] block"
+                    className="text-xs font-tabular-mono text-[var(--math-ink-x)] block"
                   >
                     x₀ = {coords.x.toFixed(2)} (Plane x = const)
                   </label>
@@ -1300,7 +1313,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <div>
                   <label
                     htmlFor="coord-y"
-                    className="text-xs font-tabular-mono text-[#96B898] block"
+                    className="text-xs font-tabular-mono text-[var(--math-ink-y)] block"
                   >
                     y₀ = {coords.y.toFixed(2)} (Plane y = const)
                   </label>
@@ -1318,7 +1331,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <div>
                   <label
                     htmlFor="coord-z"
-                    className="text-xs font-tabular-mono text-[#029091] block"
+                    className="text-xs font-tabular-mono text-[var(--math-ink-z)] block"
                   >
                     z₀ = {coords.z.toFixed(2)} (Plane z = const)
                   </label>
@@ -1341,7 +1354,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <div>
                   <label
                     htmlFor="cyl-r"
-                    className="text-xs font-tabular-mono text-[#8D9FCE] block"
+                    className="text-xs font-tabular-mono text-[var(--math-ink-x)] block"
                   >
                     Radial Distance r₀ = {coords.r.toFixed(2)} (Cylinder r = const)
                   </label>
@@ -1365,7 +1378,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <div>
                   <label
                     htmlFor="cyl-theta"
-                    className="text-xs font-tabular-mono text-[#96B898] block"
+                    className="text-xs font-tabular-mono text-[var(--math-ink-y)] block"
                   >
                     Azimuthal Angle θ₀ = {coords.thetaDeg.toFixed(1)}° (Half-Plane θ = const)
                   </label>
@@ -1389,7 +1402,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <div>
                   <label
                     htmlFor="cyl-z"
-                    className="text-xs font-tabular-mono text-[#029091] block"
+                    className="text-xs font-tabular-mono text-[var(--math-ink-z)] block"
                   >
                     Height z₀ = {coords.z.toFixed(2)} (Plane z = const)
                   </label>
@@ -1418,7 +1431,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <div>
                   <label
                     htmlFor="sph-rho"
-                    className="text-xs font-tabular-mono text-[#8D9FCE] block"
+                    className="text-xs font-tabular-mono text-[var(--math-ink-x)] block"
                   >
                     Spherical Radius ρ₀ = {coords.rho.toFixed(2)} (Sphere ρ = const)
                   </label>
@@ -1442,7 +1455,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <div>
                   <label
                     htmlFor="sph-phi"
-                    className="text-xs font-tabular-mono text-[#D5658B] block"
+                    className="text-xs font-tabular-mono text-[var(--math-ink-lower)] block"
                   >
                     Polar Zenith Angle φ₀ = {coords.phiDeg.toFixed(1)}° from +z (Cone φ = const)
                   </label>
@@ -1466,7 +1479,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 <div>
                   <label
                     htmlFor="sph-theta"
-                    className="text-xs font-tabular-mono text-[#96B898] block"
+                    className="text-xs font-tabular-mono text-[var(--math-ink-y)] block"
                   >
                     Azimuthal Angle θ₀ = {coords.thetaDeg.toFixed(1)}° in xy-plane (Half-Plane)
                   </label>
@@ -1494,18 +1507,18 @@ export function Curvilinear3DSurfacesAndElementLab() {
           {/* 3D Differential Volume Element dV Edge-Length Breakdown */}
           <div className="border border-[var(--border-strong)] bg-[var(--bg-canvas)] p-3.5 space-y-2.5">
             <div className="flex items-center justify-between text-xs font-tabular-mono">
-              <span className="flex items-center gap-1.5 text-[#FBEAA4] font-semibold">
-                <Box className="w-3.5 h-3.5 text-[#D35323]" aria-hidden="true" />
+              <span className="flex items-center gap-1.5 text-[var(--math-ink-diff)] font-semibold">
+                <Box className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" aria-hidden="true" />
                 <span>3D Volume Element dV Edge Magnifier</span>
               </span>
-              <span className="text-[#D35323]">
+              <span className="text-[var(--math-ink-sweep)]">
                 |J| = {coords.jacobianVal.toFixed(3)}
               </span>
             </div>
 
             <div className="grid grid-cols-3 gap-2 font-tabular-mono text-xs text-center">
               <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-                <span className="text-[10px] text-[#8D9FCE] block">
+                <span className="text-[10px] text-[var(--math-ink-x)] block">
                   Edge 1 ({coords.edge1Label})
                 </span>
                 <span className="font-semibold text-[var(--text-primary)]">
@@ -1513,7 +1526,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 </span>
               </div>
               <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-                <span className="text-[10px] text-[#D5658B] block">
+                <span className="text-[10px] text-[var(--math-ink-lower)] block">
                   Edge 2 ({coords.edge2Label})
                 </span>
                 <span className="font-semibold text-[var(--text-primary)]">
@@ -1521,7 +1534,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                 </span>
               </div>
               <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-                <span className="text-[10px] text-[#96B898] block">
+                <span className="text-[10px] text-[var(--math-ink-y)] block">
                   Edge 3 ({coords.edge3Label})
                 </span>
                 <span className="font-semibold text-[var(--text-primary)]">
@@ -1562,7 +1575,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
               <div>
                 <label
                   htmlFor="wedge-dq1"
-                  className="text-[10px] font-tabular-mono text-[#8D9FCE] block"
+                  className="text-[10px] font-tabular-mono text-[var(--math-ink-x)] block"
                 >
                   {system === "cartesian"
                     ? "Δx"
@@ -1585,7 +1598,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
               <div>
                 <label
                   htmlFor="wedge-dq2"
-                  className="text-[10px] font-tabular-mono text-[#D5658B] block"
+                  className="text-[10px] font-tabular-mono text-[var(--math-ink-lower)] block"
                 >
                   {system === "cartesian"
                     ? "Δy"
@@ -1608,7 +1621,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
               <div>
                 <label
                   htmlFor="wedge-dq3"
-                  className="text-[10px] font-tabular-mono text-[#96B898] block"
+                  className="text-[10px] font-tabular-mono text-[var(--math-ink-y)] block"
                 >
                   {system === "cartesian"
                     ? "Δz"
@@ -1637,7 +1650,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
       <div className="border border-[var(--border-strong)] bg-[var(--bg-canvas)] p-4 sm:p-5 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] font-semibold block">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] font-semibold block">
               Custom 3D Curvilinear Region &amp; Triple Integral Evaluator
             </span>
             <p className="text-xs font-math-serif text-[var(--text-secondary)]">
@@ -1655,7 +1668,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
             </p>
           </div>
 
-          <label className="flex items-center gap-1.5 text-xs font-tabular-mono text-[#029091] cursor-pointer">
+          <label className="flex items-center gap-1.5 text-xs font-tabular-mono text-[var(--math-ink-z)] cursor-pointer">
             <input
               type="checkbox"
               checked={showCustomSolid}
@@ -1681,7 +1694,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
-                <span className="text-[10px] font-tabular-mono uppercase px-1.5 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[#FBEAA4] w-fit">
+                <span className="text-[10px] font-tabular-mono uppercase px-1.5 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--math-ink-diff)] w-fit">
                   {p.badge}
                 </span>
                 <span className="font-math-serif text-xs font-semibold">
@@ -1796,7 +1809,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
             <span className="uppercase text-[var(--text-muted)]">
               Evaluated Curvilinear Triple Integral (with Volume Scaling Factor)
             </span>
-            <span className="text-[#FBEAA4]">
+            <span className="text-[var(--math-ink-diff)]">
               ∭ f dV ≈ {evaluatedIntegral.toFixed(4)}
             </span>
           </div>
@@ -1815,7 +1828,7 @@ export function Curvilinear3DSurfacesAndElementLab() {
         >
           <summary className="px-4 py-3 text-sm font-math-serif font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-panel-elevated)]">
             <ChevronDown
-              className="w-4 h-4 text-[#029091] shrink-0"
+              className="w-4 h-4 text-[var(--math-ink-z)] shrink-0"
               aria-hidden="true"
             />
             <span>
@@ -1831,14 +1844,14 @@ export function Curvilinear3DSurfacesAndElementLab() {
               <KaTeXMath math="\hat{\mathbf{e}}_\rho, \hat{\mathbf{e}}_\phi, \hat{\mathbf{e}}_\theta" />:
             </p>
             <ul className="space-y-1 text-xs font-tabular-mono">
-              <li className="text-[#8D9FCE]">
+              <li className="text-[var(--math-ink-x)]">
                 1. Radial edge along ê_ρ: pure radial step of length dρ.
               </li>
-              <li className="text-[#D5658B]">
+              <li className="text-[var(--math-ink-lower)]">
                 2. Meridional arc along ê_φ: on a sphere of radius ρ, tilting the
                 zenith angle by dφ sweeps an arc of length ρ dφ.
               </li>
-              <li className="text-[#96B898]">
+              <li className="text-[var(--math-ink-y)]">
                 3. Horizontal latitude arc along ê_θ: at zenith angle φ, the
                 distance to the z-axis is r = ρ sin(φ), so rotating by dθ sweeps
                 an arc of length r dθ = ρ sin(φ) dθ.

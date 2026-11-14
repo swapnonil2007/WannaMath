@@ -543,7 +543,7 @@ export function GradientAscentAndLevelSurfaceLab() {
       {/* Lab Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
             Laboratory 3.1.3.2 • Gradient Flow, Contour Orthogonality &amp; 3D Surface Normals
           </span>
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -562,11 +562,11 @@ export function GradientAscentAndLevelSurfaceLab() {
             onClick={() => setMode("2d-flow")}
             className={`px-3 py-2 text-xs font-tabular-mono border transition-colors flex items-center gap-1.5 ${
               mode === "2d-flow"
-                ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
+                ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             }`}
           >
-            <TrendingUp className="w-3.5 h-3.5 text-[#D35323]" />
+            <TrendingUp className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
             <span>2D Gradient Flow &amp; Slope Rose</span>
           </button>
           <button
@@ -574,11 +574,11 @@ export function GradientAscentAndLevelSurfaceLab() {
             onClick={() => setMode("3d-normal")}
             className={`px-3 py-2 text-xs font-tabular-mono border transition-colors flex items-center gap-1.5 ${
               mode === "3d-normal"
-                ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
+                ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             }`}
           >
-            <Layers className="w-3.5 h-3.5 text-[#029091]" />
+            <Layers className="w-3.5 h-3.5 text-[var(--math-ink-z)]" />
             <span>3D Level Surface Normal ∇F</span>
           </button>
         </div>
@@ -597,12 +597,12 @@ export function GradientAscentAndLevelSurfaceLab() {
                   onClick={() => handleSelect2dPreset(p)}
                   className={`p-3 border text-left transition-colors ${
                     selected
-                      ? "border-[#D35323] bg-[var(--bg-canvas)]"
+                      ? "border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]"
                       : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2 mb-1">
-                    <span className="text-[11px] font-tabular-mono text-[#D35323] font-semibold">
+                    <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)] font-semibold">
                       {p.badge}
                     </span>
                   </div>
@@ -631,7 +631,7 @@ export function GradientAscentAndLevelSurfaceLab() {
             <div className="lg:col-span-6 p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
               <div className="flex items-center justify-between text-[11px] font-tabular-mono text-[var(--text-muted)]">
                 <span>SYMBOLIC GRADIENT &amp; GEOMETRY</span>
-                <span className="text-[#FBEAA4]">
+                <span className="text-[var(--math-ink-diff)]">
                   {isCustom2d ? "Custom Potential" : activePreset2d.badge}
                 </span>
               </div>
@@ -654,13 +654,13 @@ export function GradientAscentAndLevelSurfaceLab() {
             <div className="lg:col-span-7 space-y-3">
               <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
                 <span className="flex items-center gap-1.5">
-                  <Crosshair className="w-3.5 h-3.5 text-[#D35323]" />
+                  <Crosshair className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
                   <span>
                     Click map to place seed (x₀, y₀) = ({safeX0.toFixed(2)},{" "}
                     {safeY0.toFixed(2)})
                   </span>
                 </span>
-                <span className="text-[#96B898]">90° Contour Crossing</span>
+                <span className="text-[var(--math-ink-y)]">90° Contour Crossing</span>
               </div>
 
               <SvgCoordinatePlane2D
@@ -870,7 +870,7 @@ export function GradientAscentAndLevelSurfaceLab() {
               {/* Polar Slope Rose SVG */}
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
                 <div className="flex items-center justify-between text-xs font-tabular-mono">
-                  <span className="text-[#FBEAA4] font-semibold">
+                  <span className="text-[var(--math-ink-diff)] font-semibold">
                     360° POLAR SLOPE ROSE: D_u f(α) = ‖∇f‖ cos θ
                   </span>
                   <span className="text-[var(--text-muted)]">
@@ -963,7 +963,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                       <text
                         x={12}
                         y={20}
-                        fill="#D35323"
+                        fill="var(--math-ink-sweep)"
                         fontSize="10"
                         fontFamily="monospace"
                       >
@@ -972,7 +972,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                       <text
                         x={12}
                         y={34}
-                        fill="#8D9FCE"
+                        fill="var(--math-ink-x)"
                         fontSize="10"
                         fontFamily="monospace"
                       >
@@ -996,7 +996,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                     onClick={() => setFlowSign("ascent")}
                     className={`py-1.5 px-2 text-xs font-tabular-mono border ${
                       flowSign === "ascent"
-                        ? "border-[#D35323] bg-[#D35323]/15 text-[#D35323] font-semibold"
+                        ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--math-ink-sweep)] font-semibold"
                         : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-muted)]"
                     }`}
                   >
@@ -1007,7 +1007,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                     onClick={() => setFlowSign("descent")}
                     className={`py-1.5 px-2 text-xs font-tabular-mono border ${
                       flowSign === "descent"
-                        ? "border-[#96B898] bg-[#96B898]/15 text-[#96B898] font-semibold"
+                        ? "border-[var(--math-ink-y)] bg-[#96B898]/15 text-[var(--math-ink-y)] font-semibold"
                         : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-muted)]"
                     }`}
                   >
@@ -1016,7 +1016,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                 </div>
 
                 <div className="space-y-1">
-                  <div className="flex justify-between text-xs font-tabular-mono text-[#D5658B]">
+                  <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-lower)]">
                     <span>Discrete Step Size η (xₙ₊₁ = xₙ ± η∇f)</span>
                     <span>{stepSizeEta.toFixed(2)}</span>
                   </div>
@@ -1028,11 +1028,12 @@ export function GradientAscentAndLevelSurfaceLab() {
                     value={stepSizeEta}
                     onChange={(e) => setStepSizeEta(parseFloat(e.target.value))}
                     className="w-full accent-[#D5658B]"
+                    aria-label="Discrete step size η"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <div className="flex justify-between text-xs font-tabular-mono text-[#8D9FCE]">
+                  <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-x)]">
                     <span>Compass Heading α (u = ⟨cos α, sin α⟩)</span>
                     <span>{compassDeg.toFixed(0)}°</span>
                   </div>
@@ -1044,6 +1045,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                     value={compassDeg}
                     onChange={(e) => setCompassDeg(parseFloat(e.target.value))}
                     className="w-full accent-[#8D9FCE]"
+                    aria-label="Compass heading α (degrees)"
                   />
                 </div>
               </div>
@@ -1051,7 +1053,7 @@ export function GradientAscentAndLevelSurfaceLab() {
               {/* Orthogonality & Directional Telemetry */}
               <div className="grid grid-cols-2 gap-2.5 text-xs font-tabular-mono">
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                  <span className="text-[#D35323] text-[10px] block">
+                  <span className="text-[var(--math-ink-sweep)] text-[10px] block">
                     ‖∇f(x₀, y₀)‖ MAX SLOPE
                   </span>
                   <span className="text-[var(--text-primary)] font-semibold">
@@ -1059,7 +1061,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                   </span>
                 </div>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                  <span className="text-[#8D9FCE] text-[10px] block">
+                  <span className="text-[var(--math-ink-x)] text-[10px] block">
                     D_u f(α) = ∇f · u
                   </span>
                   <span className="text-[var(--text-primary)] font-semibold">
@@ -1067,15 +1069,15 @@ export function GradientAscentAndLevelSurfaceLab() {
                   </span>
                 </div>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                  <span className="text-[#FBEAA4] text-[10px] block">
+                  <span className="text-[var(--math-ink-diff)] text-[10px] block">
                     ORTHOGONALITY ∇f · t̂
                   </span>
-                  <span className="text-[#96B898] font-semibold">
+                  <span className="text-[var(--math-ink-y)] font-semibold">
                     {analysis2d.orthoDot.toExponential(1)}
                   </span>
                 </div>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                  <span className="text-[#D5658B] text-[10px] block">
+                  <span className="text-[var(--math-ink-lower)] text-[10px] block">
                     AFTER 14 STEPS f(x₁₄)
                   </span>
                   <span className="text-[var(--text-primary)] font-semibold">
@@ -1099,7 +1101,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                   onClick={() => handleSelect3dPreset(p)}
                   className={`p-3 border text-left transition-colors ${
                     selected
-                      ? "border-[#029091] bg-[var(--bg-canvas)]"
+                      ? "border-[var(--math-ink-z)] bg-[var(--bg-canvas)]"
                       : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
                   }`}
                 >
@@ -1150,7 +1152,7 @@ export function GradientAscentAndLevelSurfaceLab() {
               <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <div className="flex justify-between text-[11px] font-tabular-mono text-[#029091]">
+                    <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-z)]">
                       <span>Surface u</span>
                       <span>{analysis3d.safeU.toFixed(2)}</span>
                     </div>
@@ -1162,10 +1164,11 @@ export function GradientAscentAndLevelSurfaceLab() {
                       value={analysis3d.safeU}
                       onChange={(e) => setUParam(parseFloat(e.target.value))}
                       className="w-full accent-[#029091]"
+                      aria-label="Surface parameter u"
                     />
                   </div>
                   <div className="space-y-1">
-                    <div className="flex justify-between text-[11px] font-tabular-mono text-[#96B898]">
+                    <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-y)]">
                       <span>Surface v</span>
                       <span>{analysis3d.safeV.toFixed(2)}</span>
                     </div>
@@ -1177,13 +1180,14 @@ export function GradientAscentAndLevelSurfaceLab() {
                       value={analysis3d.safeV}
                       onChange={(e) => setVParam(parseFloat(e.target.value))}
                       className="w-full accent-[#96B898]"
+                      aria-label="Surface parameter v"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[var(--border-subtle)]">
                   <div className="space-y-1">
-                    <div className="flex justify-between text-[11px] font-tabular-mono text-[#8D9FCE]">
+                    <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-x)]">
                       <span>u Azimuth φ</span>
                       <span>{dirAzimuthDeg}°</span>
                     </div>
@@ -1197,10 +1201,11 @@ export function GradientAscentAndLevelSurfaceLab() {
                         setDirAzimuthDeg(parseFloat(e.target.value))
                       }
                       className="w-full accent-[#8D9FCE]"
+                      aria-label="Unit direction azimuth φ (degrees)"
                     />
                   </div>
                   <div className="space-y-1">
-                    <div className="flex justify-between text-[11px] font-tabular-mono text-[#8D9FCE]">
+                    <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-x)]">
                       <span>u Elevation θ</span>
                       <span>{dirElevDeg}°</span>
                     </div>
@@ -1212,6 +1217,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                       value={dirElevDeg}
                       onChange={(e) => setDirElevDeg(parseFloat(e.target.value))}
                       className="w-full accent-[#8D9FCE]"
+                      aria-label="Unit direction elevation θ (degrees)"
                     />
                   </div>
                 </div>
@@ -1232,7 +1238,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                     setDirAzimuthDeg(Math.round((az + 360) % 360));
                     setDirElevDeg(Math.round(el));
                   }}
-                  className="w-full py-1.5 px-3 border border-[#D35323] text-[#D35323] bg-[var(--bg-panel)] hover:bg-[#D35323]/15 text-xs font-tabular-mono flex items-center justify-center gap-1.5"
+                  className="w-full py-1.5 px-3 border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-panel)] hover:bg-[#D35323]/15 text-xs font-tabular-mono flex items-center justify-center gap-1.5"
                 >
                   <Compass className="w-3.5 h-3.5" />
                   <span>Snap 3D Heading u to Normal ∇F (Max D_u F)</span>
@@ -1241,7 +1247,7 @@ export function GradientAscentAndLevelSurfaceLab() {
 
               <div className="grid grid-cols-2 gap-2.5 text-xs font-tabular-mono">
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                  <span className="text-[#D35323] text-[10px] block">
+                  <span className="text-[var(--math-ink-sweep)] text-[10px] block">
                     ∇F(p) NORMAL
                   </span>
                   <span className="text-[var(--text-primary)] font-semibold">
@@ -1249,7 +1255,7 @@ export function GradientAscentAndLevelSurfaceLab() {
                   </span>
                 </div>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                  <span className="text-[#8D9FCE] text-[10px] block">
+                  <span className="text-[var(--math-ink-x)] text-[10px] block">
                     3D SLOPE D_u F
                   </span>
                   <span className="text-[var(--text-primary)] font-semibold">

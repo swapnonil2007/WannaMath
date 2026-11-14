@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -11,6 +12,18 @@ import {
 } from "lucide-react";
 import { MULTIVARIABLE_CALCULUS_TOPICS } from "@/registry/curriculum";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
+
+export const metadata: Metadata = {
+  title: "Multivariable & Vector Calculus",
+  alternates: {
+    canonical: "/multivariable-calculus",
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 const TOPIC_ICONS: Record<string, React.ReactNode> = {
   "double-integrals": <Layers className="w-5 h-5" aria-hidden="true" />,
@@ -39,7 +52,7 @@ export default function CalculusDomainPage() {
       {/* Domain Header */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <div className="lg:col-span-7 space-y-4">
-          <span className="px-2.5 py-1 border border-[var(--border-strong)] bg-[var(--bg-panel)] text-xs font-tabular-mono text-[#8D9FCE] inline-block">
+          <span className="px-2.5 py-1 border border-[var(--border-strong)] bg-[var(--bg-panel)] text-xs font-tabular-mono text-[var(--math-ink-x)] inline-block">
             DOMAIN MATH-01 • 4 DEDICATED TOPIC LABORATORIES
           </span>
           <h1 className="font-math-serif text-4xl sm:text-5xl font-semibold text-[var(--text-primary)] tracking-tight">
@@ -58,7 +71,7 @@ export default function CalculusDomainPage() {
 
         {/* Conceptual Synthesis Box */}
         <div className="lg:col-span-5 border border-[var(--border-strong)] bg-[var(--bg-panel)] p-5 space-y-3">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#FBEAA4]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-diff)]">
             <GitBranch className="w-4 h-4" aria-hidden="true" />
             <span>How the 4 Topics Unify Mathematically</span>
           </div>
@@ -97,7 +110,7 @@ export default function CalculusDomainPage() {
                 <div className="flex items-center gap-3">
                   <span
                     className="w-9 h-9 flex items-center justify-center border border-[var(--border-strong)] bg-[var(--bg-canvas)]"
-                    style={{ color: topic.accentHex }}
+                    style={{ color: getAdaptiveAccentInk(topic.accentHex) }}
                   >
                     {TOPIC_ICONS[topic.id]}
                   </span>
@@ -123,7 +136,7 @@ export default function CalculusDomainPage() {
                     >
                       <span
                         className="font-tabular-mono font-semibold"
-                        style={{ color: topic.accentHex }}
+                        style={{ color: getAdaptiveAccentInk(topic.accentHex) }}
                       >
                         §{topic.number}.{i + 1}
                       </span>
@@ -145,7 +158,7 @@ export default function CalculusDomainPage() {
                   <span>Launch Topic {topic.number} Laboratory</span>
                   <ArrowRight
                     className="w-4 h-4"
-                    style={{ color: topic.accentHex }}
+                    style={{ color: getAdaptiveAccentInk(topic.accentHex) }}
                     aria-hidden="true"
                   />
                 </Link>

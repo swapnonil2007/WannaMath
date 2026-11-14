@@ -136,7 +136,7 @@ export function BivariateGaussianLab() {
 
         <div className="mt-4 grid gap-3 md:grid-cols-4">
           <label className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <div className="flex justify-between font-mono text-xs text-[#D5658B]">
+            <div className="flex justify-between font-mono text-xs text-[#E37CA0]">
               <span>Correlation ρ</span>
               <span>{fmt(rho, 2)}</span>
             </div>
@@ -184,7 +184,7 @@ export function BivariateGaussianLab() {
           </label>
 
           <label className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <div className="flex justify-between font-mono text-xs text-[#D35323]">
+            <div className="flex justify-between font-mono text-xs text-[#EF7547]">
               <span>Condition Slice x₀</span>
               <span>{fmt(sliceX0, 2)}</span>
             </div>
@@ -283,7 +283,7 @@ export function BivariateGaussianLab() {
               <div className="flex justify-between font-mono text-xs text-[#A2AAB8]">
                 <span className="text-[#8D9FCE]">Wall: f_X(x)</span>
                 <span className="text-[#96B898]">Wall: f_Y(y)</span>
-                <span className="text-[#D35323]">Slice: x = {fmt(sliceX0, 1)}</span>
+                <span className="text-[#EF7547]">Slice: x = {fmt(sliceX0, 1)}</span>
               </div>
             }
           />
@@ -367,14 +367,19 @@ export function BivariateGaussianLab() {
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4 lg:col-span-2">
           <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-            <span className="font-sans text-xs font-semibold uppercase tracking-wider text-[#D35323]">
+            <span className="font-sans text-xs font-semibold uppercase tracking-wider text-[#EF7547]">
               Marginal f_Y(y) vs. Conditioned f_{"{Y|X}"}(y | x₀ = {fmt(sliceX0, 2)})
             </span>
             <span className="font-mono text-xs text-[#FBEAA4]">
               σ_{"{Y|X}"} = {fmt(bivar.condSigY, 3)} (vs. σ_y = {fmt(sigY, 2)})
             </span>
           </div>
-          <svg viewBox="0 0 600 170" className="w-full rounded-lg border border-[#35383F] bg-[#1E1F22]">
+          <svg
+            role="img"
+            aria-label="Comparison plot of marginal distribution f_Y(y) and conditional slice f_{Y|X}(y given x_0) showing variance reduction and conditional mean shift"
+            viewBox="0 0 600 170"
+            className="w-full rounded-lg border border-[#35383F] bg-[#1E1F22]"
+          >
             {(() => {
               const pad = 26;
               const maxY = Math.max(0.8, ...bivar.ySlicePts.map((p) => p.cond));
@@ -417,7 +422,7 @@ export function BivariateGaussianLab() {
           </div>
           <div className="mt-2 space-y-1">
             <div>
-              E[Y | x₀] = <span className="text-[#D35323]">{fmt(bivar.condMeanY, 3)}</span>
+              E[Y | x₀] = <span className="text-[#EF7547]">{fmt(bivar.condMeanY, 3)}</span>
             </div>
             <div>
               Principal Axis Tilt = <span className="text-[#FBEAA4]">{fmt(bivar.thetaDeg, 1)}°</span>

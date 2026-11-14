@@ -5,7 +5,7 @@ import { Play, Pause, RotateCcw, Sparkles } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface WronskianPreset {
   id: string;
@@ -257,7 +257,7 @@ export function WronskianPhaseAreaLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#96B898]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)]">
             <span>Lab 3.1.10A</span>
             <span>•</span>
             <span>Wronskian &amp; Linear Independence</span>
@@ -280,15 +280,15 @@ export function WronskianPhaseAreaLab() {
           <button
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[var(--border-strong)] bg-[var(--bg-canvas)] text-[var(--text-primary)] hover:border-[#96B898]"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans border border-[var(--border-strong)] bg-[var(--bg-canvas)] text-[var(--text-primary)] hover:border-[var(--math-ink-y)]"
           >
             {isPlaying ? (
               <>
-                <Pause className="w-3.5 h-3.5 text-[#D35323]" /> Pause Sweep
+                <Pause className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" /> Pause Sweep
               </>
             ) : (
               <>
-                <Play className="w-3.5 h-3.5 text-[#96B898]" /> Animate x₀
+                <Play className="w-3.5 h-3.5 text-[var(--math-ink-y)]" /> Animate x₀
               </>
             )}
           </button>
@@ -313,7 +313,7 @@ export function WronskianPhaseAreaLab() {
               onClick={() => handleSelectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 active
-                  ? "border-[#96B898] bg-[var(--bg-canvas)] text-[#96B898] font-medium"
+                  ? "border-[var(--math-ink-y)] bg-[var(--bg-canvas)] text-[var(--math-ink-y)] font-medium"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
@@ -350,7 +350,7 @@ export function WronskianPhaseAreaLab() {
             <span className="text-[var(--text-secondary)]">
               Evaluation Point <KaTeXMath math="x_0" />
             </span>
-            <span className="font-tabular-mono font-semibold text-[#D35323]">
+            <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)]">
               x₀ = {x0.toFixed(2)}
             </span>
           </div>
@@ -504,7 +504,7 @@ export function WronskianPhaseAreaLab() {
               <span className="w-3 h-0.5 bg-[#8D9FCE] inline-block" /> y₁(x)
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <span className="w-3 h-0.5 border-t-2 border-dashed border-[#96B898] inline-block" />{" "}
+              <span className="w-3 h-0.5 border-t-2 border-dashed border-[var(--math-ink-y)] inline-block" />{" "}
               y₂(x)
             </span>
             <span className="inline-flex items-center gap-1.5">
@@ -523,8 +523,8 @@ export function WronskianPhaseAreaLab() {
             <span
               className={`font-tabular-mono text-xs px-2 py-0.5 border ${
                 isZeroWronskian
-                  ? "border-[#B95869] text-[#B95869] bg-[var(--bg-canvas)]"
-                  : "border-[#96B898] text-[#96B898] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-upper)] text-[var(--math-ink-upper)] bg-[var(--bg-canvas)]"
+                  : "border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[var(--bg-canvas)]"
               }`}
             >
               {isZeroWronskian ? "COLLINEAR (W ≈ 0)" : "NON-ZERO AREA (W ≠ 0)"}
@@ -644,7 +644,7 @@ export function WronskianPhaseAreaLab() {
                       <text
                         x={p1x + 6}
                         y={p1y - 6}
-                        fill="#8D9FCE"
+                        fill="var(--math-ink-x)"
                         fontSize="11"
                         fontFamily="IBM Plex Sans, sans-serif"
                         fontWeight="600"
@@ -669,7 +669,7 @@ export function WronskianPhaseAreaLab() {
                       <text
                         x={p2x + 6}
                         y={p2y + 12}
-                        fill="#96B898"
+                        fill="var(--math-ink-y)"
                         fontSize="11"
                         fontFamily="IBM Plex Sans, sans-serif"
                         fontWeight="600"
@@ -685,11 +685,11 @@ export function WronskianPhaseAreaLab() {
 
           <div className="flex flex-wrap items-center gap-4 text-xs font-sans text-[var(--text-secondary)]">
             <span className="inline-flex items-center gap-1.5">
-              <span className="w-3 h-3 border border-[#FBEAA4] bg-[#FBEAA4]/25 inline-block" />{" "}
+              <span className="w-3 h-3 border border-[var(--math-ink-diff)] bg-[#FBEAA4]/25 inline-block" />{" "}
               Positive Area (<KaTeXMath math="W > 0" />)
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <span className="w-3 h-3 border border-[#B95869] bg-[#B95869]/25 inline-block" />{" "}
+              <span className="w-3 h-3 border border-[var(--math-ink-upper)] bg-[#B95869]/25 inline-block" />{" "}
               Negative Orientation (<KaTeXMath math="W < 0" />)
             </span>
           </div>
@@ -699,7 +699,7 @@ export function WronskianPhaseAreaLab() {
       {/* Live Wronskian Matrix & Abel's Identity Readout */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-          <div className="flex items-center gap-1.5 text-xs font-tabular-mono uppercase text-[#8D9FCE]">
+          <div className="flex items-center gap-1.5 text-xs font-tabular-mono uppercase text-[var(--math-ink-x)]">
             <Sparkles className="w-3.5 h-3.5" /> Live Determinant Matrix
           </div>
           <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -721,7 +721,7 @@ export function WronskianPhaseAreaLab() {
         </div>
 
         <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-          <span className="text-xs font-tabular-mono uppercase text-[#D35323] block">
+          <span className="text-xs font-tabular-mono uppercase text-[var(--math-ink-sweep)] block">
             Independence Verdict
           </span>
           <p className="text-sm font-serif font-semibold text-[var(--text-primary)]">
@@ -737,7 +737,7 @@ export function WronskianPhaseAreaLab() {
         </div>
 
         <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-          <span className="text-xs font-tabular-mono uppercase text-[#96B898] block">
+          <span className="text-xs font-tabular-mono uppercase text-[var(--math-ink-y)] block">
             Abel&apos;s Identity Check
           </span>
           {!isCustom && probe.abelPred !== null ? (
@@ -747,7 +747,7 @@ export function WronskianPhaseAreaLab() {
               </div>
               <p className="text-xs font-tabular-mono text-[var(--text-secondary)]">
                 Abel Prediction: W(0)e^(-px₀) ={" "}
-                <span className="text-[#FBEAA4] font-semibold">
+                <span className="text-[var(--math-ink-diff)] font-semibold">
                   {probe.abelPred.toFixed(4)}
                 </span>
               </p>

@@ -11,6 +11,7 @@ import {
   createVectorArrow3D,
   mathToThreeVec3,
 } from "@/components/visualizations/primitives";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 interface DivCurlPreset {
   id: string;
@@ -361,7 +362,7 @@ export function DivCurlDecompositionLab() {
     >
       {/* Header */}
       <div className="border-b border-[var(--border-subtle)] pb-4 space-y-1">
-        <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] block">
+        <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
           Laboratory 3.3.3.3 • Component-Wise Divergence Budget, 3D Curl Axis &amp; Del Identities
         </span>
         <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -387,11 +388,11 @@ export function DivCurlDecompositionLab() {
               onClick={() => handleSelectPreset(p)}
               className={`p-3 border text-left transition-colors ${
                 selected
-                  ? "border-[#029091] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-z)] bg-[var(--bg-canvas)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
               }`}
             >
-              <span className="text-[11px] font-tabular-mono text-[#FBEAA4] font-semibold block mb-1">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)] font-semibold block mb-1">
                 {p.badge}
               </span>
               <div className="text-xs font-math-serif text-[var(--text-primary)] leading-snug">
@@ -471,7 +472,7 @@ export function DivCurlDecompositionLab() {
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="grid grid-cols-3 gap-3">
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#8D9FCE]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-x)]">
                   <span>x₀</span>
                   <span>{x0.toFixed(2)}</span>
                 </div>
@@ -483,10 +484,11 @@ export function DivCurlDecompositionLab() {
                   value={x0}
                   onChange={(e) => setX0(parseFloat(e.target.value))}
                   className="w-full accent-[#8D9FCE]"
+                  aria-label="Probe box center x₀"
                 />
               </div>
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#96B898]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-y)]">
                   <span>y₀</span>
                   <span>{y0.toFixed(2)}</span>
                 </div>
@@ -498,10 +500,11 @@ export function DivCurlDecompositionLab() {
                   value={y0}
                   onChange={(e) => setY0(parseFloat(e.target.value))}
                   className="w-full accent-[#96B898]"
+                  aria-label="Probe box center y₀"
                 />
               </div>
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#029091]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-z)]">
                   <span>z₀</span>
                   <span>{z0.toFixed(2)}</span>
                 </div>
@@ -513,12 +516,13 @@ export function DivCurlDecompositionLab() {
                   value={z0}
                   onChange={(e) => setZ0(parseFloat(e.target.value))}
                   className="w-full accent-[#029091]"
+                  aria-label="Probe box center z₀"
                 />
               </div>
             </div>
 
             <div className="space-y-1 pt-2 border-t border-[var(--border-subtle)]">
-              <div className="flex justify-between text-xs font-tabular-mono text-[#AAA36D]">
+              <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-grid)]">
                 <span className="flex items-center gap-1.5">
                   <Box className="w-3.5 h-3.5" />
                   <span>Control Cube Half-Width h (ΔV = (2h)³)</span>
@@ -533,6 +537,7 @@ export function DivCurlDecompositionLab() {
                 value={cubeHalfWidth}
                 onChange={(e) => setCubeHalfWidth(parseFloat(e.target.value))}
                 className="w-full accent-[#AAA36D]"
+                aria-label="Control cube half-width h"
               />
             </div>
           </div>
@@ -557,7 +562,7 @@ export function DivCurlDecompositionLab() {
           {/* 1. Divergence Budget Panel */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
-              <span className="text-xs font-tabular-mono font-semibold text-[#D35323] flex items-center gap-1.5">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] flex items-center gap-1.5">
                 <Wind className="w-3.5 h-3.5" />
                 <span>DIVERGENCE BUDGET: ∇·F = ∂P/∂x + ∂Q/∂y + ∂R/∂z</span>
               </span>
@@ -574,7 +579,9 @@ export function DivCurlDecompositionLab() {
               ].map((row) => (
                 <div key={row.label} className="space-y-1">
                   <div className="flex justify-between">
-                    <span style={{ color: row.color }}>{row.label}</span>
+                    <span style={{ color: getAdaptiveAccentInk(row.color) }}>
+                      {row.label}
+                    </span>
                     <span className="text-[var(--text-primary)]">
                       {row.val >= 0 ? `+${row.val.toFixed(3)}` : row.val.toFixed(3)}
                     </span>
@@ -601,7 +608,7 @@ export function DivCurlDecompositionLab() {
           {/* 2. Full 3D Curl Components */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
-              <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] flex items-center gap-1.5">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] flex items-center gap-1.5">
                 <RotateCw className="w-3.5 h-3.5" />
                 <span>3D CURL VECTOR: ∇×F = ⟨ωₓ, ω_y, ω_z⟩</span>
               </span>
@@ -612,7 +619,7 @@ export function DivCurlDecompositionLab() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs font-tabular-mono">
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1">
-                <span className="text-[10px] text-[#8D9FCE] block">
+                <span className="text-[10px] text-[var(--math-ink-x)] block">
                   ωₓ = ∂R/∂y - ∂Q/∂z
                 </span>
                 <div className="text-sm font-semibold text-[var(--text-primary)]">
@@ -623,7 +630,7 @@ export function DivCurlDecompositionLab() {
                 </div>
               </div>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1">
-                <span className="text-[10px] text-[#96B898] block">
+                <span className="text-[10px] text-[var(--math-ink-y)] block">
                   ω_y = ∂P/∂z - ∂R/∂x
                 </span>
                 <div className="text-sm font-semibold text-[var(--text-primary)]">
@@ -634,7 +641,7 @@ export function DivCurlDecompositionLab() {
                 </div>
               </div>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1">
-                <span className="text-[10px] text-[#029091] block">
+                <span className="text-[10px] text-[var(--math-ink-z)] block">
                   ω_z = ∂Q/∂x - ∂P/∂y
                 </span>
                 <div className="text-sm font-semibold text-[var(--text-primary)]">
@@ -649,7 +656,7 @@ export function DivCurlDecompositionLab() {
 
           {/* 3. Live 2nd-Order Del Identity Verifier */}
           <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-            <span className="flex items-center gap-1.5 text-[#96B898]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-y)]">
               <ShieldCheck className="w-4 h-4" />
               <span>Exact Identity Check: ∇·(∇×F) at probe</span>
             </span>

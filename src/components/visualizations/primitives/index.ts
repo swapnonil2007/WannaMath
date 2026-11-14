@@ -1,5 +1,4 @@
 export * from "./threeScenePrimitives";
+export * from "./demandRenderLoop";
 export * from "./ThreeOrbitViewport";
-export * from "./SvgCoordinatePlane2D";
-export * from "./quadrature";
-export * from "./contourMarchingSquares";
+export * from "./core2d";

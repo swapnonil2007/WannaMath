@@ -7,6 +7,10 @@ import { Box, Eye, Grid, RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
+import {
+  createDemandDrivenRenderLoop,
+  type DemandDrivenRenderLoopHandle,
+} from "@/components/visualizations/primitives/demandRenderLoop";
 
 type SurfaceId = "paraboloid" | "saddle" | "wave" | "plane" | "custom";
 type DomainShapeId = "rectangle" | "triangle" | "sector" | "spandrel" | "custom";
@@ -140,6 +144,7 @@ export function RiemannVolumeLab() {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const prismGroupRef = useRef<THREE.Group | null>(null);
   const surfaceGroupRef = useRef<THREE.Group | null>(null);
+  const renderLoopRef = useRef<DemandDrivenRenderLoopHandle | null>(null);
 
   const [surfaceId, setSurfaceId] = useState<SurfaceId>("paraboloid");
   const [surfaceExpr, setSurfaceExpr] = useState<string>(
@@ -379,13 +384,18 @@ export function RiemannVolumeLab() {
     prismGroupRef.current = prismGroup;
     surfaceGroupRef.current = surfaceGroup;
 
-    let frameId: number;
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    animate();
+    const renderLoop = createDemandDrivenRenderLoop({
+      container,
+      renderer,
+      scene,
+      camera,
+      controls: controls as unknown as {
+        update: () => boolean;
+        addEventListener: (event: string, listener: () => void) => void;
+        removeEventListener: (event: string, listener: () => void) => void;
+      },
+    });
+    renderLoopRef.current = renderLoop;
 
     const handleResize = () => {
       if (!container) return;
@@ -394,12 +404,15 @@ export function RiemannVolumeLab() {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      renderLoop.requestRender(2);
     };
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(frameId);
+      renderLoop.dispose();
+      renderLoopRef.current = null;
+      controls.dispose();
       renderer.dispose();
     };
   }, []);
@@ -534,6 +547,7 @@ export function RiemannVolumeLab() {
       });
       surfaceGroup.add(new THREE.Mesh(surfGeom, surfWire));
     }
+    renderLoopRef.current?.requestRender(2);
   }, [partitionData, inspectedCell, showSmoothSurface, xRange, evalF, evalYBounds]);
 
   // Dynamic boundary curve paths and coordinate mapping for 2D SVG
@@ -579,7 +593,7 @@ export function RiemannVolumeLab() {
       {/* Lab Header */}
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)]">
             <Box className="w-4 h-4" aria-hidden="true" />
             <span>Interactive Laboratory 01.1 • Riemann Volume Convergence</span>
           </div>
@@ -600,7 +614,7 @@ export function RiemannVolumeLab() {
             <span className="text-[10px] uppercase text-[var(--text-muted)] block">
               Riemann Sum S
             </span>
-            <span className="text-sm font-semibold text-[#FBEAA4]">
+            <span className="text-sm font-semibold text-[var(--math-ink-diff)]">
               {partitionData.riemannSum.toFixed(4)}
             </span>
           </div>
@@ -608,7 +622,7 @@ export function RiemannVolumeLab() {
             <span className="text-[10px] uppercase text-[var(--text-muted)] block">
               Exact Volume V
             </span>
-            <span className="text-sm font-semibold text-[#96B898]">
+            <span className="text-sm font-semibold text-[var(--math-ink-y)]">
               {partitionData.exactVol.toFixed(4)}
             </span>
           </div>
@@ -616,7 +630,7 @@ export function RiemannVolumeLab() {
             <span className="text-[10px] uppercase text-[var(--text-muted)] block">
               Rel. Error
             </span>
-            <span className="text-sm font-semibold text-[#D35323]">
+            <span className="text-sm font-semibold text-[var(--math-ink-sweep)]">
               {partitionData.relErrorPct.toFixed(2)}%
             </span>
           </div>
@@ -718,7 +732,7 @@ export function RiemannVolumeLab() {
             onClick={() => setShowSmoothSurface((v) => !v)}
             className="w-full px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--text-primary)] flex items-center justify-center gap-2 cursor-pointer"
           >
-            <Eye className="w-3.5 h-3.5 text-[#8D9FCE]" aria-hidden="true" />
+            <Eye className="w-3.5 h-3.5 text-[var(--math-ink-x)]" aria-hidden="true" />
             <span>
               {showSmoothSurface
                 ? "Hide Smooth Surface Overlay"
@@ -803,7 +817,7 @@ export function RiemannVolumeLab() {
             <span>3D Riemann Columns (Drag to Orbit)</span>
             <span className="text-[#8D9FCE]">x</span>
             <span className="text-[#96B898]">y</span>
-            <span className="text-[#029091]">z</span>
+            <span className="text-[#28B7B8]">z</span>
           </div>
 
           <div ref={mountRef} className="w-full h-[400px] cursor-grab" />
@@ -824,7 +838,7 @@ export function RiemannVolumeLab() {
             </span>
             <span>
               Column Volume ΔV ={" "}
-              <strong className="text-[#D35323]">
+              <strong className="text-[#EF7547]">
                 {inspectedCell?.dV.toFixed(4)}
               </strong>
             </span>
@@ -837,10 +851,10 @@ export function RiemannVolumeLab() {
           <figure className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 flex flex-col items-center">
             <div className="w-full flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)] mb-2">
               <span className="flex items-center gap-1.5">
-                <Grid className="w-3.5 h-3.5 text-[#029091]" aria-hidden="true" />
+                <Grid className="w-3.5 h-3.5 text-[var(--math-ink-z)]" aria-hidden="true" />
                 <span>2D Partition Grid (Click Cell to Inspect)</span>
               </span>
-              <span className="text-[#D35323]">
+              <span className="text-[var(--math-ink-sweep)]">
                 ({inspectedCell?.xc.toFixed(2)}, {inspectedCell?.yc.toFixed(2)})
               </span>
             </div>
@@ -925,7 +939,7 @@ export function RiemannVolumeLab() {
               <text
                 x={198}
                 y={183}
-                fill="#8D9FCE"
+                fill="var(--math-ink-x)"
                 fontSize="11"
                 fontFamily="monospace"
               >
@@ -934,7 +948,7 @@ export function RiemannVolumeLab() {
               <text
                 x={26}
                 y={11}
-                fill="#96B898"
+                fill="var(--math-ink-y)"
                 fontSize="11"
                 fontFamily="monospace"
               >
@@ -964,7 +978,7 @@ export function RiemannVolumeLab() {
 
             <div className="space-y-1">
               <div className="flex justify-between text-xs font-tabular-mono">
-                <label htmlFor="riemann-nx" className="text-[#8D9FCE]">
+                <label htmlFor="riemann-nx" className="text-[var(--math-ink-x)]">
                   x-Subdivisions (Nₓ = {nx}, Δx = {partitionData.dx.toFixed(3)})
                 </label>
               </div>
@@ -982,7 +996,7 @@ export function RiemannVolumeLab() {
 
             <div className="space-y-1">
               <div className="flex justify-between text-xs font-tabular-mono">
-                <label htmlFor="riemann-ny" className="text-[#96B898]">
+                <label htmlFor="riemann-ny" className="text-[var(--math-ink-y)]">
                   y-Subdivisions (Nᵧ = {ny}, Δy = {partitionData.dy.toFixed(3)})
                 </label>
               </div>

@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { Grid, Compass, AlertTriangle } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface BasisPreset {
   id: string;
@@ -95,7 +95,7 @@ export function ChangeOfBasisLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#96B898] text-[#96B898] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[var(--bg-canvas)]">
               LAB 2.1.2 • BASIS &amp; CHANGE OF BASIS
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -123,7 +123,7 @@ export function ChangeOfBasisLab() {
               }}
               className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                 presetId === p.id
-                  ? "border-[#96B898] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
+                  ? "border-[var(--math-ink-y)] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
               }`}
             >
@@ -136,7 +136,7 @@ export function ChangeOfBasisLab() {
       {/* Controls Bar */}
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 bg-[var(--bg-canvas)] grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
-          <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
+          <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
             Basis Vector b₁ (Column 1 of P)
           </span>
           <div className="grid grid-cols-2 gap-2">
@@ -146,6 +146,7 @@ export function ChangeOfBasisLab() {
               value={b1[0]}
               onChange={(e) => setB1([Number(e.target.value) || 0, b1[1]])}
               className="px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-canvas)] border border-[var(--border-subtle)]"
+              aria-label="Basis vector b₁ x-component"
             />
             <input
               type="number"
@@ -153,12 +154,13 @@ export function ChangeOfBasisLab() {
               value={b1[1]}
               onChange={(e) => setB1([b1[0], Number(e.target.value) || 0])}
               className="px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-canvas)] border border-[var(--border-subtle)]"
+              aria-label="Basis vector b₁ y-component"
             />
           </div>
         </div>
 
         <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
-          <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+          <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
             Basis Vector b₂ (Column 2 of P)
           </span>
           <div className="grid grid-cols-2 gap-2">
@@ -168,6 +170,7 @@ export function ChangeOfBasisLab() {
               value={b2[0]}
               onChange={(e) => setB2([Number(e.target.value) || 0, b2[1]])}
               className="px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-canvas)] border border-[var(--border-subtle)]"
+              aria-label="Basis vector b₂ x-component"
             />
             <input
               type="number"
@@ -175,12 +178,13 @@ export function ChangeOfBasisLab() {
               value={b2[1]}
               onChange={(e) => setB2([b2[0], Number(e.target.value) || 0])}
               className="px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-canvas)] border border-[var(--border-subtle)]"
+              aria-label="Basis vector b₂ y-component"
             />
           </div>
         </div>
 
         <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
-          <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+          <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
             Scrub Basis Coordinates [x]_ℬ = (c₁, c₂)
           </span>
           <div className="space-y-1">
@@ -192,6 +196,7 @@ export function ChangeOfBasisLab() {
               value={uCoord}
               onChange={(e) => setUCoord(Number(e.target.value))}
               className="w-full accent-[#8D9FCE]"
+              aria-label="Basis coordinate c₁ along b₁"
             />
             <input
               type="range"
@@ -201,6 +206,7 @@ export function ChangeOfBasisLab() {
               value={vCoord}
               onChange={(e) => setVCoord(Number(e.target.value))}
               className="w-full accent-[#96B898]"
+              aria-label="Basis coordinate c₂ along b₂"
             />
           </div>
         </div>
@@ -211,11 +217,11 @@ export function ChangeOfBasisLab() {
         {/* Left: Basis Coordinate Space [x]_B */}
         <div className="border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] p-5 space-y-3 bg-[var(--bg-canvas)]">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#8D9FCE] flex items-center gap-1.5">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] flex items-center gap-1.5">
               <Grid className="w-3.5 h-3.5" aria-hidden="true" />
               ℬ-Coordinate Space (Click to set [x]_ℬ)
             </span>
-            <span className="text-xs font-tabular-mono text-[#FBEAA4]">
+            <span className="text-xs font-tabular-mono text-[var(--math-ink-diff)]">
               [x]_ℬ = ⟨{uCoord.toFixed(2)}, {vCoord.toFixed(2)}⟩
             </span>
           </div>
@@ -259,11 +265,11 @@ export function ChangeOfBasisLab() {
         {/* Right: Physical Standard Space x = P [x]_B */}
         <div className="p-5 space-y-3 bg-[var(--bg-panel)]">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] flex items-center gap-1.5">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] flex items-center gap-1.5">
               <Compass className="w-3.5 h-3.5" aria-hidden="true" />
               Physical Space ℝ² (Click to compute P⁻¹x)
             </span>
-            <span className="text-xs font-tabular-mono text-[#D35323]">
+            <span className="text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
               x = ⟨{stats.xPhys[0].toFixed(2)}, {stats.xPhys[1].toFixed(2)}⟩
             </span>
           </div>
@@ -366,7 +372,7 @@ export function ChangeOfBasisLab() {
         </div>
         <div className="lg:col-span-5 text-xs font-math-serif text-[var(--text-secondary)]">
           {stats.singular ? (
-            <span className="text-[#B95869] font-tabular-mono flex items-center gap-1.5">
+            <span className="text-[var(--math-ink-upper)] font-tabular-mono flex items-center gap-1.5">
               <AlertTriangle className="w-4 h-4 shrink-0" aria-hidden="true" />
               det(P) ≈ 0: basis vectors are linearly dependent; P⁻¹ does not exist!
             </span>

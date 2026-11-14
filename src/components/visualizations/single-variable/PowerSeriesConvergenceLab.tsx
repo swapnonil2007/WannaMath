@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface PowerSeriesPreset {
   id: string;
@@ -166,7 +166,7 @@ export function PowerSeriesConvergenceLab() {
     <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#D5658B]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-lower)]">
             <span>Lab 1.4.2A</span>
             <span>•</span>
             <span>Power Series &amp; Complex Disks</span>
@@ -202,7 +202,7 @@ export function PowerSeriesConvergenceLab() {
             onClick={() => handleSelectPreset(p)}
             className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
               p.id === preset.id
-                ? "border-[#D5658B] bg-[var(--bg-canvas)] text-[#D5658B] font-medium"
+                ? "border-[var(--math-ink-lower)] bg-[var(--bg-canvas)] text-[var(--math-ink-lower)] font-medium"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -216,7 +216,7 @@ export function PowerSeriesConvergenceLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Partial Sum Degree N</span>
-            <span className="font-tabular-mono font-semibold text-[#D35323]">
+            <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)]">
               N = {degreeN}
             </span>
           </div>
@@ -235,7 +235,7 @@ export function PowerSeriesConvergenceLab() {
         <div className="space-y-1">
           <div className="flex justify-between text-xs font-sans">
             <span className="text-[var(--text-secondary)]">Probe Point x₀</span>
-            <span className="font-tabular-mono text-[#8D9FCE]">
+            <span className="font-tabular-mono text-[var(--math-ink-x)]">
               x₀ = {probeX.toFixed(2)}
             </span>
           </div>
@@ -264,7 +264,7 @@ export function PowerSeriesConvergenceLab() {
               1. Real Line Partial Sum <KaTeXMath math={`S_{${degreeN}}(x)`} /> vs.{" "}
               <KaTeXMath math="f(x)" />
             </span>
-            <span className="font-tabular-mono text-[#029091]">
+            <span className="font-tabular-mono text-[var(--math-ink-z)]">
               {preset.intervalText}
             </span>
           </div>
@@ -384,7 +384,7 @@ export function PowerSeriesConvergenceLab() {
                       <text
                         x={toSvgX(px) + 7}
                         y={toSvgY(py) - 4}
-                        fill="#B95869"
+                        fill="var(--math-ink-upper)"
                         fontSize="10"
                         fontFamily="IBM Plex Sans, sans-serif"
                       >
@@ -412,7 +412,7 @@ export function PowerSeriesConvergenceLab() {
             <div>
               {preset.rightEndpointStatus}
             </div>
-            <div className="border-t border-[var(--border-subtle)] pt-1.5 text-[#D35323]">
+            <div className="border-t border-[var(--border-subtle)] pt-1.5 text-[var(--math-ink-sweep)]">
               |f({probeX.toFixed(2)}) - S_{degreeN}({probeX.toFixed(2)})| ={" "}
               {Number.isFinite(model.probeErr)
                 ? model.probeErr.toExponential(2)

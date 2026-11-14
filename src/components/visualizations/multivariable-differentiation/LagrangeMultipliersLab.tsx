@@ -275,11 +275,11 @@ export function LagrangeMultipliersLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#B95869] text-[#B95869] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-upper)] text-[var(--math-ink-upper)] bg-[var(--bg-canvas)]">
               LAB 3.1.4 • LAGRANGE MULTIPLIERS &amp; CONSTRAINED TANGENCY
             </span>
             {activeState.isStationary && (
-              <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#FBEAA4] text-[#FBEAA4] bg-[#FBEAA4]/15">
+              <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[#FBEAA4]/15">
                 ★ TANGENCY ALIGNED: ∇f = λ∇g
               </span>
             )}
@@ -299,7 +299,7 @@ export function LagrangeMultipliersLab() {
                 onClick={() => handleSelectPreset(p)}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#B95869] bg-[#B95869]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-upper)] bg-[#B95869]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -325,7 +325,7 @@ export function LagrangeMultipliersLab() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
           <label className="block space-y-1">
-            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#B95869] block">
+            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-upper)] block">
               Constraint Curve <KaTeXMath math="x(t)" /> (t ∈ [{tMin.toFixed(1)}, {tMax.toFixed(2)}])
             </span>
             <input
@@ -335,12 +335,12 @@ export function LagrangeMultipliersLab() {
                 setXParamExpr(e.target.value);
                 setIsCustom(true);
               }}
-              className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[#B95869]"
+              className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--math-ink-upper)]"
             />
           </label>
 
           <label className="block space-y-1">
-            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#B95869] block">
+            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-upper)] block">
               Constraint Curve <KaTeXMath math="y(t)" /> (t ∈ [{tMin.toFixed(1)}, {tMax.toFixed(2)}])
             </span>
             <input
@@ -350,7 +350,7 @@ export function LagrangeMultipliersLab() {
                 setYParamExpr(e.target.value);
                 setIsCustom(true);
               }}
-              className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[#B95869]"
+              className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--math-ink-upper)]"
             />
           </label>
         </div>
@@ -367,13 +367,13 @@ export function LagrangeMultipliersLab() {
             titleBadge="3D Objective Surface z = f(x,y) & Constrained Space Curve"
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#B95869]">
+                <span className="text-[var(--math-ink-upper)]">
                   (x(t), y(t)) = ({activeState.xc.toFixed(2)}, {activeState.yc.toFixed(2)})
                 </span>
-                <span className="text-[#FBEAA4] font-semibold">
+                <span className="text-[var(--math-ink-diff)] font-semibold">
                   Objective f = {activeState.f0.toFixed(3)}
                 </span>
-                <span className="text-[#96B898]">
+                <span className="text-[var(--math-ink-y)]">
                   df/ds = ∇f · T = {activeState.dfds.toFixed(3)}
                 </span>
               </div>
@@ -511,7 +511,7 @@ export function LagrangeMultipliersLab() {
               <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
                 LAGRANGE TANGENCY CONDITION AT ({activeState.xc.toFixed(2)}, {activeState.yc.toFixed(2)})
               </span>
-              <span className="text-xs font-tabular-mono text-[#FBEAA4]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-diff)]">
                 |sin θ| = {activeState.sinTheta.toFixed(3)}
               </span>
             </div>
@@ -534,10 +534,10 @@ export function LagrangeMultipliersLab() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Target className="w-3.5 h-3.5 text-[#B95869]" />
+                <Target className="w-3.5 h-3.5 text-[var(--math-ink-upper)]" />
                 2D Contour Tangency &amp; Gradient Alignment
               </span>
-              <span className="text-xs font-tabular-mono text-[#FBEAA4]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-diff)]">
                 k = f(x,y) = {activeState.f0.toFixed(3)}
               </span>
             </div>
@@ -678,7 +678,7 @@ export function LagrangeMultipliersLab() {
           {/* Parameter Scrubber + Quick-Snap Extrema Buttons */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="flex items-center justify-between text-xs font-tabular-mono">
-              <span className="text-[#B95869] font-semibold">
+              <span className="text-[var(--math-ink-upper)] font-semibold">
                 Walk Along Constraint Parameter t
               </span>
               <span className="text-[var(--text-primary)]">
@@ -693,6 +693,7 @@ export function LagrangeMultipliersLab() {
               value={safeT}
               onChange={(e) => setParamT(parseFloat(e.target.value))}
               className="w-full accent-[#B95869]"
+              aria-label="Constraint curve parameter t (radians)"
             />
 
             {/* Quick-Snap Extrema Buttons */}
@@ -700,7 +701,7 @@ export function LagrangeMultipliersLab() {
               <button
                 type="button"
                 onClick={() => setParamT(constraintAnalysis.bestMaxT)}
-                className="flex items-center justify-center gap-1.5 px-2.5 py-2 text-xs font-tabular-mono border border-[#FBEAA4] text-[#FBEAA4] bg-[var(--bg-panel)] hover:bg-[#FBEAA4]/15"
+                className="flex items-center justify-center gap-1.5 px-2.5 py-2 text-xs font-tabular-mono border border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[var(--bg-panel)] hover:bg-[#FBEAA4]/15"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 Snap to Max (f = {constraintAnalysis.bestMaxVal.toFixed(2)})
@@ -708,7 +709,7 @@ export function LagrangeMultipliersLab() {
               <button
                 type="button"
                 onClick={() => setParamT(constraintAnalysis.bestMinT)}
-                className="flex items-center justify-center gap-1.5 px-2.5 py-2 text-xs font-tabular-mono border border-[#8D9FCE] text-[#8D9FCE] bg-[var(--bg-panel)] hover:bg-[#8D9FCE]/15"
+                className="flex items-center justify-center gap-1.5 px-2.5 py-2 text-xs font-tabular-mono border border-[var(--math-ink-x)] text-[var(--math-ink-x)] bg-[var(--bg-panel)] hover:bg-[#8D9FCE]/15"
               >
                 <Target className="w-3.5 h-3.5" />
                 Snap to Min (f = {constraintAnalysis.bestMinVal.toFixed(2)})
@@ -719,7 +720,7 @@ export function LagrangeMultipliersLab() {
           {/* Vector Legend & Numerical Telemetry */}
           <div className="grid grid-cols-3 gap-2 text-xs font-tabular-mono">
             <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#D35323] block text-[10px]">
+              <span className="text-[var(--math-ink-sweep)] block text-[10px]">
                 OBJECTIVE ∇f
               </span>
               <span className="text-[var(--text-primary)] font-semibold">
@@ -727,7 +728,7 @@ export function LagrangeMultipliersLab() {
               </span>
             </div>
             <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#8D9FCE] block text-[10px]">
+              <span className="text-[var(--math-ink-x)] block text-[10px]">
                 NORMAL N_g ∝ ∇g
               </span>
               <span className="text-[var(--text-primary)] font-semibold">
@@ -735,10 +736,10 @@ export function LagrangeMultipliersLab() {
               </span>
             </div>
             <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#96B898] block text-[10px]">
+              <span className="text-[var(--math-ink-y)] block text-[10px]">
                 TANGENT SLOPE df/ds
               </span>
-              <span className="text-[#96B898] font-semibold">
+              <span className="text-[var(--math-ink-y)] font-semibold">
                 {activeState.dfds.toFixed(3)}
               </span>
             </div>

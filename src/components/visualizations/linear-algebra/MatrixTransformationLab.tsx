@@ -3,7 +3,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Play, Pause, RotateCcw, Compass, Shuffle } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 type LabMode = "homotopy" | "composition";
 
@@ -146,7 +147,7 @@ export function MatrixTransformationLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]">
               LAB 2.2.1 • MATRIX TRANSFORMATIONS &amp; COMPOSITION
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -165,7 +166,7 @@ export function MatrixTransformationLab() {
             onClick={() => setMode("homotopy")}
             className={`px-3 py-1.5 text-xs font-tabular-mono transition-colors ${
               mode === "homotopy"
-                ? "bg-[#D35323] text-[#1E1F22] font-semibold"
+                ? "bg-[#9E360E] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)]"
             }`}
           >
@@ -176,7 +177,7 @@ export function MatrixTransformationLab() {
             onClick={() => setMode("composition")}
             className={`px-3 py-1.5 text-xs font-tabular-mono border-l border-[var(--border-subtle)] transition-colors ${
               mode === "composition"
-                ? "bg-[#029091] text-[#1E1F22] font-semibold"
+                ? "bg-[#016869] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)]"
             }`}
           >
@@ -201,7 +202,7 @@ export function MatrixTransformationLab() {
                 }}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   presetId === p.id
-                    ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)]"
                 }`}
               >
@@ -218,7 +219,7 @@ export function MatrixTransformationLab() {
                   if (homotopyT >= 0.99) setHomotopyT(0);
                   setIsPlaying((p) => !p);
                 }}
-                className="px-3 py-1 text-xs font-tabular-mono border border-[#029091] bg-[#029091]/15 text-[#029091] font-semibold flex items-center gap-1.5"
+                className="px-3 py-1 text-xs font-tabular-mono border border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--math-ink-z)] font-semibold flex items-center gap-1.5"
               >
                 {isPlaying ? (
                   <>
@@ -246,7 +247,7 @@ export function MatrixTransformationLab() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
-            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
               Matrix A = [[a₁ₓ, a₂ₓ], [a₁ᵧ, a₂ᵧ]]
             </span>
             <div className="grid grid-cols-4 gap-2">
@@ -274,7 +275,7 @@ export function MatrixTransformationLab() {
           {mode === "homotopy" ? (
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2 flex flex-col justify-center">
               <div className="flex justify-between text-xs font-tabular-mono">
-                <span className="text-[#029091]">Homotopy Scrubber t (I → A)</span>
+                <span className="text-[var(--math-ink-z)]">Homotopy Scrubber t (I → A)</span>
                 <span className="font-semibold">{homotopyT.toFixed(2)}</span>
               </div>
               <input
@@ -288,11 +289,12 @@ export function MatrixTransformationLab() {
                   setHomotopyT(Number(e.target.value));
                 }}
                 className="w-full accent-[#029091]"
+                aria-label="Homotopy scrubber t from I to A"
               />
             </div>
           ) : (
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-2">
-              <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#8D9FCE] block">
+              <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
                 Second Matrix B = [[b₁₁, b₁₂], [b₂₁, b₂₂]] (Default: 90° CCW Rotation)
               </span>
               <div className="grid grid-cols-4 gap-2">
@@ -326,10 +328,10 @@ export function MatrixTransformationLab() {
           <div className="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-[var(--border-subtle)] p-5 space-y-3 bg-[var(--bg-canvas)]">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Compass className="w-3.5 h-3.5 text-[#D35323]" aria-hidden="true" />
+                <Compass className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" aria-hidden="true" />
                 Transformed Space Grid &amp; Basis Columns [a₁ | a₂]
               </span>
-              <span className="text-[11px] font-tabular-mono text-[#FBEAA4]">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)]">
                 Click plane to place input vector x
               </span>
             </div>
@@ -412,7 +414,7 @@ export function MatrixTransformationLab() {
 
           <div className="lg:col-span-5 p-5 space-y-4 bg-[var(--bg-panel)] flex flex-col justify-between">
             <div className="space-y-3">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
                 Action on Standard Basis &amp; Test Vector x
               </span>
               <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] overflow-x-auto text-xs">
@@ -434,11 +436,11 @@ export function MatrixTransformationLab() {
 
               <div className="grid grid-cols-2 gap-2.5 text-xs font-tabular-mono">
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                  <span className="text-[10px] text-[#8D9FCE] block">Where î lands (a₁)</span>
+                  <span className="text-[10px] text-[var(--math-ink-x)] block">Where î lands (a₁)</span>
                   <span>⟨{interpA[0].toFixed(2)}, {interpA[2].toFixed(2)}⟩</span>
                 </div>
                 <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-                  <span className="text-[10px] text-[#96B898] block">Where ĵ lands (a₂)</span>
+                  <span className="text-[10px] text-[var(--math-ink-y)] block">Where ĵ lands (a₂)</span>
                   <span>⟨{interpA[1].toFixed(2)}, {interpA[3].toFixed(2)}⟩</span>
                 </div>
               </div>
@@ -462,7 +464,10 @@ export function MatrixTransformationLab() {
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-tabular-mono uppercase tracking-wider" style={{ color: pane.color }}>
+                <span
+                  className="text-xs font-tabular-mono uppercase tracking-wider"
+                  style={{ color: getAdaptiveAccentInk(pane.color) }}
+                >
                   {pane.title}
                 </span>
                 <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -495,7 +500,7 @@ export function MatrixTransformationLab() {
           ))}
 
           <div className="lg:col-span-12 border-t border-[var(--border-subtle)] px-6 py-3 bg-[var(--bg-canvas)] flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-            <span className="flex items-center gap-1.5 text-[#FBEAA4]">
+            <span className="flex items-center gap-1.5 text-[var(--math-ink-diff)]">
               <Shuffle className="w-3.5 h-3.5" aria-hidden="true" />
               {compStats.commutes
                 ? "Special Case: Matrices A and B Commute (BA = AB)!"

@@ -10,6 +10,7 @@ import {
   mathToThreeVec3,
   createVectorArrow3D,
 } from "@/components/visualizations/primitives";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 type DimMode = "2d" | "3d";
 
@@ -199,7 +200,7 @@ export function DeterminantVolumeLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]">
               LAB 2.2.2 • DETERMINANTS AS ORIENTED VOLUME
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -224,7 +225,7 @@ export function DeterminantVolumeLab() {
             onClick={() => setDimMode("2d")}
             className={`px-3 py-1.5 text-xs font-tabular-mono transition-colors ${
               dimMode === "2d"
-                ? "bg-[#D35323] text-[#1E1F22] font-semibold"
+                ? "bg-[#9E360E] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)]"
             }`}
           >
@@ -235,7 +236,7 @@ export function DeterminantVolumeLab() {
             onClick={() => setDimMode("3d")}
             className={`px-3 py-1.5 text-xs font-tabular-mono border-l border-[var(--border-subtle)] transition-colors ${
               dimMode === "3d"
-                ? "bg-[#029091] text-[#1E1F22] font-semibold"
+                ? "bg-[#016869] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)]"
             }`}
           >
@@ -258,7 +259,7 @@ export function DeterminantVolumeLab() {
                 }}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   p2Id === p.id
-                    ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)]"
                 }`}
               >
@@ -277,7 +278,7 @@ export function DeterminantVolumeLab() {
                 }}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   p3Id === p.id
-                    ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)]"
                 }`}
               >
@@ -343,10 +344,10 @@ export function DeterminantVolumeLab() {
               titleBadge="3D Parallelepiped Spanned by Matrix Columns a₁, a₂, a₃"
               footerSlot={
                 <div className="flex flex-wrap justify-between gap-2 text-xs font-tabular-mono">
-                  <span className="text-[#8D9FCE]">a₁</span>
-                  <span className="text-[#96B898]">a₂</span>
-                  <span className="text-[#FBEAA4]">a₃</span>
-                  <span className={det3d < -1e-3 ? "text-[#B95869] font-semibold" : "text-[#029091] font-semibold"}>
+                  <span className="text-[var(--math-ink-x)]">a₁</span>
+                  <span className="text-[var(--math-ink-y)]">a₂</span>
+                  <span className="text-[var(--math-ink-diff)]">a₃</span>
+                  <span className={det3d < -1e-3 ? "text-[var(--math-ink-upper)] font-semibold" : "text-[var(--math-ink-z)] font-semibold"}>
                     Signed Volume det(A) = {det3d.toFixed(3)}
                   </span>
                 </div>
@@ -370,7 +371,7 @@ export function DeterminantVolumeLab() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
-                  <span className="text-xs font-tabular-mono text-[#8D9FCE] block">Column a₁</span>
+                  <span className="text-xs font-tabular-mono text-[var(--math-ink-x)] block">Column a₁</span>
                   <div className="grid grid-cols-2 gap-1.5">
                     <input
                       type="number"
@@ -378,6 +379,7 @@ export function DeterminantVolumeLab() {
                       value={a1_2d[0]}
                       onChange={(e) => setA1_2d([Number(e.target.value) || 0, a1_2d[1]])}
                       className="px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)]"
+                      aria-label="Column a₁ x-component"
                     />
                     <input
                       type="number"
@@ -385,11 +387,12 @@ export function DeterminantVolumeLab() {
                       value={a1_2d[1]}
                       onChange={(e) => setA1_2d([a1_2d[0], Number(e.target.value) || 0])}
                       className="px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)]"
+                      aria-label="Column a₁ y-component"
                     />
                   </div>
                 </div>
                 <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
-                  <span className="text-xs font-tabular-mono text-[#96B898] block">Column a₂ (or click plot)</span>
+                  <span className="text-xs font-tabular-mono text-[var(--math-ink-y)] block">Column a₂ (or click plot)</span>
                   <div className="grid grid-cols-2 gap-1.5">
                     <input
                       type="number"
@@ -397,6 +400,7 @@ export function DeterminantVolumeLab() {
                       value={a2_2d[0]}
                       onChange={(e) => setA2_2d([Number(e.target.value) || 0, a2_2d[1]])}
                       className="px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)]"
+                      aria-label="Column a₂ x-component"
                     />
                     <input
                       type="number"
@@ -404,6 +408,7 @@ export function DeterminantVolumeLab() {
                       value={a2_2d[1]}
                       onChange={(e) => setA2_2d([a2_2d[0], Number(e.target.value) || 0])}
                       className="px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)]"
+                      aria-label="Column a₂ y-component"
                     />
                   </div>
                 </div>
@@ -423,7 +428,7 @@ export function DeterminantVolumeLab() {
                   block
                 />
                 {Math.abs(det2d) <= 1e-3 && (
-                  <p className="text-[#B95869] font-tabular-mono flex items-center gap-1.5">
+                  <p className="text-[var(--math-ink-upper)] font-tabular-mono flex items-center gap-1.5">
                     <AlertTriangle className="w-3.5 h-3.5" aria-hidden="true" />
                     Singular Matrix: Area collapsed to zero!
                   </p>
@@ -441,7 +446,10 @@ export function DeterminantVolumeLab() {
                   key={item.lbl}
                   className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5"
                 >
-                  <span className="text-xs font-tabular-mono block" style={{ color: item.color }}>
+                  <span
+                    className="text-xs font-tabular-mono block"
+                    style={{ color: getAdaptiveAccentInk(item.color) }}
+                  >
                     Column {item.lbl}
                   </span>
                   <div className="grid grid-cols-3 gap-1.5">
@@ -457,13 +465,14 @@ export function DeterminantVolumeLab() {
                           item.set(next);
                         }}
                         className="px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)]"
+                        aria-label={`Column ${item.lbl} ${["x", "y", "z"][axis]}-component`}
                       />
                     ))}
                   </div>
                 </div>
               ))}
               <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-xs font-tabular-mono flex items-center justify-between">
-                <span className="text-[#029091] flex items-center gap-1">
+                <span className="text-[var(--math-ink-z)] flex items-center gap-1">
                   <Box className="w-3.5 h-3.5" aria-hidden="true" />
                   Volume Scaling |det A|:
                 </span>
@@ -473,7 +482,7 @@ export function DeterminantVolumeLab() {
           )}
 
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] flex items-center gap-1.5">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5" aria-hidden="true" />
               Orientation &amp; Singularity
             </span>

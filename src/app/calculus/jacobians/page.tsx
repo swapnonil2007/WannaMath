@@ -1,23 +1,34 @@
 import React from "react";
+import type { Metadata } from "next";
 import { TopicPageShell } from "@/components/layout/TopicPageShell";
-import { DualGridMorphingAndTangentLab } from "@/components/visualizations/jacobians/DualGridMorphingAndTangentLab";
-import { JacobianIntegralPullbackLab } from "@/components/visualizations/jacobians/JacobianIntegralPullbackLab";
+import { DynamicLabRenderer } from "@/components/visualizations/DynamicLabRenderer";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+
+export const metadata: Metadata = {
+  title: "Jacobian Matrix & Change of Variables (3.2.4)",
+  alternates: {
+    canonical: "/multivariable-calculus/integral-calculus/jacobians",
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function JacobiansPage() {
   return (
     <TopicPageShell topicId="jacobians">
       <div className="space-y-10">
         {/* Lab 1: Dual-Space (u,v) ↔ (x,y) Grid Morphing & Tangent Parallelogram */}
-        <DualGridMorphingAndTangentLab />
+        <DynamicLabRenderer name="DualGridMorphingAndTangentLab" />
 
         {/* Lab 2: Integral Domain Pullback & 2D/3D Jacobian Matrix Explorer */}
-        <JacobianIntegralPullbackLab />
+        <DynamicLabRenderer name="JacobianIntegralPullbackLab" />
 
         {/* Geometric Summary: Why the Determinant Appears */}
         <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-5">
           <div className="border-b border-[var(--border-subtle)] pb-3">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
               Unifying Principle Across Multivariable Integration
             </span>
             <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -27,7 +38,7 @@ export default function JacobiansPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-              <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE] block">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                 1. 1D U-SUBSTITUTION ANALOGUE
               </span>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -43,7 +54,7 @@ export default function JacobiansPage() {
             </div>
 
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-              <span className="text-xs font-tabular-mono font-semibold text-[#96B898] block">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                 2. 2D TANGENT CROSS PRODUCT
               </span>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
@@ -61,7 +72,7 @@ export default function JacobiansPage() {
             </div>
 
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-              <span className="text-xs font-tabular-mono font-semibold text-[#029091] block">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
                 3. 3D SCALAR TRIPLE PRODUCT
               </span>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">

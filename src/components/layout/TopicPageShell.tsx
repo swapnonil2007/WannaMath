@@ -18,6 +18,7 @@ import {
   getPrerequisiteChapters,
 } from "@/registry/index";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 interface TopicPageShellProps {
   topicId?: string;
@@ -41,14 +42,15 @@ export function TopicPageShell({
   const { prev, next } = getAdjacentChapters(chapter.id);
   const prereqs = getPrerequisiteChapters(chapter.id);
   const accentHex = chapter.accentHex ?? mod.accentHex ?? volume.accentHex;
+  const accentInk = getAdaptiveAccentInk(accentHex);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
       {/* 4-Tier Textbook Breadcrumb & Module Chapter Switcher Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
+      <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <nav
           aria-label="Breadcrumb"
-          className="flex flex-wrap items-center gap-1.5 text-xs font-tabular-mono text-[var(--text-muted)]"
+          className="flex flex-wrap items-center gap-1.5 text-xs font-sans font-medium text-[var(--text-muted)]"
         >
           <Link
             href="/"
@@ -71,13 +73,13 @@ export function TopicPageShell({
             Mod. {mod.numberLabel}: {mod.title}
           </Link>
           <ChevronRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-          <span className="text-[var(--text-primary)] font-medium">
+          <span className="text-[var(--text-primary)] font-semibold">
             Ch. {chapter.id}: {chapter.title}
           </span>
         </nav>
 
         {/* Sibling Chapters Quick Pill Switcher within Current Module */}
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5 shrink-0">
           {mod.chapters.map((sibling) => {
             const active = sibling.id === chapter.id;
             const siblingRoute = `/${volume.slug}/${mod.slug}/${sibling.slug}`;
@@ -106,13 +108,16 @@ export function TopicPageShell({
       </div>
 
       {/* Prerequisite Chips Bar */}
-      <div className="flex flex-wrap items-center gap-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] px-4 py-2.5">
-        <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 mr-1">
-          <GitBranch className="w-3.5 h-3.5 text-[#AAA36D]" aria-hidden="true" />
+      <div className="flex flex-wrap md:flex-nowrap items-center gap-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)] px-4 py-2.5 md:overflow-x-auto">
+        <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5 mr-1 whitespace-nowrap shrink-0">
+          <GitBranch
+            className="w-3.5 h-3.5 text-[var(--math-ink-grid)]"
+            aria-hidden="true"
+          />
           <span>Prerequisite Chapters:</span>
         </span>
         {prereqs.length === 0 ? (
-          <span className="text-xs font-tabular-mono text-[var(--text-secondary)] px-2 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
+          <span className="text-xs font-tabular-mono text-[var(--text-secondary)] px-2 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] whitespace-nowrap">
             Foundational Entry Chapter (No prior chapters required)
           </span>
         ) : (
@@ -120,17 +125,17 @@ export function TopicPageShell({
             <Link
               key={p.chapter.id}
               href={p.route}
-              className="px-2.5 py-1 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] bg-[var(--bg-canvas)] text-xs font-tabular-mono text-[var(--text-primary)] flex items-center gap-1.5 transition-colors"
+              className="px-2.5 py-1 border border-[var(--border-subtle)] hover:border-[var(--border-strong)] bg-[var(--bg-canvas)] text-xs font-sans font-medium text-[var(--text-primary)] flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0"
             >
               <span
-                className="w-1.5 h-1.5 inline-block"
+                className="w-1.5 h-1.5 inline-block shrink-0"
                 style={{
                   backgroundColor:
                     p.chapter.status === "published" ? "#96B898" : "#AAA36D",
                 }}
                 aria-hidden="true"
               />
-              <span className="text-[var(--text-muted)]">{p.chapter.id}</span>
+              <span className="font-tabular-mono text-[var(--text-muted)]">{p.chapter.id}</span>
               <span>{p.chapter.title}</span>
             </Link>
           ))
@@ -143,7 +148,7 @@ export function TopicPageShell({
           <div className="flex flex-wrap items-center gap-2.5">
             <span
               className="px-2.5 py-0.5 text-xs font-tabular-mono font-semibold border border-[var(--border-strong)] bg-[var(--bg-panel)]"
-              style={{ color: accentHex }}
+              style={{ color: accentInk }}
             >
               CHAPTER {chapter.id} • {chapter.dimensionBadge ?? "2D + 3D"}
             </span>
@@ -151,7 +156,7 @@ export function TopicPageShell({
               {chapter.status === "published" ? (
                 <>
                   <CheckCircle2
-                    className="w-3.5 h-3.5 text-[#96B898]"
+                    className="w-3.5 h-3.5 text-[var(--math-ink-y)]"
                     aria-hidden="true"
                   />
                   <span>Published Interactive Labs</span>
@@ -159,7 +164,7 @@ export function TopicPageShell({
               ) : (
                 <>
                   <Clock
-                    className="w-3.5 h-3.5 text-[#FBEAA4]"
+                    className="w-3.5 h-3.5 text-[var(--math-ink-diff)]"
                     aria-hidden="true"
                   />
                   <span>Curriculum Syllabus Ready</span>
@@ -183,7 +188,7 @@ export function TopicPageShell({
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
               <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
                 <Cpu
-                  className="w-3.5 h-3.5 text-[#96B898]"
+                  className="w-3.5 h-3.5 text-[var(--math-ink-y)]"
                   aria-hidden="true"
                 />
                 <span>Engineering &amp; Physical Application Context</span>
@@ -211,9 +216,9 @@ export function TopicPageShell({
           {chapter.keyEquationsLatex.map((eq, idx) => (
             <div
               key={idx}
-              className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--text-primary)] overflow-x-auto"
+              className="p-3 min-h-[88px] flex items-center bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--text-primary)] overflow-x-auto"
             >
-              <KaTeXMath math={eq} block />
+              <KaTeXMath math={eq} block className="w-full" />
             </div>
           ))}
 
@@ -232,10 +237,10 @@ export function TopicPageShell({
           <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
             <div className="flex items-center gap-2">
               <HelpCircle
-                className="w-4 h-4 text-[#FBEAA4]"
+                className="w-4 h-4 text-[var(--math-ink-diff)]"
                 aria-hidden="true"
               />
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#FBEAA4]">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-diff)]">
                 4-Step Pedagogical Chapter Rhythm • Geometric Intuition First
               </span>
             </div>
@@ -246,7 +251,7 @@ export function TopicPageShell({
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
             <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
-              <span className="text-[11px] font-tabular-mono font-semibold text-[#8D9FCE] block">
+              <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
                 STEP 1 • GEOMETRIC QUESTION
               </span>
               <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
@@ -255,7 +260,7 @@ export function TopicPageShell({
             </div>
 
             <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
-              <span className="text-[11px] font-tabular-mono font-semibold text-[#96B898] block">
+              <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
                 STEP 2 • INTERACTIVE LAB EXPLORATION
               </span>
               <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
@@ -264,7 +269,7 @@ export function TopicPageShell({
             </div>
 
             <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5 overflow-x-auto">
-              <span className="text-[11px] font-tabular-mono font-semibold text-[#FBEAA4] block">
+              <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
                 STEP 3 • SYMBOLIC FORMALIZATION
               </span>
               <div className="text-xs pt-1">
@@ -275,7 +280,7 @@ export function TopicPageShell({
             </div>
 
             <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
-              <span className="text-[11px] font-tabular-mono font-semibold text-[#D35323] block">
+              <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
                 STEP 4 • EDGE CASES &amp; NEXT BRIDGE
               </span>
               <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
@@ -293,7 +298,11 @@ export function TopicPageShell({
           className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-4"
         >
           <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] mb-3">
-            <Layers className="w-3.5 h-3.5" style={{ color: accentHex }} />
+            <Layers
+              className="w-3.5 h-3.5"
+              style={{ color: accentInk }}
+              aria-hidden="true"
+            />
             <span>Interactive Laboratories in Chapter {chapter.id}</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -308,7 +317,7 @@ export function TopicPageShell({
                     <span>
                       LAB {chapter.id}.{idx + 1} • {lab.componentKey}
                     </span>
-                    <span style={{ color: accentHex }}>
+                    <span style={{ color: accentInk }}>
                       {lab.dimensionBadge ?? "2D + 3D"}
                     </span>
                   </div>
@@ -339,7 +348,7 @@ export function TopicPageShell({
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-2.5">
             <BookOpen
               className="w-5 h-5"
-              style={{ color: accentHex }}
+              style={{ color: accentInk }}
               aria-hidden="true"
             />
             <span>Chapter {chapter.id} Laboratory Specifications</span>
@@ -359,7 +368,7 @@ export function TopicPageShell({
                 <div className="flex items-center justify-between">
                   <span
                     className="text-xs font-tabular-mono font-semibold px-2 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]"
-                    style={{ color: accentHex }}
+                    style={{ color: accentInk }}
                   >
                     LAB {chapter.id}.{index + 1}
                   </span>
@@ -400,7 +409,9 @@ export function TopicPageShell({
             <ArrowLeft
               className="w-5 h-5 shrink-0"
               style={{
-                color: prev.chapter.accentHex ?? prev.volume.accentHex,
+                color: getAdaptiveAccentInk(
+                  prev.chapter.accentHex ?? prev.volume.accentHex
+                ),
               }}
               aria-hidden="true"
             />
@@ -420,7 +431,7 @@ export function TopicPageShell({
             className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] hover:border-[var(--border-strong)] transition-colors flex items-center gap-3"
           >
             <ArrowLeft
-              className="w-5 h-5 shrink-0 text-[#8D9FCE]"
+              className="w-5 h-5 shrink-0 text-[var(--math-ink-x)]"
               aria-hidden="true"
             />
             <div>
@@ -451,7 +462,9 @@ export function TopicPageShell({
             <ArrowRight
               className="w-5 h-5 shrink-0"
               style={{
-                color: next.chapter.accentHex ?? next.volume.accentHex,
+                color: getAdaptiveAccentInk(
+                  next.chapter.accentHex ?? next.volume.accentHex
+                ),
               }}
               aria-hidden="true"
             />
@@ -470,7 +483,7 @@ export function TopicPageShell({
               </span>
             </div>
             <ArrowRight
-              className="w-5 h-5 shrink-0 text-[#AAA36D]"
+              className="w-5 h-5 shrink-0 text-[var(--math-ink-grid)]"
               aria-hidden="true"
             />
           </Link>

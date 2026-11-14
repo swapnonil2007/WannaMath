@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -12,11 +13,39 @@ import {
 } from "lucide-react";
 import { getAllVolumes, getVolumeBySlug } from "@/registry/index";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildVolumeJsonLd } from "@/lib/seo/structuredData";
+import { buildPageMetadata } from "@/lib/seo/siteConfig";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 export function generateStaticParams() {
   return getAllVolumes().map((vol) => ({
     volume: vol.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ volume: string }>;
+}): Promise<Metadata> {
+  const { volume: volumeSlug } = await params;
+  const volume = getVolumeBySlug(volumeSlug);
+  if (!volume) {
+    return {
+      title: "Volume Not Found",
+      robots: { index: false, follow: false },
+    };
+  }
+  const totalChapters = volume.modules.reduce(
+    (acc, m) => acc + m.chapters.length,
+    0
+  );
+  return buildPageMetadata({
+    title: `Vol. ${volume.volumeNumber}: ${volume.title}`,
+    description: `${volume.description} Explore ${volume.modules.length} modules and ${totalChapters} interactive chapters with 2D/3D visualizations.`,
+    path: `/${volume.slug}`,
+  });
 }
 
 export default async function VolumePage({
@@ -43,6 +72,7 @@ export default async function VolumePage({
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+      <JsonLd data={buildVolumeJsonLd(volume)} />
       {/* Breadcrumb */}
       <nav
         aria-label="Breadcrumb"
@@ -63,7 +93,7 @@ export default async function VolumePage({
           <div className="flex flex-wrap items-center gap-2.5">
             <span
               className="px-2.5 py-1 border border-[var(--border-strong)] bg-[var(--bg-panel)] text-xs font-tabular-mono font-semibold"
-              style={{ color: volume.accentHex }}
+              style={{ color: getAdaptiveAccentInk(volume.accentHex) }}
             >
               TEXTBOOK VOLUME {volume.volumeNumber} • {volume.modules.length}{" "}
               MODULES • {totalChapters} CHAPTERS
@@ -89,7 +119,7 @@ export default async function VolumePage({
           <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] border-b border-[var(--border-subtle)] pb-2">
             <Cpu
               className="w-3.5 h-3.5"
-              style={{ color: volume.accentHex }}
+              style={{ color: getAdaptiveAccentInk(volume.accentHex) }}
               aria-hidden="true"
             />
             <span>Core Engineering Applications</span>
@@ -97,7 +127,7 @@ export default async function VolumePage({
           <ul className="space-y-1.5 text-xs text-[var(--text-secondary)]">
             {volume.engineeringApplications.map((app) => (
               <li key={app} className="flex items-start gap-2">
-                <span style={{ color: volume.accentHex }}>•</span>
+                <span style={{ color: getAdaptiveAccentInk(volume.accentHex) }}>•</span>
                 <span>{app}</span>
               </li>
             ))}
@@ -111,7 +141,7 @@ export default async function VolumePage({
           <h2 className="font-math-serif text-2xl sm:text-3xl font-semibold text-[var(--text-primary)] flex items-center gap-2.5">
             <BookOpen
               className="w-6 h-6"
-              style={{ color: volume.accentHex }}
+              style={{ color: getAdaptiveAccentInk(volume.accentHex) }}
               aria-hidden="true"
             />
             <span>Modules &amp; Chapters in Volume {volume.volumeNumber}</span>
@@ -126,20 +156,23 @@ export default async function VolumePage({
         </div>
 
         <div className="space-y-8">
-          {volume.modules.map((mod) => {
+          {volume.modules.map((mod, modIdx) => {
             const modAccent = mod.accentHex ?? volume.accentHex;
+            const modInk = getAdaptiveAccentInk(modAccent);
             const modRoute = `/${volume.slug}/${mod.slug}`;
             return (
               <div
                 key={mod.id}
-                className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-5"
+                className={`border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-5 ${
+                  modIdx > 0 ? "below-fold-section" : ""
+                }`}
               >
                 <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
                   <div className="space-y-1 max-w-3xl">
                     <div className="flex items-center gap-2">
                       <span
                         className="px-2 py-0.5 text-xs font-tabular-mono font-semibold border border-[var(--border-subtle)] bg-[var(--bg-canvas)]"
-                        style={{ color: modAccent }}
+                        style={{ color: modInk }}
                       >
                         MODULE {mod.numberLabel}
                       </span>
@@ -174,6 +207,7 @@ export default async function VolumePage({
                   {mod.chapters.map((chapter) => {
                     const chRoute = `/${volume.slug}/${mod.slug}/${chapter.slug}`;
                     const chAccent = chapter.accentHex ?? modAccent;
+                    const chInk = getAdaptiveAccentInk(chAccent);
                     const isPublished = chapter.status === "published";
                     return (
                       <article
@@ -184,7 +218,7 @@ export default async function VolumePage({
                           <div className="flex items-center justify-between gap-2">
                             <span
                               className="text-xs font-tabular-mono font-semibold"
-                              style={{ color: chAccent }}
+                              style={{ color: chInk }}
                             >
                               CHAPTER {chapter.id} •{" "}
                               {chapter.dimensionBadge ?? "2D + 3D"}
@@ -193,17 +227,17 @@ export default async function VolumePage({
                               {isPublished ? (
                                 <>
                                   <CheckCircle2
-                                    className="w-3.5 h-3.5 text-[#96B898]"
+                                    className="w-3.5 h-3.5 text-[var(--math-ink-y)]"
                                     aria-hidden="true"
                                   />
-                                  <span className="text-[#96B898]">
+                                  <span className="text-[var(--math-ink-y)]">
                                     Published ({chapter.labs.length} Labs)
                                   </span>
                                 </>
                               ) : (
                                 <>
                                   <Clock
-                                    className="w-3.5 h-3.5 text-[#FBEAA4]"
+                                    className="w-3.5 h-3.5 text-[var(--math-ink-diff)]"
                                     aria-hidden="true"
                                   />
                                   <span>Syllabus Ready</span>

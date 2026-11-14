@@ -11,6 +11,7 @@ import {
   createVectorArrow3D,
   createParametricSurfaceMesh,
 } from "@/components/visualizations/primitives";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 type DimMode = "2d" | "3d";
 
@@ -227,7 +228,7 @@ export function VectorSpanExplorerLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#96B898] text-[#96B898] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[var(--bg-canvas)]">
               LAB 2.1.1 • LINEAR COMBINATIONS &amp; SPAN
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -258,7 +259,7 @@ export function VectorSpanExplorerLab() {
             onClick={() => setDimMode("3d")}
             className={`px-3 py-1.5 text-xs font-tabular-mono border-l border-[var(--border-subtle)] transition-colors ${
               dimMode === "3d"
-                ? "bg-[#029091] text-[#1E1F22] font-semibold"
+                ? "bg-[#016869] text-[#FFFBE4] font-semibold"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -284,7 +285,7 @@ export function VectorSpanExplorerLab() {
                 }}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   preset2dId === p.id
-                    ? "border-[#96B898] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-y)] bg-[#96B898]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)]"
                 }`}
               >
@@ -306,7 +307,7 @@ export function VectorSpanExplorerLab() {
                 }}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   preset3dId === p.id
-                    ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)]"
                 }`}
               >
@@ -323,10 +324,10 @@ export function VectorSpanExplorerLab() {
             <>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5 text-[#96B898]" aria-hidden="true" />
+                  <Compass className="w-3.5 h-3.5 text-[var(--math-ink-y)]" aria-hidden="true" />
                   2D Linear Combination Parallelogram &amp; Span Solver
                 </span>
-                <span className="text-[11px] font-tabular-mono text-[#FBEAA4]">
+                <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)]">
                   Click anywhere to solve b = c₁v₁ + c₂v₂
                 </span>
               </div>
@@ -473,10 +474,10 @@ export function VectorSpanExplorerLab() {
               titleBadge="3D Span{v₁, v₂} Plane & Linear Combination w = c₁v₁ + c₂v₂ + c₃v₃"
               footerSlot={
                 <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                  <span className="text-[#8D9FCE]">v₁ (Periwinkle)</span>
-                  <span className="text-[#96B898]">v₂ (Sage)</span>
-                  <span className="text-[#FBEAA4]">v₃ (Cream)</span>
-                  <span className="text-[#D35323] font-semibold">
+                  <span className="text-[var(--math-ink-x)]">v₁ (Periwinkle)</span>
+                  <span className="text-[var(--math-ink-y)]">v₂ (Sage)</span>
+                  <span className="text-[var(--math-ink-diff)]">v₃ (Cream)</span>
+                  <span className="text-[var(--math-ink-sweep)] font-semibold">
                     Rank {stats3d.rank} ({stats3d.rank === 3 ? "Spans ℝ³" : stats3d.rank === 2 ? "2D Plane" : "1D Line"})
                   </span>
                 </div>
@@ -548,12 +549,12 @@ export function VectorSpanExplorerLab() {
               <>
                 <span className="flex items-center gap-1.5">
                   {stats2d.rank === 2 ? (
-                    <span className="text-[#96B898] flex items-center gap-1">
+                    <span className="text-[var(--math-ink-y)] flex items-center gap-1">
                       <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                       Linearly Independent • Spans all of ℝ²
                     </span>
                   ) : (
-                    <span className="text-[#B95869] flex items-center gap-1">
+                    <span className="text-[var(--math-ink-upper)] flex items-center gap-1">
                       <AlertTriangle className="w-4 h-4" aria-hidden="true" />
                       Linearly Dependent • Collapsed to 1D Line
                     </span>
@@ -565,7 +566,7 @@ export function VectorSpanExplorerLab() {
               </>
             ) : (
               <>
-                <span className="text-[#029091]">
+                <span className="text-[var(--math-ink-z)]">
                   {stats3d.rank === 3
                     ? "Linearly Independent • Spans ℝ³ (3D Volume)"
                     : stats3d.rank === 2
@@ -586,12 +587,12 @@ export function VectorSpanExplorerLab() {
             <div className="space-y-4">
               {/* Scalar weights */}
               <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
-                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
                   Scalar Weights (c₁, c₂)
                 </span>
                 <label className="block space-y-1">
                   <div className="flex justify-between text-xs font-tabular-mono">
-                    <span className="text-[#8D9FCE]">c₁</span>
+                    <span className="text-[var(--math-ink-x)]">c₁</span>
                     <span>{c1_2d.toFixed(2)}</span>
                   </div>
                   <input
@@ -606,7 +607,7 @@ export function VectorSpanExplorerLab() {
                 </label>
                 <label className="block space-y-1">
                   <div className="flex justify-between text-xs font-tabular-mono">
-                    <span className="text-[#96B898]">c₂</span>
+                    <span className="text-[var(--math-ink-y)]">c₂</span>
                     <span>{c2_2d.toFixed(2)}</span>
                   </div>
                   <input
@@ -624,7 +625,7 @@ export function VectorSpanExplorerLab() {
               {/* Vector components */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                  <span className="text-xs font-tabular-mono text-[#8D9FCE] block">Vector v₁</span>
+                  <span className="text-xs font-tabular-mono text-[var(--math-ink-x)] block">Vector v₁</span>
                   <div className="grid grid-cols-2 gap-2">
                     <input
                       type="number"
@@ -632,6 +633,7 @@ export function VectorSpanExplorerLab() {
                       value={v1_2d[0]}
                       onChange={(e) => setV1_2d([Number(e.target.value) || 0, v1_2d[1]])}
                       className="w-full px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)]"
+                      aria-label="Vector v₁ x-component"
                     />
                     <input
                       type="number"
@@ -639,11 +641,12 @@ export function VectorSpanExplorerLab() {
                       value={v1_2d[1]}
                       onChange={(e) => setV1_2d([v1_2d[0], Number(e.target.value) || 0])}
                       className="w-full px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)]"
+                      aria-label="Vector v₁ y-component"
                     />
                   </div>
                 </div>
                 <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                  <span className="text-xs font-tabular-mono text-[#96B898] block">Vector v₂</span>
+                  <span className="text-xs font-tabular-mono text-[var(--math-ink-y)] block">Vector v₂</span>
                   <div className="grid grid-cols-2 gap-2">
                     <input
                       type="number"
@@ -651,6 +654,7 @@ export function VectorSpanExplorerLab() {
                       value={v2_2d[0]}
                       onChange={(e) => setV2_2d([Number(e.target.value) || 0, v2_2d[1]])}
                       className="w-full px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)]"
+                      aria-label="Vector v₂ x-component"
                     />
                     <input
                       type="number"
@@ -658,6 +662,7 @@ export function VectorSpanExplorerLab() {
                       value={v2_2d[1]}
                       onChange={(e) => setV2_2d([v2_2d[0], Number(e.target.value) || 0])}
                       className="w-full px-2 py-1 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)]"
+                      aria-label="Vector v₂ y-component"
                     />
                   </div>
                 </div>
@@ -679,7 +684,7 @@ export function VectorSpanExplorerLab() {
               </div>
 
               {clickedTarget && !stats2d.targetReachable && (
-                <p className="text-xs font-tabular-mono text-[#B95869] p-2.5 border border-[#B95869]/50 bg-[var(--bg-canvas)]">
+                <p className="text-xs font-tabular-mono text-[var(--math-ink-upper)] p-2.5 border border-[var(--math-ink-upper)]/50 bg-[var(--bg-canvas)]">
                   Target b = ({clickedTarget[0].toFixed(2)}, {clickedTarget[1].toFixed(2)}) lies
                   OUTSIDE the collapsed 1D line span—no solution (c₁, c₂) exists!
                 </p>
@@ -688,7 +693,7 @@ export function VectorSpanExplorerLab() {
           ) : (
             <div className="space-y-4">
               <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
                   3D Combination Weights (c₁, c₂, c₃)
                 </span>
                 {[
@@ -698,7 +703,9 @@ export function VectorSpanExplorerLab() {
                 ].map((item) => (
                   <label key={item.label} className="block space-y-1">
                     <div className="flex justify-between text-xs font-tabular-mono">
-                      <span style={{ color: item.color }}>{item.label}</span>
+                      <span style={{ color: getAdaptiveAccentInk(item.color) }}>
+                        {item.label}
+                      </span>
                       <span>{item.val.toFixed(2)}</span>
                     </div>
                     <input
@@ -709,6 +716,7 @@ export function VectorSpanExplorerLab() {
                       value={item.val}
                       onChange={(e) => item.set(Number(e.target.value))}
                       className="w-full"
+                      aria-label={`Linear combination weight ${item.label}`}
                     />
                   </label>
                 ))}
@@ -726,7 +734,7 @@ export function VectorSpanExplorerLab() {
           )}
 
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#029091] flex items-center gap-1.5">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5" aria-hidden="true" />
               Subspace Intuition
             </span>

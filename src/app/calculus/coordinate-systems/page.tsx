@@ -1,23 +1,34 @@
 import React from "react";
+import type { Metadata } from "next";
 import { TopicPageShell } from "@/components/layout/TopicPageShell";
-import { PolarCoordinateAreaLab } from "@/components/visualizations/coordinate-systems/PolarCoordinateAreaLab";
-import { Curvilinear3DSurfacesAndElementLab } from "@/components/visualizations/coordinate-systems/Curvilinear3DSurfacesAndElementLab";
+import { DynamicLabRenderer } from "@/components/visualizations/DynamicLabRenderer";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+
+export const metadata: Metadata = {
+  title: "Polar, Cylindrical & Spherical Coordinates (3.2.3)",
+  alternates: {
+    canonical: "/multivariable-calculus/integral-calculus/coordinate-systems",
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function CoordinateSystemsPage() {
   return (
     <TopicPageShell topicId="coordinate-systems">
       <div className="space-y-10">
         {/* Lab 1: 2D Polar vs Cartesian & Area Element dA = r dr dθ */}
-        <PolarCoordinateAreaLab />
+        <DynamicLabRenderer name="PolarCoordinateAreaLab" />
 
         {/* Lab 2: 3D Intersecting Coordinate Surfaces, Local Basis Triads & dV Magnifier */}
-        <Curvilinear3DSurfacesAndElementLab />
+        <DynamicLabRenderer name="Curvilinear3DSurfacesAndElementLab" />
 
         {/* Comparative Reference Sheet: Scale Factors & Differential Elements */}
         <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-5">
           <div className="border-b border-[var(--border-subtle)] pb-3">
-            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#AAA36D] block">
+            <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-grid)] block">
               Orthogonal Curvilinear Reference Sheet
             </span>
             <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -41,7 +52,7 @@ export default function CoordinateSystemsPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE]">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)]">
                   CARTESIAN (x, y, z)
                 </span>
                 <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -63,7 +74,7 @@ export default function CoordinateSystemsPage() {
 
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-tabular-mono font-semibold text-[#96B898]">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)]">
                   CYLINDRICAL (r, θ, z)
                 </span>
                 <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -85,7 +96,7 @@ export default function CoordinateSystemsPage() {
 
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D5658B]">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)]">
                   SPHERICAL (ρ, φ, θ)
                 </span>
                 <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">

@@ -227,7 +227,7 @@ export function StokesDivergenceLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]">
               LAB 3.3.7 • STOKES&apos; &amp; GAUSS DIVERGENCE THEOREM UNIFICATION
             </span>
           </div>
@@ -251,11 +251,11 @@ export function StokesDivergenceLab() {
             onClick={() => setMode("stokes")}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-tabular-mono border transition-colors ${
               mode === "stokes"
-                ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
+                ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
             }`}
           >
-            <CircleDot className="w-3.5 h-3.5 text-[#D35323]" />
+            <CircleDot className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
             Stokes&apos; Rim-Cap
           </button>
           <button
@@ -263,11 +263,11 @@ export function StokesDivergenceLab() {
             onClick={() => setMode("gauss")}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-tabular-mono border transition-colors ${
               mode === "gauss"
-                ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
+                ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)]"
             }`}
           >
-            <Box className="w-3.5 h-3.5 text-[#029091]" />
+            <Box className="w-3.5 h-3.5 text-[var(--math-ink-z)]" />
             Gauss Control Volume
           </button>
         </div>
@@ -317,19 +317,19 @@ export function StokesDivergenceLab() {
             footerSlot={
               mode === "stokes" ? (
                 <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                  <span className="text-[#D35323] font-semibold">
+                  <span className="text-[var(--math-ink-sweep)] font-semibold">
                     Rim ∮_∂S F·dr = {stokesStats.rimCirculation.toFixed(4)}
                   </span>
-                  <span className="text-[#029091] font-semibold">
+                  <span className="text-[var(--math-ink-z)] font-semibold">
                     Cap ∬_S (∇×F)·dS = {stokesStats.surfaceCurlFlux.toFixed(4)}
                   </span>
                 </div>
               ) : (
                 <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                  <span className="text-[#D35323] font-semibold">
+                  <span className="text-[var(--math-ink-sweep)] font-semibold">
                     Boundary ∯_∂E F·dS = {gaussStats.closedSurfaceFlux.toFixed(4)}
                   </span>
-                  <span className="text-[#029091] font-semibold">
+                  <span className="text-[var(--math-ink-z)] font-semibold">
                     Interior ∭_E (∇·F) dV = {gaussStats.volumeDivergence.toFixed(4)}
                   </span>
                 </div>
@@ -471,7 +471,7 @@ export function StokesDivergenceLab() {
           {mode === "stokes" ? (
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-4">
               <div className="space-y-1">
-                <div className="flex justify-between text-xs font-tabular-mono text-[#029091]">
+                <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-z)]">
                   <span>Soap-Film Dome Height H (Surface Deformation)</span>
                   <span>H = {domeHeight.toFixed(2)}</span>
                 </div>
@@ -483,11 +483,12 @@ export function StokesDivergenceLab() {
                   value={domeHeight}
                   onChange={(e) => setDomeHeight(parseFloat(e.target.value))}
                   className="w-full accent-[#029091]"
+                  aria-label="Soap-film dome height H"
                 />
               </div>
 
               <div className="space-y-1 pt-2 border-t border-[var(--border-subtle)]">
-                <div className="flex justify-between text-xs font-tabular-mono text-[#D35323]">
+                <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
                   <span>Boundary Rim Radius R</span>
                   <span>R = {rimRadius.toFixed(2)}</span>
                 </div>
@@ -499,13 +500,14 @@ export function StokesDivergenceLab() {
                   value={rimRadius}
                   onChange={(e) => setRimRadius(parseFloat(e.target.value))}
                   className="w-full accent-[#D35323]"
+                  aria-label="Boundary rim radius R"
                 />
               </div>
             </div>
           ) : (
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-4">
               <div className="space-y-1">
-                <div className="flex justify-between text-xs font-tabular-mono text-[#029091]">
+                <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-z)]">
                   <span>Control Volume Half-Size L ([-L, L]³)</span>
                   <span>L = {boxHalf.toFixed(2)}</span>
                 </div>
@@ -517,12 +519,13 @@ export function StokesDivergenceLab() {
                   value={boxHalf}
                   onChange={(e) => setBoxHalf(parseFloat(e.target.value))}
                   className="w-full accent-[#029091]"
+                  aria-label="Control volume half-size L"
                 />
               </div>
 
               <div className="grid grid-cols-3 gap-2 text-xs font-tabular-mono pt-2 border-t border-[var(--border-subtle)]">
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-                  <span className="text-[#8D9FCE] block text-[10px]">
+                  <span className="text-[var(--math-ink-x)] block text-[10px]">
                     ±x Faces
                   </span>
                   <span className="text-[var(--text-primary)] font-semibold">
@@ -530,7 +533,7 @@ export function StokesDivergenceLab() {
                   </span>
                 </div>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-                  <span className="text-[#96B898] block text-[10px]">
+                  <span className="text-[var(--math-ink-y)] block text-[10px]">
                     ±y Faces
                   </span>
                   <span className="text-[var(--text-primary)] font-semibold">
@@ -538,7 +541,7 @@ export function StokesDivergenceLab() {
                   </span>
                 </div>
                 <div className="p-2 border border-[var(--border-subtle)] bg-[var(--bg-panel)]">
-                  <span className="text-[#029091] block text-[10px]">
+                  <span className="text-[var(--math-ink-z)] block text-[10px]">
                     ±z Faces
                   </span>
                   <span className="text-[var(--text-primary)] font-semibold">
@@ -551,7 +554,7 @@ export function StokesDivergenceLab() {
 
           {/* Generalized Stokes' Theorem Unification Card */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
-            <div className="flex items-center gap-1.5 text-xs font-tabular-mono text-[#FBEAA4]">
+            <div className="flex items-center gap-1.5 text-xs font-tabular-mono text-[var(--math-ink-diff)]">
               <Sparkles className="w-3.5 h-3.5" />
               <span>THE GRAND UNIFICATION OF VECTOR CALCULUS</span>
             </div>

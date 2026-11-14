@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D, gammaReal } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D, gammaReal } from "@/components/visualizations/primitives/core2d";
 
 type DistId = "gaussian" | "exponential" | "weibull" | "beta";
 
@@ -268,7 +268,7 @@ export function PDFCDFMomentLab() {
           </label>
 
           <label className="rounded-lg border border-[#35383F] bg-[#1E1F22] p-3">
-            <div className="flex justify-between font-mono text-xs text-[#D35323]">
+            <div className="flex justify-between font-mono text-xs text-[#EF7547]">
               <span>Lower Quantile a</span>
               <span>{fmt(boundA, 2)}</span>
             </div>
@@ -474,7 +474,7 @@ export function PDFCDFMomentLab() {
           </span>
           <div className="mt-2 space-y-1">
             <div>
-              F({fmt(aVal, 2)}) = <span className="text-[#D35323]">{fmt(stats.fa, 4)}</span>
+              F({fmt(aVal, 2)}) = <span className="text-[#EF7547]">{fmt(stats.fa, 4)}</span>
             </div>
             <div>
               F({fmt(bVal, 2)}) = <span className="text-[#FBEAA4]">{fmt(stats.fb, 4)}</span>

@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 type OdeId = "exp" | "logistic" | "osc" | "stiff";
 
@@ -248,7 +248,7 @@ export function RungeKuttaSlopeLab() {
     <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-5 space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323]">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)]">
             Lab 6.2.2 • Explicit Runge–Kutta ODE Solvers
           </span>
           <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -272,7 +272,7 @@ export function RungeKuttaSlopeLab() {
                 }}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#D35323] bg-[var(--bg-canvas)] text-[#FBEAA4]"
+                    ? "border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)] text-[var(--math-ink-diff)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
@@ -288,7 +288,7 @@ export function RungeKuttaSlopeLab() {
         <div className="md:col-span-5 space-y-1">
           <div className="flex justify-between text-xs font-tabular-mono">
             <span className="text-[var(--text-secondary)]">
-              Step Size <strong className="text-[#D35323]">h = {fmt(stepH, 2)}</strong>
+              Step Size <strong className="text-[var(--math-ink-sweep)]">h = {fmt(stepH, 2)}</strong>
             </span>
             <span className="text-[var(--text-muted)]">{sim.nSteps} steps on [0, {fmt(sim.nSteps * stepH, 2)}]</span>
           </div>
@@ -307,7 +307,7 @@ export function RungeKuttaSlopeLab() {
         <div className="md:col-span-4 space-y-1">
           <div className="flex justify-between text-xs font-tabular-mono">
             <span className="text-[var(--text-secondary)]">
-              Magnify Step <strong className="text-[#029091]">n = {sim.safeIdx}</strong>
+              Magnify Step <strong className="text-[var(--math-ink-z)]">n = {sim.safeIdx}</strong>
             </span>
             <span className="text-[var(--text-muted)]">
               [{fmt(snap.tn, 2)}, {fmt(snap.tNext, 2)}]
@@ -327,7 +327,7 @@ export function RungeKuttaSlopeLab() {
 
         <div className="md:col-span-3 text-right text-xs">
           <div className="font-tabular-mono text-[var(--text-muted)]">Initial Value Problem</div>
-          <div className="text-[#FBEAA4] overflow-x-auto">
+          <div className="text-[var(--math-ink-diff)] overflow-x-auto">
             <KaTeXMath math={meta.formulaLatex} />
           </div>
         </div>
@@ -338,12 +338,12 @@ export function RungeKuttaSlopeLab() {
         {/* Global Trajectory Plot */}
         <div className="space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-            <span className="text-[#FBEAA4]">(a) Global Solution Trajectories</span>
+            <span className="text-[var(--math-ink-diff)]">(a) Global Solution Trajectories</span>
             <div className="flex items-center gap-3 text-[11px]">
-              <span className="text-[#FBEAA4]">— Exact</span>
-              <span className="text-[#8D9FCE]">— Euler</span>
-              <span className="text-[#96B898]">— Heun</span>
-              <span className="text-[#029091]">— RK4</span>
+              <span className="text-[var(--math-ink-diff)]">— Exact</span>
+              <span className="text-[var(--math-ink-x)]">— Euler</span>
+              <span className="text-[var(--math-ink-y)]">— Heun</span>
+              <span className="text-[var(--math-ink-z)]">— RK4</span>
             </div>
           </div>
 
@@ -433,12 +433,12 @@ export function RungeKuttaSlopeLab() {
         {/* Right: Single-Step Four-Slope Magnifier [t_n, t_n + h] */}
         <div className="space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-            <span className="text-[#D35323]">(b) Single-Step Magnifier [tₙ, tₙ + h]</span>
+            <span className="text-[var(--math-ink-sweep)]">(b) Single-Step Magnifier [tₙ, tₙ + h]</span>
             <div className="flex items-center gap-2.5 text-[11px]">
-              <span className="text-[#8D9FCE]">k₁</span>
-              <span className="text-[#96B898]">k₂</span>
-              <span className="text-[#AAA36D]">k₃</span>
-              <span className="text-[#D35323]">k₄</span>
+              <span className="text-[var(--math-ink-x)]">k₁</span>
+              <span className="text-[var(--math-ink-y)]">k₂</span>
+              <span className="text-[var(--math-ink-grid)]">k₃</span>
+              <span className="text-[var(--math-ink-sweep)]">k₄</span>
             </div>
           </div>
 
@@ -569,43 +569,43 @@ export function RungeKuttaSlopeLab() {
       {/* Four-Slope Breakdown & Global Terminal Errors */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3 font-tabular-mono text-xs">
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3 space-y-1">
-          <div className="text-[#8D9FCE]">k₁ = f(tₙ, yₙ)</div>
+          <div className="text-[var(--math-ink-x)]">k₁ = f(tₙ, yₙ)</div>
           <div className="text-sm font-semibold text-[var(--text-primary)]">{fmt(snap.k1, 4)}</div>
         </div>
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3 space-y-1">
-          <div className="text-[#96B898]">k₂ (Midpoint 1)</div>
+          <div className="text-[var(--math-ink-y)]">k₂ (Midpoint 1)</div>
           <div className="text-sm font-semibold text-[var(--text-primary)]">{fmt(snap.k2, 4)}</div>
         </div>
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3 space-y-1">
-          <div className="text-[#AAA36D]">k₃ (Midpoint 2)</div>
+          <div className="text-[var(--math-ink-grid)]">k₃ (Midpoint 2)</div>
           <div className="text-sm font-semibold text-[var(--text-primary)]">{fmt(snap.k3, 4)}</div>
         </div>
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3 space-y-1">
-          <div className="text-[#D35323]">k₄ (Endpoint)</div>
+          <div className="text-[var(--math-ink-sweep)]">k₄ (Endpoint)</div>
           <div className="text-sm font-semibold text-[var(--text-primary)]">{fmt(snap.k4, 4)}</div>
         </div>
-        <div className="border border-[#029091]/60 bg-[var(--bg-canvas)] p-3 space-y-1 col-span-2 md:col-span-1">
-          <div className="text-[#029091]">Weighted Avg k̄</div>
-          <div className="text-sm font-semibold text-[#FBEAA4]">{fmt(snap.kAvg, 4)}</div>
+        <div className="border border-[var(--math-ink-z)]/60 bg-[var(--bg-canvas)] p-3 space-y-1 col-span-2 md:col-span-1">
+          <div className="text-[var(--math-ink-z)]">Weighted Avg k̄</div>
+          <div className="text-sm font-semibold text-[var(--math-ink-diff)]">{fmt(snap.kAvg, 4)}</div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 font-tabular-mono text-xs">
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] px-3.5 py-2.5 flex items-center justify-between">
-          <span className="text-[#8D9FCE]">Euler |E(T)| (Order 1)</span>
+          <span className="text-[var(--math-ink-x)]">Euler |E(T)| (Order 1)</span>
           <span className="text-[var(--text-primary)] font-semibold">
             {sim.endErrors.euler.toExponential(2)}
           </span>
         </div>
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] px-3.5 py-2.5 flex items-center justify-between">
-          <span className="text-[#96B898]">Heun |E(T)| (Order 2)</span>
+          <span className="text-[var(--math-ink-y)]">Heun |E(T)| (Order 2)</span>
           <span className="text-[var(--text-primary)] font-semibold">
             {sim.endErrors.heun.toExponential(2)}
           </span>
         </div>
-        <div className="border border-[#029091]/60 bg-[var(--bg-canvas)] px-3.5 py-2.5 flex items-center justify-between">
-          <span className="text-[#029091]">RK4 |E(T)| (Order 4)</span>
-          <span className="text-[#FBEAA4] font-semibold">
+        <div className="border border-[var(--math-ink-z)]/60 bg-[var(--bg-canvas)] px-3.5 py-2.5 flex items-center justify-between">
+          <span className="text-[var(--math-ink-z)]">RK4 |E(T)| (Order 4)</span>
+          <span className="text-[var(--math-ink-diff)] font-semibold">
             {sim.endErrors.rk4.toExponential(2)}
           </span>
         </div>

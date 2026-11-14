@@ -286,7 +286,7 @@ export function PolarCoordinateAreaLab() {
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[#AAA36D]">
+          <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-grid)]">
             <Compass className="w-4 h-4" aria-hidden="true" />
             <span>
               Interactive Laboratory 03.1 • 2D Polar vs. Cartesian &amp; Area
@@ -314,7 +314,7 @@ export function PolarCoordinateAreaLab() {
             <span className="text-[10px] uppercase text-[var(--text-muted)] block">
               Cartesian (x, y)
             </span>
-            <span className="text-xs font-semibold text-[#8D9FCE]">
+            <span className="text-xs font-semibold text-[var(--math-ink-x)]">
               ({pointData.x.toFixed(2)}, {pointData.y.toFixed(2)})
             </span>
           </div>
@@ -322,7 +322,7 @@ export function PolarCoordinateAreaLab() {
             <span className="text-[10px] uppercase text-[var(--text-muted)] block">
               Wedge r dr dθ
             </span>
-            <span className="text-xs font-semibold text-[#FBEAA4]">
+            <span className="text-xs font-semibold text-[var(--math-ink-diff)]">
               {pointData.linearApproxDA.toFixed(4)}
             </span>
           </div>
@@ -330,7 +330,7 @@ export function PolarCoordinateAreaLab() {
             <span className="text-[10px] uppercase text-[var(--text-muted)] block">
               Polar ∬ f r dr dθ
             </span>
-            <span className="text-xs font-semibold text-[#96B898]">
+            <span className="text-xs font-semibold text-[var(--math-ink-y)]">
               {polarIntegralValue.toFixed(4)}
             </span>
           </div>
@@ -357,7 +357,7 @@ export function PolarCoordinateAreaLab() {
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
-                <span className="text-[10px] font-tabular-mono uppercase px-1.5 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[#FBEAA4] w-fit">
+                <span className="text-[10px] font-tabular-mono uppercase px-1.5 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--math-ink-diff)] w-fit">
                   {p.badge}
                 </span>
                 <span className="font-math-serif text-sm font-semibold">
@@ -694,7 +694,7 @@ export function PolarCoordinateAreaLab() {
           {/* Zoomed Differential Wedge Magnifier Box */}
           <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
             <div className="flex items-center justify-between text-xs font-tabular-mono">
-              <span className="flex items-center gap-1.5 text-[#D35323] font-semibold">
+              <span className="flex items-center gap-1.5 text-[var(--math-ink-sweep)] font-semibold">
                 <Maximize2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Magnified Polar Area Wedge dA</span>
               </span>
@@ -708,7 +708,7 @@ export function PolarCoordinateAreaLab() {
                 <span className="text-[10px] uppercase text-[var(--text-muted)] block">
                   Radial Thickness (dr)
                 </span>
-                <span className="text-sm font-semibold text-[#8D9FCE]">
+                <span className="text-sm font-semibold text-[var(--math-ink-x)]">
                   Δr = {dr.toFixed(3)}
                 </span>
               </div>
@@ -716,7 +716,7 @@ export function PolarCoordinateAreaLab() {
                 <span className="text-[10px] uppercase text-[var(--text-muted)] block">
                   Arc Width (r · dθ)
                 </span>
-                <span className="text-sm font-semibold text-[#96B898]">
+                <span className="text-sm font-semibold text-[var(--math-ink-y)]">
                   r Δθ = {pointData.innerArc.toFixed(3)}
                 </span>
               </div>
@@ -724,7 +724,7 @@ export function PolarCoordinateAreaLab() {
                 <span className="text-[10px] uppercase text-[var(--text-muted)] block">
                   Linearized r dr dθ
                 </span>
-                <span className="text-sm font-semibold text-[#FBEAA4]">
+                <span className="text-sm font-semibold text-[var(--math-ink-diff)]">
                   {pointData.linearApproxDA.toFixed(4)}
                 </span>
               </div>
@@ -732,7 +732,7 @@ export function PolarCoordinateAreaLab() {
                 <span className="text-[10px] uppercase text-[var(--text-muted)] block">
                   Exact Sector ΔA
                 </span>
-                <span className="text-sm font-semibold text-[#029091]">
+                <span className="text-sm font-semibold text-[var(--math-ink-z)]">
                   {pointData.exactSectorDA.toFixed(4)}
                 </span>
               </div>
@@ -773,7 +773,7 @@ export function PolarCoordinateAreaLab() {
               <div>
                 <label
                   htmlFor="polar-r0"
-                  className="text-xs font-tabular-mono text-[#8D9FCE] block"
+                  className="text-xs font-tabular-mono text-[var(--math-ink-x)] block"
                 >
                   Radius r = {r0.toFixed(2)}
                 </label>
@@ -792,7 +792,7 @@ export function PolarCoordinateAreaLab() {
               <div>
                 <label
                   htmlFor="polar-theta0"
-                  className="text-xs font-tabular-mono text-[#96B898] block"
+                  className="text-xs font-tabular-mono text-[var(--math-ink-y)] block"
                 >
                   Angle θ = {theta0Deg}° ({theta0Rad.toFixed(2)} rad)
                 </label>
@@ -811,7 +811,7 @@ export function PolarCoordinateAreaLab() {
               <div>
                 <label
                   htmlFor="polar-dr"
-                  className="text-xs font-tabular-mono text-[#FBEAA4] block"
+                  className="text-xs font-tabular-mono text-[var(--math-ink-diff)] block"
                 >
                   Radial Step Δr = {dr.toFixed(2)}
                 </label>
@@ -830,7 +830,7 @@ export function PolarCoordinateAreaLab() {
               <div>
                 <label
                   htmlFor="polar-dtheta"
-                  className="text-xs font-tabular-mono text-[#D35323] block"
+                  className="text-xs font-tabular-mono text-[var(--math-ink-sweep)] block"
                 >
                   Angular Step Δθ = {dThetaDeg}°
                 </label>

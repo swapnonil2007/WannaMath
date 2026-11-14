@@ -234,7 +234,7 @@ export function LeastSquaresProjectionLab() {
                     />
                   </label>
                   <label className="flex items-center justify-between gap-2 font-sans text-xs text-[#A2AAB8]">
-                    <span className="w-14 font-mono text-[#D5658B]">y_{idx + 1} = {fmt(pt.y, 1)}</span>
+                    <span className="w-14 font-mono text-[#E37CA0]">y_{idx + 1} = {fmt(pt.y, 1)}</span>
                     <input
                       type="range"
                       min={-2.5}
@@ -270,10 +270,10 @@ export function LeastSquaresProjectionLab() {
               <span className="rounded border border-[#8D9FCE]/50 bg-[#1E1F22] px-2 py-0.5 text-[#8D9FCE]">
                 b (target)
               </span>
-              <span className="rounded border border-[#029091]/50 bg-[#1E1F22] px-2 py-0.5 text-[#029091]">
+              <span className="rounded border border-[#029091]/50 bg-[#1E1F22] px-2 py-0.5 text-[#28B7B8]">
                 p = Ax̂
               </span>
-              <span className="rounded border border-[#D35323]/50 bg-[#1E1F22] px-2 py-0.5 text-[#D35323]">
+              <span className="rounded border border-[#D35323]/50 bg-[#1E1F22] px-2 py-0.5 text-[#EF7547]">
                 e = b − p
               </span>
             </div>
@@ -525,26 +525,26 @@ export function LeastSquaresProjectionLab() {
             />
           </div>
           {solve.singular && (
-            <p className="mt-2 font-sans text-xs text-[#B95869]">
+            <p className="mt-2 font-sans text-xs text-[#DF7E90]">
               All tᵢ are identical — columns of A are linearly dependent; slope d is underdetermined.
             </p>
           )}
         </div>
 
         <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
-          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#029091]">
+          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#28B7B8]">
             2. Optimal Solution & Projection
           </p>
           <div className="mt-2 space-y-1.5 font-mono text-xs tabular-nums text-[#D6DAE2]">
             <div>
-              <span className="text-[#029091]">x̂ = [c, d]ᵀ</span> = [{fmt(solve.cHat, 3)}, {fmt(solve.dHat, 3)}]ᵀ
+              <span className="text-[#28B7B8]">x̂ = [c, d]ᵀ</span> = [{fmt(solve.cHat, 3)}, {fmt(solve.dHat, 3)}]ᵀ
             </div>
             <div>
-              <span className="text-[#029091]">p = A x̂</span> = [{fmt(solve.p[0], 2)}, {fmt(solve.p[1], 2)},{" "}
+              <span className="text-[#28B7B8]">p = A x̂</span> = [{fmt(solve.p[0], 2)}, {fmt(solve.p[1], 2)},{" "}
               {fmt(solve.p[2], 2)}]ᵀ
             </div>
             <div>
-              <span className="text-[#D35323]">e = b − p</span> = [{fmt(solve.e[0], 2)}, {fmt(solve.e[1], 2)},{" "}
+              <span className="text-[#EF7547]">e = b − p</span> = [{fmt(solve.e[0], 2)}, {fmt(solve.e[1], 2)},{" "}
               {fmt(solve.e[2], 2)}]ᵀ
             </div>
             <div className="pt-1 text-[#FBEAA4]">
@@ -554,7 +554,7 @@ export function LeastSquaresProjectionLab() {
         </div>
 
         <div className="rounded-xl border border-[#35383F] bg-[#26282C] p-4">
-          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#D35323]">
+          <p className="font-sans text-xs font-semibold uppercase tracking-wider text-[#EF7547]">
             3. Left-Nullspace Orthogonality
           </p>
           <p className="mt-1 font-serif text-xs text-[#A2AAB8]">

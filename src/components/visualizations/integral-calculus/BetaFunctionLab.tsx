@@ -309,10 +309,10 @@ export function BetaFunctionLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#8D9FCE] text-[#8D9FCE] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-x)] text-[var(--math-ink-x)] bg-[var(--bg-canvas)]">
               LAB 3.2.6B • THE BETA FUNCTION &amp; Γ(p)Γ(q) BRIDGE
             </span>
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[#96B898] text-[#96B898] bg-[#96B898]/10">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/10">
               Symmetry: B(p, q) = B(q, p)
             </span>
           </div>
@@ -325,7 +325,7 @@ export function BetaFunctionLab() {
           <button
             type="button"
             onClick={swapPQ}
-            className="px-3 py-1.5 text-xs font-sans border border-[#8D9FCE] text-[#8D9FCE] hover:bg-[#8D9FCE]/15 bg-[var(--bg-canvas)] inline-flex items-center gap-1.5"
+            className="px-3 py-1.5 text-xs font-sans border border-[var(--math-ink-x)] text-[var(--math-ink-x)] hover:bg-[#8D9FCE]/15 bg-[var(--bg-canvas)] inline-flex items-center gap-1.5"
           >
             <ArrowLeftRight className="w-3.5 h-3.5" />
             Swap p ↔ q
@@ -353,7 +353,7 @@ export function BetaFunctionLab() {
                 onClick={() => applyPreset(preset)}
                 className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                   selected
-                    ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
+                    ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -367,9 +367,9 @@ export function BetaFunctionLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                First Parameter <strong className="text-[#8D9FCE] font-mono">p</strong>
+                First Parameter <strong className="text-[var(--math-ink-x)] font-mono">p</strong>
               </span>
-              <span className="font-tabular-mono text-[#8D9FCE]">
+              <span className="font-tabular-mono text-[var(--math-ink-x)]">
                 p = {pParam.toFixed(2)}
               </span>
             </div>
@@ -391,9 +391,9 @@ export function BetaFunctionLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                Second Parameter <strong className="text-[#96B898] font-mono">q</strong>
+                Second Parameter <strong className="text-[var(--math-ink-y)] font-mono">q</strong>
               </span>
-              <span className="font-tabular-mono text-[#96B898]">
+              <span className="font-tabular-mono text-[var(--math-ink-y)]">
                 q = {qParam.toFixed(2)}
               </span>
             </div>
@@ -415,9 +415,9 @@ export function BetaFunctionLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex items-center justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">
-                3D Polar Ray Angle <strong className="text-[#D35323] font-mono">θ₀</strong>
+                3D Polar Ray Angle <strong className="text-[var(--math-ink-sweep)] font-mono">θ₀</strong>
               </span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 θ₀ = {((sliceTheta * 180) / Math.PI).toFixed(0)}°
               </span>
             </div>
@@ -443,7 +443,7 @@ export function BetaFunctionLab() {
               1. Algebraic Form:{" "}
               <KaTeXMath math="\int_0^1 t^{p-1}(1-t)^{q-1}\,dt" />
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#8D9FCE]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-x)]">
               t ∈ [0, 1]
             </span>
           </div>
@@ -517,7 +517,7 @@ export function BetaFunctionLab() {
               <KaTeXMath math="t = \sin^2\theta" />):{" "}
               <KaTeXMath math="2\int_0^{\pi/2}\sin^{2p-1}\theta\cos^{2q-1}\theta\,d\theta" />
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#96B898]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-y)]">
               θ ∈ [0, π/2]
             </span>
           </div>
@@ -617,10 +617,10 @@ export function BetaFunctionLab() {
           sceneDeps={[buildPolarProofScene]}
           footerSlot={
             <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-tabular-mono">
-              <span className="text-[#029091]">
+              <span className="text-[var(--math-ink-z)]">
                 4·Volume = Γ(p)Γ(q) = {(data.gammaP * data.gammaQ).toFixed(4)}
               </span>
-              <span className="text-[#FBEAA4]">
+              <span className="text-[var(--math-ink-diff)]">
                 Γ(p+q)·B(p,q) = {data.gammaPQ.toFixed(3)} × {data.betaIdentity.toFixed(4)} ={" "}
                 {(data.gammaPQ * data.betaIdentity).toFixed(4)}
               </span>
@@ -634,7 +634,7 @@ export function BetaFunctionLab() {
             <div className="text-[11px] font-sans uppercase tracking-wider text-[var(--text-muted)]">
               Gauss-Legendre Integral B(p, q)
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#8D9FCE]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-x)]">
               {data.betaNumeric.toFixed(6)}
             </div>
           </div>
@@ -643,7 +643,7 @@ export function BetaFunctionLab() {
             <div className="text-[11px] font-sans uppercase tracking-wider text-[var(--text-muted)]">
               Γ(p)·Γ(q) / Γ(p + q)
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#96B898]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-y)]">
               {data.betaIdentity.toFixed(6)}
             </div>
           </div>
@@ -652,16 +652,16 @@ export function BetaFunctionLab() {
             <div className="text-[11px] font-sans uppercase tracking-wider text-[var(--text-muted)]">
               Numerical Agreement |Δ|
             </div>
-            <div className="mt-1 text-base font-tabular-mono text-[#FBEAA4]">
+            <div className="mt-1 text-base font-tabular-mono text-[var(--math-ink-diff)]">
               {Math.abs(data.betaNumeric - data.betaIdentity).toExponential(2)}
             </div>
           </div>
         </div>
 
         {activePreset && (
-          <div className="p-3 border border-[#8D9FCE]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="p-3 border border-[var(--math-ink-x)]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="space-y-1">
-              <div className="text-xs font-sans font-semibold text-[#8D9FCE] inline-flex items-center gap-1.5">
+              <div className="text-xs font-sans font-semibold text-[var(--math-ink-x)] inline-flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
                 {activePreset.label}
               </div>

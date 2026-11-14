@@ -38,9 +38,20 @@
   --text-primary-light: #1e1f22;
   --text-secondary-light: #3d3f45;
   --text-muted-light: #626055;
-  --accent-brand-light: #027374;
+  --accent-brand-light: #016869;
   --scrollbar-thumb-light: #7c7454;
   --scrollbar-track-light: #f6f0d2;
+
+  /* Light Mode High-Contrast Semantic Math Inks (>= 5.1:1 on #EDE4BE / #F6F0D2 / #FFFBE4) */
+  --math-ink-x-light: #3b4d7a;
+  --math-ink-y-light: #325b36;
+  --math-ink-z-light: #016869;
+  --math-ink-upper-light: #8a3242;
+  --math-ink-lower-light: #932d52;
+  --math-ink-sweep-light: #9e360e;
+  --math-ink-diff-light: #6d5810;
+  --math-ink-grid-light: #5e582a;
+  --math-ink-earth-light: #764a1f;
 
   /* Dark Mode (Drafting Grid Slate — Matching Reference Background) Raw Tokens */
   --bg-canvas-dark: #1e1f22;
@@ -51,12 +62,23 @@
   --border-strong-dark: #6c707c;
   --text-primary-dark: #fffbe4;
   --text-secondary-dark: #ccc8b8;
-  --text-muted-dark: #989485;
+  --text-muted-dark: #a39f90;
   --accent-brand-dark: #8d9fce;
   --scrollbar-thumb-dark: #6c707c;
   --scrollbar-track-dark: #25272c;
 
-  /* Semantic Math Tokens (Consistent Across All Visualizations) */
+  /* Dark Mode Accessible Semantic Math Inks (>= 4.6:1 on #2D3037 / #25272C / #1E1F22) */
+  --math-ink-x-dark: #8d9fce;
+  --math-ink-y-dark: #96b898;
+  --math-ink-z-dark: #28b7b8;
+  --math-ink-upper-dark: #df7e90;
+  --math-ink-lower-dark: #e37ca0;
+  --math-ink-sweep-dark: #ef7547;
+  --math-ink-diff-dark: #fbeaa4;
+  --math-ink-grid-dark: #b2ab75;
+  --math-ink-earth-dark: #d5995e;
+
+  /* Semantic Math Tokens (Consistent Across All Visualizations & Swatches) */
   --math-var-x: #8d9fce;
   --math-var-y: #96b898;
   --math-var-z: #029091;
@@ -80,6 +102,15 @@
   --accent-color: var(--accent-brand-light);
   --scrollbar-thumb: var(--scrollbar-thumb-light);
   --scrollbar-track: var(--scrollbar-track-light);
+  --math-ink-x: var(--math-ink-x-light);
+  --math-ink-y: var(--math-ink-y-light);
+  --math-ink-z: var(--math-ink-z-light);
+  --math-ink-upper: var(--math-ink-upper-light);
+  --math-ink-lower: var(--math-ink-lower-light);
+  --math-ink-sweep: var(--math-ink-sweep-light);
+  --math-ink-diff: var(--math-ink-diff-light);
+  --math-ink-grid: var(--math-ink-grid-light);
+  --math-ink-earth: var(--math-ink-earth-light);
 
   /* Fallback for browsers without light-dark() support */
   @media (prefers-color-scheme: dark) {
@@ -95,6 +126,15 @@
     --accent-color: var(--accent-brand-dark);
     --scrollbar-thumb: var(--scrollbar-thumb-dark);
     --scrollbar-track: var(--scrollbar-track-dark);
+    --math-ink-x: var(--math-ink-x-dark);
+    --math-ink-y: var(--math-ink-y-dark);
+    --math-ink-z: var(--math-ink-z-dark);
+    --math-ink-upper: var(--math-ink-upper-dark);
+    --math-ink-lower: var(--math-ink-lower-dark);
+    --math-ink-sweep: var(--math-ink-sweep-dark);
+    --math-ink-diff: var(--math-ink-diff-dark);
+    --math-ink-grid: var(--math-ink-grid-dark);
+    --math-ink-earth: var(--math-ink-earth-dark);
   }
 
   /* Modern light-dark() automatic resolution */
@@ -135,6 +175,33 @@
       var(--scrollbar-track-light),
       var(--scrollbar-track-dark)
     );
+    --math-ink-x: light-dark(var(--math-ink-x-light), var(--math-ink-x-dark));
+    --math-ink-y: light-dark(var(--math-ink-y-light), var(--math-ink-y-dark));
+    --math-ink-z: light-dark(var(--math-ink-z-light), var(--math-ink-z-dark));
+    --math-ink-upper: light-dark(
+      var(--math-ink-upper-light),
+      var(--math-ink-upper-dark)
+    );
+    --math-ink-lower: light-dark(
+      var(--math-ink-lower-light),
+      var(--math-ink-lower-dark)
+    );
+    --math-ink-sweep: light-dark(
+      var(--math-ink-sweep-light),
+      var(--math-ink-sweep-dark)
+    );
+    --math-ink-diff: light-dark(
+      var(--math-ink-diff-light),
+      var(--math-ink-diff-dark)
+    );
+    --math-ink-grid: light-dark(
+      var(--math-ink-grid-light),
+      var(--math-ink-grid-dark)
+    );
+    --math-ink-earth: light-dark(
+      var(--math-ink-earth-light),
+      var(--math-ink-earth-dark)
+    );
   }
 
   /* Mandatory viewport-wide color-scheme declaration */
@@ -155,6 +222,15 @@
     --accent-color: var(--accent-brand-dark);
     --scrollbar-thumb: var(--scrollbar-thumb-dark);
     --scrollbar-track: var(--scrollbar-track-dark);
+    --math-ink-x: var(--math-ink-x-dark);
+    --math-ink-y: var(--math-ink-y-dark);
+    --math-ink-z: var(--math-ink-z-dark);
+    --math-ink-upper: var(--math-ink-upper-dark);
+    --math-ink-lower: var(--math-ink-lower-dark);
+    --math-ink-sweep: var(--math-ink-sweep-dark);
+    --math-ink-diff: var(--math-ink-diff-dark);
+    --math-ink-grid: var(--math-ink-grid-dark);
+    --math-ink-earth: var(--math-ink-earth-dark);
   }
 
   &:has(> head > meta[name="color-scheme"][content="light"]) {
@@ -171,6 +247,15 @@
     --accent-color: var(--accent-brand-light);
     --scrollbar-thumb: var(--scrollbar-thumb-light);
     --scrollbar-track: var(--scrollbar-track-light);
+    --math-ink-x: var(--math-ink-x-light);
+    --math-ink-y: var(--math-ink-y-light);
+    --math-ink-z: var(--math-ink-z-light);
+    --math-ink-upper: var(--math-ink-upper-light);
+    --math-ink-lower: var(--math-ink-lower-light);
+    --math-ink-sweep: var(--math-ink-sweep-light);
+    --math-ink-diff: var(--math-ink-diff-light);
+    --math-ink-grid: var(--math-ink-grid-light);
+    --math-ink-earth: var(--math-ink-earth-light);
   }
 
   accent-color: var(--accent-color);
@@ -233,6 +318,30 @@ body {
 .font-tabular-mono {
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
   font-variant-numeric: tabular-nums;
+}
+
+/* Preserve accessible light math inks inside always-dark containers across both themes */
+.bg-\[\#18191C\],
+.bg-\[\#1E1F22\],
+.bg-\[\#25272C\],
+.bg-\[\#26282C\],
+.bg-\[\#35383F\] {
+  --math-ink-x: var(--math-ink-x-dark);
+  --math-ink-y: var(--math-ink-y-dark);
+  --math-ink-z: var(--math-ink-z-dark);
+  --math-ink-upper: var(--math-ink-upper-dark);
+  --math-ink-lower: var(--math-ink-lower-dark);
+  --math-ink-sweep: var(--math-ink-sweep-dark);
+  --math-ink-diff: var(--math-ink-diff-dark);
+  --math-ink-grid: var(--math-ink-grid-dark);
+  --math-ink-earth: var(--math-ink-earth-dark);
+}
+
+/* Keep below-fold layout stable across mobile and desktop viewports */
+@layer utilities {
+  .below-fold-section {
+    contain: layout style;
+  }
 }
 
 /* KaTeX overrides for eye comfort and overflow safety */

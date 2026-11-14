@@ -8,7 +8,7 @@ import { compileMathExpression } from "@/lib/mathParser";
 import {
   SvgCoordinatePlane2D,
   extractLevelCurveSegments,
-} from "@/components/visualizations/primitives";
+} from "@/components/visualizations/primitives/core2d";
 
 interface SlopeFieldPreset {
   id: string;
@@ -266,7 +266,7 @@ export function SlopeFieldTracerLab() {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
             Laboratory 4.1.1.1 • Direction Fields, Isoclines &amp; Numerical Integration
           </span>
           <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
@@ -285,7 +285,7 @@ export function SlopeFieldTracerLab() {
             onClick={() => setKeepMultiple((v) => !v)}
             className={`px-3 py-1.5 text-xs font-tabular-mono border transition-colors ${
               keepMultiple
-                ? "border-[#96B898] bg-[#96B898]/15 text-[#96B898]"
+                ? "border-[var(--math-ink-y)] bg-[#96B898]/15 text-[var(--math-ink-y)]"
                 : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-muted)]"
             }`}
           >
@@ -313,11 +313,11 @@ export function SlopeFieldTracerLab() {
               onClick={() => handleSelectPreset(p)}
               className={`p-3 border text-left transition-colors ${
                 selected
-                  ? "border-[#D35323] bg-[var(--bg-canvas)]"
+                  ? "border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-canvas)]/60 hover:border-[var(--border-strong)]"
               }`}
             >
-              <span className="text-[11px] font-tabular-mono text-[#D35323] font-semibold block mb-1">
+              <span className="text-[11px] font-tabular-mono text-[var(--math-ink-sweep)] font-semibold block mb-1">
                 {p.badge}
               </span>
               <div className="text-xs font-math-serif text-[var(--text-primary)] leading-snug">
@@ -361,7 +361,7 @@ export function SlopeFieldTracerLab() {
         <div className="lg:col-span-7 space-y-3">
           <div className="flex items-center justify-between text-xs font-tabular-mono text-[var(--text-muted)]">
             <span className="flex items-center gap-1.5">
-              <Crosshair className="w-3.5 h-3.5 text-[#D35323]" />
+              <Crosshair className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
               <span>
                 Click plane to place (t₀, y₀) = ({labData.primarySeed[0].toFixed(2)},{" "}
                 {labData.primarySeed[1].toFixed(2)})
@@ -510,7 +510,7 @@ export function SlopeFieldTracerLab() {
           {/* Isocline Controls */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] flex items-center gap-1.5">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] flex items-center gap-1.5">
                 <Eye className="w-3.5 h-3.5" />
                 <span>ISOCLINE INSPECTOR: f(t, y) = c</span>
               </span>
@@ -519,7 +519,7 @@ export function SlopeFieldTracerLab() {
                 onClick={() => setShowIsoclines((v) => !v)}
                 className={`px-2 py-0.5 text-[11px] font-tabular-mono border ${
                   showIsoclines
-                    ? "border-[#FBEAA4] text-[#FBEAA4]"
+                    ? "border-[var(--math-ink-diff)] text-[var(--math-ink-diff)]"
                     : "border-[var(--border-subtle)] text-[var(--text-muted)]"
                 }`}
               >
@@ -539,6 +539,7 @@ export function SlopeFieldTracerLab() {
                 value={isoclineSlopeC}
                 onChange={(e) => setIsoclineSlopeC(parseFloat(e.target.value))}
                 className="w-full accent-[#FBEAA4]"
+                aria-label="Isocline constant slope value c"
               />
             </div>
             <p className="text-[11px] font-math-serif text-[var(--text-secondary)]">
@@ -550,7 +551,7 @@ export function SlopeFieldTracerLab() {
           {/* Euler vs RK4 Numerical Method Comparison */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-tabular-mono font-semibold text-[#D5658B] flex items-center gap-1.5">
+              <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-lower)] flex items-center gap-1.5">
                 <GitBranch className="w-3.5 h-3.5" />
                 <span>EULER STEP-SIZE DRIFT VS. RK4</span>
               </span>
@@ -559,7 +560,7 @@ export function SlopeFieldTracerLab() {
                 onClick={() => setShowEulerCompare((v) => !v)}
                 className={`px-2 py-0.5 text-[11px] font-tabular-mono border ${
                   showEulerCompare
-                    ? "border-[#D5658B] text-[#D5658B]"
+                    ? "border-[var(--math-ink-lower)] text-[var(--math-ink-lower)]"
                     : "border-[var(--border-subtle)] text-[var(--text-muted)]"
                 }`}
               >
@@ -567,7 +568,7 @@ export function SlopeFieldTracerLab() {
               </button>
             </div>
             <div className="space-y-1">
-              <div className="flex justify-between text-xs font-tabular-mono text-[#D5658B]">
+              <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-lower)]">
                 <span>Euler Step Size h</span>
                 <span>h = {eulerStepH.toFixed(2)}</span>
               </div>
@@ -579,6 +580,7 @@ export function SlopeFieldTracerLab() {
                 value={eulerStepH}
                 onChange={(e) => setEulerStepH(parseFloat(e.target.value))}
                 className="w-full accent-[#D5658B]"
+                aria-label="Euler step size h"
               />
             </div>
           </div>
@@ -586,7 +588,7 @@ export function SlopeFieldTracerLab() {
           {/* Picard & Local Slope Telemetry */}
           <div className="grid grid-cols-2 gap-2.5 text-xs font-tabular-mono">
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#8D9FCE] text-[10px] block">
+              <span className="text-[var(--math-ink-x)] text-[10px] block">
                 SLOPE AT SEED f(t₀, y₀)
               </span>
               <span className="text-[var(--text-primary)] font-semibold">
@@ -594,7 +596,7 @@ export function SlopeFieldTracerLab() {
               </span>
             </div>
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#D35323] text-[10px] block">
+              <span className="text-[var(--math-ink-sweep)] text-[10px] block">
                 LIPSCHITZ ∂f/∂y AT SEED
               </span>
               <span className="text-[var(--text-primary)] font-semibold">
@@ -604,7 +606,7 @@ export function SlopeFieldTracerLab() {
               </span>
             </div>
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] col-span-2 flex justify-between items-center">
-              <span className="text-[#D5658B] text-[11px]">
+              <span className="text-[var(--math-ink-lower)] text-[11px]">
                 Endpoint Drift |y_Euler - y_RK4|
               </span>
               <span className="text-[var(--text-primary)] font-semibold">

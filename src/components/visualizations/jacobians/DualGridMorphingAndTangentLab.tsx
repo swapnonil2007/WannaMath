@@ -5,7 +5,7 @@ import { RotateCcw, Play, Pause, Maximize2 } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { MathExpressionInput } from "@/components/math/MathExpressionInput";
 import { compileMathExpression } from "@/lib/mathParser";
-import { computeJacobian2D } from "@/components/visualizations/primitives";
+import { computeJacobian2D } from "@/components/visualizations/primitives/core2d";
 
 interface TransformPreset {
   id: string;
@@ -503,7 +503,7 @@ export function DualGridMorphingAndTangentLab() {
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-xs font-tabular-mono bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[#D35323]">
+            <span className="px-2 py-0.5 text-xs font-tabular-mono bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--math-ink-sweep)]">
               LAB 04.1 &amp; 04.2 • DUAL-SPACE GRID MORPHING &amp; TANGENT PARALLELOGRAM
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -533,12 +533,12 @@ export function DualGridMorphingAndTangentLab() {
                 aria-pressed={active}
                 className={`p-3 border text-left transition-colors flex flex-col justify-between gap-1.5 ${
                   active
-                    ? "border-[#D35323] bg-[var(--bg-canvas)]"
+                    ? "border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] opacity-80 hover:opacity-100"
                 }`}
               >
                 <div className="flex items-center justify-between gap-1">
-                  <span className="text-[11px] font-tabular-mono font-semibold text-[#D35323]">
+                  <span className="text-[11px] font-tabular-mono font-semibold text-[var(--math-ink-sweep)]">
                     {p.badge}
                   </span>
                 </div>
@@ -590,7 +590,7 @@ export function DualGridMorphingAndTangentLab() {
           </div>
 
           <div className="border-t border-[var(--border-subtle)] pt-3 space-y-2">
-            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[#96B898] block">
+            <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--math-ink-y)] block">
               Define Parameter Domain Rectangle R_uv = [u_min, u_max] × [v_min, v_max]:
             </span>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -650,7 +650,7 @@ export function DualGridMorphingAndTangentLab() {
       {/* Continuous Homotopy Morph Bar */}
       <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323] block">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
             Continuous Grid Homotopy Morphing Slider t ∈ [0, 1]
           </span>
           <div className="text-xs text-[var(--text-secondary)]">
@@ -665,7 +665,7 @@ export function DualGridMorphingAndTangentLab() {
               if (morphT >= 0.99) setMorphT(0);
               setIsPlayingMorph((prev) => !prev);
             }}
-            className="px-3 py-1.5 border border-[#D35323] bg-[var(--bg-panel)] text-xs font-tabular-mono text-[#D35323] flex items-center gap-1.5 shrink-0"
+            className="px-3 py-1.5 border border-[var(--math-ink-sweep)] bg-[var(--bg-panel)] text-xs font-tabular-mono text-[var(--math-ink-sweep)] flex items-center gap-1.5 shrink-0"
           >
             {isPlayingMorph ? (
               <>
@@ -694,7 +694,7 @@ export function DualGridMorphingAndTangentLab() {
             className="w-full accent-[#D35323]"
           />
 
-          <span className="text-xs font-tabular-mono font-semibold text-[#FBEAA4] w-16 text-right">
+          <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] w-16 text-right">
             t = {morphT.toFixed(2)}
           </span>
         </div>
@@ -708,7 +708,7 @@ export function DualGridMorphingAndTangentLab() {
             {/* Viewport 1: (u, v) Parameter Space */}
             <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-tabular-mono font-semibold text-[#8D9FCE]">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)]">
                   1. PARAMETER SPACE (u, v)
                 </span>
                 <span className="text-[11px] font-tabular-mono text-[var(--text-muted)]">
@@ -786,7 +786,7 @@ export function DualGridMorphingAndTangentLab() {
                 <text
                   x={uvP00x + 6}
                   y={uvP00y + 13}
-                  fill="#FBEAA4"
+                  fill="var(--math-ink-diff)"
                   fontSize="10"
                   fontFamily="var(--font-mono)"
                 >
@@ -795,7 +795,7 @@ export function DualGridMorphingAndTangentLab() {
                 <text
                   x={svgW - 24}
                   y={svgH - 10}
-                  fill="#8D9FCE"
+                  fill="var(--math-ink-x)"
                   fontSize="11"
                   fontFamily="var(--font-mono)"
                 >
@@ -804,7 +804,7 @@ export function DualGridMorphingAndTangentLab() {
                 <text
                   x={12}
                   y={20}
-                  fill="#96B898"
+                  fill="var(--math-ink-y)"
                   fontSize="11"
                   fontFamily="var(--font-mono)"
                 >
@@ -816,7 +816,7 @@ export function DualGridMorphingAndTangentLab() {
                 <span>
                   (u₀, v₀) = ({safeU0.toFixed(2)}, {safeV0.toFixed(2)})
                 </span>
-                <span className="text-[#FBEAA4]">
+                <span className="text-[var(--math-ink-diff)]">
                   ΔA_uv = Δu·Δv = {localJacobian.areaUV.toFixed(4)}
                 </span>
               </div>
@@ -825,10 +825,10 @@ export function DualGridMorphingAndTangentLab() {
             {/* Viewport 2: (x, y) Physical Space */}
             <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-tabular-mono font-semibold text-[#D35323]">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)]">
                   2. PHYSICAL SPACE (x, y)
                 </span>
-                <span className="text-[11px] font-tabular-mono text-[#FBEAA4]">
+                <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)]">
                   |det J| = {Math.abs(localJacobian.detJ).toFixed(3)}
                 </span>
               </div>
@@ -917,7 +917,7 @@ export function DualGridMorphingAndTangentLab() {
                 <text
                   x={xy00x + 6}
                   y={xy00y + 13}
-                  fill="#FBEAA4"
+                  fill="var(--math-ink-diff)"
                   fontSize="10"
                   fontFamily="var(--font-mono)"
                 >
@@ -926,7 +926,7 @@ export function DualGridMorphingAndTangentLab() {
                 <text
                   x={svgW - 24}
                   y={svgH - 10}
-                  fill="#8D9FCE"
+                  fill="var(--math-ink-x)"
                   fontSize="11"
                   fontFamily="var(--font-mono)"
                 >
@@ -935,7 +935,7 @@ export function DualGridMorphingAndTangentLab() {
                 <text
                   x={12}
                   y={20}
-                  fill="#96B898"
+                  fill="var(--math-ink-y)"
                   fontSize="11"
                   fontFamily="var(--font-mono)"
                 >
@@ -947,7 +947,7 @@ export function DualGridMorphingAndTangentLab() {
                 <span>
                   (x₀, y₀) = ({x0.toFixed(2)}, {y0.toFixed(2)})
                 </span>
-                <span className="text-[#D35323]">
+                <span className="text-[var(--math-ink-sweep)]">
                   |det J|·ΔuΔv = {localJacobian.areaLinear.toFixed(4)}
                 </span>
               </div>
@@ -961,8 +961,8 @@ export function DualGridMorphingAndTangentLab() {
           >
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2">
               <div className="flex items-center gap-2">
-                <Maximize2 className="w-4 h-4 text-[#FBEAA4]" />
-                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#FBEAA4]">
+                <Maximize2 className="w-4 h-4 text-[var(--math-ink-diff)]" />
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-diff)]">
                   Local Linearization Magnifier: Tangent Vectors r_u Δu &amp; r_v Δv
                 </span>
               </div>
@@ -973,7 +973,7 @@ export function DualGridMorphingAndTangentLab() {
                   aria-pressed={showTangentParallelogram}
                   className={`px-2 py-1 text-[11px] font-tabular-mono border ${
                     showTangentParallelogram
-                      ? "border-[#FBEAA4] text-[#FBEAA4] bg-[var(--bg-panel)]"
+                      ? "border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[var(--bg-panel)]"
                       : "border-[var(--border-subtle)] text-[var(--text-muted)]"
                   }`}
                 >
@@ -985,7 +985,7 @@ export function DualGridMorphingAndTangentLab() {
                   aria-pressed={showTrueCurvedPatch}
                   className={`px-2 py-1 text-[11px] font-tabular-mono border ${
                     showTrueCurvedPatch
-                      ? "border-[#029091] text-[#029091] bg-[var(--bg-panel)]"
+                      ? "border-[var(--math-ink-z)] text-[var(--math-ink-z)] bg-[var(--bg-panel)]"
                       : "border-[var(--border-subtle)] text-[var(--text-muted)]"
                   }`}
                 >
@@ -996,7 +996,7 @@ export function DualGridMorphingAndTangentLab() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1">
-                <span className="text-[11px] font-tabular-mono text-[#8D9FCE] block">
+                <span className="text-[11px] font-tabular-mono text-[var(--math-ink-x)] block">
                   TANGENT VECTOR r_u Δu
                 </span>
                 <KaTeXMath
@@ -1004,7 +1004,7 @@ export function DualGridMorphingAndTangentLab() {
                 />
               </div>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1">
-                <span className="text-[11px] font-tabular-mono text-[#96B898] block">
+                <span className="text-[11px] font-tabular-mono text-[var(--math-ink-y)] block">
                   TANGENT VECTOR r_v Δv
                 </span>
                 <KaTeXMath
@@ -1012,15 +1012,15 @@ export function DualGridMorphingAndTangentLab() {
                 />
               </div>
               <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1">
-                <span className="text-[11px] font-tabular-mono text-[#FBEAA4] block">
+                <span className="text-[11px] font-tabular-mono text-[var(--math-ink-diff)] block">
                   PARALLELOGRAM vs. CURVED AREA
                 </span>
                 <div className="font-tabular-mono text-[11px] space-y-0.5 pt-0.5">
                   <div>
-                    Linear: <strong className="text-[#FBEAA4]">{localJacobian.areaLinear.toFixed(4)}</strong>
+                    Linear: <strong className="text-[var(--math-ink-diff)]">{localJacobian.areaLinear.toFixed(4)}</strong>
                   </div>
                   <div>
-                    Exact Curved: <strong className="text-[#029091]">{localJacobian.exactArea.toFixed(4)}</strong>
+                    Exact Curved: <strong className="text-[var(--math-ink-z)]">{localJacobian.exactArea.toFixed(4)}</strong>
                   </div>
                 </div>
               </div>
@@ -1049,7 +1049,7 @@ export function DualGridMorphingAndTangentLab() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-tabular-mono">
-                  <span className="text-[#8D9FCE]">u₀ position</span>
+                  <span className="text-[var(--math-ink-x)]">u₀ position</span>
                   <span>{safeU0.toFixed(2)}</span>
                 </div>
                 <input
@@ -1066,7 +1066,7 @@ export function DualGridMorphingAndTangentLab() {
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-tabular-mono">
-                  <span className="text-[#96B898]">v₀ position</span>
+                  <span className="text-[var(--math-ink-y)]">v₀ position</span>
                   <span>{safeV0.toFixed(2)}</span>
                 </div>
                 <input
@@ -1083,7 +1083,7 @@ export function DualGridMorphingAndTangentLab() {
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-tabular-mono">
-                  <span className="text-[#FBEAA4]">Step Δu</span>
+                  <span className="text-[var(--math-ink-diff)]">Step Δu</span>
                   <span>{du.toFixed(2)}</span>
                 </div>
                 <input
@@ -1100,7 +1100,7 @@ export function DualGridMorphingAndTangentLab() {
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-tabular-mono">
-                  <span className="text-[#FBEAA4]">Step Δv</span>
+                  <span className="text-[var(--math-ink-diff)]">Step Δv</span>
                   <span>{dv.toFixed(2)}</span>
                 </div>
                 <input
@@ -1120,16 +1120,16 @@ export function DualGridMorphingAndTangentLab() {
           {/* Live Jacobian Matrix & Determinant Evaluation */}
           <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-4 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#D35323]">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)]">
                 Live Jacobian Matrix J(u₀, v₀) at t = {morphT.toFixed(2)}
               </span>
               <span
                 className={`text-[11px] font-tabular-mono px-2 py-0.5 border ${
                   Math.abs(localJacobian.detJ) < 1e-3
-                    ? "border-[#B95869] text-[#B95869]"
+                    ? "border-[var(--math-ink-upper)] text-[var(--math-ink-upper)]"
                     : localJacobian.detJ > 0
-                    ? "border-[#96B898] text-[#96B898]"
-                    : "border-[#D5658B] text-[#D5658B]"
+                    ? "border-[var(--math-ink-y)] text-[var(--math-ink-y)]"
+                    : "border-[var(--math-ink-lower)] text-[var(--math-ink-lower)]"
                 }`}
               >
                 {Math.abs(localJacobian.detJ) < 1e-3
@@ -1156,7 +1156,7 @@ export function DualGridMorphingAndTangentLab() {
 
             {!isCustomTransform && (
               <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5 overflow-x-auto">
-                <span className="text-[11px] font-tabular-mono text-[#AAA36D] block">
+                <span className="text-[11px] font-tabular-mono text-[var(--math-ink-grid)] block">
                   ANALYTIC DERIVATION (AT t = 1):
                 </span>
                 <KaTeXMath math={activePreset.jacobianFormulaLatex} block />

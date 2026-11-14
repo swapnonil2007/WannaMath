@@ -15,6 +15,7 @@ import {
   computePartialDerivatives2D,
   extractLevelCurveSegments,
 } from "@/components/visualizations/primitives";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 interface GradientPreset {
   id: string;
@@ -242,7 +243,7 @@ export function GradientDirectionalDerivativeLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#D35323] text-[#D35323] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-canvas)]">
               LAB 3.1.3 • DIRECTIONAL DERIVATIVE &amp; GRADIENT COMPASS
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -264,7 +265,7 @@ export function GradientDirectionalDerivativeLab() {
                 onClick={() => handleSelectPreset(p)}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#D35323] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-sweep)] bg-[#D35323]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -298,7 +299,7 @@ export function GradientDirectionalDerivativeLab() {
             <label key={item.label} className="block space-y-1">
               <span
                 className="text-[11px] font-tabular-mono uppercase tracking-wider block"
-                style={{ color: item.color }}
+                style={{ color: getAdaptiveAccentInk(item.color) }}
               >
                 Bound <KaTeXMath math={item.label} />
               </span>
@@ -309,7 +310,7 @@ export function GradientDirectionalDerivativeLab() {
                   item.set(e.target.value);
                   setIsCustom(true);
                 }}
-                className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[#D35323]"
+                className="w-full px-2.5 py-1.5 text-xs font-tabular-mono bg-[var(--bg-panel)] border border-[var(--border-subtle)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--math-ink-sweep)]"
               />
             </label>
           ))}
@@ -327,13 +328,13 @@ export function GradientDirectionalDerivativeLab() {
             titleBadge="3D Revolving Vertical Slice Along Unit Heading u"
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#D35323]">
+                <span className="text-[var(--math-ink-sweep)]">
                   ‖∇f‖ = {directionalStats.gradMagnitude.toFixed(3)}
                 </span>
-                <span className="text-[#8D9FCE]">
+                <span className="text-[var(--math-ink-x)]">
                   Heading α = {alphaDeg.toFixed(0)}° (θ = {directionalStats.thetaDeg.toFixed(1)}°)
                 </span>
-                <span className="text-[#96B898] font-semibold">
+                <span className="text-[var(--math-ink-y)] font-semibold">
                   D_u f = {directionalStats.duf.toFixed(3)}
                 </span>
               </div>
@@ -505,7 +506,7 @@ export function GradientDirectionalDerivativeLab() {
               <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
                 DOT PRODUCT DECOMPOSITION AT ({safeX0.toFixed(2)}, {safeY0.toFixed(2)})
               </span>
-              <span className="text-xs font-tabular-mono text-[#96B898]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-y)]">
                 cos θ = {directionalStats.cosTheta.toFixed(3)}
               </span>
             </div>
@@ -528,10 +529,10 @@ export function GradientDirectionalDerivativeLab() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Compass className="w-3.5 h-3.5 text-[#D35323]" />
+                <Compass className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
                 2D Contour &amp; Gradient Compass (Click to Move Point)
               </span>
-              <span className="text-xs font-tabular-mono text-[#D35323]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
                 θ = {directionalStats.thetaDeg.toFixed(1)}°
               </span>
             </div>
@@ -650,7 +651,7 @@ export function GradientDirectionalDerivativeLab() {
           {/* Quick-Snap Alignment Buttons + Compass Slider */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="flex items-center justify-between text-xs font-tabular-mono">
-              <span className="text-[#8D9FCE] font-semibold">
+              <span className="text-[var(--math-ink-x)] font-semibold">
                 Unit Heading Angle α (u = ⟨cos α, sin α⟩)
               </span>
               <span className="text-[var(--text-primary)]">
@@ -665,6 +666,7 @@ export function GradientDirectionalDerivativeLab() {
               value={alphaDeg}
               onChange={(e) => setAlphaDeg(parseFloat(e.target.value))}
               className="w-full accent-[#8D9FCE]"
+              aria-label="Unit heading angle α (degrees)"
             />
 
             {/* Quick-Snap Buttons */}
@@ -674,7 +676,7 @@ export function GradientDirectionalDerivativeLab() {
                 onClick={() =>
                   setAlphaDeg(Math.round(directionalStats.gradAngleDeg) % 360)
                 }
-                className="flex items-center justify-center gap-1 px-2 py-1.5 text-[11px] font-tabular-mono border border-[#D35323] text-[#D35323] bg-[var(--bg-panel)] hover:bg-[#D35323]/15"
+                className="flex items-center justify-center gap-1 px-2 py-1.5 text-[11px] font-tabular-mono border border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[var(--bg-panel)] hover:bg-[#D35323]/15"
               >
                 <ArrowUpRight className="w-3.5 h-3.5" />
                 Steepest +‖∇f‖
@@ -686,7 +688,7 @@ export function GradientDirectionalDerivativeLab() {
                     Math.round(directionalStats.gradAngleDeg + 90) % 360
                   )
                 }
-                className="flex items-center justify-center gap-1 px-2 py-1.5 text-[11px] font-tabular-mono border border-[#FBEAA4] text-[#FBEAA4] bg-[var(--bg-panel)] hover:bg-[#FBEAA4]/15"
+                className="flex items-center justify-center gap-1 px-2 py-1.5 text-[11px] font-tabular-mono border border-[var(--math-ink-diff)] text-[var(--math-ink-diff)] bg-[var(--bg-panel)] hover:bg-[#FBEAA4]/15"
               >
                 <Minus className="w-3.5 h-3.5" />
                 Contour (D_u=0)
@@ -698,7 +700,7 @@ export function GradientDirectionalDerivativeLab() {
                     Math.round(directionalStats.gradAngleDeg + 180) % 360
                   )
                 }
-                className="flex items-center justify-center gap-1 px-2 py-1.5 text-[11px] font-tabular-mono border border-[#96B898] text-[#96B898] bg-[var(--bg-panel)] hover:bg-[#96B898]/15"
+                className="flex items-center justify-center gap-1 px-2 py-1.5 text-[11px] font-tabular-mono border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[var(--bg-panel)] hover:bg-[#96B898]/15"
               >
                 <ArrowDownRight className="w-3.5 h-3.5" />
                 Descent -‖∇f‖
@@ -708,7 +710,7 @@ export function GradientDirectionalDerivativeLab() {
             {/* Probe Point Sliders */}
             <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[var(--border-subtle)]">
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#8D9FCE]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-x)]">
                   <span>Point x₀</span>
                   <span>{safeX0.toFixed(2)}</span>
                 </div>
@@ -720,11 +722,12 @@ export function GradientDirectionalDerivativeLab() {
                   value={safeX0}
                   onChange={(e) => setX0(parseFloat(e.target.value))}
                   className="w-full accent-[#8D9FCE]"
+                  aria-label="Evaluation point x₀"
                 />
               </div>
 
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#96B898]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-y)]">
                   <span>Point y₀</span>
                   <span>{safeY0.toFixed(2)}</span>
                 </div>
@@ -736,6 +739,7 @@ export function GradientDirectionalDerivativeLab() {
                   value={safeY0}
                   onChange={(e) => setY0(parseFloat(e.target.value))}
                   className="w-full accent-[#96B898]"
+                  aria-label="Evaluation point y₀"
                 />
               </div>
             </div>
@@ -744,7 +748,7 @@ export function GradientDirectionalDerivativeLab() {
           {/* Telemetry Readout */}
           <div className="grid grid-cols-3 gap-2 text-xs font-tabular-mono">
             <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#D35323] block text-[10px]">
+              <span className="text-[var(--math-ink-sweep)] block text-[10px]">
                 GRADIENT ∇f
               </span>
               <span className="text-[var(--text-primary)] font-semibold">
@@ -752,7 +756,7 @@ export function GradientDirectionalDerivativeLab() {
               </span>
             </div>
             <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#8D9FCE] block text-[10px]">
+              <span className="text-[var(--math-ink-x)] block text-[10px]">
                 HEADING u
               </span>
               <span className="text-[var(--text-primary)] font-semibold">
@@ -760,10 +764,10 @@ export function GradientDirectionalDerivativeLab() {
               </span>
             </div>
             <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#96B898] block text-[10px]">
+              <span className="text-[var(--math-ink-y)] block text-[10px]">
                 SLOPE D_u f
               </span>
-              <span className="text-[#96B898] font-semibold">
+              <span className="text-[var(--math-ink-y)] font-semibold">
                 {directionalStats.duf.toFixed(3)}
               </span>
             </div>

@@ -12,6 +12,7 @@ import {
   computePartialDerivatives2D,
   mathToThreeVec3,
 } from "@/components/visualizations/primitives";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 interface HessianPreset {
   id: string;
@@ -179,7 +180,7 @@ export function HessianSecondDerivativeTestLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#B95869] text-[#B95869] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-upper)] text-[var(--math-ink-upper)] bg-[var(--bg-canvas)]">
               LAB 3.1.8A • SECOND DERIVATIVE TEST (r, s, t &amp; D = rt − s²)
             </span>
             <span
@@ -217,7 +218,7 @@ export function HessianSecondDerivativeTestLab() {
               onClick={() => applyPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 p.id === presetId
-                  ? "border-[#B95869] bg-[#B95869]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-upper)] bg-[#B95869]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
               }`}
             >
@@ -242,7 +243,7 @@ export function HessianSecondDerivativeTestLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Probe x₀</span>
-              <span className="font-tabular-mono text-[#8D9FCE]">
+              <span className="font-tabular-mono text-[var(--math-ink-x)]">
                 {x0.toFixed(2)}
               </span>
             </div>
@@ -261,7 +262,7 @@ export function HessianSecondDerivativeTestLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Probe y₀</span>
-              <span className="font-tabular-mono text-[#96B898]">
+              <span className="font-tabular-mono text-[var(--math-ink-y)]">
                 {y0.toFixed(2)}
               </span>
             </div>
@@ -279,7 +280,7 @@ export function HessianSecondDerivativeTestLab() {
 
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] flex flex-col justify-between gap-2">
             <span className="text-xs font-sans text-[var(--text-secondary)] flex items-center gap-1.5">
-              <Crosshair className="w-3.5 h-3.5 text-[#FBEAA4]" />
+              <Crosshair className="w-3.5 h-3.5 text-[var(--math-ink-diff)]" />
               Quick Snap to Stationary Points
             </span>
             <div className="flex gap-2">
@@ -330,7 +331,7 @@ export function HessianSecondDerivativeTestLab() {
           <div className="grid grid-cols-2 gap-3 text-xs font-tabular-mono">
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
               <div className="text-[var(--text-muted)]">Gradient ‖∇f‖</div>
-              <div className="mt-1 text-sm text-[#8D9FCE]">
+              <div className="mt-1 text-sm text-[var(--math-ink-x)]">
                 {stats.gradNorm.toFixed(4)}
               </div>
             </div>
@@ -338,20 +339,20 @@ export function HessianSecondDerivativeTestLab() {
               <div className="text-[var(--text-muted)]">Discriminant D = rt − s²</div>
               <div
                 className="mt-1 text-sm font-semibold"
-                style={{ color: stats.badgeColor }}
+                style={{ color: getAdaptiveAccentInk(stats.badgeColor) }}
               >
                 {stats.D.toFixed(4)}
               </div>
             </div>
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
               <div className="text-[var(--text-muted)]">r = f_xx, s = f_xy, t = f_yy</div>
-              <div className="mt-1 text-xs text-[#FBEAA4]">
+              <div className="mt-1 text-xs text-[var(--math-ink-diff)]">
                 ({stats.r.toFixed(2)}, {stats.s.toFixed(2)}, {stats.t.toFixed(2)})
               </div>
             </div>
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
               <div className="text-[var(--text-muted)]">Eigen-Curvatures λ₁, λ₂</div>
-              <div className="mt-1 text-xs text-[#029091]">
+              <div className="mt-1 text-xs text-[var(--math-ink-z)]">
                 {stats.lambda1.toFixed(2)}, {stats.lambda2.toFixed(2)}
               </div>
             </div>

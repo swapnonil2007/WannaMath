@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { ArrowRightLeft, RotateCcw } from "lucide-react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
 
 interface BernoulliPreset {
   id: string;
@@ -214,10 +214,10 @@ export function BernoulliReductionLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#8D9FCE] text-[#8D9FCE] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-x)] text-[var(--math-ink-x)] bg-[var(--bg-canvas)]">
               LAB 3.1.9B • BERNOULLI&apos;S EQUATION &amp; v = y^(1−n) LINEARIZATION
             </span>
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[#96B898] text-[#96B898] bg-[#96B898]/10 inline-flex items-center gap-1">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono border border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/10 inline-flex items-center gap-1">
               <ArrowRightLeft className="w-3 h-3" />
               v₀ = y₀^({sim.oneMinusN.toFixed(1)}) = {sim.v0.toFixed(3)}
             </span>
@@ -247,7 +247,7 @@ export function BernoulliReductionLab() {
               onClick={() => selectPreset(p)}
               className={`px-3 py-1.5 text-xs font-sans border transition-colors ${
                 p.id === presetId
-                  ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
+                  ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)]"
                   : "border-[var(--border-subtle)] bg-[var(--bg-panel)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
               }`}
             >
@@ -260,7 +260,7 @@ export function BernoulliReductionLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Initial x₀</span>
-              <span className="font-tabular-mono text-[#8D9FCE]">
+              <span className="font-tabular-mono text-[var(--math-ink-x)]">
                 x₀ = {x0.toFixed(2)}
               </span>
             </div>
@@ -279,7 +279,7 @@ export function BernoulliReductionLab() {
           <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
             <div className="flex justify-between text-xs font-sans">
               <span className="text-[var(--text-secondary)]">Initial y₀ &gt; 0</span>
-              <span className="font-tabular-mono text-[#D35323]">
+              <span className="font-tabular-mono text-[var(--math-ink-sweep)]">
                 y₀ = {y0.toFixed(2)}
               </span>
             </div>
@@ -352,7 +352,7 @@ export function BernoulliReductionLab() {
             <span className="text-xs font-sans font-semibold text-[var(--text-primary)]">
               2. Linearized LDE Space <KaTeXMath math={`(x, v = y^{${sim.oneMinusN.toFixed(1)}})`} />
             </span>
-            <span className="text-[11px] font-tabular-mono text-[#96B898]">
+            <span className="text-[11px] font-tabular-mono text-[var(--math-ink-y)]">
               Linear LDE!
             </span>
           </div>
@@ -405,7 +405,7 @@ export function BernoulliReductionLab() {
 
       {/* Verification & Derivation Footer */}
       <div className="border-t border-[var(--border-subtle)] px-6 py-4 bg-[var(--bg-elevated)] space-y-3">
-        <div className="p-3 border border-[#8D9FCE]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="p-3 border border-[var(--math-ink-x)]/40 bg-[var(--bg-canvas)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="text-xs font-serif text-[var(--text-secondary)]">
             {preset.note}
           </p>
@@ -419,7 +419,7 @@ export function BernoulliReductionLab() {
             <span>
               End-of-window consistency check: Direct Bernoulli y = {sim.yDirectRight.toFixed(4)}
             </span>
-            <span className="text-[#96B898]">
+            <span className="text-[var(--math-ink-y)]">
               Reconstructed v^(1/(1−n)) = {sim.yFromVRight.toFixed(4)}
             </span>
           </div>

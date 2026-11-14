@@ -235,7 +235,7 @@ export function DivCurlProbeLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#029091] text-[#029091] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-z)] text-[var(--math-ink-z)] bg-[var(--bg-canvas)]">
               LAB 3.3.3 • DIVERGENCE FLUX BOX &amp; CURL PADDLEWHEEL PROBE
             </span>
             <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
@@ -257,7 +257,7 @@ export function DivCurlProbeLab() {
                 onClick={() => handleSelectPreset(p)}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#029091] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-z)] bg-[#029091]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -316,13 +316,13 @@ export function DivCurlProbeLab() {
             titleBadge="3D Vector Field F(x,y,z), Flux Cube & Local Curl Vector ∇×F"
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#029091]">
+                <span className="text-[var(--math-ink-z)]">
                   Probe: ({safeX.toFixed(2)}, {safeY.toFixed(2)}, {safeZ.toFixed(2)})
                 </span>
-                <span className="text-[#D35323] font-semibold">
+                <span className="text-[var(--math-ink-sweep)] font-semibold">
                   div F = {localAnalysis.divF.toFixed(3)}
                 </span>
-                <span className="text-[#FBEAA4] font-semibold">
+                <span className="text-[var(--math-ink-diff)] font-semibold">
                   (curl F)_z = {localAnalysis.curlZ.toFixed(3)}
                 </span>
               </div>
@@ -415,7 +415,7 @@ export function DivCurlProbeLab() {
               <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
                 LOCAL DIVERGENCE &amp; CURL EVALUATION
               </span>
-              <span className="text-xs font-tabular-mono text-[#029091]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-z)]">
                 F = ⟨{localAnalysis.p0.toFixed(2)}, {localAnalysis.q0.toFixed(2)}, {localAnalysis.r0.toFixed(2)}⟩
               </span>
             </div>
@@ -438,10 +438,10 @@ export function DivCurlProbeLab() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Compass className="w-3.5 h-3.5 text-[#029091]" />
+                <Compass className="w-3.5 h-3.5 text-[var(--math-ink-z)]" />
                 2D Slice z = {safeZ.toFixed(2)} (Click to Place Probe)
               </span>
-              <span className="text-xs font-tabular-mono text-[#FBEAA4]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-diff)]">
                 (∇×F)_z = {localAnalysis.curlZ.toFixed(2)}
               </span>
             </div>
@@ -535,7 +535,7 @@ export function DivCurlProbeLab() {
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="grid grid-cols-3 gap-3">
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#8D9FCE]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-x)]">
                   <span>x₀</span>
                   <span>{safeX.toFixed(2)}</span>
                 </div>
@@ -547,10 +547,11 @@ export function DivCurlProbeLab() {
                   value={safeX}
                   onChange={(e) => setProbeX(parseFloat(e.target.value))}
                   className="w-full accent-[#8D9FCE]"
+                  aria-label="Probe box center x₀"
                 />
               </div>
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#96B898]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-y)]">
                   <span>y₀</span>
                   <span>{safeY.toFixed(2)}</span>
                 </div>
@@ -562,10 +563,11 @@ export function DivCurlProbeLab() {
                   value={safeY}
                   onChange={(e) => setProbeY(parseFloat(e.target.value))}
                   className="w-full accent-[#96B898]"
+                  aria-label="Probe box center y₀"
                 />
               </div>
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] font-tabular-mono text-[#029091]">
+                <div className="flex justify-between text-[11px] font-tabular-mono text-[var(--math-ink-z)]">
                   <span>z₀</span>
                   <span>{safeZ.toFixed(2)}</span>
                 </div>
@@ -577,12 +579,13 @@ export function DivCurlProbeLab() {
                   value={safeZ}
                   onChange={(e) => setProbeZ(parseFloat(e.target.value))}
                   className="w-full accent-[#029091]"
+                  aria-label="Probe box center z₀"
                 />
               </div>
             </div>
 
             <div className="space-y-1 pt-2 border-t border-[var(--border-subtle)]">
-              <div className="flex justify-between text-xs font-tabular-mono text-[#FBEAA4]">
+              <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-diff)]">
                 <span>Probe Box Half-Width h</span>
                 <span>{boxRadius.toFixed(2)}</span>
               </div>
@@ -594,6 +597,7 @@ export function DivCurlProbeLab() {
                 value={boxRadius}
                 onChange={(e) => setBoxRadius(parseFloat(e.target.value))}
                 className="w-full accent-[#FBEAA4]"
+                aria-label="Probe box half-width h"
               />
             </div>
           </div>
@@ -601,7 +605,7 @@ export function DivCurlProbeLab() {
           {/* Physical Interpretation Cards */}
           <div className="grid grid-cols-2 gap-3 text-xs font-tabular-mono">
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
-              <div className="flex items-center gap-1.5 text-[#D35323]">
+              <div className="flex items-center gap-1.5 text-[var(--math-ink-sweep)]">
                 <Wind className="w-3.5 h-3.5" />
                 <span>DIVERGENCE ∇·F</span>
               </div>
@@ -618,7 +622,7 @@ export function DivCurlProbeLab() {
             </div>
 
             <div className="p-3 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1">
-              <div className="flex items-center gap-1.5 text-[#FBEAA4]">
+              <div className="flex items-center gap-1.5 text-[var(--math-ink-diff)]">
                 <RotateCw className="w-3.5 h-3.5" />
                 <span>Z-CURL (∇×F)_z</span>
               </div>

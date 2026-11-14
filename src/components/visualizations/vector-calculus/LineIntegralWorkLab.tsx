@@ -248,14 +248,14 @@ export function LineIntegralWorkLab() {
       <div className="border-b border-[var(--border-subtle)] px-6 py-4 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[#8D9FCE] text-[#8D9FCE] bg-[var(--bg-canvas)]">
+            <span className="px-2 py-0.5 text-[11px] font-tabular-mono uppercase tracking-wider border border-[var(--math-ink-x)] text-[var(--math-ink-x)] bg-[var(--bg-canvas)]">
               LAB 3.3.4 • LINE INTEGRAL WORK &amp; PATH INDEPENDENCE
             </span>
             <span
               className={`px-2 py-0.5 text-[11px] font-tabular-mono border inline-flex items-center gap-1 ${
                 workAnalysis.isNumericallyConservative
-                  ? "border-[#96B898] text-[#96B898] bg-[#96B898]/10"
-                  : "border-[#D35323] text-[#D35323] bg-[#D35323]/10"
+                  ? "border-[var(--math-ink-y)] text-[var(--math-ink-y)] bg-[#96B898]/10"
+                  : "border-[var(--math-ink-sweep)] text-[var(--math-ink-sweep)] bg-[#D35323]/10"
               }`}
             >
               {workAnalysis.isNumericallyConservative ? (
@@ -284,7 +284,7 @@ export function LineIntegralWorkLab() {
                 onClick={() => handleSelectPreset(p)}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#8D9FCE] bg-[#8D9FCE]/15 text-[var(--text-primary)] font-semibold"
+                    ? "border-[var(--math-ink-x)] bg-[#8D9FCE]/15 text-[var(--text-primary)] font-semibold"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                 }`}
               >
@@ -332,13 +332,13 @@ export function LineIntegralWorkLab() {
             titleBadge="3D Work Curtain (Height z = F · T Along Path C)"
             footerSlot={
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-                <span className="text-[#D35323] font-semibold">
+                <span className="text-[var(--math-ink-sweep)] font-semibold">
                   Bent Path W(C₁) = {workAnalysis.workBent.toFixed(4)}
                 </span>
-                <span className="text-[#8D9FCE]">
+                <span className="text-[var(--math-ink-x)]">
                   Straight Path W(C₀) = {workAnalysis.workStraight.toFixed(4)}
                 </span>
-                <span className="text-[#FBEAA4]">
+                <span className="text-[var(--math-ink-diff)]">
                   ΔW = {Math.abs(workAnalysis.workBent - workAnalysis.workStraight).toFixed(4)}
                 </span>
               </div>
@@ -448,7 +448,7 @@ export function LineIntegralWorkLab() {
                 LINE INTEGRAL &amp; FUNDAMENTAL THEOREM CHECK
               </span>
               {workAnalysis.potDiff !== null && (
-                <span className="text-xs font-tabular-mono text-[#96B898]">
+                <span className="text-xs font-tabular-mono text-[var(--math-ink-y)]">
                   f(B) - f(A) = {workAnalysis.potDiff.toFixed(4)}
                 </span>
               )}
@@ -472,10 +472,10 @@ export function LineIntegralWorkLab() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Route className="w-3.5 h-3.5 text-[#D35323]" />
+                <Route className="w-3.5 h-3.5 text-[var(--math-ink-sweep)]" />
                 2D Path Deformation C₁ vs. Straight C₀
               </span>
-              <span className="text-xs font-tabular-mono text-[#96B898]">
+              <span className="text-xs font-tabular-mono text-[var(--math-ink-y)]">
                 F · T = {workAnalysis.tangentialForce.toFixed(3)}
               </span>
             </div>
@@ -571,7 +571,7 @@ export function LineIntegralWorkLab() {
           {/* Sliders */}
           <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-3">
             <div className="space-y-1">
-              <div className="flex justify-between text-xs font-tabular-mono text-[#D35323]">
+              <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
                 <span>Path Deformation Bulge b</span>
                 <span>b = {pathBend.toFixed(2)}</span>
               </div>
@@ -583,11 +583,12 @@ export function LineIntegralWorkLab() {
                 value={pathBend}
                 onChange={(e) => setPathBend(parseFloat(e.target.value))}
                 className="w-full accent-[#D35323]"
+                aria-label="Path deformation bulge b"
               />
             </div>
 
             <div className="space-y-1 pt-2 border-t border-[var(--border-subtle)]">
-              <div className="flex justify-between text-xs font-tabular-mono text-[#FBEAA4]">
+              <div className="flex justify-between text-xs font-tabular-mono text-[var(--math-ink-diff)]">
                 <span>Particle Position t ∈ [0, 1]</span>
                 <span>t = {particleT.toFixed(2)}</span>
               </div>
@@ -599,6 +600,7 @@ export function LineIntegralWorkLab() {
                 value={particleT}
                 onChange={(e) => setParticleT(parseFloat(e.target.value))}
                 className="w-full accent-[#FBEAA4]"
+                aria-label="Particle position t"
               />
             </div>
           </div>
@@ -606,7 +608,7 @@ export function LineIntegralWorkLab() {
           {/* Readouts */}
           <div className="grid grid-cols-3 gap-2 text-xs font-tabular-mono">
             <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#FBEAA4] block text-[10px]">
+              <span className="text-[var(--math-ink-diff)] block text-[10px]">
                 PARTIAL WORK [0,t]
               </span>
               <span className="text-[var(--text-primary)] font-semibold">
@@ -614,7 +616,7 @@ export function LineIntegralWorkLab() {
               </span>
             </div>
             <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#D35323] block text-[10px]">
+              <span className="text-[var(--math-ink-sweep)] block text-[10px]">
                 TOTAL W(C₁)
               </span>
               <span className="text-[var(--text-primary)] font-semibold">
@@ -622,7 +624,7 @@ export function LineIntegralWorkLab() {
               </span>
             </div>
             <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]">
-              <span className="text-[#8D9FCE] block text-[10px]">
+              <span className="text-[var(--math-ink-x)] block text-[10px]">
                 CHORD W(C₀)
               </span>
               <span className="text-[var(--text-primary)] font-semibold">

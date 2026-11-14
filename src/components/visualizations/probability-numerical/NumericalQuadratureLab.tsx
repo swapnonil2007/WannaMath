@@ -2,7 +2,8 @@
 
 import React, { useMemo, useState } from "react";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
-import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives";
+import { SvgCoordinatePlane2D } from "@/components/visualizations/primitives/core2d";
+import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 type IntegrandId = "cosine" | "poly5" | "chirp" | "runge";
 type RuleId = "midpoint" | "trapezoid" | "simpson" | "gauss";
@@ -239,7 +240,7 @@ export function NumericalQuadratureLab() {
     <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-5 space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1">
-          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[#AAA36D]">
+          <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-grid)]">
             Lab 6.2.1 • Newton–Cotes vs. Gauss–Legendre Quadrature
           </span>
           <h2 className="font-math-serif text-lg font-semibold text-[var(--text-primary)]">
@@ -260,7 +261,7 @@ export function NumericalQuadratureLab() {
                 onClick={() => setIntegrandId(item.id)}
                 className={`px-2.5 py-1 text-xs font-tabular-mono border transition-colors ${
                   active
-                    ? "border-[#AAA36D] bg-[var(--bg-canvas)] text-[#FBEAA4]"
+                    ? "border-[var(--math-ink-grid)] bg-[var(--bg-canvas)] text-[var(--math-ink-diff)]"
                     : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                 }`}
               >
@@ -298,7 +299,7 @@ export function NumericalQuadratureLab() {
           <div className="flex justify-between text-xs font-tabular-mono">
             <span className="text-[var(--text-secondary)]">
               Nodes / Panels{" "}
-              <strong style={{ color: activeRuleMeta.color }}>
+              <strong style={{ color: getAdaptiveAccentInk(activeRuleMeta.color) }}>
                 N = {nNodes}
                 {ruleId === "simpson" && simpsonEff !== nNodes ? ` (Simpson uses ${simpsonEff})` : ""}
               </strong>
@@ -319,7 +320,7 @@ export function NumericalQuadratureLab() {
 
         <div className="lg:col-span-2 text-right font-tabular-mono text-xs">
           <div className="text-[var(--text-muted)]">Integrand</div>
-          <div className="text-[#FBEAA4] truncate">
+          <div className="text-[var(--math-ink-diff)] truncate">
             <KaTeXMath math="[-1, 1]" />
           </div>
         </div>
@@ -330,8 +331,8 @@ export function NumericalQuadratureLab() {
         {/* Left: Function & Quadrature Panels */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs font-tabular-mono">
-            <span className="text-[#FBEAA4]">(a) Integrand &amp; Quadrature Approximation</span>
-            <span style={{ color: activeRuleMeta.color }}>
+            <span className="text-[var(--math-ink-diff)]">(a) Integrand &amp; Quadrature Approximation</span>
+            <span style={{ color: getAdaptiveAccentInk(activeRuleMeta.color) }}>
               {activeRuleMeta.label} • <KaTeXMath math={meta.formulaLatex} />
             </span>
           </div>
@@ -517,7 +518,7 @@ export function NumericalQuadratureLab() {
         {/* Right: Log-Log Convergence Error Plot */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs font-tabular-mono">
-            <span className="text-[#8D9FCE]">(b) Log₁₀ Error Convergence vs. N</span>
+            <span className="text-[var(--math-ink-x)]">(b) Log₁₀ Error Convergence vs. N</span>
             <span className="text-[var(--text-muted)]">log₁₀ |Iₙ − I_exact|</span>
           </div>
 
@@ -551,7 +552,7 @@ export function NumericalQuadratureLab() {
                           y={278}
                           textAnchor="middle"
                           fontSize={9.5}
-                          fill="#8D9FCE"
+                          fill="var(--math-ink-x)"
                           fontFamily="var(--font-jetbrains-mono), monospace"
                         >
                           N={nTick}
@@ -613,7 +614,7 @@ export function NumericalQuadratureLab() {
                     y={toSvgY(-13) - 4}
                     textAnchor="end"
                     fontSize={9}
-                    fill="#B95869"
+                    fill="var(--math-ink-upper)"
                     fontFamily="var(--font-jetbrains-mono), monospace"
                   >
                     10⁻¹³ precision floor
@@ -629,23 +630,26 @@ export function NumericalQuadratureLab() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 font-tabular-mono text-xs">
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3 space-y-1">
           <div className="text-[var(--text-muted)]">Exact Integral I</div>
-          <div className="text-base font-semibold text-[#FBEAA4]">{fmt(meta.exact, 8)}</div>
+          <div className="text-base font-semibold text-[var(--math-ink-diff)]">{fmt(meta.exact, 8)}</div>
         </div>
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3 space-y-1">
           <div className="text-[var(--text-muted)]">{activeRuleMeta.label} Estimate</div>
-          <div className="text-base font-semibold" style={{ color: activeRuleMeta.color }}>
+          <div
+            className="text-base font-semibold"
+            style={{ color: getAdaptiveAccentInk(activeRuleMeta.color) }}
+          >
             {fmt(approxVal, 8)}
           </div>
         </div>
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3 space-y-1">
           <div className="text-[var(--text-muted)]">Absolute Error |E_N|</div>
-          <div className="text-base font-semibold text-[#B95869]">
+          <div className="text-base font-semibold text-[var(--math-ink-upper)]">
             {absErr < 1e-12 ? "< 1.00e-12 (EXACT)" : absErr.toExponential(3)}
           </div>
         </div>
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3 space-y-1">
           <div className="text-[var(--text-muted)]">Gauss Precision Degree</div>
-          <div className="text-base font-semibold text-[#D35323]">
+          <div className="text-base font-semibold text-[var(--math-ink-sweep)]">
             Exact ≤ deg {2 * nNodes - 1}
           </div>
         </div>
@@ -655,7 +659,7 @@ export function NumericalQuadratureLab() {
       {ruleId === "gauss" && (
         <div className="border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3.5 space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-tabular-mono">
-            <span className="text-[#D35323] font-semibold">
+            <span className="text-[var(--math-ink-sweep)] font-semibold">
               Legendre Roots &amp; Weights (N = {nNodes})
             </span>
             <span className="text-[var(--text-muted)]">
@@ -668,10 +672,10 @@ export function NumericalQuadratureLab() {
                 key={idx}
                 className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] px-2 py-1.5"
               >
-                <div className="text-[#D35323]">
+                <div className="text-[var(--math-ink-sweep)]">
                   x_{idx + 1} = {fmt(xi, 4)}
                 </div>
-                <div className="text-[#AAA36D]">w_{idx + 1} = {fmt(gaussData.weights[idx], 4)}</div>
+                <div className="text-[var(--math-ink-grid)]">w_{idx + 1} = {fmt(gaussData.weights[idx], 4)}</div>
               </div>
             ))}
           </div>
