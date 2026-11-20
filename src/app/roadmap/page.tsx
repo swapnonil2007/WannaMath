@@ -19,7 +19,7 @@ import { getAdaptiveAccentInk } from "@/lib/accentInk";
 export const metadata: Metadata = buildPageMetadata({
   title: "6-Volume Syllabus Matrix & Curriculum Roadmap",
   description:
-    "Complete 6-volume, 20-module, 65-chapter curriculum matrix for Wanna Math—covering single-variable calculus, linear algebra, multivariable calculus, differential equations, complex transforms, and numerical methods.",
+    "Complete 6-volume, 20-module, 70-chapter curriculum matrix for Wanna Math—covering single-variable calculus, linear algebra, multivariable calculus, differential equations, complex transforms, and numerical methods.",
   path: "/roadmap",
 });
 

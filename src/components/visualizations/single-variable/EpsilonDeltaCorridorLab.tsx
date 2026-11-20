@@ -389,11 +389,14 @@ export function EpsilonDeltaCorridorLab() {
   );
 
   return (
-    <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6">
+    <section
+      id="epsilon-delta-corridor"
+      className="scroll-mt-24 border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-6"
+    >
       <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
         <div className="space-y-1 max-w-3xl">
           <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)]">
-            <span>Lab 1.1.1A</span>
+            <span>Lab 1.1.2A</span>
             <span>•</span>
             <span>Formal Limit Definition</span>
           </div>

@@ -1,4 +1,5 @@
 import { getAllResolvedChapters, getAllVolumes } from "@/registry/index";
+import { getAllFormulaSheets } from "@/lib/formulas";
 import {
   BRAND_DISPLAY_NAME,
   BRAND_TAGLINE,
@@ -32,6 +33,7 @@ const FLAGSHIP_CHAPTER_IDS = new Set([
 
 export function GET() {
   const volumes = getAllVolumes();
+  const formulaSheets = getAllFormulaSheets();
   const resolvedChapters = getAllResolvedChapters();
   const totalModules = volumes.reduce((acc, v) => acc + v.modules.length, 0);
   const totalChapters = resolvedChapters.length;
@@ -55,6 +57,7 @@ export function GET() {
     "",
     `- [Home Overview](${absoluteUrl("/")}): Interactive 3D preview, Module 3.2 highlights, 6-volume directory, and Statistics Volume (18 chapters).`,
     `- [Full Syllabus Matrix](${absoluteUrl("/roadmap")}): Complete structured map across all ${volumes.length} volumes and ${totalChapters} chapters.`,
+    `- [Formula Reference Sheets](${absoluteUrl("/formulas")}): ${formulaSheets.length} dedicated calculus reference sheets (${formulaSheets.map((s) => `[${s.shortTitle}](${absoluteUrl(`/formulas/${s.slug}`)})`).join(", ")}).`,
     `- [How to Use Guide](${absoluteUrl("/how-to-use")}): Quick-start orientation, interactive formula sandbox, 2D/3D viewport controls, Butterfly color dictionary, and starter tracks.`,
     `- [About & Creator](${absoluteUrl("/about")}): Open-source philosophy, contributor info, and creator profile (${CREATOR.name}).`,
     `- [Full Machine-Readable Textbook Index](${absoluteUrl("/llms-full.txt")}): Complete Markdown syllabus with all ${totalChapters} chapters, prerequisites, key LaTeX equations, and ${totalLabs} interactive lab specs.`,

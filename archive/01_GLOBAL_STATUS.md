@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-14 — All 6 Core Volumes 100% Published (`65` Chapters, `82` Labs) + **Statistics Volume (`Volume S`, `/statistics`) 100% Published (`18/18` Chapters, `18` Labs Live; `100` Labs Textbook-Wide)**
+> **Last Updated:** 2026-11-21 — All 6 Core Volumes 100% Published (`70` Chapters, `87` Labs) + `4` Volume I Formula Reference Sheets (`/formulas`) + **Statistics Volume (`Volume S`, `/statistics`) 100% Published (`18/18` Chapters, `18` Labs Live; `105` Labs Textbook-Wide)**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -10,7 +10,7 @@
 
 | Volume | Slug | Accent Token | Modules | Chapters | Status |
 | :--- | :--- | :--- | :---: | :---: | :--- |
-| **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 12 | **`published` (12/12 Published — 12 Labs Live)** |
+| **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 17 | **`published` (17/17 Published — 17 Labs + 4 Formula Sheets Live)** |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | **`published` (9/9 Published — 9 Labs Live)** |
 | **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 24 | **`published` (24/24 Published — 41 Labs Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | **`published` (8/8 Published — 8 Labs Live)** |
@@ -22,24 +22,29 @@
 
 ## 2. Detailed Chapter Status Matrix — Volume I: Single-Variable Calculus (`/single-variable-calculus`)
 
-### Module 1.1: Limits & Continuity (`/single-variable-calculus/limits-continuity`) — **ALL PUBLISHED (2/2)**
+### Module 1.1: Limits & Continuity (`/single-variable-calculus/limits-continuity`) — **ALL PUBLISHED (3/3)**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
-| `1.1.1` | `/single-variable-calculus/limits-continuity/epsilon-delta-limits` | $\varepsilon$-$\delta$ Neighborhoods & Limit Convergence | **`published`** | `EpsilonDeltaCorridorLab` |
-| `1.1.2` | `/single-variable-calculus/limits-continuity/continuity-ivt` | Continuity, Intermediate Value Theorem & Asymptotes | **`published`** | `IVTBisectionLab` |
+| `1.1.1` | `/single-variable-calculus/limits-continuity/limits` | Limits, Left-Hand & Right-Hand Approach (LHL & RHL) | **`published`** | `OneSidedLimitsExplorerLab`, `LimitsAtInfinityAndTechniquesLab` *(+ Hero Link -> `/formulas/limits`)* |
+| `1.1.2` | `/single-variable-calculus/limits-continuity/epsilon-delta-limits` | $\varepsilon$-$\delta$ Neighborhoods & Limit Convergence | **`published`** | `EpsilonDeltaCorridorLab` |
+| `1.1.3` | `/single-variable-calculus/limits-continuity/continuity-ivt` | Continuity, Intermediate Value Theorem & Asymptotes | **`published`** | `IVTBisectionLab` |
 
-### Module 1.2: Differential Calculus & Local Linearity (`/single-variable-calculus/differential-calculus`) — **ALL PUBLISHED (4/4)**
+### Module 1.2: Differential Calculus & Local Linearity (`/single-variable-calculus/differential-calculus`) — **ALL PUBLISHED (8/8)**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
-| `1.2.1` | `/single-variable-calculus/differential-calculus/secant-tangent-homotopy` | Secant-to-Tangent Homotopy & Instantaneous Rate | **`published`** | `SecantTangentLab` |
+| `1.2.1` | `/single-variable-calculus/differential-calculus/secant-tangent-homotopy` | Secant-to-Tangent Homotopy & Instantaneous Rate | **`published`** | `SecantTangentLab` *(+ Hero Link -> `/formulas/derivatives`)* |
 | `1.2.2` | `/single-variable-calculus/differential-calculus/local-linearity-differentials` | Local Linearity, Differentials & Newton-Raphson | **`published`** | `NewtonRaphsonLab` |
 | `1.2.3` | `/single-variable-calculus/differential-calculus/chain-rule-kinematics` | Chain Rule, Implicit Differentiation & Related Rates | **`published`** | `ChainRulePropagatorLab` |
-| `1.2.4` | `/single-variable-calculus/differential-calculus/taylor-polynomials-curvature` | Taylor Polynomials & Curvature Osculating Circles | **`published`** | `TaylorCurvatureLab` |
+| `1.2.4` | `/single-variable-calculus/differential-calculus/taylor-polynomials-curvature` | Taylor Polynomials & Curvature Osculating Circles | **`published`** | `TaylorCurvatureLab` *(+ Hero Link -> `/formulas/taylor-expansions`)* |
+| `1.2.5` | `/single-variable-calculus/differential-calculus/mean-value-theorems` | *Sub-Parent: The Mean Value Theorems* — Rolle, Lagrange & Cauchy Overview | **`published`** | *Theorem Family Overview (0 Labs)* |
+| `1.2.5a` | `/single-variable-calculus/differential-calculus/rolles-theorem` | *Sub-Parent: The Mean Value Theorems* — Rolle's Theorem: Horizontal Tangents & Stationary Points | **`published`** | `RollesTheoremLab` |
+| `1.2.5b` | `/single-variable-calculus/differential-calculus/lagrange-mean-value-theorem` | *Sub-Parent: The Mean Value Theorems* — Lagrange's Mean Value Theorem (LMVT): Parallel Tangents | **`published`** | `LagrangeMVTLab` |
+| `1.2.5c` | `/single-variable-calculus/differential-calculus/cauchy-mean-value-theorem` | *Sub-Parent: The Mean Value Theorems* — Cauchy's Mean Value Theorem (CMVT): Parametric Tangents & L'Hôpital Bridge | **`published`** | `CauchyMVTLab` |
 
 ### Module 1.3: Single-Variable Integration & Accumulation (`/single-variable-calculus/integral-calculus`) — **ALL PUBLISHED (4/4)**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
-| `1.3.1` | `/single-variable-calculus/integral-calculus/riemann-sums-1d` | 1D Riemann Sums, Darboux Bounds & Definite Area | **`published`** | `Riemann1DLab` |
+| `1.3.1` | `/single-variable-calculus/integral-calculus/riemann-sums-1d` | 1D Riemann Sums, Darboux Bounds & Definite Area | **`published`** | `Riemann1DLab` *(+ Hero Link -> `/formulas/integrals`)* |
 | `1.3.2` | `/single-variable-calculus/integral-calculus/fundamental-theorem-calculus` | The Fundamental Theorem of Calculus: Accumulation vs. Slope | **`published`** | `FTCAccumulationLab` |
 | `1.3.3` | `/single-variable-calculus/integral-calculus/substitution-integration-by-parts` | $u$-Substitution & Integration by Parts Geometry | **`published`** | `SubstitutionIBPLab` |
 | `1.3.4` | `/single-variable-calculus/integral-calculus/solids-of-revolution` | Solids of Revolution: Disks, Washers & Cylindrical Shells | **`published`** | `SolidOfRevolutionLab` |
@@ -50,7 +55,7 @@
 | `1.4.1` | `/single-variable-calculus/infinite-series/sequences-partial-sums` | Sequences, Partial Sums & Geometric Convergence | **`published`** | `PartialSumSeriesLab` |
 | `1.4.2` | `/single-variable-calculus/infinite-series/power-series-convergence` | Power Series, Radius of Convergence & Analytic Functions | **`published`** | `PowerSeriesConvergenceLab` |
 
-*(All 4 Modules and all 12 Chapters of **Volume I** are 100% Published; detailed index in [`archive/volumes/vol_01_single_variable/README.md`](./volumes/vol_01_single_variable/README.md).)*
+*(All 4 Modules, all 17 Chapters with box-free `heroIntro` briefs, all 17 Interactive Labs, and all 4 Formula Reference Sheets `/formulas/{limits,derivatives,taylor-expansions,integrals}` of **Volume I** are 100% Published; detailed index in [`archive/volumes/vol_01_single_variable/README.md`](./volumes/vol_01_single_variable/README.md).)*
 
 ---
 

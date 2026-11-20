@@ -231,7 +231,9 @@ export default async function VolumePage({
                                     aria-hidden="true"
                                   />
                                   <span className="text-[var(--math-ink-y)]">
-                                    Published ({chapter.labs.length} Labs)
+                                    {chapter.labs.length > 0
+                                      ? `Published (${chapter.labs.length} Labs)`
+                                      : "Published (Overview)"}
                                   </span>
                                 </>
                               ) : (
@@ -273,7 +275,9 @@ export default async function VolumePage({
                           <div className="flex items-center justify-between">
                             <span className="text-[11px] font-tabular-mono text-[var(--text-muted)] flex items-center gap-1">
                               <Layers className="w-3 h-3" aria-hidden="true" />
-                              {chapter.labs.map((l) => l.componentKey).join(", ")}
+                              {chapter.labs.length > 0
+                                ? chapter.labs.map((l) => l.componentKey).join(", ")
+                                : "Overview Hub (Rolle, Lagrange, Cauchy)"}
                             </span>
 
                             <Link
@@ -281,7 +285,11 @@ export default async function VolumePage({
                               className="px-2.5 py-1 border border-[var(--border-strong)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--text-primary)] flex items-center gap-1 shrink-0"
                             >
                               <span>
-                                {isPublished ? "Launch Labs" : "View Chapter"}
+                                {isPublished
+                                  ? chapter.labs.length > 0
+                                    ? "Launch Labs"
+                                    : "Open Overview"
+                                  : "View Chapter"}
                               </span>
                               <ArrowRight
                                 className="w-3 h-3"

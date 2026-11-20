@@ -213,7 +213,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "Test limits across lines y = mx, parabolas y = kx², and polar coordinates, and distinguish partial derivative existence from true total differentiability.",
           status: "published",
           estimatedMinutes: 35,
-          prerequisites: ["1.1.1", "3.1.1", "3.1.2"],
+          prerequisites: ["1.1.1", "1.1.2", "3.1.1", "3.1.2"],
           dimensionBadge: "2D + 3D",
           accentHex: "#8D9FCE",
           keyEquationsLatex: [

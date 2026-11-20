@@ -1,23 +1,25 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { lazy, Suspense } from "react";
 import { LabLoadingSkeleton } from "@/components/visualizations/LabLoadingSkeleton";
 
-const HeroIntegralPreview = dynamic(
-  () =>
-    import("@/components/visualizations/HeroIntegralPreview").then(
-      (mod) => mod.HeroIntegralPreview
-    ),
-  {
-    loading: () => (
-      <LabLoadingSkeleton
-        title="2D/3D Riemann Preview"
-        heightClass="min-h-[540px]"
-      />
-    ),
-  }
+const HeroIntegralPreview = lazy(() =>
+  import("@/components/visualizations/HeroIntegralPreview").then((mod) => ({
+    default: mod.HeroIntegralPreview,
+  }))
 );
 
 export function HeroIntegralPreviewLoader() {
-  return <HeroIntegralPreview />;
+  return (
+    <Suspense
+      fallback={
+        <LabLoadingSkeleton
+          title="2D/3D Riemann Preview"
+          heightClass="min-h-[540px]"
+        />
+      }
+    >
+      <HeroIntegralPreview />
+    </Suspense>
+  );
 }

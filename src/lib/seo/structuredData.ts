@@ -3,6 +3,7 @@ import type {
   ResolvedChapterContext,
   VolumeMetadata,
 } from "@/registry/types";
+import type { FormulaSheetDefinition } from "@/lib/formulas/types";
 import {
   BRAND_DISPLAY_NAME,
   BRAND_TAGLINE,
@@ -165,7 +166,7 @@ export function buildRoadmapJsonLd(volumes: VolumeMetadata[]) {
         url: roadmapUrl,
         name: "6-Volume Engineering Mathematics Master Syllabus",
         description:
-          "Complete 6-volume, 20-module, 65-chapter curriculum architecture covering single-variable calculus through multivariable calculus, linear algebra, ODEs, PDEs, complex transforms, and numerical methods.",
+          "Complete 6-volume, 20-module, 70-chapter curriculum architecture covering single-variable calculus through multivariable calculus, linear algebra, ODEs, PDEs, complex transforms, and numerical methods.",
         isPartOf: { "@id": WEBSITE_ID },
         inLanguage: "en-US",
         mainEntity: {
@@ -261,6 +262,89 @@ export function buildHowToUseJsonLd() {
             text: "Drag 3D WebGL viewports to orbit, click 2D canvases directly, and inspect the Butterfly color dictionary.",
           },
         ],
+      },
+    ],
+  };
+}
+
+export function buildFormulasIndexJsonLd(sheets: FormulaSheetDefinition[]) {
+  const indexUrl = absoluteUrl("/formulas");
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      getOrganizationNode(),
+      buildBreadcrumbList(
+        [
+          { name: BRAND_DISPLAY_NAME, path: "/" },
+          { name: "Formula Reference Sheets", path: "/formulas" },
+        ],
+        indexUrl
+      ),
+      {
+        "@type": "CollectionPage",
+        "@id": `${indexUrl}#webpage`,
+        url: indexUrl,
+        name: "Volume I Calculus Formula Reference Sheets",
+        description:
+          "Verified reference formula sheets for Limits, Derivatives, Taylor & Maclaurin Expansions, and Integrals.",
+        isPartOf: { "@id": WEBSITE_ID },
+        inLanguage: "en-US",
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: sheets.length,
+          itemListElement: sheets.map((sheet, idx) => ({
+            "@type": "ListItem",
+            position: idx + 1,
+            item: {
+              "@type": "LearningResource",
+              name: sheet.title,
+              description: sheet.subtitle,
+              url: absoluteUrl(`/formulas/${sheet.slug}`),
+              isAccessibleForFree: true,
+            },
+          })),
+        },
+      },
+    ],
+  };
+}
+
+export function buildFormulaSheetJsonLd(sheet: FormulaSheetDefinition) {
+  const pageUrl = absoluteUrl(`/formulas/${sheet.slug}`);
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      getCreatorNode(),
+      getOrganizationNode(),
+      buildBreadcrumbList(
+        [
+          { name: BRAND_DISPLAY_NAME, path: "/" },
+          { name: "Formula Reference Sheets", path: "/formulas" },
+          { name: sheet.shortTitle, path: `/formulas/${sheet.slug}` },
+        ],
+        pageUrl
+      ),
+      {
+        "@type": ["LearningResource", "TechArticle"],
+        "@id": `${pageUrl}#formula-sheet`,
+        url: pageUrl,
+        mainEntityOfPage: pageUrl,
+        headline: sheet.title,
+        name: sheet.title,
+        description: sheet.subtitle,
+        inLanguage: "en-US",
+        isAccessibleForFree: true,
+        learningResourceType: "Formula Reference Sheet",
+        educationalLevel: "Undergraduate Engineering",
+        author: { "@id": CREATOR_ID },
+        publisher: { "@id": ORGANIZATION_ID },
+        isPartOf: {
+          "@type": "CollectionPage",
+          name: "Formula Reference Sheets",
+          url: absoluteUrl("/formulas"),
+        },
       },
     ],
   };

@@ -38,8 +38,8 @@ const BUTTERFLY_SWATCHES = [
 const STATS = [
   { label: "6 Volumes", color: "#8D9FCE" },
   { label: "20 Modules", color: "#96B898" },
-  { label: "65 Chapters", color: "#029091" },
-  { label: "82 Interactive Labs", color: "#D35323" },
+  { label: "70 Chapters", color: "#029091" },
+  { label: "87 Interactive Labs", color: "#D35323" },
 ];
 
 export default function OpenGraphImage() {

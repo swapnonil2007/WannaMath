@@ -1,6 +1,6 @@
 # 01 — Current Project Status & Agent Handoff Checkpoint (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-14 — **All 6 Engineering Math Volumes (`65` Chapters, `82` Labs) + Statistics Volume (`Volume S`, `/statistics`, `18/18` Chapters, `18` Labs) 100% PUBLISHED (`100` Labs Textbook-Wide)**
+> **Last Updated:** 2026-11-21 — **All 6 Engineering Math Volumes (`70` Chapters, `87` Labs) + `4` Volume I Formula Sheets (`/formulas`) + Statistics Volume (`Volume S`, `/statistics`, `18/18` Chapters, `18` Labs) 100% PUBLISHED (`105` Labs Textbook-Wide)**
 > **See Full 6-Volume Matrix:** [`archive/01_GLOBAL_STATUS.md`](./01_GLOBAL_STATUS.md) & [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 > **Statistics Volume Master Plan:** [`archive/volumes/vol_07_statistics/STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md)
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
@@ -52,7 +52,8 @@
 | **Statistics Volume — Phase 4 (`S.4`)** | `1d5a886` | **PUBLISHED** | Published **Module S.4 (`statistical-inference`)**: `S.4.1` (`MaximumLikelihoodBiasVarianceLab`), `S.4.2` (`ConfidenceIntervalCoverageLab`), and `S.4.3` (`HypothesisPowerOverlapLab`) (`12/18` Statistics chapters, `94` live labs textbook-wide). |
 | **Statistics Volume — Phase 5 (`S.5`)** | `5ef496b` | **PUBLISHED** | Published **Module S.5 (`group-comparisons-anova`)**: `S.5.1` (`TwoSamplePairedWelchLab`), `S.5.2` (`ChiSquareContingencySimpsonLab`), and `S.5.3` (`AnovaBetweenWithinLab`) (`15/18` Statistics chapters, `97` live labs textbook-wide). |
 | **Statistics Volume — Phase 6 (`S.6`)** | `fa1d4ba` | **PUBLISHED** | Published **Module S.6 (`regression-bayesian-advanced`)**: `S.6.1` (`OLSRegressionAnscombeLab`), `S.6.2` (`MultipleRegression3DRegularizationLab`), and `S.6.3` (`BayesianUpdatingAndBootstrapLab`), plus `llms.txt` sync — completing **all `18/18` Statistics chapters (`100` live labs textbook-wide)**. |
-| **How to Use Wanna Math Guide (`/how-to-use`)** | *Current* | **PUBLISHED** | Added `/how-to-use` orientation guide (`src/app/how-to-use/page.tsx`) with live `<HowToUseInteractiveDemo />` practice sandbox, formula syntax cheat sheet, 2D/3D viewport control reference, dual Butterfly color dictionary, starter tracks, and Navbar/Footer/sitemap/`llms.txt`/JSON-LD integration. |
+| **How to Use Wanna Math Guide (`/how-to-use`)** | *Committed* | **PUBLISHED** | Added `/how-to-use` orientation guide (`src/app/how-to-use/page.tsx`) with live `<HowToUseInteractiveDemo />` practice sandbox, formula syntax cheat sheet, 2D/3D viewport control reference, dual Butterfly color dictionary, starter tracks, and Navbar/Footer/sitemap/`llms.txt`/JSON-LD integration. |
+| **Volume I Content & Formula Improvements (Phases 1–6)** | *Current* | **PUBLISHED** | Upgraded **Volume I (`17/17` chapters, `17` labs)**: added box-free hero prose (`heroIntro` via `<MathRichText />` — *The Question You Should Ask* & *In Simple Words & Math*); launched `/formulas` index + 4 verified sheets (`/formulas/limits`, `/formulas/derivatives`, `/formulas/taylor-expansions`, `/formulas/integrals`) with hero buttons on `1.1.1`, `1.2.1`, `1.2.4`, `1.3.1`; inserted dedicated Chapter `1.1.1` (`limits`: `OneSidedLimitsExplorerLab`, `LimitsAtInfinityAndTechniquesLab`) before `1.1.2` (`epsilon-delta-limits`) & `1.1.3` (`continuity-ivt`); published nested **The Mean Value Theorems** sub-parent under Module `1.2` (`1.2.5` Overview + `1.2.5a` `RollesTheoremLab`, `1.2.5b` `LagrangeMVTLab`, `1.2.5c` `CauchyMVTLab`); and replaced `next/dynamic` (`ssr: true`) with `React.lazy` + `<Suspense>` in `HeroIntegralPreviewLoader.tsx` & `DynamicLabRenderer.tsx` to eliminate the Next 15 `PreloadChunks` SSR `useId()` hydration mismatch. |
 
 ---
 
@@ -65,8 +66,8 @@
 
 ---
 
-## 3. Active Expansion — Statistics Volume (`Volume S`, `/statistics`)
-- **6-Volume Textbook (`I`–`VI`):** **100% published** (`65/65` chapters, `82` live interactive labs) and remains **untouched** in the **`6-Volume TOC`** drawer.
-- **Statistics Volume (`Volume S`):** **100% PUBLISHED (`18/18` chapters, `18` interactive labs; `100` live interactive labs textbook-wide).** All Phases 1–6 (`S.1`–`S.6`) are live under the dedicated **`Statistics TOC`**.
+## 3. Textbook Totals & Statistics Volume (`Volume S`, `/statistics`)
+- **6-Volume Textbook (`I`–`VI`):** **100% published** (`70/70` chapters, `87` live interactive labs + `4` Volume I Formula Sheets at `/formulas`) and remains cleanly separated from **`Statistics TOC`**.
+- **Statistics Volume (`Volume S`):** **100% PUBLISHED (`18/18` chapters, `18` interactive labs; `105` live interactive labs textbook-wide).** All Phases 1–6 (`S.1`–`S.6`) are live under the dedicated **`Statistics TOC`**.
 - **Immediate Next Step (Optional Argon Review):** Switch to **Argon** if you would like a full-volume pedagogical, mathematical accuracy, and visual audit across Modules `S.1`–`S.6`!
 - **Blueprint & Workflow:** [`archive/volumes/vol_07_statistics/STATISTICS_PLAN.md`](./volumes/vol_07_statistics/STATISTICS_PLAN.md) (`S.1`–`S.6`, 6 phases, 18 chapters & interactive labs).

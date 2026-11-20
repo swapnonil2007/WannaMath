@@ -23,6 +23,19 @@ export interface ChapterSubParent {
   badge?: string;
 }
 
+export interface ChapterHeroIntro {
+  /** Direct student-facing guiding question (supports inline $...$ KaTeX) */
+  questionToAsk: string;
+  /** 1-2 plain-English + math paragraphs (supports inline $...$ and block $$...$$ KaTeX, rendered without boxes) */
+  briefExplanation: string[];
+}
+
+export interface ChapterHeroActionLink {
+  label: string;
+  href: string;
+  description?: string;
+}
+
 export interface ChapterMetadata {
   id: string;
   slug: string;
@@ -38,6 +51,8 @@ export interface ChapterMetadata {
   engineeringContext?: string;
   pedagogicalRhythm?: ChapterPedagogicalRhythm;
   subParent?: ChapterSubParent;
+  heroIntro?: ChapterHeroIntro;
+  heroActionLinks?: ChapterHeroActionLink[];
 }
 
 export interface ModuleMetadata {

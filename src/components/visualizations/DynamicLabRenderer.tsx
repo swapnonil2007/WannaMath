@@ -1,753 +1,482 @@
 "use client";
 
-import type { ComponentType } from "react";
-import dynamic from "next/dynamic";
+import {
+  lazy,
+  Suspense,
+  type ComponentType,
+  type LazyExoticComponent,
+} from "react";
 import { LabLoadingSkeleton } from "@/components/visualizations/LabLoadingSkeleton";
 
-const renderLabLoading = () => <LabLoadingSkeleton />;
+function lazyLab(
+  loader: () => Promise<ComponentType>
+): LazyExoticComponent<ComponentType> {
+  return lazy(() => loader().then((Component) => ({ default: Component })));
+}
 
 const LAB_COMPONENTS = {
   // Volume I — Module 1.1
-  EpsilonDeltaCorridorLab: dynamic(
-    () =>
+  OneSidedLimitsExplorerLab: lazyLab(() =>
+      import(
+        "@/components/visualizations/single-variable/OneSidedLimitsExplorerLab"
+      ).then((m) => m.OneSidedLimitsExplorerLab)),
+  LimitsAtInfinityAndTechniquesLab: lazyLab(() =>
+      import(
+        "@/components/visualizations/single-variable/LimitsAtInfinityAndTechniquesLab"
+      ).then((m) => m.LimitsAtInfinityAndTechniquesLab)),
+  EpsilonDeltaCorridorLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/EpsilonDeltaCorridorLab"
-      ).then((m) => m.EpsilonDeltaCorridorLab),
-    { loading: renderLabLoading }
-  ),
-  IVTBisectionLab: dynamic(
-    () =>
+      ).then((m) => m.EpsilonDeltaCorridorLab)),
+  IVTBisectionLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/IVTBisectionLab"
-      ).then((m) => m.IVTBisectionLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.IVTBisectionLab)),
 
   // Volume I — Module 1.2
-  SecantTangentLab: dynamic(
-    () =>
+  SecantTangentLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/SecantTangentLab"
-      ).then((m) => m.SecantTangentLab),
-    { loading: renderLabLoading }
-  ),
-  NewtonRaphsonLab: dynamic(
-    () =>
+      ).then((m) => m.SecantTangentLab)),
+  NewtonRaphsonLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/NewtonRaphsonLab"
-      ).then((m) => m.NewtonRaphsonLab),
-    { loading: renderLabLoading }
-  ),
-  ChainRulePropagatorLab: dynamic(
-    () =>
+      ).then((m) => m.NewtonRaphsonLab)),
+  ChainRulePropagatorLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/ChainRulePropagatorLab"
-      ).then((m) => m.ChainRulePropagatorLab),
-    { loading: renderLabLoading }
-  ),
-  TaylorCurvatureLab: dynamic(
-    () =>
+      ).then((m) => m.ChainRulePropagatorLab)),
+  TaylorCurvatureLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/TaylorCurvatureLab"
-      ).then((m) => m.TaylorCurvatureLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.TaylorCurvatureLab)),
+  RollesTheoremLab: lazyLab(() =>
+      import(
+        "@/components/visualizations/single-variable/RollesTheoremLab"
+      ).then((m) => m.RollesTheoremLab)),
+  LagrangeMVTLab: lazyLab(() =>
+      import(
+        "@/components/visualizations/single-variable/LagrangeMVTLab"
+      ).then((m) => m.LagrangeMVTLab)),
+  CauchyMVTLab: lazyLab(() =>
+      import(
+        "@/components/visualizations/single-variable/CauchyMVTLab"
+      ).then((m) => m.CauchyMVTLab)),
 
   // Volume I — Module 1.3
-  Riemann1DLab: dynamic(
-    () =>
+  Riemann1DLab: lazyLab(() =>
       import("@/components/visualizations/single-variable/Riemann1DLab").then(
         (m) => m.Riemann1DLab
-      ),
-    { loading: renderLabLoading }
-  ),
-  FTCAccumulationLab: dynamic(
-    () =>
+      )),
+  FTCAccumulationLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/FTCAccumulationLab"
-      ).then((m) => m.FTCAccumulationLab),
-    { loading: renderLabLoading }
-  ),
-  SubstitutionIBPLab: dynamic(
-    () =>
+      ).then((m) => m.FTCAccumulationLab)),
+  SubstitutionIBPLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/SubstitutionIBPLab"
-      ).then((m) => m.SubstitutionIBPLab),
-    { loading: renderLabLoading }
-  ),
-  SolidOfRevolutionLab: dynamic(
-    () =>
+      ).then((m) => m.SubstitutionIBPLab)),
+  SolidOfRevolutionLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/SolidOfRevolutionLab"
-      ).then((m) => m.SolidOfRevolutionLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.SolidOfRevolutionLab)),
 
   // Volume I — Module 1.4
-  PartialSumSeriesLab: dynamic(
-    () =>
+  PartialSumSeriesLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/PartialSumSeriesLab"
-      ).then((m) => m.PartialSumSeriesLab),
-    { loading: renderLabLoading }
-  ),
-  PowerSeriesConvergenceLab: dynamic(
-    () =>
+      ).then((m) => m.PartialSumSeriesLab)),
+  PowerSeriesConvergenceLab: lazyLab(() =>
       import(
         "@/components/visualizations/single-variable/PowerSeriesConvergenceLab"
-      ).then((m) => m.PowerSeriesConvergenceLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.PowerSeriesConvergenceLab)),
 
   // Volume II — Modules 2.1–2.3
-  VectorSpanExplorerLab: dynamic(
-    () =>
+  VectorSpanExplorerLab: lazyLab(() =>
       import(
         "@/components/visualizations/linear-algebra/VectorSpanExplorerLab"
-      ).then((m) => m.VectorSpanExplorerLab),
-    { loading: renderLabLoading }
-  ),
-  ChangeOfBasisLab: dynamic(
-    () =>
+      ).then((m) => m.VectorSpanExplorerLab)),
+  ChangeOfBasisLab: lazyLab(() =>
       import(
         "@/components/visualizations/linear-algebra/ChangeOfBasisLab"
-      ).then((m) => m.ChangeOfBasisLab),
-    { loading: renderLabLoading }
-  ),
-  FourSubspacesLab: dynamic(
-    () =>
+      ).then((m) => m.ChangeOfBasisLab)),
+  FourSubspacesLab: lazyLab(() =>
       import(
         "@/components/visualizations/linear-algebra/FourSubspacesLab"
-      ).then((m) => m.FourSubspacesLab),
-    { loading: renderLabLoading }
-  ),
-  MatrixTransformationLab: dynamic(
-    () =>
+      ).then((m) => m.FourSubspacesLab)),
+  MatrixTransformationLab: lazyLab(() =>
       import(
         "@/components/visualizations/linear-algebra/MatrixTransformationLab"
-      ).then((m) => m.MatrixTransformationLab),
-    { loading: renderLabLoading }
-  ),
-  DeterminantVolumeLab: dynamic(
-    () =>
+      ).then((m) => m.MatrixTransformationLab)),
+  DeterminantVolumeLab: lazyLab(() =>
       import(
         "@/components/visualizations/linear-algebra/DeterminantVolumeLab"
-      ).then((m) => m.DeterminantVolumeLab),
-    { loading: renderLabLoading }
-  ),
-  LeastSquaresProjectionLab: dynamic(
-    () =>
+      ).then((m) => m.DeterminantVolumeLab)),
+  LeastSquaresProjectionLab: lazyLab(() =>
       import(
         "@/components/visualizations/linear-algebra/LeastSquaresProjectionLab"
-      ).then((m) => m.LeastSquaresProjectionLab),
-    { loading: renderLabLoading }
-  ),
-  EigenvectorCompassLab: dynamic(
-    () =>
+      ).then((m) => m.LeastSquaresProjectionLab)),
+  EigenvectorCompassLab: lazyLab(() =>
       import(
         "@/components/visualizations/linear-algebra/EigenvectorCompassLab"
-      ).then((m) => m.EigenvectorCompassLab),
-    { loading: renderLabLoading }
-  ),
-  QuadraticFormLab: dynamic(
-    () =>
+      ).then((m) => m.EigenvectorCompassLab)),
+  QuadraticFormLab: lazyLab(() =>
       import(
         "@/components/visualizations/linear-algebra/QuadraticFormLab"
-      ).then((m) => m.QuadraticFormLab),
-    { loading: renderLabLoading }
-  ),
-  SVDThreeStageLab: dynamic(
-    () =>
+      ).then((m) => m.QuadraticFormLab)),
+  SVDThreeStageLab: lazyLab(() =>
       import(
         "@/components/visualizations/linear-algebra/SVDThreeStageLab"
-      ).then((m) => m.SVDThreeStageLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.SVDThreeStageLab)),
 
   // Volume III — Module 3.1
-  SurfaceContourSlicerLab: dynamic(
-    () =>
+  SurfaceContourSlicerLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/SurfaceContourSlicerLab"
-      ).then((m) => m.SurfaceContourSlicerLab),
-    { loading: renderLabLoading }
-  ),
-  PartialDerivativeTangentPlaneLab: dynamic(
-    () =>
+      ).then((m) => m.SurfaceContourSlicerLab)),
+  PartialDerivativeTangentPlaneLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/PartialDerivativeTangentPlaneLab"
-      ).then((m) => m.PartialDerivativeTangentPlaneLab),
-    { loading: renderLabLoading }
-  ),
-  GradientDirectionalDerivativeLab: dynamic(
-    () =>
+      ).then((m) => m.PartialDerivativeTangentPlaneLab)),
+  GradientDirectionalDerivativeLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/GradientDirectionalDerivativeLab"
-      ).then((m) => m.GradientDirectionalDerivativeLab),
-    { loading: renderLabLoading }
-  ),
-  GradientAscentAndLevelSurfaceLab: dynamic(
-    () =>
+      ).then((m) => m.GradientDirectionalDerivativeLab)),
+  GradientAscentAndLevelSurfaceLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/GradientAscentAndLevelSurfaceLab"
-      ).then((m) => m.GradientAscentAndLevelSurfaceLab),
-    { loading: renderLabLoading }
-  ),
-  LagrangeMultipliersLab: dynamic(
-    () =>
+      ).then((m) => m.GradientAscentAndLevelSurfaceLab)),
+  LagrangeMultipliersLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/LagrangeMultipliersLab"
-      ).then((m) => m.LagrangeMultipliersLab),
-    { loading: renderLabLoading }
-  ),
-  MultivariableLimitsPathsLab: dynamic(
-    () =>
+      ).then((m) => m.LagrangeMultipliersLab)),
+  MultivariableLimitsPathsLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/MultivariableLimitsPathsLab"
-      ).then((m) => m.MultivariableLimitsPathsLab),
-    { loading: renderLabLoading }
-  ),
-  DifferentiabilityErrorConeLab: dynamic(
-    () =>
+      ).then((m) => m.MultivariableLimitsPathsLab)),
+  DifferentiabilityErrorConeLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/DifferentiabilityErrorConeLab"
-      ).then((m) => m.DifferentiabilityErrorConeLab),
-    { loading: renderLabLoading }
-  ),
-  HigherOrderChainImplicitLab: dynamic(
-    () =>
+      ).then((m) => m.DifferentiabilityErrorConeLab)),
+  HigherOrderChainImplicitLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/HigherOrderChainImplicitLab"
-      ).then((m) => m.HigherOrderChainImplicitLab),
-    { loading: renderLabLoading }
-  ),
-  SingleVariableTaylorLab: dynamic(
-    () =>
+      ).then((m) => m.HigherOrderChainImplicitLab)),
+  SingleVariableTaylorLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/SingleVariableTaylorLab"
-      ).then((m) => m.SingleVariableTaylorLab),
-    { loading: renderLabLoading }
-  ),
-  MultivariableTaylorHessianLab: dynamic(
-    () =>
+      ).then((m) => m.SingleVariableTaylorLab)),
+  MultivariableTaylorHessianLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/MultivariableTaylorHessianLab"
-      ).then((m) => m.MultivariableTaylorHessianLab),
-    { loading: renderLabLoading }
-  ),
-  HomogeneousScalingRayLab: dynamic(
-    () =>
+      ).then((m) => m.MultivariableTaylorHessianLab)),
+  HomogeneousScalingRayLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/HomogeneousScalingRayLab"
-      ).then((m) => m.HomogeneousScalingRayLab),
-    { loading: renderLabLoading }
-  ),
-  EulersTheoremSecondOrderLab: dynamic(
-    () =>
+      ).then((m) => m.HomogeneousScalingRayLab)),
+  EulersTheoremSecondOrderLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/EulersTheoremSecondOrderLab"
-      ).then((m) => m.EulersTheoremSecondOrderLab),
-    { loading: renderLabLoading }
-  ),
-  HessianSecondDerivativeTestLab: dynamic(
-    () =>
+      ).then((m) => m.EulersTheoremSecondOrderLab)),
+  HessianSecondDerivativeTestLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/HessianSecondDerivativeTestLab"
-      ).then((m) => m.HessianSecondDerivativeTestLab),
-    { loading: renderLabLoading }
-  ),
-  GeneralMethodDegenerateExtremaLab: dynamic(
-    () =>
+      ).then((m) => m.HessianSecondDerivativeTestLab)),
+  GeneralMethodDegenerateExtremaLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/GeneralMethodDegenerateExtremaLab"
-      ).then((m) => m.GeneralMethodDegenerateExtremaLab),
-    { loading: renderLabLoading }
-  ),
-  LinearOdeIntegratingFactorLab: dynamic(
-    () =>
+      ).then((m) => m.GeneralMethodDegenerateExtremaLab)),
+  LinearOdeIntegratingFactorLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/LinearOdeIntegratingFactorLab"
-      ).then((m) => m.LinearOdeIntegratingFactorLab),
-    { loading: renderLabLoading }
-  ),
-  BernoulliReductionLab: dynamic(
-    () =>
+      ).then((m) => m.LinearOdeIntegratingFactorLab)),
+  BernoulliReductionLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/BernoulliReductionLab"
-      ).then((m) => m.BernoulliReductionLab),
-    { loading: renderLabLoading }
-  ),
-  WronskianPhaseAreaLab: dynamic(
-    () =>
+      ).then((m) => m.BernoulliReductionLab)),
+  WronskianPhaseAreaLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/WronskianPhaseAreaLab"
-      ).then((m) => m.WronskianPhaseAreaLab),
-    { loading: renderLabLoading }
-  ),
-  CharacteristicRootsSolutionLab: dynamic(
-    () =>
+      ).then((m) => m.WronskianPhaseAreaLab)),
+  CharacteristicRootsSolutionLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/CharacteristicRootsSolutionLab"
-      ).then((m) => m.CharacteristicRootsSolutionLab),
-    { loading: renderLabLoading }
-  ),
-  OperatorMethodTutorialLab: dynamic(
-    () =>
+      ).then((m) => m.CharacteristicRootsSolutionLab)),
+  OperatorMethodTutorialLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/OperatorMethodTutorialLab"
-      ).then((m) => m.OperatorMethodTutorialLab),
-    { loading: renderLabLoading }
-  ),
-  VariationOfParametersCauchyEulerLab: dynamic(
-    () =>
+      ).then((m) => m.OperatorMethodTutorialLab)),
+  VariationOfParametersCauchyEulerLab: lazyLab(() =>
       import(
         "@/components/visualizations/multivariable-differentiation/VariationOfParametersCauchyEulerLab"
-      ).then((m) => m.VariationOfParametersCauchyEulerLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.VariationOfParametersCauchyEulerLab)),
 
   // Volume III — Module 3.2
-  RiemannVolumeLab: dynamic(
-    () =>
+  RiemannVolumeLab: lazyLab(() =>
       import("@/components/visualizations/double-integrals/RiemannVolumeLab").then(
         (m) => m.RiemannVolumeLab
-      ),
-    { loading: renderLabLoading }
-  ),
-  IteratedOrderChangeLab: dynamic(
-    () =>
+      )),
+  IteratedOrderChangeLab: lazyLab(() =>
       import(
         "@/components/visualizations/double-integrals/IteratedOrderChangeLab"
-      ).then((m) => m.IteratedOrderChangeLab),
-    { loading: renderLabLoading }
-  ),
-  TripleIntegralOrderLab: dynamic(
-    () =>
+      ).then((m) => m.IteratedOrderChangeLab)),
+  TripleIntegralOrderLab: lazyLab(() =>
       import(
         "@/components/visualizations/triple-integrals/TripleIntegralOrderLab"
-      ).then((m) => m.TripleIntegralOrderLab),
-    { loading: renderLabLoading }
-  ),
-  TripleVoxelDensityLab: dynamic(
-    () =>
+      ).then((m) => m.TripleIntegralOrderLab)),
+  TripleVoxelDensityLab: lazyLab(() =>
       import(
         "@/components/visualizations/triple-integrals/TripleVoxelDensityLab"
-      ).then((m) => m.TripleVoxelDensityLab),
-    { loading: renderLabLoading }
-  ),
-  PolarCoordinateAreaLab: dynamic(
-    () =>
+      ).then((m) => m.TripleVoxelDensityLab)),
+  PolarCoordinateAreaLab: lazyLab(() =>
       import(
         "@/components/visualizations/coordinate-systems/PolarCoordinateAreaLab"
-      ).then((m) => m.PolarCoordinateAreaLab),
-    { loading: renderLabLoading }
-  ),
-  Curvilinear3DSurfacesAndElementLab: dynamic(
-    () =>
+      ).then((m) => m.PolarCoordinateAreaLab)),
+  Curvilinear3DSurfacesAndElementLab: lazyLab(() =>
       import(
         "@/components/visualizations/coordinate-systems/Curvilinear3DSurfacesAndElementLab"
-      ).then((m) => m.Curvilinear3DSurfacesAndElementLab),
-    { loading: renderLabLoading }
-  ),
-  DualGridMorphingAndTangentLab: dynamic(
-    () =>
+      ).then((m) => m.Curvilinear3DSurfacesAndElementLab)),
+  DualGridMorphingAndTangentLab: lazyLab(() =>
       import(
         "@/components/visualizations/jacobians/DualGridMorphingAndTangentLab"
-      ).then((m) => m.DualGridMorphingAndTangentLab),
-    { loading: renderLabLoading }
-  ),
-  JacobianIntegralPullbackLab: dynamic(
-    () =>
+      ).then((m) => m.DualGridMorphingAndTangentLab)),
+  JacobianIntegralPullbackLab: lazyLab(() =>
       import(
         "@/components/visualizations/jacobians/JacobianIntegralPullbackLab"
-      ).then((m) => m.JacobianIntegralPullbackLab),
-    { loading: renderLabLoading }
-  ),
-  ImproperIntegralConvergenceLab: dynamic(
-    () =>
+      ).then((m) => m.JacobianIntegralPullbackLab)),
+  ImproperIntegralConvergenceLab: lazyLab(() =>
       import(
         "@/components/visualizations/integral-calculus/ImproperIntegralConvergenceLab"
-      ).then((m) => m.ImproperIntegralConvergenceLab),
-    { loading: renderLabLoading }
-  ),
-  ConvergenceTestsTutorialLab: dynamic(
-    () =>
+      ).then((m) => m.ImproperIntegralConvergenceLab)),
+  ConvergenceTestsTutorialLab: lazyLab(() =>
       import(
         "@/components/visualizations/integral-calculus/ConvergenceTestsTutorialLab"
-      ).then((m) => m.ConvergenceTestsTutorialLab),
-    { loading: renderLabLoading }
-  ),
-  GammaFunctionLab: dynamic(
-    () =>
+      ).then((m) => m.ConvergenceTestsTutorialLab)),
+  GammaFunctionLab: lazyLab(() =>
       import(
         "@/components/visualizations/integral-calculus/GammaFunctionLab"
-      ).then((m) => m.GammaFunctionLab),
-    { loading: renderLabLoading }
-  ),
-  BetaFunctionLab: dynamic(
-    () =>
+      ).then((m) => m.GammaFunctionLab)),
+  BetaFunctionLab: lazyLab(() =>
       import(
         "@/components/visualizations/integral-calculus/BetaFunctionLab"
-      ).then((m) => m.BetaFunctionLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.BetaFunctionLab)),
 
   // Volume III — Module 3.3
-  VectorGradientCalculatorLab: dynamic(
-    () =>
+  VectorGradientCalculatorLab: lazyLab(() =>
       import(
         "@/components/visualizations/vector-calculus/VectorGradientCalculatorLab"
-      ).then((m) => m.VectorGradientCalculatorLab),
-    { loading: renderLabLoading }
-  ),
-  DirectionalDerivativeCalculatorLab: dynamic(
-    () =>
+      ).then((m) => m.VectorGradientCalculatorLab)),
+  DirectionalDerivativeCalculatorLab: lazyLab(() =>
       import(
         "@/components/visualizations/vector-calculus/DirectionalDerivativeCalculatorLab"
-      ).then((m) => m.DirectionalDerivativeCalculatorLab),
-    { loading: renderLabLoading }
-  ),
-  DivCurlProbeLab: dynamic(
-    () =>
+      ).then((m) => m.DirectionalDerivativeCalculatorLab)),
+  DivCurlProbeLab: lazyLab(() =>
       import("@/components/visualizations/vector-calculus/DivCurlProbeLab").then(
         (m) => m.DivCurlProbeLab
-      ),
-    { loading: renderLabLoading }
-  ),
-  VectorFieldStreamlineExplorerLab: dynamic(
-    () =>
+      )),
+  VectorFieldStreamlineExplorerLab: lazyLab(() =>
       import(
         "@/components/visualizations/vector-calculus/VectorFieldStreamlineExplorerLab"
-      ).then((m) => m.VectorFieldStreamlineExplorerLab),
-    { loading: renderLabLoading }
-  ),
-  DivCurlDecompositionLab: dynamic(
-    () =>
+      ).then((m) => m.VectorFieldStreamlineExplorerLab)),
+  DivCurlDecompositionLab: lazyLab(() =>
       import(
         "@/components/visualizations/vector-calculus/DivCurlDecompositionLab"
-      ).then((m) => m.DivCurlDecompositionLab),
-    { loading: renderLabLoading }
-  ),
-  LineIntegralWorkLab: dynamic(
-    () =>
+      ).then((m) => m.DivCurlDecompositionLab)),
+  LineIntegralWorkLab: lazyLab(() =>
       import(
         "@/components/visualizations/vector-calculus/LineIntegralWorkLab"
-      ).then((m) => m.LineIntegralWorkLab),
-    { loading: renderLabLoading }
-  ),
-  GreensTheoremLab: dynamic(
-    () =>
+      ).then((m) => m.LineIntegralWorkLab)),
+  GreensTheoremLab: lazyLab(() =>
       import(
         "@/components/visualizations/vector-calculus/GreensTheoremLab"
-      ).then((m) => m.GreensTheoremLab),
-    { loading: renderLabLoading }
-  ),
-  SurfaceFluxLab: dynamic(
-    () =>
+      ).then((m) => m.GreensTheoremLab)),
+  SurfaceFluxLab: lazyLab(() =>
       import("@/components/visualizations/vector-calculus/SurfaceFluxLab").then(
         (m) => m.SurfaceFluxLab
-      ),
-    { loading: renderLabLoading }
-  ),
-  StokesDivergenceLab: dynamic(
-    () =>
+      )),
+  StokesDivergenceLab: lazyLab(() =>
       import(
         "@/components/visualizations/vector-calculus/StokesDivergenceLab"
-      ).then((m) => m.StokesDivergenceLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.StokesDivergenceLab)),
 
   // Volume IV — Modules 4.1–4.4
-  SlopeFieldTracerLab: dynamic(
-    () =>
+  SlopeFieldTracerLab: lazyLab(() =>
       import(
         "@/components/visualizations/differential-equations/SlopeFieldTracerLab"
-      ).then((m) => m.SlopeFieldTracerLab),
-    { loading: renderLabLoading }
-  ),
-  AutonomousPhaseLineLab: dynamic(
-    () =>
+      ).then((m) => m.SlopeFieldTracerLab)),
+  AutonomousPhaseLineLab: lazyLab(() =>
       import(
         "@/components/visualizations/differential-equations/AutonomousPhaseLineLab"
-      ).then((m) => m.AutonomousPhaseLineLab),
-    { loading: renderLabLoading }
-  ),
-  HarmonicOscillatorLab: dynamic(
-    () =>
+      ).then((m) => m.AutonomousPhaseLineLab)),
+  HarmonicOscillatorLab: lazyLab(() =>
       import(
         "@/components/visualizations/differential-equations/HarmonicOscillatorLab"
-      ).then((m) => m.HarmonicOscillatorLab),
-    { loading: renderLabLoading }
-  ),
-  ForcedResonanceLab: dynamic(
-    () =>
+      ).then((m) => m.HarmonicOscillatorLab)),
+  ForcedResonanceLab: lazyLab(() =>
       import(
         "@/components/visualizations/differential-equations/ForcedResonanceLab"
-      ).then((m) => m.ForcedResonanceLab),
-    { loading: renderLabLoading }
-  ),
-  TraceDeterminantPhaseLab: dynamic(
-    () =>
+      ).then((m) => m.ForcedResonanceLab)),
+  TraceDeterminantPhaseLab: lazyLab(() =>
       import(
         "@/components/visualizations/differential-equations/TraceDeterminantPhaseLab"
-      ).then((m) => m.TraceDeterminantPhaseLab),
-    { loading: renderLabLoading }
-  ),
-  NonlinearPhasePortraitLab: dynamic(
-    () =>
+      ).then((m) => m.TraceDeterminantPhaseLab)),
+  NonlinearPhasePortraitLab: lazyLab(() =>
       import(
         "@/components/visualizations/differential-equations/NonlinearPhasePortraitLab"
-      ).then((m) => m.NonlinearPhasePortraitLab),
-    { loading: renderLabLoading }
-  ),
-  HeatEquationDiffusionLab: dynamic(
-    () =>
+      ).then((m) => m.NonlinearPhasePortraitLab)),
+  HeatEquationDiffusionLab: lazyLab(() =>
       import(
         "@/components/visualizations/differential-equations/HeatEquationDiffusionLab"
-      ).then((m) => m.HeatEquationDiffusionLab),
-    { loading: renderLabLoading }
-  ),
-  WaveEquationModesLab: dynamic(
-    () =>
+      ).then((m) => m.HeatEquationDiffusionLab)),
+  WaveEquationModesLab: lazyLab(() =>
       import(
         "@/components/visualizations/differential-equations/WaveEquationModesLab"
-      ).then((m) => m.WaveEquationModesLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.WaveEquationModesLab)),
 
   // Volume V — Modules 5.1–5.4
-  EulerHelixPhasorLab: dynamic(
-    () =>
+  EulerHelixPhasorLab: lazyLab(() =>
       import(
         "@/components/visualizations/transforms-complex/EulerHelixPhasorLab"
-      ).then((m) => m.EulerHelixPhasorLab),
-    { loading: renderLabLoading }
-  ),
-  ConformalMappingLab: dynamic(
-    () =>
+      ).then((m) => m.EulerHelixPhasorLab)),
+  ConformalMappingLab: lazyLab(() =>
       import(
         "@/components/visualizations/transforms-complex/ConformalMappingLab"
-      ).then((m) => m.ConformalMappingLab),
-    { loading: renderLabLoading }
-  ),
-  CauchyContourLab: dynamic(
-    () =>
+      ).then((m) => m.ConformalMappingLab)),
+  CauchyContourLab: lazyLab(() =>
       import(
         "@/components/visualizations/transforms-complex/CauchyContourLab"
-      ).then((m) => m.CauchyContourLab),
-    { loading: renderLabLoading }
-  ),
-  ResidueTheoremLab: dynamic(
-    () =>
+      ).then((m) => m.CauchyContourLab)),
+  ResidueTheoremLab: lazyLab(() =>
       import(
         "@/components/visualizations/transforms-complex/ResidueTheoremLab"
-      ).then((m) => m.ResidueTheoremLab),
-    { loading: renderLabLoading }
-  ),
-  LaplaceSPlane3DLab: dynamic(
-    () =>
+      ).then((m) => m.ResidueTheoremLab)),
+  LaplaceSPlane3DLab: lazyLab(() =>
       import(
         "@/components/visualizations/transforms-complex/LaplaceSPlane3DLab"
-      ).then((m) => m.LaplaceSPlane3DLab),
-    { loading: renderLabLoading }
-  ),
-  ConvolutionFlipSlideLab: dynamic(
-    () =>
+      ).then((m) => m.LaplaceSPlane3DLab)),
+  ConvolutionFlipSlideLab: lazyLab(() =>
       import(
         "@/components/visualizations/transforms-complex/ConvolutionFlipSlideLab"
-      ).then((m) => m.ConvolutionFlipSlideLab),
-    { loading: renderLabLoading }
-  ),
-  FourierSeriesGibbsLab: dynamic(
-    () =>
+      ).then((m) => m.ConvolutionFlipSlideLab)),
+  FourierSeriesGibbsLab: lazyLab(() =>
       import(
         "@/components/visualizations/transforms-complex/FourierSeriesGibbsLab"
-      ).then((m) => m.FourierSeriesGibbsLab),
-    { loading: renderLabLoading }
-  ),
-  FourierTransformWindingLab: dynamic(
-    () =>
+      ).then((m) => m.FourierSeriesGibbsLab)),
+  FourierTransformWindingLab: lazyLab(() =>
       import(
         "@/components/visualizations/transforms-complex/FourierTransformWindingLab"
-      ).then((m) => m.FourierTransformWindingLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.FourierTransformWindingLab)),
 
   // Volume VI — Modules 6.1–6.2
-  PDFCDFMomentLab: dynamic(
-    () =>
+  PDFCDFMomentLab: lazyLab(() =>
       import(
         "@/components/visualizations/probability-numerical/PDFCDFMomentLab"
-      ).then((m) => m.PDFCDFMomentLab),
-    { loading: renderLabLoading }
-  ),
-  BivariateGaussianLab: dynamic(
-    () =>
+      ).then((m) => m.PDFCDFMomentLab)),
+  BivariateGaussianLab: lazyLab(() =>
       import(
         "@/components/visualizations/probability-numerical/BivariateGaussianLab"
-      ).then((m) => m.BivariateGaussianLab),
-    { loading: renderLabLoading }
-  ),
-  NumericalQuadratureLab: dynamic(
-    () =>
+      ).then((m) => m.BivariateGaussianLab)),
+  NumericalQuadratureLab: lazyLab(() =>
       import(
         "@/components/visualizations/probability-numerical/NumericalQuadratureLab"
-      ).then((m) => m.NumericalQuadratureLab),
-    { loading: renderLabLoading }
-  ),
-  RungeKuttaSlopeLab: dynamic(
-    () =>
+      ).then((m) => m.NumericalQuadratureLab)),
+  RungeKuttaSlopeLab: lazyLab(() =>
       import(
         "@/components/visualizations/probability-numerical/RungeKuttaSlopeLab"
-      ).then((m) => m.RungeKuttaSlopeLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.RungeKuttaSlopeLab)),
 
   // Statistics Volume — Module S.1
-  HistogramBinningShapeLab: dynamic(
-    () =>
+  HistogramBinningShapeLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/HistogramBinningShapeLab"
-      ).then((m) => m.HistogramBinningShapeLab),
-    { loading: renderLabLoading }
-  ),
-  MeanMedianSeesawLab: dynamic(
-    () =>
+      ).then((m) => m.HistogramBinningShapeLab)),
+  MeanMedianSeesawLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/MeanMedianSeesawLab"
-      ).then((m) => m.MeanMedianSeesawLab),
-    { loading: renderLabLoading }
-  ),
-  SpreadBoxplotBesselLab: dynamic(
-    () =>
+      ).then((m) => m.MeanMedianSeesawLab)),
+  SpreadBoxplotBesselLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/SpreadBoxplotBesselLab"
-      ).then((m) => m.SpreadBoxplotBesselLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.SpreadBoxplotBesselLab)),
 
   // Statistics Volume — Module S.2
-  VennProbabilityAreaLab: dynamic(
-    () =>
+  VennProbabilityAreaLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/VennProbabilityAreaLab"
-      ).then((m) => m.VennProbabilityAreaLab),
-    { loading: renderLabLoading }
-  ),
-  BayesMosaicTreeLab: dynamic(
-    () =>
+      ).then((m) => m.VennProbabilityAreaLab)),
+  BayesMosaicTreeLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/BayesMosaicTreeLab"
-      ).then((m) => m.BayesMosaicTreeLab),
-    { loading: renderLabLoading }
-  ),
-  GaltonBoardDiscreteLab: dynamic(
-    () =>
+      ).then((m) => m.BayesMosaicTreeLab)),
+  GaltonBoardDiscreteLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/GaltonBoardDiscreteLab"
-      ).then((m) => m.GaltonBoardDiscreteLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.GaltonBoardDiscreteLab)),
 
   // Statistics Volume — Module S.3
-  NormalZScoreQQPlotLab: dynamic(
-    () =>
+  NormalZScoreQQPlotLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/NormalZScoreQQPlotLab"
-      ).then((m) => m.NormalZScoreQQPlotLab),
-    { loading: renderLabLoading }
-  ),
-  CentralLimitTheoremAnimatorLab: dynamic(
-    () =>
+      ).then((m) => m.NormalZScoreQQPlotLab)),
+  CentralLimitTheoremAnimatorLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/CentralLimitTheoremAnimatorLab"
-      ).then((m) => m.CentralLimitTheoremAnimatorLab),
-    { loading: renderLabLoading }
-  ),
-  SamplingDistributionsTChi2FLab: dynamic(
-    () =>
+      ).then((m) => m.CentralLimitTheoremAnimatorLab)),
+  SamplingDistributionsTChi2FLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/SamplingDistributionsTChi2FLab"
-      ).then((m) => m.SamplingDistributionsTChi2FLab),
-    { loading: renderLabLoading }
-  ),
+      ).then((m) => m.SamplingDistributionsTChi2FLab)),
 
   // Statistics Volume — Module S.4
-  MaximumLikelihoodBiasVarianceLab: dynamic(
-    () =>
+  MaximumLikelihoodBiasVarianceLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/MaximumLikelihoodBiasVarianceLab"
-      ).then((m) => m.MaximumLikelihoodBiasVarianceLab),
-    { loading: renderLabLoading }
-  ),
-  ConfidenceIntervalCoverageLab: dynamic(
-    () =>
+      ).then((m) => m.MaximumLikelihoodBiasVarianceLab)),
+  ConfidenceIntervalCoverageLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/ConfidenceIntervalCoverageLab"
-      ).then((m) => m.ConfidenceIntervalCoverageLab),
-    { loading: renderLabLoading }
-  ),
-  HypothesisPowerOverlapLab: dynamic(
-    () =>
+      ).then((m) => m.ConfidenceIntervalCoverageLab)),
+  HypothesisPowerOverlapLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/HypothesisPowerOverlapLab"
-      ).then((m) => m.HypothesisPowerOverlapLab),
-    { loading: renderLabLoading }
-  ),
-  TwoSamplePairedWelchLab: dynamic(
-    () =>
+      ).then((m) => m.HypothesisPowerOverlapLab)),
+  TwoSamplePairedWelchLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/TwoSamplePairedWelchLab"
-      ).then((m) => m.TwoSamplePairedWelchLab),
-    { loading: renderLabLoading }
-  ),
-  ChiSquareContingencySimpsonLab: dynamic(
-    () =>
+      ).then((m) => m.TwoSamplePairedWelchLab)),
+  ChiSquareContingencySimpsonLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/ChiSquareContingencySimpsonLab"
-      ).then((m) => m.ChiSquareContingencySimpsonLab),
-    { loading: renderLabLoading }
-  ),
-  AnovaBetweenWithinLab: dynamic(
-    () =>
+      ).then((m) => m.ChiSquareContingencySimpsonLab)),
+  AnovaBetweenWithinLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/AnovaBetweenWithinLab"
-      ).then((m) => m.AnovaBetweenWithinLab),
-    { loading: renderLabLoading }
-  ),
-  OLSRegressionAnscombeLab: dynamic(
-    () =>
+      ).then((m) => m.AnovaBetweenWithinLab)),
+  OLSRegressionAnscombeLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/OLSRegressionAnscombeLab"
-      ).then((m) => m.OLSRegressionAnscombeLab),
-    { loading: renderLabLoading }
-  ),
-  MultipleRegression3DRegularizationLab: dynamic(
-    () =>
+      ).then((m) => m.OLSRegressionAnscombeLab)),
+  MultipleRegression3DRegularizationLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/MultipleRegression3DRegularizationLab"
-      ).then((m) => m.MultipleRegression3DRegularizationLab),
-    { loading: renderLabLoading }
-  ),
-  BayesianUpdatingAndBootstrapLab: dynamic(
-    () =>
+      ).then((m) => m.MultipleRegression3DRegularizationLab)),
+  BayesianUpdatingAndBootstrapLab: lazyLab(() =>
       import(
         "@/components/visualizations/statistics/BayesianUpdatingAndBootstrapLab"
-      ).then((m) => m.BayesianUpdatingAndBootstrapLab),
-    { loading: renderLabLoading }
-  ),
-  HowToUseInteractiveDemo: dynamic(
-    () =>
+      ).then((m) => m.BayesianUpdatingAndBootstrapLab)),
+  HowToUseInteractiveDemo: lazyLab(() =>
       import("@/components/visualizations/HowToUseInteractiveDemo").then(
         (m) => m.HowToUseInteractiveDemo
-      ),
-    { loading: renderLabLoading }
-  ),
-} satisfies Record<string, ComponentType>;
+      )),
+} satisfies Record<string, LazyExoticComponent<ComponentType>>;
 
 export type LabComponentName = keyof typeof LAB_COMPONENTS;
 
 export function DynamicLabRenderer({ name }: { name: LabComponentName }) {
   const LabComponent = LAB_COMPONENTS[name];
-  return <LabComponent />;
+  return (
+    <Suspense fallback={<LabLoadingSkeleton />}>
+      <LabComponent />
+    </Suspense>
+  );
 }

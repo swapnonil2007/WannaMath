@@ -60,6 +60,61 @@ export async function generateMetadata({
   });
 }
 
+const MVT_FAMILY_TABS = [
+  {
+    id: "1.2.5",
+    slug: "mean-value-theorems",
+    label: "1.2.5 Overview",
+  },
+  {
+    id: "1.2.5a",
+    slug: "rolles-theorem",
+    label: "1.2.5a Rolle's Theorem",
+  },
+  {
+    id: "1.2.5b",
+    slug: "lagrange-mean-value-theorem",
+    label: "1.2.5b Lagrange's MVT",
+  },
+  {
+    id: "1.2.5c",
+    slug: "cauchy-mean-value-theorem",
+    label: "1.2.5c Cauchy's MVT",
+  },
+] as const;
+
+function MvtFamilyNav({ activeSlug }: { activeSlug: string }) {
+  return (
+    <nav
+      aria-label="Mean Value Theorems Sub-Navigation"
+      className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-3 flex flex-wrap items-center justify-between gap-3"
+    >
+      <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)]">
+        Theorem Family Navigation
+      </span>
+      <div className="flex flex-wrap gap-2">
+        {MVT_FAMILY_TABS.map((tab) => {
+          const active = tab.slug === activeSlug;
+          return (
+            <Link
+              key={tab.slug}
+              href={`/single-variable-calculus/differential-calculus/${tab.slug}`}
+              aria-current={active ? "page" : undefined}
+              className={`px-3 py-1.5 text-xs font-tabular-mono border transition-colors ${
+                active
+                  ? "border-[var(--math-ink-sweep)] bg-[var(--bg-canvas)] text-[var(--math-ink-sweep)] font-semibold"
+                  : "border-[var(--border-subtle)] bg-[var(--bg-canvas)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
+              }`}
+            >
+              {tab.label}
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
+
 export default async function ChapterPage({
   params,
 }: {
@@ -82,6 +137,214 @@ export default async function ChapterPage({
     <>
       <JsonLd data={buildChapterJsonLd(resolved)} />
       <TopicPageShell chapterId={chapter.id}>
+      {chapter.slug === "limits" && (
+        <div className="space-y-10">
+          <DynamicLabRenderer name="OneSidedLimitsExplorerLab" />
+
+          {/* LHL, RHL & Two-Sided Limit Existence Guide */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
+                  One-Sided Foundations • LHL &amp; RHL
+                </span>
+                <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                  Left-Hand Limit (<KaTeXMath math="\text{LHL}" />), Right-Hand
+                  Limit (<KaTeXMath math="\text{RHL}" />) &amp; Existence Rules
+                </h2>
+              </div>
+              <Link
+                href="/formulas/limits"
+                className="px-3.5 py-2 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--math-ink-x)] transition-colors shrink-0"
+              >
+                See Common Limit Formulas →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. LEFT-HAND LIMIT (LHL)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\lim_{x \to a^-} f(x) = L_-"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Approach <KaTeXMath math="x = a" /> strictly from values{" "}
+                  <KaTeXMath math="x < a" /> (using <KaTeXMath math="x = a - h" />{" "}
+                  as <KaTeXMath math="h \to 0^+" />). Only the curve to the{" "}
+                  <strong>left</strong> of <KaTeXMath math="a" /> governs{" "}
+                  <KaTeXMath math="\text{LHL}" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. RIGHT-HAND LIMIT (RHL)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\lim_{x \to a^+} f(x) = L_+"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Approach <KaTeXMath math="x = a" /> strictly from values{" "}
+                  <KaTeXMath math="x > a" /> (using <KaTeXMath math="x = a + h" />{" "}
+                  as <KaTeXMath math="h \to 0^+" />). Only the curve to the{" "}
+                  <strong>right</strong> of <KaTeXMath math="a" /> governs{" "}
+                  <KaTeXMath math="\text{RHL}" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  3. TWO-SIDED EQUIVALENCE
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="\lim_{x \to a} f(x) = L \iff L_- = L_+ = L \in \mathbb{R}"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  The two-sided limit exists finitely if and only if both one-sided
+                  limits exist finitely and meet at the exact same height{" "}
+                  <KaTeXMath math="L" />, regardless of <KaTeXMath math="f(a)" />.
+                </p>
+              </div>
+            </div>
+
+            {/* Four Ways a Limit Fails */}
+            <div className="space-y-3 pt-2">
+              <h3 className="text-sm font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
+                Four Classic Ways a Two-Sided Limit Fails to Exist
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs font-math-serif text-[var(--text-secondary)]">
+                <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                  <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                    A. JUMP DISCONTINUITY
+                  </span>
+                  <p>
+                    Both <KaTeXMath math="L_-" /> and <KaTeXMath math="L_+" /> exist
+                    finitely, yet <KaTeXMath math="L_- \neq L_+" /> (e.g.,{" "}
+                    <KaTeXMath math="|x - 1|/(x - 1)" /> jumping from{" "}
+                    <KaTeXMath math="-1" /> to <KaTeXMath math="+1" />).
+                  </p>
+                </div>
+
+                <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                  <span className="font-tabular-mono font-semibold text-[var(--math-ink-upper)] block">
+                    B. INFINITE BLOW-UP (POLE)
+                  </span>
+                  <p>
+                    Outputs surge toward <KaTeXMath math="+\infty" /> or{" "}
+                    <KaTeXMath math="-\infty" /> (e.g., <KaTeXMath math="1/(x-1)^2" />
+                    ). Even when both sides go to <KaTeXMath math="+\infty" />, no
+                    finite limit <KaTeXMath math="L \in \mathbb{R}" /> exists.
+                  </p>
+                </div>
+
+                <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                  <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                    C. BOUNDED OSCILLATION
+                  </span>
+                  <p>
+                    Curves like <KaTeXMath math="\sin(6/x)" /> swing across{" "}
+                    <KaTeXMath math="[-1, 1]" /> infinitely often near{" "}
+                    <KaTeXMath math="x = 0" />, preventing either LHL or RHL from
+                    settling.
+                  </p>
+                </div>
+
+                <div className="p-3.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                  <span className="font-tabular-mono font-semibold text-[var(--math-ink-grid)] block">
+                    D. MISSING ONE-SIDED DOMAIN
+                  </span>
+                  <p>
+                    At <KaTeXMath math="x = 0" /> for <KaTeXMath math="\sqrt{x}" />,
+                    RHL equals <KaTeXMath math="0" />, whereas LHL is undefined over{" "}
+                    <KaTeXMath math="\mathbb{R}" /> because <KaTeXMath math="x < 0" />{" "}
+                    lies outside the real domain.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <DynamicLabRenderer name="LimitsAtInfinityAndTechniquesLab" />
+
+          {/* Algebraic Limit Evaluation Playbook */}
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
+                  0/0 &amp; ∞/∞ Algebraic Playbook
+                </span>
+                <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+                  Resolving Indeterminate Forms Before Plugging In
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Link
+                  href="/formulas/limits"
+                  className="px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--math-ink-x)] transition-colors"
+                >
+                  Open Full Limit Formula Sheet →
+                </Link>
+                <Link
+                  href="/single-variable-calculus/limits-continuity/epsilon-delta-limits"
+                  className="px-3 py-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] hover:border-[var(--border-strong)] text-xs font-tabular-mono text-[var(--math-ink-y)] transition-colors"
+                >
+                  Next: Ch. 1.1.2 Formal ε–δ →
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. FACTOR &amp; CANCEL (0/0)
+                </span>
+                <p>
+                  When both numerator and denominator vanish at <KaTeXMath math="x = a" />,
+                  factor out <KaTeXMath math="(x - a)" />. Because a limit keeps{" "}
+                  <KaTeXMath math="x \neq a" />, canceling the zero factor exposes the
+                  true hole height immediately.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. RATIONALIZE &amp; COMBINE
+                </span>
+                <p>
+                  Multiply radical differences like <KaTeXMath math="3 - \sqrt{x}" /> by
+                  their conjugate <KaTeXMath math="3 + \sqrt{x}" />, or place nested
+                  fractions over a common denominator so hidden{" "}
+                  <KaTeXMath math="(x - a)" /> factors cancel cleanly.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  3. LEADING POWERS &amp; SQUEEZE
+                </span>
+                <p>
+                  As <KaTeXMath math="x \to \pm\infty" />, divide rational functions by the
+                  highest power of <KaTeXMath math="x" /> (keeping{" "}
+                  <KaTeXMath math="\sqrt{x^2} = |x|" />!) and trap oscillating factors
+                  like <KaTeXMath math="\sin x / x" /> with the Squeeze Theorem.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
       {chapter.slug === "epsilon-delta-limits" && (
         <div className="space-y-10">
           <DynamicLabRenderer name="EpsilonDeltaCorridorLab" />
@@ -206,6 +469,536 @@ export default async function ChapterPage({
       {chapter.slug === "taylor-polynomials-curvature" && (
         <div className="space-y-10">
           <DynamicLabRenderer name="TaylorCurvatureLab" />
+        </div>
+      )}
+
+      {chapter.slug === "mean-value-theorems" && (
+        <div className="space-y-10">
+          <MvtFamilyNav activeSlug="mean-value-theorems" />
+
+          {/* Logical Proof Ladder */}
+          <section className="border border-[var(--border-strong)] bg-[var(--bg-panel)] p-6 space-y-5">
+            <div className="border-b border-[var(--border-subtle)] pb-3">
+              <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
+                Unified Logical Hierarchy
+              </span>
+              <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                How One Geometric Idea Generates Rolle, Lagrange, Cauchy &amp;
+                L&apos;Hôpital&apos;s Rule
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  STEP 1 • EVT + FERMAT
+                </span>
+                <p>
+                  A continuous function on <KaTeXMath math="[a, b]" /> attains a
+                  maximum and minimum; at any interior extremum where{" "}
+                  <KaTeXMath math="f" /> is differentiable,{" "}
+                  <KaTeXMath math="f'(c) = 0" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  STEP 2 • ROLLE&apos;S THEOREM
+                </span>
+                <p>
+                  When <KaTeXMath math="f(a) = f(b)" />, either{" "}
+                  <KaTeXMath math="f" /> is flat everywhere or attains an interior
+                  peak/valley—guaranteeing at least one horizontal tangent{" "}
+                  <KaTeXMath math="f'(c) = 0" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  STEP 3 • LAGRANGE&apos;S MVT
+                </span>
+                <p>
+                  Subtract the tilted chord line to form{" "}
+                  <KaTeXMath math="h(x) = f(x) - [f(a) + m_{\text{sec}}(x-a)]" />
+                  . Applying Rolle to <KaTeXMath math="h" /> yields{" "}
+                  <KaTeXMath math="f'(c) = m_{\text{sec}}" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  STEP 4 • CAUCHY → L&apos;HÔPITAL
+                </span>
+                <p>
+                  Applying Rolle to{" "}
+                  <KaTeXMath math="[f(b)-f(a)]g(t) - [g(b)-g(a)]f(t)" /> aligns
+                  parametric tangent <KaTeXMath math="(g'(c), f'(c))" /> with
+                  chord <KaTeXMath math="\overline{AB}" />, proving L&apos;Hôpital&apos;s Rule.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* 3-Theorem Comparison Table */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
+            <h2 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+              Side-by-Side Comparison of the Three Mean Value Theorems
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead>
+                  <tr className="border-b border-[var(--border-strong)] bg-[var(--bg-canvas)] font-tabular-mono text-xs uppercase text-[var(--text-muted)]">
+                    <th scope="col" className="px-3.5 py-2.5">Theorem</th>
+                    <th scope="col" className="px-3.5 py-2.5">Hypotheses</th>
+                    <th scope="col" className="px-3.5 py-2.5">Guaranteed Conclusion</th>
+                    <th scope="col" className="px-3.5 py-2.5">Geometric Meaning &amp; Key Trap</th>
+                  </tr>
+                </thead>
+                <tbody className="font-math-serif text-[var(--text-secondary)]">
+                  <tr className="border-b border-[var(--border-subtle)]">
+                    <td className="px-3.5 py-3 font-semibold text-[var(--text-primary)] whitespace-nowrap">
+                      1.2.5a Rolle&apos;s
+                    </td>
+                    <td className="px-3.5 py-3">
+                      Continuous on <KaTeXMath math="[a,b]" />, diff. on{" "}
+                      <KaTeXMath math="(a,b)" />, and <KaTeXMath math="f(a)=f(b)" />
+                    </td>
+                    <td className="px-3.5 py-3">
+                      <KaTeXMath math="\exists\, c \in (a,b) : f'(c) = 0" />
+                    </td>
+                    <td className="px-3.5 py-3">
+                      At least one horizontal tangent. Corner <KaTeXMath math="1-|x|" />{" "}
+                      breaks diff. on <KaTeXMath math="(a,b)" />.
+                    </td>
+                  </tr>
+                  <tr className="border-b border-[var(--border-subtle)]">
+                    <td className="px-3.5 py-3 font-semibold text-[var(--text-primary)] whitespace-nowrap">
+                      1.2.5b Lagrange&apos;s
+                    </td>
+                    <td className="px-3.5 py-3">
+                      Continuous on <KaTeXMath math="[a,b]" />, diff. on{" "}
+                      <KaTeXMath math="(a,b)" />
+                    </td>
+                    <td className="px-3.5 py-3">
+                      <KaTeXMath math="\exists\, c \in (a,b) : f'(c) = \frac{f(b)-f(a)}{b-a}" />
+                    </td>
+                    <td className="px-3.5 py-3">
+                      Tangent parallel to secant chord. Cusp <KaTeXMath math="x^{2/3}" />{" "}
+                      on <KaTeXMath math="[-1,2]" /> breaks diff. at <KaTeXMath math="0" />.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-3.5 py-3 font-semibold text-[var(--text-primary)] whitespace-nowrap">
+                      1.2.5c Cauchy&apos;s
+                    </td>
+                    <td className="px-3.5 py-3">
+                      <KaTeXMath math="f, g" /> cont. on <KaTeXMath math="[a,b]" />, diff.
+                      on <KaTeXMath math="(a,b)" /> (+ <KaTeXMath math="g'\neq 0" /> for
+                      ratio)
+                    </td>
+                    <td className="px-3.5 py-3">
+                      <KaTeXMath math="\frac{f'(c)}{g'(c)} = \frac{f(b)-f(a)}{g(b)-g(a)}" />
+                    </td>
+                    <td className="px-3.5 py-3">
+                      Parametric tangent <KaTeXMath math="\parallel \overline{AB}" /> at one
+                      shared <KaTeXMath math="c" />; note <KaTeXMath math="c_f \neq c_g" />!
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          {/* 3 Dedicated Theorem Cards */}
+          <section className="space-y-4">
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+              Explore Each Dedicated Mean Value Theorem Page &amp; Graphical Lab
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <Link
+                href="/single-variable-calculus/differential-calculus/rolles-theorem"
+                className="border border-[var(--border-strong)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-elevated)] p-5 flex flex-col justify-between gap-4 transition-colors"
+              >
+                <div className="space-y-2">
+                  <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)]">
+                    CHAPTER 1.2.5a • LIVE LAB
+                  </span>
+                  <h3 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+                    Rolle&apos;s Theorem
+                  </h3>
+                  <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
+                    Verify all 3 hypotheses, hunt horizontal tangents, and inspect
+                    corner and endpoint-jump counterexamples.
+                  </p>
+                </div>
+                <span className="text-xs font-tabular-mono text-[var(--math-ink-sweep)]">
+                  Open Rolle&apos;s Theorem &amp; Lab →
+                </span>
+              </Link>
+
+              <Link
+                href="/single-variable-calculus/differential-calculus/lagrange-mean-value-theorem"
+                className="border border-[var(--border-strong)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-elevated)] p-5 flex flex-col justify-between gap-4 transition-colors"
+              >
+                <div className="space-y-2">
+                  <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)]">
+                    CHAPTER 1.2.5b • LIVE LAB
+                  </span>
+                  <h3 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+                    Lagrange&apos;s Mean Value Theorem
+                  </h3>
+                  <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
+                    Translate the secant chord parallel to the curve and compare
+                    instantaneous vs. average rate via auxiliary <KaTeXMath math="h(x)" />.
+                  </p>
+                </div>
+                <span className="text-xs font-tabular-mono text-[var(--math-ink-z)]">
+                  Open Lagrange&apos;s MVT &amp; Lab →
+                </span>
+              </Link>
+
+              <Link
+                href="/single-variable-calculus/differential-calculus/cauchy-mean-value-theorem"
+                className="border border-[var(--border-strong)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-elevated)] p-5 flex flex-col justify-between gap-4 transition-colors"
+              >
+                <div className="space-y-2">
+                  <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)]">
+                    CHAPTER 1.2.5c • LIVE LAB
+                  </span>
+                  <h3 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+                    Cauchy&apos;s Mean Value Theorem
+                  </h3>
+                  <p className="text-xs font-math-serif text-[var(--text-secondary)] leading-relaxed">
+                    Explore parametric curve <KaTeXMath math="(g(t), f(t))" />,
+                    see why <KaTeXMath math="c_f \neq c_g" />, and bridge to
+                    L&apos;Hôpital&apos;s Rule.
+                  </p>
+                </div>
+                <span className="text-xs font-tabular-mono text-[var(--math-ink-x)]">
+                  Open Cauchy&apos;s MVT &amp; Lab →
+                </span>
+              </Link>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "rolles-theorem" && (
+        <div className="space-y-10">
+          <MvtFamilyNav activeSlug="rolles-theorem" />
+          <DynamicLabRenderer name="RollesTheoremLab" />
+
+          {/* Proof Sketch, Root-Separation Corollary & Counterexamples */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-sweep)] block">
+                  Formal Proof, Root Separation &amp; Counterexamples
+                </span>
+                <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                  Why Every One of Rolle&apos;s Three Hypotheses Is Essential
+                </h2>
+              </div>
+              <Link
+                href="/single-variable-calculus/differential-calculus/lagrange-mean-value-theorem"
+                className="px-3.5 py-2 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--math-ink-z)] transition-colors shrink-0"
+              >
+                Next: Ch. 1.2.5b Lagrange&apos;s MVT →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. PROOF SKETCH (EVT + FERMAT&apos;S THEOREM)
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Since <KaTeXMath math="f" /> is continuous on the closed bounded
+                  interval <KaTeXMath math="[a, b]" />, the Extreme Value Theorem
+                  guarantees a global maximum <KaTeXMath math="M" /> and minimum{" "}
+                  <KaTeXMath math="m" />. If <KaTeXMath math="M = m" />,{" "}
+                  <KaTeXMath math="f" /> is constant and <KaTeXMath math="f'(c) = 0" />{" "}
+                  everywhere. Otherwise, because <KaTeXMath math="f(a) = f(b)" />, at
+                  least one extreme value occurs at an interior point{" "}
+                  <KaTeXMath math="c \in (a, b)" />; since <KaTeXMath math="f" /> is
+                  differentiable there, Fermat&apos;s theorem forces{" "}
+                  <KaTeXMath math="f'(c) = 0" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  2. ROOT-SEPARATION COROLLARY
+                </span>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Between any two consecutive real roots <KaTeXMath math="r_1 < r_2" />{" "}
+                  of a differentiable function (<KaTeXMath math="f(r_1)=f(r_2)=0" />),
+                  the derivative <KaTeXMath math="f'(x)" /> has at least one root.
+                  Contrapositively, if <KaTeXMath math="f'(x) > 0" /> everywhere on an
+                  interval, <KaTeXMath math="f" /> can have{" "}
+                  <strong>at most one</strong> real root!
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  TRAP A • DROP DIFFERENTIABILITY
+                </span>
+                <p>
+                  <KaTeXMath math="f(x) = 1 - |x|" /> on <KaTeXMath math="[-1, 1]" />{" "}
+                  is continuous and satisfies <KaTeXMath math="f(-1)=f(1)=0" />, yet
+                  its sharp peak at <KaTeXMath math="x=0" /> lets slope flip from{" "}
+                  <KaTeXMath math="+1" /> to <KaTeXMath math="-1" /> with zero
+                  horizontal tangents.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-upper)] block">
+                  TRAP B • DROP ENDPOINT CONTINUITY
+                </span>
+                <p>
+                  Defining <KaTeXMath math="f(x) = x" /> on <KaTeXMath math="[0, 1)" />{" "}
+                  and <KaTeXMath math="f(1) = 0" /> gives <KaTeXMath math="f(0)=f(1)=0" />{" "}
+                  and <KaTeXMath math="f'(x) = 1" /> everywhere on <KaTeXMath math="(0, 1)" />
+                  —proof that closed-interval continuity at endpoints is mandatory.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-lower)] block">
+                  TRAP C • UNEQUAL ENDPOINTS
+                </span>
+                <p>
+                  When <KaTeXMath math="f(a) \neq f(b)" /> (e.g.{" "}
+                  <KaTeXMath math="f(x) = \frac{1}{2}x^2" /> on <KaTeXMath math="[0, 2]" />
+                  ), no horizontal tangent exists; instead, the curve matches the tilted
+                  secant slope via Lagrange&apos;s MVT.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "lagrange-mean-value-theorem" && (
+        <div className="space-y-10">
+          <MvtFamilyNav activeSlug="lagrange-mean-value-theorem" />
+          <DynamicLabRenderer name="LagrangeMVTLab" />
+
+          {/* Auxiliary Rolle Proof, Corollaries & Cusp Counterexample */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-z)] block">
+                  Proof from Rolle, Key Corollaries &amp; Cusp Trap
+                </span>
+                <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                  Why <KaTeXMath math="f'(c) = \frac{f(b)-f(a)}{b-a}" /> Unlocks
+                  Monotonicity &amp; Error Bounds
+                </h2>
+              </div>
+              <Link
+                href="/single-variable-calculus/differential-calculus/cauchy-mean-value-theorem"
+                className="px-3.5 py-2 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--math-ink-x)] transition-colors shrink-0"
+              >
+                Next: Ch. 1.2.5c Cauchy&apos;s MVT →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. PROOF VIA AUXILIARY FUNCTION h(x)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="h(x) = f(x) - \left[f(a) + \frac{f(b) - f(a)}{b - a}(x - a)\right]"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Since <KaTeXMath math="h" /> subtracts the straight secant line,{" "}
+                  <KaTeXMath math="h(a) = h(b) = 0" />, and <KaTeXMath math="h" />{" "}
+                  inherits continuity on <KaTeXMath math="[a, b]" /> and
+                  differentiability on <KaTeXMath math="(a, b)" />. Rolle&apos;s
+                  Theorem gives <KaTeXMath math="h'(c) = 0" />, which rearranges
+                  immediately to <KaTeXMath math="f'(c) = \frac{f(b)-f(a)}{b-a}" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  2. CUSP COUNTEREXAMPLE ON [-1, 2]
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="f(x) = x^{2/3} \implies m_{\text{sec}} = \frac{2^{2/3}-1}{3} \approx 0.1958"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Although <KaTeXMath math="x^{2/3}" /> is continuous across{" "}
+                  <KaTeXMath math="[-1, 2]" />, its derivative{" "}
+                  <KaTeXMath math="f'(x) = \frac{2}{3}x^{-1/3}" /> blows up at the
+                  interior cusp <KaTeXMath math="x = 0" />. Elsewhere{" "}
+                  <KaTeXMath math="|f'(x)| \ge 0.5291 > 0.1958" />, leaving zero
+                  valid <KaTeXMath math="c" />.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  COROLLARY 1 • CONSTANT FUNCTIONS
+                </span>
+                <p>
+                  If <KaTeXMath math="f'(x) = 0" /> everywhere on an interval,
+                  then for any <KaTeXMath math="x_1 < x_2" />,{" "}
+                  <KaTeXMath math="f(x_2)-f(x_1) = f'(c)(x_2-x_1) = 0" />—proving{" "}
+                  <KaTeXMath math="f" /> must be constant and justifying the{" "}
+                  <KaTeXMath math="+C" /> in antiderivatives!
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  COROLLARY 2 • STRICT MONOTONICITY
+                </span>
+                <p>
+                  If <KaTeXMath math="f'(x) > 0" /> on <KaTeXMath math="(a, b)" />,
+                  then <KaTeXMath math="f(x_2) - f(x_1) = f'(c)(x_2 - x_1) > 0" />{" "}
+                  whenever <KaTeXMath math="x_2 > x_1" />, guaranteeing{" "}
+                  <KaTeXMath math="f" /> is strictly increasing.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-1.5">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
+                  COROLLARY 3 • LIPSCHITZ ERROR BOUND
+                </span>
+                <p>
+                  Whenever <KaTeXMath math="|f'(x)| \le M" /> on{" "}
+                  <KaTeXMath math="(a, b)" />, the total jump is bounded linearly:{" "}
+                  <KaTeXMath math="|f(b) - f(a)| \le M|b - a|" />—for instance,{" "}
+                  <KaTeXMath math="|\sin b - \sin a| \le |b - a|" />.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {chapter.slug === "cauchy-mean-value-theorem" && (
+        <div className="space-y-10">
+          <MvtFamilyNav activeSlug="cauchy-mean-value-theorem" />
+          <DynamicLabRenderer name="CauchyMVTLab" />
+
+          {/* Auxiliary H(t), c_f != c_g, Cross vs Ratio, and L'Hopital Derivation */}
+          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+              <div>
+                <span className="text-xs font-tabular-mono uppercase tracking-wider text-[var(--math-ink-x)] block">
+                  Proof, Ratio Conditions &amp; L&apos;Hôpital Derivation
+                </span>
+                <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)]">
+                  From Parametric Tangents to L&apos;Hôpital&apos;s Rule
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Link
+                  href="/formulas/limits#evaluation-techniques"
+                  className="px-3 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono text-[var(--math-ink-x)] transition-colors"
+                >
+                  See L&apos;Hôpital in Limit Formulas →
+                </Link>
+                <Link
+                  href="/single-variable-calculus/integral-calculus/riemann-sums-1d"
+                  className="px-3 py-1.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] hover:border-[var(--border-strong)] text-xs font-tabular-mono text-[var(--math-ink-z)] transition-colors"
+                >
+                  Continue to Module 1.3: Integration →
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-x)] block">
+                  1. PROOF VIA AUXILIARY DETERMINANT H(t)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="H(t) = [f(b)-f(a)]\,g(t) - [g(b)-g(a)]\,f(t)"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Checking endpoints shows <KaTeXMath math="H(a) = H(b) = f(b)g(a) - g(b)f(a)" />.
+                  Because <KaTeXMath math="H" /> satisfies Rolle&apos;s Theorem on{" "}
+                  <KaTeXMath math="[a, b]" />, there exists{" "}
+                  <KaTeXMath math="c \in (a, b)" /> with{" "}
+                  <KaTeXMath math="H'(c) = 0" />, giving{" "}
+                  <KaTeXMath math="[f(b)-f(a)]g'(c) = [g(b)-g(a)]f'(c)" />.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2.5">
+                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
+                  2. WHY SEPARATE LAGRANGE FAILS (c_f ≠ c_g)
+                </span>
+                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
+                  <KaTeXMath
+                    math="f(t)=t^3,\; g(t)=t^2 \text{ on } [1,2]:\; c_g = 1.500,\; c_f \approx 1.528,\; c_{\text{Cauchy}} = \frac{14}{9} \approx 1.556"
+                    block
+                  />
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] font-math-serif leading-relaxed">
+                  Dividing Lagrange&apos;s result for <KaTeXMath math="f" /> by
+                  Lagrange&apos;s result for <KaTeXMath math="g" /> produces{" "}
+                  <KaTeXMath math="f'(c_f)/g'(c_g)" /> evaluated at{" "}
+                  <strong>two different instants</strong> <KaTeXMath math="c_f \neq c_g" />.
+                  Only Cauchy&apos;s combined <KaTeXMath math="H(t)" /> forces one
+                  shared <KaTeXMath math="c" />.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-math-serif text-[var(--text-secondary)]">
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-y)] block">
+                  3. CROSS-MULTIPLIED FORM VS. RATIO FORM
+                </span>
+                <p>
+                  The cross-multiplied equation requires only continuity on{" "}
+                  <KaTeXMath math="[a, b]" /> and differentiability on{" "}
+                  <KaTeXMath math="(a, b)" />. Writing the ratio{" "}
+                  <KaTeXMath math="\frac{f'(c)}{g'(c)} = \frac{f(b)-f(a)}{g(b)-g(a)}" />{" "}
+                  requires <KaTeXMath math="g'(t) \neq 0" /> for all{" "}
+                  <KaTeXMath math="t \in (a, b)" />, which also guarantees{" "}
+                  <KaTeXMath math="g(b) \neq g(a)" /> by Rolle&apos;s Theorem.
+                </p>
+              </div>
+
+              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
+                <span className="font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
+                  4. DIRECT PROOF OF L&apos;HÔPITAL&apos;S RULE (0/0)
+                </span>
+                <p>
+                  Suppose <KaTeXMath math="f(a) = g(a) = 0" /> and{" "}
+                  <KaTeXMath math="g'(t) \neq 0" /> near <KaTeXMath math="a" />.
+                  Applying Cauchy&apos;s MVT on <KaTeXMath math="[a, x]" /> gives{" "}
+                  <KaTeXMath math="\frac{f(x)}{g(x)} = \frac{f(x)-f(a)}{g(x)-g(a)} = \frac{f'(c_x)}{g'(c_x)}" />{" "}
+                  with <KaTeXMath math="c_x" /> trapped between <KaTeXMath math="a" />{" "}
+                  and <KaTeXMath math="x" />—forcing{" "}
+                  <KaTeXMath math="\lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{c\to a}\frac{f'(c)}{g'(c)}" />{" "}
+                  whenever the derivative limit exists!
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       )}
 

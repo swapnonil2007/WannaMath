@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next";
 import { getAllVolumes } from "@/registry/index";
+import { getAllFormulaSheets } from "@/lib/formulas";
 import { absoluteUrl } from "@/lib/seo/siteConfig";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const volumes = getAllVolumes();
+  const formulaSheets = getAllFormulaSheets();
   const lastModified = new Date();
 
   const entries: MetadataRoute.Sitemap = [
@@ -20,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: absoluteUrl("/formulas"),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
       url: absoluteUrl("/how-to-use"),
       lastModified,
       changeFrequency: "monthly",
@@ -32,6 +40,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
   ];
+
+  for (const sheet of formulaSheets) {
+    entries.push({
+      url: absoluteUrl(`/formulas/${sheet.slug}`),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    });
+  }
 
   for (const volume of volumes) {
     entries.push({

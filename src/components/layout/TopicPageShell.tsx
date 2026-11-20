@@ -5,6 +5,7 @@ import {
   ArrowRight,
   ChevronRight,
   Cpu,
+  FileText,
   Layers,
   BookOpen,
   Clock,
@@ -18,6 +19,7 @@ import {
   getPrerequisiteChapters,
 } from "@/registry/index";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
+import { MathRichText } from "@/components/math/MathRichText";
 import { getAdaptiveAccentInk } from "@/lib/accentInk";
 
 interface TopicPageShellProps {
@@ -184,6 +186,30 @@ export function TopicPageShell({
             {chapter.subtitle}
           </p>
 
+          {chapter.heroActionLinks && chapter.heroActionLinks.length > 0 && (
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              {chapter.heroActionLinks.map((action) => (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className="inline-flex items-center gap-2.5 px-4 py-2.5 border border-[var(--border-strong)] bg-[var(--bg-panel)] hover:bg-[var(--bg-panel-elevated)] text-sm font-sans font-medium text-[var(--text-primary)] transition-colors"
+                >
+                  <FileText
+                    className="w-4 h-4 shrink-0"
+                    style={{ color: accentInk }}
+                    aria-hidden="true"
+                  />
+                  <span>{action.label}</span>
+                  <ArrowRight
+                    className="w-4 h-4 shrink-0"
+                    style={{ color: accentInk }}
+                    aria-hidden="true"
+                  />
+                </Link>
+              ))}
+            </div>
+          )}
+
           {chapter.engineeringContext && (
             <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-panel)] space-y-1.5">
               <div className="flex items-center gap-2 text-xs font-tabular-mono uppercase tracking-wider text-[var(--text-muted)]">
@@ -226,10 +252,47 @@ export function TopicPageShell({
             <span>
               Volume {volume.volumeNumber} • Module {mod.numberLabel}
             </span>
-            <span>{chapter.labs.length} Interactive Lab(s)</span>
+            <span>
+              {chapter.labs.length > 0
+                ? `${chapter.labs.length} Interactive Lab(s)`
+                : "Theorem Family Overview"}
+            </span>
           </div>
         </div>
       </section>
+
+      {/* Clean Editorial Hero Intro: Question to Ask & Brief Explanation (Box-Free) */}
+      {chapter.heroIntro && (
+        <section
+          aria-label="Chapter Intuition and Overview"
+          className="max-w-4xl space-y-6 pt-6 border-t border-[var(--border-subtle)]"
+        >
+          <div className="space-y-1.5">
+            <h2
+              className="text-xs font-tabular-mono uppercase tracking-wider font-semibold"
+              style={{ color: accentInk }}
+            >
+              The Question You Should Ask
+            </h2>
+            <p className="font-math-serif text-xl sm:text-2xl font-medium text-[var(--text-primary)] leading-snug">
+              <MathRichText text={chapter.heroIntro.questionToAsk} />
+            </p>
+          </div>
+
+          <div className="space-y-2.5">
+            <h2 className="text-xs font-tabular-mono uppercase tracking-wider font-semibold text-[var(--text-muted)]">
+              In Simple Words &amp; Math
+            </h2>
+            <div className="font-math-serif text-base sm:text-[17px] text-[var(--text-secondary)] leading-relaxed space-y-3">
+              {chapter.heroIntro.briefExplanation.map((paragraph, idx) => (
+                <p key={idx}>
+                  <MathRichText text={paragraph} />
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Step 1 of 4-Step Pedagogical Chapter Rhythm: Physical & Geometric Question */}
       {chapter.pedagogicalRhythm && (
@@ -343,58 +406,60 @@ export function TopicPageShell({
       {children}
 
       {/* Detailed Laboratory & Section Breakdown */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
-          <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-2.5">
-            <BookOpen
-              className="w-5 h-5"
-              style={{ color: accentInk }}
-              aria-hidden="true"
-            />
-            <span>Chapter {chapter.id} Laboratory Specifications</span>
-          </h2>
-          <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
-            {chapter.labs.length} Interactive Lab(s)
-          </span>
-        </div>
+      {chapter.labs.length > 0 && (
+        <section className="space-y-4">
+          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+            <h2 className="font-math-serif text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-2.5">
+              <BookOpen
+                className="w-5 h-5"
+                style={{ color: accentInk }}
+                aria-hidden="true"
+              />
+              <span>Chapter {chapter.id} Laboratory Specifications</span>
+            </h2>
+            <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
+              {chapter.labs.length} Interactive Lab(s)
+            </span>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {chapter.labs.map((lab, index) => (
-            <article
-              key={lab.id}
-              className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-5 space-y-3 flex flex-col justify-between"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span
-                    className="text-xs font-tabular-mono font-semibold px-2 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]"
-                    style={{ color: accentInk }}
-                  >
-                    LAB {chapter.id}.{index + 1}
-                  </span>
-                  <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
-                    Component: {lab.componentKey}
-                  </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {chapter.labs.map((lab, index) => (
+              <article
+                key={lab.id}
+                className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-5 space-y-3 flex flex-col justify-between"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="text-xs font-tabular-mono font-semibold px-2 py-0.5 border border-[var(--border-subtle)] bg-[var(--bg-canvas)]"
+                      style={{ color: accentInk }}
+                    >
+                      LAB {chapter.id}.{index + 1}
+                    </span>
+                    <span className="text-xs font-tabular-mono text-[var(--text-muted)]">
+                      Component: {lab.componentKey}
+                    </span>
+                  </div>
+
+                  <h3 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
+                    {lab.title}
+                  </h3>
+
+                  <p className="font-math-serif text-sm text-[var(--text-secondary)] leading-relaxed">
+                    {lab.summary}
+                  </p>
                 </div>
 
-                <h3 className="font-math-serif text-xl font-semibold text-[var(--text-primary)]">
-                  {lab.title}
-                </h3>
-
-                <p className="font-math-serif text-sm text-[var(--text-secondary)] leading-relaxed">
-                  {lab.summary}
-                </p>
-              </div>
-
-              {lab.formulaLatex && (
-                <div className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--text-primary)] overflow-x-auto">
-                  <KaTeXMath math={lab.formulaLatex} block />
-                </div>
-              )}
-            </article>
-          ))}
-        </div>
-      </section>
+                {lab.formulaLatex && (
+                  <div className="p-3 bg-[var(--bg-canvas)] border border-[var(--border-subtle)] text-[var(--text-primary)] overflow-x-auto">
+                    <KaTeXMath math={lab.formulaLatex} block />
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Sequential Prev / Next Chapter Footer Navigation Across Modules & Volumes */}
       <nav

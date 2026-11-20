@@ -164,7 +164,9 @@ export default async function ModulePage({
                           aria-hidden="true"
                         />
                         <span className="text-[var(--math-ink-y)]">
-                          Published ({chapter.labs.length} Labs)
+                          {chapter.labs.length > 0
+                            ? `Published (${chapter.labs.length} Labs)`
+                            : "Published (Overview)"}
                         </span>
                       </>
                     ) : (
@@ -198,27 +200,29 @@ export default async function ModulePage({
                   </div>
                 )}
 
-                <div className="space-y-1.5 pt-1">
-                  <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
-                    <Layers className="w-3.5 h-3.5" aria-hidden="true" />
-                    <span>Interactive Laboratories:</span>
-                  </span>
-                  <ul className="space-y-1 text-xs text-[var(--text-secondary)]">
-                    {chapter.labs.map((lab, idx) => (
-                      <li key={lab.id} className="flex items-start gap-2">
-                        <span
-                          className="font-tabular-mono"
-                          style={{ color: chAccent }}
-                        >
-                          {chapter.id}.{idx + 1}
-                        </span>
-                        <span>
-                          {lab.title} (<code>{lab.componentKey}</code>)
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {chapter.labs.length > 0 && (
+                  <div className="space-y-1.5 pt-1">
+                    <span className="text-[11px] font-tabular-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span>Interactive Laboratories:</span>
+                    </span>
+                    <ul className="space-y-1 text-xs text-[var(--text-secondary)]">
+                      {chapter.labs.map((lab, idx) => (
+                        <li key={lab.id} className="flex items-start gap-2">
+                          <span
+                            className="font-tabular-mono"
+                            style={{ color: chAccent }}
+                          >
+                            {chapter.id}.{idx + 1}
+                          </span>
+                          <span>
+                            {lab.title} (<code>{lab.componentKey}</code>)
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
 
               <div className="pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between">
@@ -233,7 +237,13 @@ export default async function ModulePage({
                   href={chRoute}
                   className="px-3.5 py-1.5 border border-[var(--border-strong)] bg-[var(--bg-canvas)] hover:bg-[var(--bg-panel-elevated)] text-xs font-tabular-mono font-medium text-[var(--text-primary)] flex items-center gap-1.5"
                 >
-                  <span>{isPublished ? "Open Chapter Labs" : "View Syllabus"}</span>
+                  <span>
+                    {isPublished
+                      ? chapter.labs.length > 0
+                        ? "Open Chapter Labs"
+                        : "Open Overview"
+                      : "View Syllabus"}
+                  </span>
                   <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </Link>
               </div>
