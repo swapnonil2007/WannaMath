@@ -130,7 +130,7 @@ export default function HowToUsePage() {
         { id: "3.2.1", label: "3.2.1 Double Integrals" },
         { id: "3.2.4", label: "3.2.4 Jacobians" },
         { id: "3.3.1", label: "3.3.1 Gradient Vector Field" },
-        { id: "3.3.7", label: "3.3.7 Stokes' & Divergence" },
+        { id: "3.3.7", label: "3.3.7 Vector Integral Theorems" },
       ]),
     },
     {

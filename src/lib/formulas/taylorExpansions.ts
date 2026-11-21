@@ -2,6 +2,9 @@ import type { FormulaSheetDefinition } from "./types";
 
 export const TAYLOR_FORMULA_SHEET: FormulaSheetDefinition = {
   slug: "taylor-expansions",
+  volumeId: "vol-1",
+  volumeLabel: "Volume I: Single-Variable Calculus",
+  previewLatex: "f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!}(x - a)^n",
   title: "Common Taylor & Maclaurin Series Expansions",
   shortTitle: "Taylor Expansions",
   subtitle:

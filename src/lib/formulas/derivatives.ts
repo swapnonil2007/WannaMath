@@ -2,6 +2,9 @@ import type { FormulaSheetDefinition } from "./types";
 
 export const DERIVATIVES_FORMULA_SHEET: FormulaSheetDefinition = {
   slug: "derivatives",
+  volumeId: "vol-1",
+  volumeLabel: "Volume I: Single-Variable Calculus",
+  previewLatex: "\\frac{d}{dx}\\bigl[f(g(x))\\bigr] = f'(g(x))\\,g'(x)",
   title: "Common Derivative Formulas, Differentiation Rules & Domains",
   shortTitle: "Derivative Formulas",
   subtitle:

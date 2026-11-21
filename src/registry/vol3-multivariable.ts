@@ -43,6 +43,14 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Topographic terrain modeling, isobaric weather charts, and equipotential electrostatic surfaces.",
+          heroIntro: {
+            questionToAsk:
+              "How can we read the height, slope, and shape of a 3D surface $z = f(x, y)$ from flat 2D horizontal slices $f(x, y) = k$?",
+            briefExplanation: [
+              "Imagine slicing a curved 3D landscape $z = f(x, y)$ at fixed elevations $z = k$ and stamping each slice down onto the $xy$-plane. Every curve traced out—written $C_k = \\{(x, y) \\in \\mathbb{R}^2 : f(x, y) = k\\}$—is a level curve (contour line), just like the elevation rings on a topographic map.",
+              "Contour spacing directly encodes steepness: tightly packed rings mean rapid elevation change, wide gaps indicate flat plateaus, nested loops circle local peaks or bowls, and figure-eight crossings reveal saddle passes.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "How can we represent a 3D scalar landscape z = f(x,y) on a flat 2D engineering drawing without losing height and steepness information?",
@@ -83,6 +91,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Multivariable sensitivity analysis, thermodynamic Maxwell relations (Clairaut symmetry), kinematic chain rule rates, and implicit constraint manifolds.",
+          heroActionLinks: [
+            {
+              label: "See Multivariable Derivative Formulas",
+              href: "/formulas/multivariable-derivatives",
+              description: "Partials, Clairaut symmetry, Chain Rule, Euler & Hessian tests",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How does freezing one variable at a time let us measure slope in multiple dimensions, build a tangent plane, and differentiate composite or implicit surfaces?",
+            briefExplanation: [
+              "Hold $y = y_0$ fixed and differentiate along the $x$-slice to get $f_x = \\frac{\\partial f}{\\partial x}$; hold $x = x_0$ fixed to get $f_y = \\frac{\\partial f}{\\partial y}$. Together, these two slice tangents span the tangent plane $L(x, y) = f(x_0, y_0) + f_x(x_0, y_0)(x - x_0) + f_y(x_0, y_0)(y - y_0)$ whenever $f$ is differentiable.",
+              "Higher-order mixed partials satisfy Clairaut's Theorem $f_{xy} = f_{yx}$ whenever both mixed partials are continuous near $(x_0, y_0)$. Moving along a curve $\\mathbf{r}(t) = \\langle x(t), y(t) \\rangle$ adds all partial rates via the Chain Rule $\\frac{dz}{dt} = f_x\\frac{dx}{dt} + f_y\\frac{dy}{dt}$, while an implicit relation $F(x, y, z) = 0$ gives $\\frac{\\partial z}{\\partial x} = -\\frac{F_x}{F_z}$ whenever $F_z \\neq 0$.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "When a surface z = f(x,y) depends on two independent variables, how do first-order partials build a tangent plane—and how do second-order partials, chain rule pathways, and implicit equations generalize differentiation?",
@@ -133,6 +156,26 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Gradient descent optimization in machine learning, Fourier heat conduction q = -k∇T, electrostatic fields E = -∇V, and surface normals in CAD/ray-tracing.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Del Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Gradient ∇f, directional derivatives, Del identities & level-surface normals",
+            },
+            {
+              label: "Multivariable Derivative Formulas",
+              href: "/formulas/multivariable-derivatives",
+              description: "Partials, tangent planes, Chain Rule & Lagrange multipliers",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How do we measure the instantaneous slope of $z = f(x, y)$ or $F(x, y, z)$ in any unit direction $\\hat{\\mathbf{u}}$, and why does the gradient always point straight uphill?",
+            briefExplanation: [
+              "Collecting every first partial derivative into one arrow forms the gradient vector $\\nabla f = \\langle f_x, f_y \\rangle$ (or $\\langle F_x, F_y, F_z \\rangle$ in $\\mathbb{R}^3$). Stepping in any unit direction $\\hat{\\mathbf{u}}$ (always normalize so $\\|\\hat{\\mathbf{u}}\\| = 1$) gives the directional derivative via a single dot product: $D_{\\hat{\\mathbf{u}}} f = \\nabla f \\cdot \\hat{\\mathbf{u}} = \\|\\nabla f\\|\\cos\\theta$.",
+              "Because $\\cos\\theta$ ranges from $-1$ to $+1$, steepest ascent runs along $+\\nabla f$ (at rate $\\|\\nabla f\\|$), steepest descent runs along $-\\nabla f$, and zero slope ($\\cos\\theta = 0$) occurs along level-curve tangents—proving $\\nabla f$ stands strictly perpendicular to contours and level surfaces.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "If you stand on a 3D hillside z = f(x,y) or inside a 3D potential field F(x,y,z) and move along unit heading u, what is your instantaneous rate of change—and why do steepest paths always cut level curves at 90°?",
@@ -182,6 +225,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Minimum-weight structural design under stress constraints, portfolio optimization, and maximum entropy.",
+          heroActionLinks: [
+            {
+              label: "See Multivariable Derivative Formulas",
+              href: "/formulas/multivariable-derivatives",
+              description: "Lagrange multipliers, Hessian extrema & implicit derivatives",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "When motion is restricted to a constraint curve $g(x, y) = c$, why must the objective gradient $\\nabla f$ and constraint gradient $\\nabla g$ line up parallel at an extremum?",
+            briefExplanation: [
+              "Picture walking along the constraint curve $g(x, y) = c$. If $\\nabla f$ still has any nonzero push tangent to the curve, stepping slightly forward or backward changes $f$; therefore, at a constrained extremum, $\\nabla f$ must be perpendicular to the constraint, aligning collinearly with the constraint normal: $\\nabla f(x^*, y^*) = \\lambda\\,\\nabla g(x^*, y^*)$.",
+              "Always check the regularity hypothesis $\\nabla g \\neq \\mathbf{0}$ (any constraint cusp or boundary endpoint where $\\nabla g = \\mathbf{0}$ must be tested separately). In practice, $\\lambda = \\frac{df^*}{dc}$ equals the sensitivity rate showing how fast the optimal value shifts when constraint budget $c$ relaxes.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "When our movement is restricted to a constraint path g(x,y) = c, why must the objective contour f(x,y) = k be tangent to the constraint curve at an extremum?",
@@ -190,7 +248,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             symbolicFormalizationLatex:
               "\\frac{df}{ds} = \\nabla f \\cdot \\hat{\\mathbf{T}} = 0 \\iff \\color{#D35323}{\\nabla f(x^*,y^*)} = \\lambda\\,\\color{#8D9FCE}{\\nabla g(x^*,y^*)}",
             edgeCasesAndBridge:
-              "Having mastered local differential geometry of surfaces (Module 3.1), Module 3.2 reverses differentiation to accumulate area, volume, and mass across 2D and 3D domains.",
+              "Watch for constraint cusps where ∇g = 0 (regularity fails and must be checked separately alongside endpoints). Next, Chapter 3.1.5 examines multivariable limits and exact differentiability criteria before we classify unconstrained extrema in Chapter 3.1.8.",
           },
           labs: [
             {
@@ -222,6 +280,26 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Shock fronts, stress concentration corners, and justifying smooth linearization models in control and continuum mechanics.",
+          heroActionLinks: [
+            {
+              label: "See Limit Formulas",
+              href: "/formulas/limits",
+              description: "Limit laws, trig/exponential limits & indeterminate forms",
+            },
+            {
+              label: "Multivariable Derivative Formulas",
+              href: "/formulas/multivariable-derivatives",
+              description: "Total differentiability criterion, partials & Clairaut theorem",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "Why can a function approach $0$ along every straight line through $(a, b)$—or even have both partial derivatives $f_x$ and $f_y$—yet fail to have a 2D limit or tangent plane?",
+            briefExplanation: [
+              "Unlike 1D (where only left and right sides exist), approaching $(a, b)$ in $\\mathbb{R}^2$ allows infinitely many curved paths such as $y = mx$, $y = kx^2$, or spirals. Two paths yielding different values prove the limit does not exist, whereas proving $\\lim_{(x,y)\\to(a,b)} f(x, y) = L$ requires bounding $|f(x, y) - L| \\to 0$ uniformly across every direction (often using polar radius $r \\to 0$).",
+              "Even when $f_x$ and $f_y$ both exist at a point, total differentiability requires the linearization error ratio $\\frac{|f(x_0+h,y_0+k) - L(x_0+h,y_0+k)|}{\\sqrt{h^2+k^2}} \\to 0$. Continuous partials ($C^1$) guarantee differentiability, which guarantees continuity, whereas sharp creases like $\\sqrt{|xy|}$ break both.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "Why can a function approach zero along every straight line through the origin—or even possess both partial derivatives—yet fail to have a genuine limit or tangent plane?",
@@ -272,6 +350,26 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Small-angle nonlinear pendulum linearization, finite-difference truncation error orders, and quadratic optimization trust regions.",
+          heroActionLinks: [
+            {
+              label: "See Taylor Expansion Formulas",
+              href: "/formulas/taylor-expansions",
+              description: "Maclaurin series, Lagrange remainder & convergence intervals",
+            },
+            {
+              label: "Multivariable Derivative Formulas",
+              href: "/formulas/multivariable-derivatives",
+              description: "2D quadratic Taylor & Hessian matrix formulations",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How do second- and higher-order derivatives bend a flat tangent line or tangent plane into a curved polynomial that hugs a function locally?",
+            briefExplanation: [
+              "In one variable, the degree-$n$ Taylor polynomial $T_n(x) = \\sum_{k=0}^n \\frac{f^{(k)}(x_0)}{k!}(x - x_0)^k$ matches the height and first $n$ derivatives of $f$ at $x_0$, with accuracy bounded by the Lagrange remainder $R_n(x)$.",
+              "In two variables, adding second partials yields the quadratic Taylor surface $T_2(\\mathbf{p}_0 + \\mathbf{h}) = f(\\mathbf{p}_0) + \\nabla f(\\mathbf{p}_0)\\cdot\\mathbf{h} + \\frac{1}{2}\\mathbf{h}^T \\mathbf{H}_f(\\mathbf{p}_0)\\mathbf{h}$. Here the symmetric Hessian matrix $\\mathbf{H}_f$ captures elliptical bowls versus hyperbolic saddles, forming the foundation of the Second Derivative Test.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "How do higher-order derivatives let a simple polynomial match not just a function's height and slope, but also its 1D and 2D curvature around an operating point?",
@@ -320,6 +418,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Constant returns to scale in production functions, Buckingham Pi dimensional scaling, and Euler's equation of isotropic elasticity.",
+          heroActionLinks: [
+            {
+              label: "See Multivariable Derivative Formulas",
+              href: "/formulas/multivariable-derivatives",
+              description: "Euler's 1st/2nd-order homogeneous identities & composite rules",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "If stretching inputs radially turns $f(tx, ty) = t^n f(x, y)$, what exact partial differential equations must that surface obey at both 1st and 2nd order?",
+            briefExplanation: [
+              "A function is homogeneous of degree $n$ if scaling $(x, y) \\mapsto (tx, ty)$ for $t > 0$ multiplies its value by $t^n$. Differentiating $f(tx, ty) = t^n f(x, y)$ with respect to $t$ and setting $t = 1$ proves Euler's First-Order Theorem: $x f_x + y f_y = n f(x, y)$.",
+              "For $C^2$ homogeneous functions, differentiating once more gives Euler's Second-Order identity $x^2 f_{xx} + 2xy f_{xy} + y^2 f_{yy} = n(n - 1)f(x, y)$. Even when $u$ is disguised inside an inverse function—such as $u = \\sin^{-1}(f)$ or $\\tan^{-1}(f)$ where $g(u) = f$ is degree $n$—applying Euler to $g(u)$ unlocks $x u_x + y u_y = n\\frac{g(u)}{g'(u)}$ directly.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "If scaling every coordinate radially by a factor t scales output by tⁿ, what universal partial differential equation must all such surfaces satisfy—both at 1st and 2nd order?",
@@ -368,6 +481,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Structural potential energy stability equilibria, least-squares regression convexity, and multi-well landscape optimization.",
+          heroActionLinks: [
+            {
+              label: "See Multivariable Derivative Formulas",
+              href: "/formulas/multivariable-derivatives",
+              description: "Hessian Second Derivative Test, D = 0 cases & extrema classification",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "Once $\\nabla f = \\mathbf{0}$ finds a flat spot on a 3D surface, how does the Hessian discriminant $D = rt - s^2$ sort bowls from saddles—and what rescues $D = 0$?",
+            briefExplanation: [
+              "At a $C^2$ critical point $(x_0, y_0)$ where $f_x = f_y = 0$, set $r = f_{xx}$, $s = f_{xy}$, $t = f_{yy}$, and $D = r t - s^2$. When $D > 0$, all cross-sections bend the same way ($r > 0$ gives a local minimum, $r < 0$ a local maximum); when $D < 0$, principal curvatures have opposite signs, forming a saddle point.",
+              "When $D = 0$, the Second Derivative Test is strictly inconclusive—it can hide a valley ($x^4 + y^4$), a degenerate trough, or Peano's surface $(y - x^2)(y - 2x^2)$, which rises along every line yet dips along intermediate parabolas. Resolving $D = 0$ requires testing the sign of $\\Delta f(h, k) = f(x_0 + h, y_0 + k) - f(x_0, y_0)$ directly.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "Once ∇f = 0 locates a stationary plateau, how does second-order curvature D = rt - s² classify bowls vs. saddles—and what happens when D = 0 renders the Hessian test inconclusive?",
@@ -421,6 +549,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "RC/RL transient electrical circuits, Newton thermal cooling, brine tank mixing, and nonlinear logistic saturation dynamics.",
+          heroActionLinks: [
+            {
+              label: "See ODE & Operator Formulas",
+              href: "/formulas/ode-methods",
+              description: "Integrating factors, Bernoulli reduction, 1/f(D), Variation & Cauchy-Euler",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How does multiplying by an integrating factor $\\mu(x)$ collapse a first-order linear ODE into a single product derivative, and how does Bernoulli's substitution tame a nonlinear $y^n$ term?",
+            briefExplanation: [
+              "Write a first-order linear ODE in standard form $y' + P(x)y = Q(x)$ on an interval where $P$ and $Q$ are continuous, then multiply through by $\\mu(x) = e^{\\int P(x)\\,dx}$. Since $\\mu'(x) = P(x)\\mu(x)$, the left side collapses into $\\frac{d}{dx}[\\mu(x)\\,y] = \\mu(x)Q(x)$, solved directly by one integration.",
+              "A Bernoulli equation $y' + P(x)y = Q(x)y^n$ ($n \\neq 0, 1$) is nonlinear in $y$, yet dividing by $y^n$ and substituting $v = y^{1-n}$ turns it into the linear ODE $v' + (1 - n)P(x)v = (1 - n)Q(x)$ (remembering to check the equilibrium $y \\equiv 0$ separately when $n > 0$).",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "Why does multiplying a non-exact linear equation y' + P(x)y = Q(x) by the integrating factor μ(x) = e^{∫P dx} collapse its left-hand side into a single product derivative—and how does Bernoulli's substitution pull nonlinear flows into the same straight framework?",
@@ -474,6 +617,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Mechanical spring-mass-damper suspension tuning (overdamped, critically damped, underdamped), RLC circuit resonance, and structural vibration poles.",
+          heroActionLinks: [
+            {
+              label: "See ODE & Operator Formulas",
+              href: "/formulas/ode-methods",
+              description: "Wronskian, Abel identity, characteristic roots & reduction of order",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How do we verify that two solutions $y_1, y_2$ truly span all solutions of a second-order linear ODE, and why does a repeated characteristic root force an extra factor of $x$?",
+            briefExplanation: [
+              "The Wronskian determinant $W(y_1, y_2)(x) = y_1 y_2' - y_2 y_1'$ measures the signed phase-plane parallelogram area of the two solution state vectors $\\langle y_1, y_1' \\rangle$ and $\\langle y_2, y_2' \\rangle$. By Abel's identity, on any interval with continuous coefficients, $W$ is either everywhere nonzero (linearly independent) or identically zero.",
+              "For constant coefficients $a y'' + b y' + c y = 0$, trying $y = e^{rx}$ yields $a r^2 + b r + c = 0$: distinct real roots ($\\Delta > 0$) give $C_1 e^{r_1 x} + C_2 e^{r_2 x}$, repeated roots ($\\Delta = 0$) require $(C_1 + C_2 x)e^{rx}$ so $W \\neq 0$, and complex conjugate roots $\\alpha \\pm i\\beta$ ($\\Delta < 0$) generate oscillatory solutions $e^{\\alpha x}(C_1\\cos\\beta x + C_2\\sin\\beta x)$.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "When do two solutions y₁ and y₂ truly span the entire 2D solution space of a second-order ODE—and why does a repeated root r₁ = r₂ force an extra factor of x into the second basis function?",
@@ -527,6 +685,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Forced mechanical resonance, AC circuit steady-state phasor response, radial spherical Laplace potentials (Cauchy-Euler r² R'' + 2r R' - λR = 0), and thick-walled pressure vessel stresses.",
+          heroActionLinks: [
+            {
+              label: "See ODE & Operator Formulas",
+              href: "/formulas/ode-methods",
+              description: "Inverse operator 1/f(D) table, Variation of Parameters & Cauchy-Euler",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How does treating $D = \\frac{d}{dx}$ like algebra fast-track particular integrals, what handles arbitrary forcing $g(x)$, and why does $x = e^t$ flatten Cauchy-Euler equations?",
+            briefExplanation: [
+              "Writing $f(D)y = g(x)$ enables inverse operator shortcuts $y_p = \\frac{1}{f(D)}g(x)$ for $e^{ax}$, $\\sin(ax)/\\cos(ax)$, polynomials, and exponential shifts (with derivative differentiation rescuing resonance denominators where $f(a) = 0$ or $f(-a^2) = 0$). For arbitrary continuous forcings like $\\sec(x)$, normalize to $y'' + p y' + q y = g(x)$ and apply Variation of Parameters using $W$.",
+              "For equidimensional Cauchy-Euler equations $a x^2 y'' + b x y' + c y = g(x)$ (valid on $x > 0$, or using $|x|$ for $x < 0$), substituting $x = e^t$ and $\\theta = x\\frac{d}{dx}$ converts $x^2 D^2 = \\theta(\\theta - 1)$ into a constant-coefficient ODE in $t$.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "How does the algebraic symbol D = d/dx turn particular-integral calculus into fraction algebra—what rescues non-exponential forcings like sec(x)—and why does t = ln x flatten every Cauchy-Euler equation into constant coefficients?",
@@ -535,7 +708,7 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             symbolicFormalizationLatex:
               "x = e^t,\\; \\theta = x\\frac{d}{dx} \\implies x^k D^k = \\theta(\\theta - 1)\\cdots(\\theta - k + 1)",
             edgeCasesAndBridge:
-              "Watch out for resonance poles f(a) = 0 in inverse operators, singularities like sec(x) at x = ±π/2 in Variation of Parameters, and x > 0 domain restrictions (use |x| for x < 0) in Cauchy-Euler equations. With Chapter 3.1.11 published, all 22 chapters of Volume III are complete!",
+              "Watch out for resonance poles f(a) = 0 in inverse operators, singularities like sec(x) at x = ±π/2 in Variation of Parameters, and x > 0 domain restrictions (use |x| for x < 0) in Cauchy-Euler equations. With Module 3.1 (Differential Calculus & ODEs) complete, Module 3.2 reverses differentiation to accumulate area, volume, mass, and Eulerian integrals across 2D and 3D domains.",
           },
           labs: [
             {
@@ -586,6 +759,26 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "\\iint_{R} f(x,y)\\,dA = \\int_{a}^{b} \\int_{g_1(x)}^{g_2(x)} f(x,y)\\,dy\\,dx = \\int_{c}^{d} \\int_{h_1(y)}^{h_2(y)} f(x,y)\\,dx\\,dy",
             "V = \\lim_{\\Delta x, \\Delta y \\to 0} \\sum_{i=1}^{N_x} \\sum_{j=1}^{N_y} f(x_i^*, y_j^*)\\,\\Delta x\\,\\Delta y",
           ],
+          heroActionLinks: [
+            {
+              label: "See Multiple Integral & Jacobian Formulas",
+              href: "/formulas/multiple-integrals-jacobians",
+              description: "Type I/II slicing, Fubini order reversal, coordinates & Jacobians",
+            },
+            {
+              label: "Single-Variable Integral Formulas",
+              href: "/formulas/integrals",
+              description: "Standard antiderivatives, substitution, IBP & trig integrals",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How do we add up columns under $z = f(x, y)$ over a curved 2D footprint $R$, and why can reversing $dy\\,dx \\leftrightarrow dx\\,dy$ unlock an impossible inner integral?",
+            briefExplanation: [
+              "Subdivide region $R$ into tiny tiles $\\Delta x\\,\\Delta y$, erect a prism of height $f(x_i^*, y_j^*)$ on each, and take the limit of their signed volumes to define $\\iint_R f(x, y)\\,dA$. Sweeping $R$ with vertical strips yields Type I bounds ($a \\le x \\le b$, $g_1(x) \\le y \\le g_2(x)$), while horizontal strips yield Type II bounds ($c \\le y \\le d$, $h_1(y) \\le x \\le h_2(y)$).",
+              "By Fubini's Theorem, whenever $f$ is continuous on a bounded domain $R$ (or $\\iint_R |f|\\,dA < \\infty$), both iterated orders agree—letting you swap integration order to rescue non-elementary inner antiderivatives such as $\\int e^{y^2}\\,dy$.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "How do we compute the exact signed volume beneath a curved 3D surface z = f(x,y) over a non-rectangular 2D domain R, and why does swapping dy dx ↔ dx dy often transform an impossible integral into a trivial one?",
@@ -637,6 +830,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "\\iiint_{E} f(x,y,z)\\,dV = \\int_{a}^{b} \\int_{g_1(x)}^{g_2(x)} \\int_{u_1(x,y)}^{u_2(x,y)} f(x,y,z)\\,dz\\,dy\\,dx",
             "M = \\iiint_{E} \\rho(x,y,z)\\,dV, \\qquad \\bar{z} = \\frac{1}{M}\\iiint_{E} z\\,\\rho(x,y,z)\\,dV",
           ],
+          heroActionLinks: [
+            {
+              label: "See Multiple Integral & Jacobian Formulas",
+              href: "/formulas/multiple-integrals-jacobians",
+              description: "6-order triple integrals, shadow walls, mass & centroids",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How do you write all six bounds of a triple integral $\\iiint_E f(x, y, z)\\,dV$ systematically without guessing, and how do the $6$ orders correspond to 2D shadows?",
+            briefExplanation: [
+              "Follow the 3-stage collapse: first shoot a 1D ray through solid $E$ (say along $z$) from entry surface $u_1(x, y)$ to exit surface $u_2(x, y)$ to set the inner integral. Then flatten the entire 3D solid onto the $xy$-plane to read the remaining 2D bounds over its shadow $\\pi_{xy}(E)$.",
+              "Aiming the inner ray along $z$, $y$, or $x$ and projecting the shadow onto the $xy$, $xz$, or $yz$ wall produces all $6$ permutations of $dx\\,dy\\,dz$, letting you choose the cleanest shadow to compute volume, variable-density mass $M = \\iiint_E \\rho\\,dV$, and center of mass.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "How do we systematically determine the six bounds of a 3D triple integral over a curved solid E without guessing, and how do the 6 permutations of dx dy dz correspond to shadows on the three coordinate walls?",
@@ -688,6 +896,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "dV = dx\\,dy\\,dz = r\\,dr\\,d\\theta\\,dz = \\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta",
             "(x,y,z) = (\\rho\\sin\\phi\\cos\\theta,\\; \\rho\\sin\\phi\\sin\\theta,\\; \\rho\\cos\\phi)",
           ],
+          heroActionLinks: [
+            {
+              label: "See Multiple Integral & Jacobian Formulas",
+              href: "/formulas/multiple-integrals-jacobians",
+              description: "Polar, Cylindrical & Spherical transforms and scale factors",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "Why does polar area need an extra $r$ ($dA = r\\,dr\\,d\\theta$) and spherical volume need $\\rho^2\\sin\\phi$ ($dV = \\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta$) instead of multiplying differentials alone?",
+            briefExplanation: [
+              "An angular increment $d\\theta$ is dimensionless—the physical distance it sweeps scales with radius from the origin or symmetry axis. In polar and cylindrical coordinates that arc length is $r\\,d\\theta$; in spherical coordinates ($\\rho \\ge 0$, polar colatitude $\\phi \\in [0, \\pi]$ from the $+z$-axis, azimuth $\\theta \\in [0, 2\\pi)$), the three orthogonal box edges measure $d\\rho$, $\\rho\\,d\\phi$, and $\\rho\\sin\\phi\\,d\\theta$.",
+              "Multiplying those three orthogonal arc-length factors yields $dV = h_1 h_2 h_3\\,dq_1\\,dq_2\\,dq_3$, turning square-root Cartesian boundaries on disks, cylinders, cones, and spheres into constant integration bounds.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "Why does a polar area wedge require an extra factor of r (dA = r dr dθ) and a spherical volume box require ρ² sin φ (dV = ρ² sin φ dρ dφ dθ)?",
@@ -739,6 +962,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "\\iint_{R_{xy}} f(x,y)\\,dx\\,dy = \\iint_{R_{uv}} f(x(u,v), y(u,v))\\,\\left|\\frac{\\partial(x,y)}{\\partial(u,v)}\\right|\\,du\\,dv",
             "J = \\frac{\\partial(x,y)}{\\partial(u,v)} = \\begin{vmatrix} \\dfrac{\\partial x}{\\partial u} & \\dfrac{\\partial x}{\\partial v} \\\\[8pt] \\dfrac{\\partial y}{\\partial u} & \\dfrac{\\partial y}{\\partial v} \\end{vmatrix} = \\frac{\\partial x}{\\partial u}\\frac{\\partial y}{\\partial v} - \\frac{\\partial x}{\\partial v}\\frac{\\partial y}{\\partial u}",
           ],
+          heroActionLinks: [
+            {
+              label: "See Multiple Integral & Jacobian Formulas",
+              href: "/formulas/multiple-integrals-jacobians",
+              description: "2D/3D Jacobian determinants, pullback & inverse identities",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "When you pull a slanted or curved domain $R_{xy}$ back into a flat rectangle $R_{uv}$, how does the Jacobian $|\\det J|$ measure exact local area or volume distortion?",
+            briefExplanation: [
+              "A smooth, one-to-one mapping $(u, v) \\mapsto (x(u, v), y(u, v))$ deforms each parameter tile $\\Delta u\\,\\Delta v$ into a tangent parallelogram spanned by $\\mathbf{r}_u \\Delta u$ and $\\mathbf{r}_v \\Delta v$. Its area scales by the absolute Jacobian determinant $\\left|\\frac{\\partial(x,y)}{\\partial(u,v)}\\right| = |x_u y_v - x_v y_u|$.",
+              "That local stretch factor powers the Change of Variables formula $\\iint_{R_{xy}} f\\,dx\\,dy = \\iint_{R_{uv}} f(x(u,v), y(u,v))\\left|\\frac{\\partial(x,y)}{\\partial(u,v)}\\right|du\\,dv$ (and its $3 \\times 3$ 3D counterpart). Polar ($r$) and spherical ($\\rho^2\\sin\\phi$) elements are special cases, while $\\det J = 0$ marks where a mapping folds or collapses dimension.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "When we deform a complicated physical domain R_xy back into a clean rectangle R_uv in parameter space, how much does each infinitesimal grid square stretch, compress, or twist?",
@@ -791,6 +1029,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "\\int_{a}^{\\infty} f(x)\\,dx = \\lim_{T \\to \\infty} \\int_{a}^{T} f(x)\\,dx, \\qquad \\int_{1}^{\\infty} \\frac{dx}{x^p} \\text{ converges } \\iff p > 1",
             "\\sum_{n=1}^{\\infty} a_n \\text{ vs. } \\int_1^\\infty f(x)\\,dx, \\quad L = \\lim_{n\\to\\infty}\\left|\\frac{a_{n+1}}{a_n}\\right|, \\quad R = \\lim_{n\\to\\infty}\\sqrt[n]{|a_n|}",
           ],
+          heroActionLinks: [
+            {
+              label: "See Convergence, Gamma & Beta Formulas",
+              href: "/formulas/convergence-gamma-beta",
+              description: "Type I/II improper integrals, series tests & Eulerian special functions",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How can an infinitely long tail ($x \\to \\infty$) or an unbounded vertical spike still enclose finite area, and which test decides convergence fastest for integrals and series?",
+            briefExplanation: [
+              "Improper integrals replace infinite endpoints with a limit cutoff $\\lim_{T\\to\\infty}\\int_a^T$ (Type I) or excise vertical asymptotes with a shrinking gap $\\varepsilon \\to 0^+$ (Type II). Crucially, the $p$-test flips between the two: $\\int_1^\\infty x^{-p}\\,dx$ converges iff $p > 1$, whereas $\\int_0^1 x^{-p}\\,dx$ converges iff $p < 1$.",
+              "For positive continuous decreasing functions, the Integral Test links improper tails directly to infinite series $\\sum a_n$. Combined with Direct/Limit Comparison, Ratio, Root, and Alternating Series tests, it separates genuine convergence from deceptive harmonic traps like $\\sum \\frac{1}{n}$, where terms vanish yet the sum still diverges.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "How can an infinitely long region (x → ∞) or an infinitely tall vertical spike enclose a finite area—and which systematic convergence test settles any integral or infinite series?",
@@ -841,6 +1094,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
             "\\Gamma(z) = \\int_{0}^{\\infty} t^{z-1} e^{-t}\\,dt \\quad (z > 0), \\qquad \\Gamma(z+1) = z\\,\\Gamma(z), \\qquad \\Gamma\\!\\left(\\tfrac{1}{2}\\right) = \\sqrt{\\pi}",
             "\\mathrm{B}(p,q) = \\int_{0}^{1} t^{p-1}(1-t)^{q-1}\\,dt = 2\\int_{0}^{\\pi/2} \\sin^{2p-1}\\theta\\cos^{2q-1}\\theta\\,d\\theta = \\frac{\\Gamma(p)\\Gamma(q)}{\\Gamma(p+q)}",
           ],
+          heroActionLinks: [
+            {
+              label: "See Convergence, Gamma & Beta Formulas",
+              href: "/formulas/convergence-gamma-beta",
+              description: "Gamma Γ(z), reflection/duplication, Beta B(p,q) & Wallis integrals",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How does Euler's integral $\\Gamma(z)$ turn discrete factorials $n!$ into a smooth curve across real numbers, and how does Beta $\\mathrm{B}(p, q)$ evaluate tough trigonometric integrals in one line?",
+            briefExplanation: [
+              "Euler's Gamma function $\\Gamma(z) = \\int_0^\\infty t^{z-1}e^{-t}\\,dt$ converges for $z > 0$ (or $\\operatorname{Re}(z) > 0$) and satisfies the integration-by-parts recurrence $\\Gamma(z + 1) = z\\Gamma(z)$, reproducing $\\Gamma(n + 1) = n!$ at nonnegative integers while yielding $\\Gamma\\!\\left(\\frac{1}{2}\\right) = \\sqrt{\\pi}$ from the Gaussian integral. Rearranging $\\Gamma(z) = \\frac{\\Gamma(z+1)}{z}$ reveals simple poles at $z = 0, -1, -2, \\dots$.",
+              "Euler's Beta function $\\mathrm{B}(p, q) = \\int_0^1 t^{p-1}(1 - t)^{q-1}\\,dt$ ($p, q > 0$) transforms via $t = \\sin^2\\theta$ into $2\\int_0^{\\pi/2}\\sin^{2p-1}\\theta\\cos^{2q-1}\\theta\\,d\\theta$ and unifies with Gamma through 2D polar integration: $\\mathrm{B}(p, q) = \\frac{\\Gamma(p)\\Gamma(q)}{\\Gamma(p+q)}$.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "How can we continuously interpolate the discrete factorial n! across fractional and negative values—and how do tricky trigonometric integrals like ∫₀^(π/2) sin⁵θ cos⁴θ dθ evaluate in seconds without repeated parts?",
@@ -902,6 +1170,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Electric field potentials E = -∇V, Fourier thermal flux q = -k∇T, aerodynamic pressure gradients, CAD level-set surface normals, and steepest-ascent optimization.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Integral Theorem Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Del in Cartesian/Cylindrical/Spherical, gradient normals & integral theorems",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How does applying the Del operator $\\nabla$ to a scalar field $\\phi(x, y, z)$ produce a vector pointing toward steepest rise and perpendicular to every level surface $\\phi = c$?",
+            briefExplanation: [
+              "Applying $\\nabla = \\mathbf{i}\\frac{\\partial}{\\partial x} + \\mathbf{j}\\frac{\\partial}{\\partial y} + \\mathbf{k}\\frac{\\partial}{\\partial z}$ to a differentiable scalar potential $\\phi(x, y, z)$ builds the gradient field $\\nabla\\phi = \\langle \\phi_x, \\phi_y, \\phi_z \\rangle$. At any point $P$, $\\nabla\\phi(P)$ points toward the fastest spatial increase and its length $\\|\\nabla\\phi(P)\\|$ equals that peak rate.",
+              "Along any curve $\\mathbf{r}(t)$ lying on the level surface $\\phi(x, y, z) = c$, $\\phi(\\mathbf{r}(t))$ stays constant, so $\\nabla\\phi \\cdot \\mathbf{r}'(t) = 0$. Wherever $\\nabla\\phi(P) \\neq \\mathbf{0}$, normalizing yields the unit surface normal $\\hat{\\mathbf{n}} = \\frac{\\nabla\\phi(P)}{\\|\\nabla\\phi(P)\\|}$ and tangent plane $\\nabla\\phi(P)\\cdot(\\mathbf{r} - \\mathbf{r}_0) = 0$.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "How does the vector differential operator Del (∇) turn a scalar potential field φ(x,y,z) into a normal vector field pointing toward steepest spatial increase?",
@@ -942,6 +1225,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Aircraft glide slope sensitivity along flight velocity v, thermal rate of change measured by a moving probe, angle between intersecting surfaces, and conservative path differentials df = ∇f · dr.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Integral Theorem Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Directional derivatives D_u f = ∇f·û, Del identities & vector theorems",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "Given any 2D or 3D direction vector $\\mathbf{v}$ starting at $P$, how fast does a scalar field $\\phi$ change per unit arc length—and why must $\\mathbf{v}$ be normalized first?",
+            briefExplanation: [
+              "Directional rate of change measures change per unit physical distance, not per raw step of length $\\|\\mathbf{v}\\|$. Always convert a nonzero vector $\\mathbf{v}$ into the unit heading $\\hat{\\mathbf{u}} = \\frac{\\mathbf{v}}{\\|\\mathbf{v}\\|}$ first, then dot with the gradient: $D_{\\hat{\\mathbf{u}}}\\phi(P) = \\nabla\\phi(P)\\cdot\\hat{\\mathbf{u}} = \\|\\nabla\\phi(P)\\|\\cos\\theta$.",
+              "The $\\cos\\theta$ factor immediately characterizes all extremes: $D_{\\hat{\\mathbf{u}}}\\phi$ peaks at $+\\|\\nabla\\phi(P)\\|$ along $+\\nabla\\phi$, bottoms out at $-\\|\\nabla\\phi(P)\\|$ along $-\\nabla\\phi$, and equals $0$ along any tangent direction perpendicular to $\\nabla\\phi$.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "Given an arbitrary non-unit direction vector v = ⟨v_x, v_y, v_z⟩ starting at P, how fast does a scalar field φ change per unit arc length—and which directions produce extreme or zero change?",
@@ -982,6 +1280,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Incompressible fluid continuity (∇·u = 0), aerodynamic vorticity, electrostatic potential fields F = -∇φ, Maxwell's differential laws, and continuum strain-rotation splitting.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Integral Theorem Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Div, curl & Laplacian in all coordinate systems plus C² identities",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "Inside a velocity or force field $\\mathbf{F}(x, y, z)$, how do we measure net outward expansion ($\\nabla\\cdot\\mathbf{F}$) separately from local rotational spin ($\\nabla\\times\\mathbf{F}$)?",
+            briefExplanation: [
+              "Divergence $\\nabla\\cdot\\mathbf{F} = P_x + Q_y + R_z$ is a scalar measuring net outward flux per unit volume (positive at sources, negative at sinks, zero in incompressible flow). Curl $\\nabla\\times\\mathbf{F}$ is a 3D vector whose axis and magnitude capture microscopic circulation per unit area via the right-hand rule.",
+              "Watch two classic geometric surprises: straight shear flow $\\langle y, 0, 0\\rangle$ has nonzero curl even with parallel streamlines, whereas the swirling point vortex $\\langle -y, x, 0\\rangle/(x^2+y^2)$ is curl-free everywhere off the singular $z$-axis. On any $C^2$ domain, two identities always hold: $\\nabla\\times(\\nabla\\phi) = \\mathbf{0}$ and $\\nabla\\cdot(\\nabla\\times\\mathbf{F}) = 0$.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "Given a vector field F(x,y,z) assigning magnitude and direction to every point in space, how do we trace particle trajectories (streamlines) and separately measure local outward expansion (∇·F) versus 3D local spin (∇×F)?",
@@ -1042,6 +1355,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Mechanical work in conservative gravitational/electrostatic fields vs. dissipative aerodynamic drag and vortex circulation.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Integral Theorem Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Line integrals, FTLI, conservative fields & the Big Four theorems",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How does a force field $\\mathbf{F}$ accumulate mechanical work $\\int_C \\mathbf{F}\\cdot d\\mathbf{r}$ along a curved trajectory $C$, and when does that work depend only on the endpoints $A$ and $B$?",
+            briefExplanation: [
+              "Parameterizing curve $C$ by $\\mathbf{r}(t)$ from $t = a$ to $b$, the tangential work integral $W = \\int_C \\mathbf{F}\\cdot d\\mathbf{r} = \\int_a^b \\mathbf{F}(\\mathbf{r}(t))\\cdot\\mathbf{r}'(t)\\,dt$ sums how strongly $\\mathbf{F}$ pushes along the curve's tangent direction at every step.",
+              "When $\\mathbf{F} = \\nabla f$ is conservative, the Fundamental Theorem for Line Integrals collapses the integral to $f(B) - f(A)$ and guarantees zero circulation around closed loops. Remember that $\\nabla\\times\\mathbf{F} = \\mathbf{0}$ implies $\\mathbf{F} = \\nabla f$ only on a simply connected domain free of holes or singularities.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "When a particle travels along a curved path C through a force field F, when does the total work depend on the chosen path versus only the endpoints A and B?",
@@ -1081,6 +1409,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Mechanical planimeters, aerodynamic lift circulation, and 2D finite-volume conservation laws.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Integral Theorem Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Green's circulation & flux forms, Stokes', Gauss & Del identities",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "Why does summing microscopic spin $\\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}$ over every tile inside a 2D region $D$ equal one counter-clockwise walk around its boundary $\\partial D$?",
+            briefExplanation: [
+              "Partition a flat 2D region $D$ into a fine grid of tiny rectangles and traverse each counter-clockwise. Every shared interior edge is walked forward by one tile and backward by its neighbor, so internal line integrals cancel pair by pair—leaving only the outer positively oriented boundary $\\partial D$.",
+              "That cancellation proves Green's Theorem $\\oint_{\\partial D}(P\\,dx + Q\\,dy) = \\iint_D \\left(\\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}\\right)dA$ (plus its twin outward-flux form $\\oint_{\\partial D}\\mathbf{F}\\cdot\\hat{\\mathbf{n}}\\,ds = \\iint_D (\\nabla\\cdot\\mathbf{F})\\,dA$), provided $P$ and $Q$ are $C^1$ across the entire interior of $D$ with no enclosed singularities.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "Why does summing microscopic spin (∂Q/∂x - ∂P/∂y) over the entire 2D interior D equal the single 1D line integral around the outer boundary ∂D?",
@@ -1120,6 +1463,21 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
           ],
           engineeringContext:
             "Volumetric mass flow rate across turbine blades, Gauss's law for electric flux, and radiative heat transfer.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Integral Theorem Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Parametric & graph surface flux elements dS alongside Stokes & Gauss",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "How do we integrate flow crossing a curved 3D surface $S$ when both the vector field $\\mathbf{F}$ and the surface orientation $\\hat{\\mathbf{n}}$ vary from patch to patch?",
+            briefExplanation: [
+              "Parameterizing $S$ by $\\mathbf{r}(u, v)$ turns each parameter tile $\\Delta u\\,\\Delta v$ into an oriented tangent patch $d\\mathbf{S} = (\\mathbf{r}_u \\times \\mathbf{r}_v)\\,du\\,dv = \\hat{\\mathbf{n}}\\,dS$ (for an explicit graph $z = g(x, y)$, upward orientation gives $d\\mathbf{S} = \\langle -g_x, -g_y, 1 \\rangle\\,dx\\,dy$).",
+              "Surface flux $\\Phi = \\iint_S \\mathbf{F}\\cdot\\hat{\\mathbf{n}}\\,dS$ totals the normal flow piercing every patch across $S$. Because flux tracks signed crossing direction, reversing $\\hat{\\mathbf{n}} \\to -\\hat{\\mathbf{n}}$ flips $\\Phi$ to $-\\Phi$, and non-orientable one-sided surfaces like a Möbius strip admit no global flux sign.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
               "How do we compute the total volumetric flow piercing a curved 3D canopy S when both the flow F and the surface normal n̂ vary from point to point?",
@@ -1146,39 +1504,170 @@ export const VOL3_MULTIVARIABLE: VolumeMetadata = {
         {
           id: "3.3.7",
           slug: "stokes-divergence-theorems",
-          title: "Stokes' Theorem & The Divergence Theorem",
+          title: "The Vector Integral Theorems: Green, Stokes & Gauss Overview",
           subtitle:
-            "Unify all integral theorems: see why surface curl flux depends only on the boundary rim ∂S and why closed-surface flux equals interior divergence.",
+            "Compare Green's Theorem (flat 2D), Stokes' Theorem (curved 3D surface-to-rim), and Gauss's Divergence Theorem (3D shell-to-volume) inside the unified Generalized Stokes ladder.",
           status: "published",
-          estimatedMinutes: 35,
+          estimatedMinutes: 20,
           prerequisites: ["3.2.2", "3.3.5", "3.3.6"],
-          dimensionBadge: "3D",
+          dimensionBadge: "Overview • 2D/3D",
           accentHex: "#D35323",
+          subParent: {
+            slug: "vector-integral-theorems",
+            title: "Vector Integral Theorems",
+            badge: "Integral Theorems",
+          },
           keyEquationsLatex: [
-            "\\iint_{S} (\\nabla \\times \\mathbf{F})\\cdot d\\mathbf{S} = \\oint_{\\partial S} \\mathbf{F}\\cdot d\\mathbf{r}",
-            "\\oiint_{\\partial E} \\mathbf{F}\\cdot d\\mathbf{S} = \\iiint_{E} (\\nabla \\cdot \\mathbf{F})\\,dV",
+            "\\iint_{S} (\\nabla \\times \\mathbf{F})\\cdot d\\mathbf{S} = \\oint_{\\partial S} \\mathbf{F}\\cdot d\\mathbf{r}, \\qquad \\oiint_{\\partial E} \\mathbf{F}\\cdot\\hat{\\mathbf{n}}\\,dS = \\iiint_{E} (\\nabla \\cdot \\mathbf{F})\\,dV",
+            "\\int_{\\Omega} d\\omega = \\int_{\\partial\\Omega} \\omega",
           ],
           engineeringContext:
-            "Maxwell's equations in integral/differential form, control-volume CFD conservation, and topological invariance.",
+            "Maxwell's equations in integral and differential form, finite-volume CFD conservation laws, and topological invariance across manifolds.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Integral Theorem Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Stokes' Theorem, Gauss's Divergence Theorem & Generalized Stokes ladder",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "Why do FTC in 1D, Green's Theorem in 2D, Stokes' Theorem on curved 3D caps, and Gauss's Divergence Theorem on 3D solids all follow one identical boundary-versus-interior law?",
+            briefExplanation: [
+              "Every fundamental integral theorem equates a global evaluation along an outer boundary $\\partial\\Omega$ to the sum of microscopic derivatives throughout its interior $\\Omega$. Stokes' Theorem $\\iint_S (\\nabla\\times\\mathbf{F})\\cdot d\\mathbf{S} = \\oint_{\\partial S}\\mathbf{F}\\cdot d\\mathbf{r}$ equates spinning curl piercing a 3D cap to work around its wire rim, while Gauss's Divergence Theorem $\\oiint_{\\partial E}\\mathbf{F}\\cdot\\hat{\\mathbf{n}}\\,dS = \\iiint_E (\\nabla\\cdot\\mathbf{F})\\,dV$ equates closed-shell outflow to interior sources minus sinks.",
+              "Use this overview page to compare Green ($3.3.5$), Stokes ($3.3.7a$), and Divergence ($3.3.7b$) side by side under the Generalized Stokes Principle $\\int_\\Omega d\\omega = \\int_{\\partial\\Omega}\\omega$, then open the dedicated 3D laboratory for each theorem.",
+            ],
+          },
           pedagogicalRhythm: {
             question:
-              "Why do two completely different 3D soap-film surfaces sharing the same wire boundary rim ∂S capture the exact same curl flux, and why does closed-surface flux equal interior divergence?",
+              "How do dimension, boundary orientation (right-hand rule vs. outward normal), and interior singularities distinguish Green, Stokes, and Gauss?",
             labInteraction:
-              "Deform the 3D soap-film dome height H in Stokes' mode to verify invariant curl flux, then switch to Gauss's Control Volume to compare 6-face outward flux against 3D volume divergence.",
+              "Follow the 4-step Dimensional Ladder and side-by-side matrix below, then launch Lab 3.3.7a (Stokes' 4-cap deformer) and Lab 3.3.7b (Divergence Cube, Sphere & Cylinder control volumes).",
             symbolicFormalizationLatex:
-              "\\int_{\\partial \\Omega} \\omega = \\int_{\\Omega} d\\omega",
+              "\\text{1D FTLI} \\longrightarrow \\text{2D Green} \\longrightarrow \\text{3D Stokes } (\\nabla\\times\\mathbf{F}) \\longrightarrow \\text{3D Gauss } (\\nabla\\cdot\\mathbf{F})",
             edgeCasesAndBridge:
-              "This completes Volume III (Multivariable & Vector Calculus)! The generalized Stokes' Theorem carries directly into contour integration and Cauchy's Theorem in Volume V.",
+              "Select Chapter 3.3.7a (Stokes' Theorem) or Chapter 3.3.7b (Gauss's Divergence Theorem) next for full 3D visual experiments and singularity failure tests.",
+          },
+          labs: [],
+        },
+        {
+          id: "3.3.7a",
+          slug: "stokes-theorem",
+          title: "Stokes' Theorem: 3D Cap Surface Invariance & Boundary Rim Work",
+          subtitle:
+            "Test four spanning surfaces anchored to the same counterclockwise rim ∂S, verify invariant curl flux numerically, and observe how a punctured z-axis vortex breaks smoothness.",
+          status: "published",
+          estimatedMinutes: 35,
+          prerequisites: ["3.3.5", "3.3.6", "3.3.7"],
+          dimensionBadge: "3D",
+          accentHex: "#D35323",
+          subParent: {
+            slug: "vector-integral-theorems",
+            title: "Vector Integral Theorems",
+            badge: "Integral Theorems",
+          },
+          keyEquationsLatex: [
+            "\\iint_{S} (\\nabla \\times \\mathbf{F})\\cdot d\\mathbf{S} = \\oint_{\\partial S} \\mathbf{F}\\cdot d\\mathbf{r}",
+            "\\iint_{S_1} (\\nabla \\times \\mathbf{F})\\cdot d\\mathbf{S} = \\iint_{S_2} (\\nabla \\times \\mathbf{F})\\cdot d\\mathbf{S} \\quad (\\partial S_1 = \\partial S_2)",
+          ],
+          engineeringContext:
+            "Faraday's law of electromagnetic induction, Ampère–Maxwell magnetostatics, aerodynamic wingtip circulation, and reducing messy 3D surface curl integrals to flat 2D disk caps.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Integral Theorem Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Stokes' Theorem, right-hand-rule orientation & curl identities",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "Why do a steep paraboloid dome, a hemisphere, an undulating saddle, and a flat disk all collect the exact same curl flux whenever they share the same wire boundary rim $\\partial S$?",
+            briefExplanation: [
+              "Think of a soap film stretched across a closed wire loop $\\partial S$. No matter how wildly you blow air into the film to deform its 3D surface $S$, Stokes' Theorem guarantees $\\iint_S (\\nabla\\times\\mathbf{F})\\cdot d\\mathbf{S} = \\oint_{\\partial S}\\mathbf{F}\\cdot d\\mathbf{r}$—the total curl piercing the cap depends solely on the boundary rim circulation, provided $\\mathbf{F} \\in C^1$ across $S$ and orientation follows the right-hand rule.",
+              "Equivalently, whenever a tricky curved cap shares its rim with a flat disk, you can replace the curved 3D cap with the flat disk (or vice versa) without changing the integral—unless a singularity like the $1/r^2$ vortex pierces straight through the cap.",
+            ],
+          },
+          pedagogicalRhythm: {
+            question:
+              "Why can you deform a spanning surface S arbitrarily while keeping its curl flux locked to rim ∂S, and when does a hidden vortex line break that equality?",
+            labInteraction:
+              "Switch between Paraboloid, Ellipsoid Cap, Flat Disk, and Saddle Cap in Lab 3.3.7a while varying height H and rim radius R, then trigger the Singularity Trap preset to see a punctured z-axis vortex yield 0 interior curl yet 2π rim circulation.",
+            symbolicFormalizationLatex:
+              "\\iint_S (\\nabla\\times\\mathbf{F})\\cdot\\hat{\\mathbf{n}}\\,dS = \\oint_{\\partial S}\\mathbf{F}\\cdot d\\mathbf{r}",
+            edgeCasesAndBridge:
+              "Stokes' Theorem requires an orientable surface S (unlike a Möbius strip) and C¹ smoothness of F across S. Next, Chapter 3.3.7b encloses a full 3D solid E with Gauss's Divergence Theorem.",
           },
           labs: [
             {
-              id: "lab-3-3-5a",
-              slug: "stokes-gauss-unification",
-              title: "3D Stokes' Rim-Surface Deformer & Gauss Divergence Control Volume Lab",
-              componentKey: "StokesDivergenceLab",
+              id: "lab-3-3-7a",
+              slug: "stokes-theorem-cap-invariance",
+              title: "Stokes' Theorem 4-Cap Surface Invariance & Punctured Vortex Lab",
+              componentKey: "StokesTheoremLab",
               summary:
-                "Deform a 3D soap-film surface sharing the same boundary rim C and verify invariant curl flux.",
-              formulaLatex: "\\int_{\\partial \\Omega} \\omega = \\int_{\\Omega} d\\omega",
+                "Compare Paraboloid, Ellipsoid, Flat Disk, and Saddle caps sharing identical CCW rim ∂S alongside right-hand normals, curl vectors, and singularity traps.",
+              formulaLatex:
+                "\\iint_S (\\nabla\\times\\mathbf{F})\\cdot d\\mathbf{S} = \\oint_{\\partial S}\\mathbf{F}\\cdot d\\mathbf{r}",
+              dimensionBadge: "3D",
+            },
+          ],
+        },
+        {
+          id: "3.3.7b",
+          slug: "divergence-theorem",
+          title: "Gauss's Divergence Theorem: Closed-Shell Flux & Volume Divergence",
+          subtitle:
+            "Compare closed-surface outward flux across a Cube, Sphere, and Closed Cylinder against interior triple-integral divergence, and explore why a point charge at 0 yields 4π flux.",
+          status: "published",
+          estimatedMinutes: 35,
+          prerequisites: ["3.2.2", "3.3.6", "3.3.7"],
+          dimensionBadge: "3D",
+          accentHex: "#029091",
+          subParent: {
+            slug: "vector-integral-theorems",
+            title: "Vector Integral Theorems",
+            badge: "Integral Theorems",
+          },
+          keyEquationsLatex: [
+            "\\oiint_{\\partial E} \\mathbf{F}\\cdot\\hat{\\mathbf{n}}\\,dS = \\iiint_E (\\nabla\\cdot\\mathbf{F})\\,dV",
+            "\\oiint_{\\partial E} \\frac{\\mathbf{r}}{\\|\\mathbf{r}\\|^3}\\cdot\\hat{\\mathbf{n}}\\,dS = 4\\pi \\quad (\\mathbf{0} \\in \\operatorname{int} E)",
+          ],
+          engineeringContext:
+            "Gauss's Law in electrostatics and gravitation, finite-volume CFD conservation (mass, momentum, energy), and Fourier heat-equation derivation.",
+          heroActionLinks: [
+            {
+              label: "See Vector Calculus & Integral Theorem Formulas",
+              href: "/formulas/vector-calculus",
+              description: "Gauss Divergence Theorem, spherical/cylindrical div & conservation laws",
+            },
+          ],
+          heroIntro: {
+            questionToAsk:
+              "Why does adding up outward flow piercing every face of a closed 3D shell $\\partial E$ equal integrating local expansion $\\nabla\\cdot\\mathbf{F}$ throughout the interior solid $E$?",
+            briefExplanation: [
+              "Imagine packing solid $E$ with millions of tiny cubes. Any fluid leaving the right wall of one interior cube enters the left wall of its neighbor with opposite outward normal sign, so every internal face cancels identically. Only the outer skin $\\partial E$ survives, proving $\\oiint_{\\partial E}\\mathbf{F}\\cdot\\hat{\\mathbf{n}}\\,dS = \\iiint_E (\\nabla\\cdot\\mathbf{F})\\,dV$.",
+              "Whenever $\\mathbf{F}$ is $C^1$ throughout solid $E$, net outward flux equals total sources minus sinks inside $E$. If an enclosed inverse-square point charge $\\mathbf{r}/\\|\\mathbf{r}\\|^3$ sits inside $E$, $\\nabla\\cdot\\mathbf{F} = 0$ everywhere away from $\\mathbf{0}$ yet outward flux equals $4\\pi$ regardless of whether $\\partial E$ is a cube, sphere, or cylinder!",
+            ],
+          },
+          pedagogicalRhythm: {
+            question:
+              "How do 6 cube faces, a sphere shell, and a closed cylinder (top + bottom + lateral wall) balance interior divergence sources and sinks?",
+            labInteraction:
+              "Switch between Cube, Sphere, and Closed Cylinder control volumes in Lab 3.3.7b to inspect face/cap flux budgets against ∭_E (∇·F) dV, then load the Point Charge (r/r³) singularity trap.",
+            symbolicFormalizationLatex:
+              "\\oiint_{\\partial E}\\mathbf{F}\\cdot\\hat{\\mathbf{n}}\\,dS = \\iiint_E (\\nabla\\cdot\\mathbf{F})\\,dV",
+            edgeCasesAndBridge:
+              "This completes Volume III (Multivariable & Vector Calculus)! The integral theorems and singularities studied here carry directly into complex contour integration and the Residue Theorem in Volume V.",
+          },
+          labs: [
+            {
+              id: "lab-3-3-7b",
+              slug: "divergence-theorem-control-volumes",
+              title: "Gauss's Divergence Cube, Sphere & Cylinder Flux Budget Lab",
+              componentKey: "DivergenceTheoremLab",
+              summary:
+                "Verify boundary outward flux against interior divergence across Cube (6 faces), Sphere, and Closed Cylinder (caps + wall), plus inverse-square origin singularity traps.",
+              formulaLatex:
+                "\\oiint_{\\partial E}\\mathbf{F}\\cdot\\hat{\\mathbf{n}}\\,dS = \\iiint_E (\\nabla\\cdot\\mathbf{F})\\,dV",
               dimensionBadge: "3D",
             },
           ],

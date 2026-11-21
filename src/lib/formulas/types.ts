@@ -2,7 +2,12 @@ export type FormulaSheetSlug =
   | "limits"
   | "derivatives"
   | "taylor-expansions"
-  | "integrals";
+  | "integrals"
+  | "multivariable-derivatives"
+  | "ode-methods"
+  | "multiple-integrals-jacobians"
+  | "convergence-gamma-beta"
+  | "vector-calculus";
 
 export interface FormulaEntry {
   label?: string;
@@ -39,6 +44,9 @@ export interface FormulaSection {
 
 export interface FormulaSheetDefinition {
   slug: FormulaSheetSlug;
+  volumeId: "vol-1" | "vol-3";
+  volumeLabel: string;
+  previewLatex: string;
   title: string;
   shortTitle: string;
   subtitle: string;

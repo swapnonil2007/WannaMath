@@ -326,7 +326,7 @@ export function FormulaSheetPageView({ sheet }: FormulaSheetPageViewProps) {
               style={{ color: accentInk }}
               aria-hidden="true"
             />
-            <span>Related Volume I Formula Reference Sheets</span>
+            <span>Related Formula Reference Sheets</span>
           </h2>
           <Link
             href="/formulas"

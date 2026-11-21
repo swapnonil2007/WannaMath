@@ -294,10 +294,14 @@ const LAB_COMPONENTS = {
       import("@/components/visualizations/vector-calculus/SurfaceFluxLab").then(
         (m) => m.SurfaceFluxLab
       )),
-  StokesDivergenceLab: lazyLab(() =>
+  StokesTheoremLab: lazyLab(() =>
       import(
-        "@/components/visualizations/vector-calculus/StokesDivergenceLab"
-      ).then((m) => m.StokesDivergenceLab)),
+        "@/components/visualizations/vector-calculus/StokesTheoremLab"
+      ).then((m) => m.StokesTheoremLab)),
+  DivergenceTheoremLab: lazyLab(() =>
+      import(
+        "@/components/visualizations/vector-calculus/DivergenceTheoremLab"
+      ).then((m) => m.DivergenceTheoremLab)),
 
   // Volume IV — Modules 4.1–4.4
   SlopeFieldTracerLab: lazyLab(() =>

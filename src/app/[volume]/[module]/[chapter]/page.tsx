@@ -7,6 +7,21 @@ import { TopicPageShell } from "@/components/layout/TopicPageShell";
 import { KaTeXMath } from "@/components/math/KaTeXMath";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { DynamicLabRenderer } from "@/components/visualizations/DynamicLabRenderer";
+import {
+  SurfacesLevelCurvesLesson,
+  PartialDerivativesTangentPlanesLesson,
+  LagrangeMultipliersLesson,
+  HomogeneousEulerLesson,
+  MaximaMinimaExtremaLesson,
+  DoubleIntegralsLesson,
+  TripleIntegralsLesson,
+} from "@/components/lessons/Vol3WrittenLessons";
+import {
+  VectorTheoremsFamilyNav,
+  VectorTheoremsOverviewContent,
+  StokesTheoremLesson,
+  DivergenceTheoremLesson,
+} from "@/components/lessons/VectorIntegralTheoremsLessons";
 import { buildChapterJsonLd } from "@/lib/seo/structuredData";
 import { buildPageMetadata } from "@/lib/seo/siteConfig";
 import { getAdaptiveAccentInk } from "@/lib/accentInk";
@@ -1041,6 +1056,7 @@ export default async function ChapterPage({
       {chapter.slug === "surfaces-level-curves" && (
         <div className="space-y-10">
           <DynamicLabRenderer name="SurfaceContourSlicerLab" />
+          <SurfacesLevelCurvesLesson />
         </div>
       )}
 
@@ -1048,6 +1064,7 @@ export default async function ChapterPage({
         <div className="space-y-10">
           <DynamicLabRenderer name="PartialDerivativeTangentPlaneLab" />
           <DynamicLabRenderer name="HigherOrderChainImplicitLab" />
+          <PartialDerivativesTangentPlanesLesson />
         </div>
       )}
 
@@ -1166,6 +1183,7 @@ export default async function ChapterPage({
       {chapter.slug === "lagrange-multipliers" && (
         <div className="space-y-10">
           <DynamicLabRenderer name="LagrangeMultipliersLab" />
+          <LagrangeMultipliersLesson />
         </div>
       )}
 
@@ -1298,6 +1316,7 @@ export default async function ChapterPage({
         <div className="space-y-10">
           <DynamicLabRenderer name="HomogeneousScalingRayLab" />
           <DynamicLabRenderer name="EulersTheoremSecondOrderLab" />
+          <HomogeneousEulerLesson />
         </div>
       )}
 
@@ -1305,6 +1324,7 @@ export default async function ChapterPage({
         <div className="space-y-10">
           <DynamicLabRenderer name="HessianSecondDerivativeTestLab" />
           <DynamicLabRenderer name="GeneralMethodDegenerateExtremaLab" />
+          <MaximaMinimaExtremaLesson />
         </div>
       )}
 
@@ -1489,6 +1509,7 @@ export default async function ChapterPage({
         <div className="space-y-10">
           <DynamicLabRenderer name="RiemannVolumeLab" />
           <DynamicLabRenderer name="IteratedOrderChangeLab" />
+          <DoubleIntegralsLesson />
         </div>
       )}
 
@@ -1496,6 +1517,7 @@ export default async function ChapterPage({
         <div className="space-y-10">
           <DynamicLabRenderer name="TripleIntegralOrderLab" />
           <DynamicLabRenderer name="TripleVoxelDensityLab" />
+          <TripleIntegralsLesson />
         </div>
       )}
 
@@ -2239,67 +2261,26 @@ export default async function ChapterPage({
 
       {chapter.slug === "stokes-divergence-theorems" && (
         <div className="space-y-10">
-          <DynamicLabRenderer name="StokesDivergenceLab" />
-
-          <section className="border border-[var(--border-subtle)] bg-[var(--bg-panel)] p-6 space-y-4">
-            <h2 className="text-xl font-math-serif font-semibold text-[var(--text-primary)]">
-              The Grand Unification Across Dimensions: FTC → Green → Stokes → Gauss
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-sweep)] block">
-                  1. STOKES&apos; SURFACE INVARIANCE
-                </span>
-                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
-                  <KaTeXMath
-                    math="\iint_{S_1} (\nabla\times\mathbf{F})\cdot d\mathbf{S} = \oint_{\partial S} \mathbf{F}\cdot d\mathbf{r} = \iint_{S_2} (\nabla\times\mathbf{F})\cdot d\mathbf{S}"
-                    block
-                  />
-                </div>
-                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
-                  Any orientable surface spanned on the same oriented rim <KaTeXMath math="\partial S" />{" "}
-                  collects identical curl flux—replace tricky domes with flat disk caps!
-                </p>
-              </div>
-
-              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-z)] block">
-                  2. GAUSS&apos;S CONTROL-VOLUME LAW
-                </span>
-                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
-                  <KaTeXMath
-                    math="\oiint_{\partial E} \mathbf{F}\cdot\hat{\mathbf{n}}\,dS = \iiint_E (\nabla\cdot\mathbf{F})\,dV"
-                    block
-                  />
-                </div>
-                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
-                  Closed-surface outward flux equals the sum of every microscopic source and sink{" "}
-                  <KaTeXMath math="\nabla\cdot\mathbf{F}" /> trapped inside solid <KaTeXMath math="E" />.
-                </p>
-              </div>
-
-              <div className="p-4 border border-[var(--border-subtle)] bg-[var(--bg-canvas)] space-y-2">
-                <span className="text-xs font-tabular-mono font-semibold text-[var(--math-ink-diff)] block">
-                  3. GENERALIZED STOKES PRINCIPLE
-                </span>
-                <div className="p-2.5 border border-[var(--border-subtle)] bg-[var(--bg-panel)] text-xs overflow-x-auto">
-                  <KaTeXMath
-                    math="\int_{\Omega} d\omega = \int_{\partial\Omega} \omega"
-                    block
-                  />
-                </div>
-                <p className="text-xs text-[var(--text-secondary)] font-math-serif">
-                  Every integral theorem equates the total microscopic derivative (<KaTeXMath math="f'" />,{" "}
-                  <KaTeXMath math="\nabla f" />, <KaTeXMath math="\nabla\times\mathbf{F}" />, or{" "}
-                  <KaTeXMath math="\nabla\cdot\mathbf{F}" />) inside domain <KaTeXMath math="\Omega" />{" "}
-                  to evaluation on its boundary <KaTeXMath math="\partial\Omega" />.
-                </p>
-              </div>
-            </div>
-          </section>
+          <VectorTheoremsFamilyNav activeSlug="stokes-divergence-theorems" />
+          <VectorTheoremsOverviewContent />
         </div>
       )}
 
+      {chapter.slug === "stokes-theorem" && (
+        <div className="space-y-10">
+          <VectorTheoremsFamilyNav activeSlug="stokes-theorem" />
+          <DynamicLabRenderer name="StokesTheoremLab" />
+          <StokesTheoremLesson />
+        </div>
+      )}
+
+      {chapter.slug === "divergence-theorem" && (
+        <div className="space-y-10">
+          <VectorTheoremsFamilyNav activeSlug="divergence-theorem" />
+          <DynamicLabRenderer name="DivergenceTheoremLab" />
+          <DivergenceTheoremLesson />
+        </div>
+      )}
       {chapter.slug === "direction-fields-integral-curves" && (
         <div className="space-y-10">
           <DynamicLabRenderer name="SlopeFieldTracerLab" />

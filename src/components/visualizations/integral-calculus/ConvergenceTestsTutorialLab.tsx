@@ -73,7 +73,7 @@ const CONVERGENCE_TESTS: ConvergenceTestSpec[] = [
     whenToUse:
       "When aₙ = f(n) comes from a positive, continuous, decreasing function that you can integrate easily (e.g., 1/nᵖ, 1/(n ln n)).",
     hypothesisLatex:
-      "f(x) \\ge 0,\\; \\text{continuous & decreasing on } [1, \\infty)",
+      "f(x) \\ge 0,\\; \\text{continuous and decreasing on } [1, \\infty)",
     verdictLatex:
       "\\sum_{n=1}^{\\infty} f(n) \\text{ converges} \\iff \\int_{1}^{\\infty} f(x)\\,dx \\text{ converges}",
     pitfallWarning:

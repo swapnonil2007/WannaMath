@@ -166,7 +166,7 @@ export function buildRoadmapJsonLd(volumes: VolumeMetadata[]) {
         url: roadmapUrl,
         name: "6-Volume Engineering Mathematics Master Syllabus",
         description:
-          "Complete 6-volume, 20-module, 70-chapter curriculum architecture covering single-variable calculus through multivariable calculus, linear algebra, ODEs, PDEs, complex transforms, and numerical methods.",
+          "Complete 6-volume, 20-module, 72-chapter curriculum architecture covering single-variable calculus through multivariable calculus, linear algebra, ODEs, PDEs, complex transforms, and numerical methods.",
         isPartOf: { "@id": WEBSITE_ID },
         inLanguage: "en-US",
         mainEntity: {
@@ -285,9 +285,10 @@ export function buildFormulasIndexJsonLd(sheets: FormulaSheetDefinition[]) {
         "@type": "CollectionPage",
         "@id": `${indexUrl}#webpage`,
         url: indexUrl,
-        name: "Volume I Calculus Formula Reference Sheets",
-        description:
-          "Verified reference formula sheets for Limits, Derivatives, Taylor & Maclaurin Expansions, and Integrals.",
+        name: "Calculus & Engineering Mathematics Formula Reference Sheets",
+        description: `Verified mathematical reference formula sheets (${sheets
+          .map((s) => s.shortTitle)
+          .join(", ")}) with explicit conditions, tables, and worked steps.`,
         isPartOf: { "@id": WEBSITE_ID },
         inLanguage: "en-US",
         mainEntity: {

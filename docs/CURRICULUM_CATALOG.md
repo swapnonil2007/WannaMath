@@ -1,6 +1,6 @@
 # Complete Curriculum Catalog — Volumes I–VI
 
-All **6 Volumes, 20 Modules, 70 Chapters, and 87 Interactive Laboratories** in **wanna math** (`v2.0`) are **`published`** and statically pre-rendered under `/[volume]/[module]/[chapter]` (plus **4 Dedicated Formula Reference Sheets** under `/formulas`).
+All **6 Volumes, 20 Modules, 72 Chapters, and 88 Interactive Laboratories** in **wanna math** (`v2.0`) are **`published`** and statically pre-rendered under `/[volume]/[module]/[chapter]` (plus **9 Dedicated Formula Reference Sheets** under `/formulas`).
 
 ---
 
@@ -10,11 +10,11 @@ All **6 Volumes, 20 Modules, 70 Chapters, and 87 Interactive Laboratories** in *
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- |
 | **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 17 | 17 *(+4 Formula Sheets)* | `published` |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | 9 | `published` |
-| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 24 | 41 | `published` |
+| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 26 | 42 *(+5 Formula Sheets)* | `published` |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | 8 | `published` |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | 8 | `published` |
 | **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | 4 | `published` |
-| **Total** | **`/[volume]/[module]/[chapter]`** | **6-Volume Textbook** | **20** | **70** | **87** | **100% Live** |
+| **Total** | **`/[volume]/[module]/[chapter]`** | **6-Volume Textbook** | **20** | **72** | **88** | **100% Live** |
 
 ---
 
@@ -134,7 +134,18 @@ All **6 Volumes, 20 Modules, 70 Chapters, and 87 Interactive Laboratories** in *
 | `3.3.4` | `/multivariable-calculus/vector-calculus/line-integrals-work` | Line Integrals (Work & Circulation) | 30 min | `2D + 3D` | `LineIntegralWorkLab` (`2D + 3D`) |
 | `3.3.5` | `/multivariable-calculus/vector-calculus/greens-theorem` | Green's Theorem | 30 min | `2D` | `GreensTheoremLab` (`2D`) |
 | `3.3.6` | `/multivariable-calculus/vector-calculus/surface-integrals-flux` | Surface Integrals & Flux | 35 min | `3D` | `SurfaceFluxLab` (`3D`) |
-| `3.3.7` | `/multivariable-calculus/vector-calculus/stokes-divergence-theorems` | Stokes' Theorem & The Divergence Theorem | 35 min | `3D` | `StokesDivergenceLab` (`3D`) |
+| `3.3.7` | `/multivariable-calculus/vector-calculus/stokes-divergence-theorems` | *Vector Integral Theorems* — Green, Stokes & Gauss Overview | 20 min | `Overview` | *Theorem Family Overview (0 Labs)* *(Hero Link: `/formulas/vector-calculus`)* |
+| `3.3.7a` | `/multivariable-calculus/vector-calculus/stokes-theorem` | *Vector Integral Theorems* — Stokes' Theorem: 3D Cap Surface Invariance & Boundary Rim Work | 35 min | `3D` | `StokesTheoremLab` *(Hero Link: `/formulas/vector-calculus`)* |
+| `3.3.7b` | `/multivariable-calculus/vector-calculus/divergence-theorem` | *Vector Integral Theorems* — Gauss's Divergence Theorem: Closed-Shell Flux & Volume Divergence | 35 min | `3D` | `DivergenceTheoremLab` *(Hero Link: `/formulas/vector-calculus`)* |
+
+### Volume III Formula Reference Sheets (`/formulas`)
+| Sheet Slug | Canonical Route | Linked Volume III Chapters | Scope & Special Verifications |
+| :--- | :--- | :--- | :--- |
+| `multivariable-derivatives` | `/formulas/multivariable-derivatives` | `3.1.2`–`3.1.8` | Partials, Clairaut/Peano caveat, Chain Rule, Euler homogeneous identities, Hessian $D=0$ caveat, Lagrange regularity ($\nabla g \neq \mathbf{0}$) |
+| `ode-methods` | `/formulas/ode-methods` | `3.1.9`–`3.1.11` | Integrating factors, Bernoulli ($y\equiv 0$ equilibrium caveat), Wronskian/Abel, $1/f(D)$ shortcuts & resonance, monic Variation of Parameters, Cauchy-Euler ($x>0$) |
+| `multiple-integrals-jacobians` | `/formulas/multiple-integrals-jacobians` | `3.2.1`–`3.2.4` | Type I/II slicing, Fubini order-reversal rescue, 6-order shadow walls, Polar/Cylindrical/Spherical scale factors, 2D/3D Jacobians, mass & moments |
+| `convergence-gamma-beta` | `/formulas/convergence-gamma-beta` | `3.2.5`, `3.2.6` | Flipped improper $p$-tests, 9-row infinite series convergence table, $\Gamma(z)$ reflection/duplication/poles, $\mathrm{B}(p,q)$ trig/Gamma unification, Wallis integrals |
+| `vector-calculus` | `/formulas/vector-calculus` | `3.1.3`, `3.3.1`–`3.3.7b` | Del ($\nabla, \nabla\cdot, \nabla\times, \nabla^2$) in Cartesian/Cylindrical/Spherical, $C^2$ & product identities, directional derivatives, FTLI (simply connected caveat) & Big Four Theorems |
 
 ---
 

@@ -2,6 +2,10 @@ import type { FormulaSheetDefinition } from "./types";
 
 export const INTEGRALS_FORMULA_SHEET: FormulaSheetDefinition = {
   slug: "integrals",
+  volumeId: "vol-1",
+  volumeLabel: "Volume I: Single-Variable Calculus",
+  previewLatex:
+    "\\int_a^b f(x)\\,dx = F(b) - F(a), \\qquad \\int u\\,dv = uv - \\int v\\,du",
   title: "Common Integral Formulas & Standard Integration Techniques",
   shortTitle: "Integral Formulas",
   subtitle:

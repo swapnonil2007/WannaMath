@@ -1,6 +1,6 @@
 # 01 — Global 6-Volume Curriculum & Build Status (`wanna math` v2.0)
 
-> **Last Updated:** 2026-11-21 — All 6 Core Volumes 100% Published (`70` Chapters, `87` Labs) + `4` Volume I Formula Reference Sheets (`/formulas`) + **Statistics Volume (`Volume S`, `/statistics`) 100% Published (`18/18` Chapters, `18` Labs Live; `105` Labs Textbook-Wide)**
+> **Last Updated:** 2026-11-21 — All 6 Core Volumes 100% Published (`72` Chapters, `88` Labs) + `9` Formula Reference Sheets (`/formulas` across Volumes I & III) + **Statistics Volume (`Volume S`, `/statistics`) 100% Published (`18/18` Chapters, `18` Labs Live; `106` Labs Textbook-Wide)**
 > **Active Branch:** `main` (`https://github.com/swapnonil2007/WannaMath.git`)
 > **Master Architecture Plan:** [`archive/00_MASTER_TEXTBOOK_PLAN.md`](./00_MASTER_TEXTBOOK_PLAN.md)
 
@@ -12,7 +12,7 @@
 | :--- | :--- | :--- | :---: | :---: | :--- |
 | **Volume I: Single-Variable Calculus** | `/single-variable-calculus` | `#8D9FCE` (Periwinkle) | 4 | 17 | **`published` (17/17 Published — 17 Labs + 4 Formula Sheets Live)** |
 | **Volume II: Linear Algebra & Space Geometry** | `/linear-algebra` | `#96B898` (Sage Green) | 3 | 9 | **`published` (9/9 Published — 9 Labs Live)** |
-| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 24 | **`published` (24/24 Published — 41 Labs Live)** |
+| **Volume III: Multivariable & Vector Calculus** | `/multivariable-calculus` | `#029091` (Deep Teal) | 3 | 26 | **`published` (26/26 Published — 42 Labs + 5 Formula Sheets Live)** |
 | **Volume IV: Differential Equations & Dynamical Systems** | `/differential-equations` | `#D35323` (Persimmon) | 4 | 8 | **`published` (8/8 Published — 8 Labs Live)** |
 | **Volume V: Transforms & Complex Analysis** | `/transforms-complex-analysis` | `#D5658B` (Dusty Rose) | 4 | 8 | **`published` (8/8 Published — 8 Labs Live)** |
 | **Volume VI: Probability, Statistics & Numerical Methods** | `/probability-numerical-methods` | `#AAA36D` (Olive Gold) | 2 | 4 | **`published` (4/4 Published — 4 Labs Live)** |
@@ -89,16 +89,20 @@
 > **Legacy Route Redirects:** `/calculus` $\rightarrow$ `/multivariable-calculus`, `/calculus/:slug` $\rightarrow$ `/multivariable-calculus/integral-calculus/:slug`, and `/multivariable-calculus/multiple-integrals(/*)` $\rightarrow$ `/multivariable-calculus/integral-calculus(/*)` are permanently redirected in `next.config.ts`.
 > **Historical Build Logs:** Preserved in [`archive/phase_logs/`](./phase_logs/) and indexed in [`archive/volumes/vol_03_multivariable/README.md`](./volumes/vol_03_multivariable/README.md).
 
-### Module 3.3: Vector Calculus & Integral Theorems (`/multivariable-calculus/vector-calculus`) — **ALL PUBLISHED**
+### Module 3.3: Vector Calculus & Integral Theorems (`/multivariable-calculus/vector-calculus`) — **ALL PUBLISHED (9/9)**
 | Chapter ID | Canonical Route | Title | Status | Live Interactive Component Keys |
 | :--- | :--- | :--- | :--- | :--- |
-| `3.3.1` | `/multivariable-calculus/vector-calculus/gradient-of-scalar-fields` | The Gradient Operator (∇φ), Level Surfaces & Normals | **`published`** | `VectorGradientCalculatorLab` |
-| `3.3.2` | `/multivariable-calculus/vector-calculus/directional-derivatives` | Directional Derivatives (D_û f = ∇f · û) & Rate of Change | **`published`** | `DirectionalDerivativeCalculatorLab` |
-| `3.3.3` | `/multivariable-calculus/vector-calculus/vector-fields-divergence-curl` | Vector Fields, Divergence & Curl | **`published`** | `DivCurlProbeLab`, `VectorFieldStreamlineExplorerLab`, `DivCurlDecompositionLab` |
-| `3.3.4` | `/multivariable-calculus/vector-calculus/line-integrals-work` | Line Integrals (Work & Circulation) | **`published`** | `LineIntegralWorkLab` |
-| `3.3.5` | `/multivariable-calculus/vector-calculus/greens-theorem` | Green's Theorem | **`published`** | `GreensTheoremLab` |
-| `3.3.6` | `/multivariable-calculus/vector-calculus/surface-integrals-flux` | Surface Integrals & Flux | **`published`** | `SurfaceFluxLab` |
-| `3.3.7` | `/multivariable-calculus/vector-calculus/stokes-divergence-theorems` | Stokes' Theorem & The Divergence Theorem | **`published`** | `StokesDivergenceLab` |
+| `3.3.1` | `/multivariable-calculus/vector-calculus/gradient-of-scalar-fields` | The Gradient Operator (∇φ), Level Surfaces & Normals | **`published`** | `VectorGradientCalculatorLab` *(+ Hero Link -> `/formulas/vector-calculus`)* |
+| `3.3.2` | `/multivariable-calculus/vector-calculus/directional-derivatives` | Directional Derivatives (D_û f = ∇f · û) & Rate of Change | **`published`** | `DirectionalDerivativeCalculatorLab` *(+ Hero Link -> `/formulas/vector-calculus`)* |
+| `3.3.3` | `/multivariable-calculus/vector-calculus/vector-fields-divergence-curl` | Vector Fields, Divergence & Curl | **`published`** | `DivCurlProbeLab`, `VectorFieldStreamlineExplorerLab`, `DivCurlDecompositionLab` *(+ Hero Link -> `/formulas/vector-calculus`)* |
+| `3.3.4` | `/multivariable-calculus/vector-calculus/line-integrals-work` | Line Integrals (Work & Circulation) | **`published`** | `LineIntegralWorkLab` *(+ Hero Link -> `/formulas/vector-calculus`)* |
+| `3.3.5` | `/multivariable-calculus/vector-calculus/greens-theorem` | Green's Theorem | **`published`** | `GreensTheoremLab` *(+ Hero Link -> `/formulas/vector-calculus`)* |
+| `3.3.6` | `/multivariable-calculus/vector-calculus/surface-integrals-flux` | Surface Integrals & Flux | **`published`** | `SurfaceFluxLab` *(+ Hero Link -> `/formulas/vector-calculus`)* |
+| `3.3.7` | `/multivariable-calculus/vector-calculus/stokes-divergence-theorems` | *Sub-Parent: Vector Integral Theorems* — Green, Stokes & Gauss Overview | **`published`** | *Theorem Family Overview (0 Labs; + Hero Link -> `/formulas/vector-calculus`)* |
+| `3.3.7a` | `/multivariable-calculus/vector-calculus/stokes-theorem` | *Sub-Parent: Vector Integral Theorems* — Stokes' Theorem: 3D Cap Surface Invariance & Boundary Rim Work | **`published`** | `StokesTheoremLab` *(+ Hero Link -> `/formulas/vector-calculus`)* |
+| `3.3.7b` | `/multivariable-calculus/vector-calculus/divergence-theorem` | *Sub-Parent: Vector Integral Theorems* — Gauss's Divergence Theorem: Closed-Shell Flux & Volume Divergence | **`published`** | `DivergenceTheoremLab` *(+ Hero Link -> `/formulas/vector-calculus`)* |
+
+> **Volume III Formula Reference Sheets (`/formulas`):** All `26` Volume III chapters include box-free `heroIntro` briefs (`The Question You Should Ask` & `In Simple Words & Math`), first-principles written prose across `3.1.1`–`3.3.7b`, and `5` dedicated Volume III reference sheets (`/formulas/multivariable-derivatives`, `/formulas/ode-methods`, `/formulas/multiple-integrals-jacobians`, `/formulas/convergence-gamma-beta`, `/formulas/vector-calculus`).
 
 ---
 

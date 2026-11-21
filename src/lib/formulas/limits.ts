@@ -2,6 +2,10 @@ import type { FormulaSheetDefinition } from "./types";
 
 export const LIMITS_FORMULA_SHEET: FormulaSheetDefinition = {
   slug: "limits",
+  volumeId: "vol-1",
+  volumeLabel: "Volume I: Single-Variable Calculus",
+  previewLatex:
+    "\\lim_{x \\to a} f(x) = L \\iff \\lim_{x \\to a^-} f(x) = \\lim_{x \\to a^+} f(x) = L",
   title: "Common Limit Formulas, Properties & Evaluation Techniques",
   shortTitle: "Limit Formulas",
   subtitle:
